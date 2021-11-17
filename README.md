@@ -1,4 +1,4 @@
-# GreenMarket
+# GreenMarket 🌿
 SSANGYONG ojt Teamproject GreenMarket 
 
 ## 1. 프로젝트 개요
