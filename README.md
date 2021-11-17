@@ -8,13 +8,13 @@ SSANGYONG ojt Teamproject GreenMarket
 #### Backend
 <img src="https://img.icons8.com/color/48/000000/java-coffee-cup-logo.png"><img src="https://img.icons8.com/color/48/000000/spring-logo.png"><img src="https://img.icons8.com/windows/32/000000/node-js.png"><img src="https://img.icons8.com/color/48/000000/oracle-logo.png">
 
-+ 주로 사용하는 언어는 java이며, Spring Boot + JPA 조합을 선호합니다.
-+ 이 외에도 Spring Security를 사용합니다
++ 주로 사용하는 언어는 java이며, Spring Boot + JPA 조합을 선호함
++ 이 외에도 Spring Security를 사용
 
 #### Front End
 <img src="https://img.icons8.com/color/48/000000/html-5.png"><img src="https://img.icons8.com/color/48/000000/css3.png">
 
-+ 브라우저의 동작 원리를 이해하며, Vue.js를 주로 사용합니다.
++ 브라우저의 동작 원리를 이해하며, html5, css, jsp를 주로 사용
 
 #### DevOps
 ![image](https://user-images.githubusercontent.com/49936027/142104398-7445d958-312e-45cb-82a1-c3ed63e910f3.png)
