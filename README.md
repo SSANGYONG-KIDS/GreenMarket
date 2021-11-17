@@ -32,7 +32,7 @@ SSANGYONG ojt Teamproject GreenMarket
 
 
 ### UseCase-Diagram
-![image](https://user-images.githubusercontent.com/49936027/142147526-2ff635f9-0092-48e7-affa-dddd5dc182b2.png)
+![image](https://user-images.githubusercontent.com/49936027/142147878-86a27b92-b532-48f2-a59a-20dca967a453.png)
 
 
 ### 정보 구조도 (I.A)
