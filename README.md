@@ -28,15 +28,20 @@ SSANGYONG ojt Teamproject GreenMarket
 ## 2. 프로젝트 설계 및 모델링 
 
 ### ERD 
-![image](https://user-images.githubusercontent.com/49936027/142098099-ecbec50b-d8ca-41b5-b03e-2bb75971c6b4.png)
+![image](https://user-images.githubusercontent.com/49936027/142147267-f9754dfa-a126-4ed7-8bfe-3db53fb61df1.png)
 
 
 ### UseCase-Diagram
 ![image](https://user-images.githubusercontent.com/49936027/142098352-ed7badee-7113-4890-a247-64af2d9140bc.png)
 
 
+### 정보 구조도 (I.A)
+![image](https://user-images.githubusercontent.com/49936027/142147312-84544422-2ba7-4209-8d0d-e9d3e9698f96.png)
+
+
 ### Project schedule
 ![image](https://user-images.githubusercontent.com/49936027/142098671-b7f24873-687a-4402-9dec-8771e8373c0e.png)
+
 
 
 ### 파일 형상관리 : Slack
