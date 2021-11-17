@@ -20,7 +20,7 @@ SSANGYONG ojt Teamproject GreenMarket
 ![image](https://user-images.githubusercontent.com/49936027/142104398-7445d958-312e-45cb-82a1-c3ed63e910f3.png)
 <img src="https://img.icons8.com/color/48/000000/amazon-web-services.png"/>
 
-+ AWS를 활용하여 모놀리식, 서버리스 등 다양한 아키텍처를 설계
++ AWS를 활용하여 다양한 아키텍처를 설계
 
 
 @TODO ... 작성중
