@@ -17,7 +17,7 @@
 
 ### ✔ 파일 구조
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3e6d08fc-3eeb-4e4c-a270-8d7564b999d8/Untitled.png)
+![image](https://user-images.githubusercontent.com/49936027/142984523-395654a4-6255-4f63-acbe-da2aad70aaa1.png)
 
 1. resource 폴더 밑에 하위 폴더로 static과 templates 생성 (이미 있으면 안 해도 됨)
 2. 1번과 마찬가지로 위처럼 bootstrap과 layout 하위 폴더 생성
@@ -31,11 +31,11 @@
 
       index.html만 templates 폴더에 넣음
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c416bc6b-a33f-479d-ae58-00ff56c8aa30/Untitled.png)
+![image](https://user-images.githubusercontent.com/49936027/142984547-321a7b63-88c7-4513-9196-5fbde4def1ea.png)
 
 1. MainController 생성
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/aa739b63-fcfd-4626-b0dc-e7e5b762ab03/Untitled.png)
+![image](https://user-images.githubusercontent.com/49936027/142984566-1dd3d81f-0f65-46a4-bc5e-36550142d643.png)
 
 ```jsx
 package com.ssangyong.GreenMarket.controller;
@@ -865,6 +865,8 @@ public class MainController {
 
 1. 구현 화면 맞는지 비교
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2375ddb4-690a-430a-b7f4-3d3ac8b5ae77/Untitled.png)
+
+![image](https://user-images.githubusercontent.com/49936027/142984444-2f34d411-e194-43e4-9ed9-49761b148756.png)
+
 
 - 메인 페이지 제외하고 본인 페이지 경로만 변경해서 쓰시면 됩니다.
