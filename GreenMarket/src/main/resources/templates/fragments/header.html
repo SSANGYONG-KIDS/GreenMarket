@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<head>
+<link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style th:fragment="header1">
+	.fit{padding: 0 35px !important;}
+	ul,ol,li{list-style:none !important; border-radius: 20px 20px 20px 20px; }
+	header  {height: 100px !important;  text-align: center !important;  }
+	header h1 { position: absolute; left: 100px; top: auto; padding: 5px 0 0; margin-top: 0 !important; }
+	header h1 a { color: black;	}
+	.logo  {display:inline-block; width: 40px; height: 40px;  background:url("/image/logo3.png") no-repeat; background-size: 40px 40px !important;   }
+	header .lnb li {display: inline-block;  }
+	header .lnb li :hover{  background-color: rgba(255,127,0, 0.5 );}
+	header .lnb li a {display: block; height: 81px;  font-size: 21px; font-weight:bold; color: #333; line-height: 81px; text-decoration: none !important; }
+	header .lnb li a:active{color: white}
+	header .spot {position: absolute; right: 50px; top: 0px; margin-right: 40px; }
+	header .spot li {position: relative;  display: inline-block; }
+	header .spot li:after {content: ""; position: absolute; left: 0; top: 50%; width: 1px; height: 7px; background:rgb(255,127,0); transform: translateY(-50%); }
+	header .spot li:first-child:after{ display: none;} 
+	header .spot li a {display: inline-block !important; height: 81px; padding:  0 10px; line-height: 81px; text-decoration: none; color: black;}
+	header .spot li:last-child a { padding-right: 0;}
+	header ul li ul { width:145px;display:none;position: absolute;	font-size:14px;background: rgb(255,127,0);}
+	header ul li ul:hover { display:block !important; }
+	<!--header ul li:hover ul { display:block !important; }-->
+	header ul li ul li { display: block;} 
+	header ul li ul li:hover {background-color: rgb(116,116,116); width: -webkit-fill-available;} 
+	ul.sub2 {text-align: center; padding: 20px;}	
+	.ac {
+	background-color: rgba(255,127,0,0.5)
+	}
+	.modal-login {
+		width: 320px;
+		margin: 30px auto;
+	}
+	.modal-login .modal-content {
+		border-radius: 1px;
+		border: none;
+	}
+	.modal-title{
+	text-align: center;
+	}
+	
+	.modal-login .modal-header {
+        position: relative;
+		justify-content: center;
+        background: #f2f2f2;
+	}
+    .modal-login .modal-body {
+        padding: 30px;
+    }
+    .modal-login .modal-footer {
+        background: #f2f2f2;
+    }
+	.modal-login h4 {
+		text-align: center;
+		font-size: 26px;
+	}
+    .modal-login label {
+        font-weight: normal;
+        font-size: 13px;
+    }
+	.modal-login .form-control, .modal-login .btn {
+		min-height: 38px;
+		border-radius: 2px; 
+	}
+	.modal-login .hint-text {
+		text-align: center;
+	}
+	.modal-login .close {
+        position: absolute;
+		top: 15px;
+		right: 15px;
+	}
+    .modal-login .checkbox-inline {
+        margin-top: 12px;
+    }
+    .modal-login input[type="checkbox"]{
+        margin-top: 2px;
+    }
+	.modal-login .btn {
+        min-width: 100px;
+		background: #3498db;
+		border: none;
+		line-height: normal;
+	}
+	.modal-login .btn:hover, .modal-login .btn:focus {
+		background: #248bd0;
+	}
+	.modal-login .hint-text a {
+		color: #999;
+	}
+	.trigger-btn {
+		display: inline-block;
+		margin: 100px auto;
+	}
+	.signup{
+	display: inline-flex;
+	border-top: 3px solid black; padding-top: 20px; width: 500px;
+	}	
+	.page-header {
+	border : none;
+	}
+	#loginbutton {
+	width:  568px;
+	}
+	
+	</style>
+</head>
+
+	
+
+<body>	
+	<header class="page-header" th:fragment="header1">
+	<div style="margin-top: -35px; padding:0px 40px" >
+	<h1> <a th:href="@{/main}">FitPle     </a> 
+	     <a th:href="@{/main}" class="logo">
+	       <!--  <img th:src="@{/image/logo2.png}"/> -->
+         </a>
+	</h1>
+
+ 
+	
+	<nav class="lnb">
+		<ul style=" background-color:rgba(255,165,0,1); ">
+			<li><a href="#a" class="fit" th:href="@{/body/myprofile}">MyFitPle</a></li>		 
+			<li><a th:href="@{/center/centerlist}"  class="fit">FitnessCenter</a></li>		 
+			<li><a href="#a"  class="fit" style="width: 185.5px;">Community</a>		
+				<ul class="sub2"style="width: 185.5px; z-index: 2">
+					<li class="fit2"><a th:href="@{/dietdiaryboard/boardlist}">DietDiary</a></li>
+					<li class="fit2"><a th:href="@{/exerciseinfoboard/boardlist}">ExerciseInfo</a></li>
+					<li class="fit2"><a th:href="@{/healthboard/boardlist}">Health</a></li>
+					<li class="fit2"><a th:href="@{/sharingboard/boardlist}">Sharing</a></li>
+				</ul> </li>
+			<li><a th:href="@{/naversearch/searchstore}" class="fit">Store</a></li>		 
+		</ul>
+	</nav>
+
+	<nav class="spot">
+		<ul>		
+			<li sec:authorize-expr="!isAuthenticated()">		   
+			      <a >손님 </a> <!-- href="/login/login"    -->
+			      <a  data-toggle="modal" data-target="#myModal">Login</a>   
+			</li>
+			
+			<li  sec:authorize-expr="isAuthenticated()"> 
+				<a sec:authentication="name" >name </a> 
+			      <a href="/login/logout" th:href="@{/login/logout}">Logout</a> 
+		     </li>
+		</ul>
+	</nav>
+	</div>
+	
+<!--
+<div th:if="${#authorization.expr('isAuthenticated()')}">
+        <h2 th:text="${#authentication.name}">Name</h2>
+        <a href="/logout" th:href="@{/logout}">Logout</a>
+    </div>
+    <div th:unless="${#authorization.expr('isAuthenticated()')}">
+        <a href="/login" th:href="@{/login}">Login</a>
+    </div>
+  -->
+  			
+ <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+		
+          <h4 class="modal-title"> LOGIN </h4>
+        </div>
+        <div class="modal-body">
+          <div id="userDiv" class="form-group">
+          
+          		<form id="userForm" action="/main" method="post">
+          			<div class="form-group">
+          	  <label> UserID </label> <input type="text" name="username"  class="form-control" required="required"/>
+          	  		</div>
+          	  		<div class="form-group" style="margin-bottom: 30px;">
+              <label> Password  </label> <input type="password" name="password" class="form-control" required="required"/>
+             		</div>
+            <label class="checkbox-inline pull-left" style="margin-left:150px;">  <input type="radio"  name="loginType" id="user" value="user" checked="checked">USER LOGIN  </label>
+         	 <label class="checkbox-inline pull-left"> <input type="radio"  name="loginType" id="business" value="business">BUSINESS LOGIN</label>
+         	 <br>
+              <input type="submit" id="loginbutton" value="LOGIN" class="btn btn-primary pull-right" style="margin-top: 5px;">
+          		</form>	
+          		</div><br>
+          	<div class="signup">
+          	 <form th:action="@{/login/signup}" method="get">
+            	 <input type="submit" value="USER SIGNUP" id="loginButton"  class="btn btn-default" style="margin-left: 90px;"/>
+             </form>
+             <form th:action="@{/login/BusinessSignup}" method="get">
+             	<input type="submit" value="BUSINESS SIGNUP"  class="btn btn-default"/>
+             </form>   
+             </div>  
+    
+             
+             </div>
+        </div>
+        <div class="modal-footer">  
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+    
+
+</header>
+
+<!-- https://gre-eny.tistory.com/86 -->
+
+</body>
+</html>
