@@ -40,7 +40,7 @@ public class LoginController {
 //	       memberAddress.setUserAddress3(userAddress3);
 	      
 	  
-	      return "redirect:/main";
+	      return "redirect:/index";
 	    }
 	
 	

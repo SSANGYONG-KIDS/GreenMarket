@@ -11,7 +11,7 @@ import com.ssangyong.GreenMarket.model.MemberEntity;
 import com.ssangyong.GreenMarket.persistences.MemberRepository;
 
 @Service
-public class LoginService implements UserDetailsService{
+public class LoginService{
 	
 	@Autowired 
 	private MemberRepository memberRepo;
@@ -20,9 +20,9 @@ public class LoginService implements UserDetailsService{
        
 	}
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return null;
-	}
+//	@Override
+//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//		return null;
+//	}
 
 }
