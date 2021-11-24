@@ -44,5 +44,4 @@ SSANGYONG ojt Teamproject GreenMarket
 
 
 
-### 파일 형상관리 : Slack
-https://w1636686392-4sg608206.slack.com/ssb/redirect
+### 파일 형상관리 : [slack](https://w1636686392-4sg608206.slack.com/ssb/redirect), [Notion](https://www.notion.so/Green-Market-8562d6a29a77448eb50a30eddc6750ba)
