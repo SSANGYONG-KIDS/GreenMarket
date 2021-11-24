@@ -11,9 +11,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @Entity
 @Builder
 @NoArgsConstructor
@@ -21,7 +23,6 @@ import lombok.Setter;
 @Table(name="item_category")
 public class ItemCategoryEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int icId;
 	private String icName;
 }
