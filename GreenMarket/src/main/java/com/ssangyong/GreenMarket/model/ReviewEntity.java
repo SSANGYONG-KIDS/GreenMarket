@@ -40,10 +40,7 @@ public class ReviewEntity {
 	private Timestamp rRegdate;
 	
 	@ManyToOne
-	@JoinColumns({
-		@JoinColumn(name = "mId", referencedColumnName="mId"),
-		@JoinColumn(name = "iId", referencedColumnName="iId")
-	})
+	@JoinColumn(name = "iId")
 	private ItemEntity item; 
 	
 	@ManyToOne

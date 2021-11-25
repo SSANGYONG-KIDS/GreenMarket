@@ -32,10 +32,7 @@ public class ItemPhotoEntity {
 	private int ipId;
 	
 	@ManyToOne
-	@JoinColumns({
-		@JoinColumn(name = "mId", referencedColumnName="mId"),
-		@JoinColumn(name = "iId", referencedColumnName="iId")
-	})
+	@JoinColumn(name = "iId")
 	private ItemEntity item; 
 	
 	private String ipFilename;

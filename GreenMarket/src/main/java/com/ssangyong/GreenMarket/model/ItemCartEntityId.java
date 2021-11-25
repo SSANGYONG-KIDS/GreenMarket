@@ -3,8 +3,6 @@ package com.ssangyong.GreenMarket.model;
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -12,12 +10,12 @@ import lombok.Data;
 
 @Data
 @Embeddable
-public class ItemEntityId implements Serializable{
-	
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int iId;
-	
+public class ItemCartEntityId implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "mId")
-	private MemberEntity member; //mId 가져오는곳
+	private MemberEntity member;
+	
+	@ManyToOne
+	@JoinColumn(name = "iId")
+	private ItemEntity item;
 }

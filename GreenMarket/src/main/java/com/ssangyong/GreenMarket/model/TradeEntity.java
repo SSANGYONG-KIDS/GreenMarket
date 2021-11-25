@@ -42,14 +42,11 @@ public class TradeEntity {
 	private TStateEnumType tState;
 
 	@ManyToOne
-	@JoinColumns({
-		@JoinColumn(name = "mId", referencedColumnName="mId"),
-		@JoinColumn(name = "iId", referencedColumnName="iId")
-	})
+	@JoinColumn(name = "iId")
 	private ItemEntity item; 
 	
 	@ManyToOne
 	@JoinColumn(name = "tBuyid")
-	private MemberEntity member; 
+	private MemberEntity buyMember; 
 	
 }

@@ -3,7 +3,6 @@ package com.ssangyong.GreenMarket.model;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -21,9 +20,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @Entity
 @Builder
 @NoArgsConstructor
@@ -31,9 +32,14 @@ import lombok.Setter;
 @Table(name="item")
 public class ItemEntity {
 	
-	@EmbeddedId
-	private ItemEntityId ieId;
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int iId;
+
+	@ManyToOne
+	@JoinColumn(name = "mId")
+	private MemberEntity member;
+
 	private String iTitle;
 	private String iContent;
 	
