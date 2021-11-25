@@ -9,296 +9,263 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 <title>회원가입 페이지</title>
 </head>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-  <style>
-    body {
-      min-height: 100vh;
-
-      background: -webkit-gradient(linear, left bottom, right top, from(#92b5db), to(#1d466c));
-      background: -webkit-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-      background: -moz-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-      background: -o-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-      background: linear-gradient(to top right, #92b5db 0%, #1d466c 100%);
-    }
-
-    .input-form {
-      max-width: 680px;
-
-      margin-top: 80px;
-      padding: 32px;
-
-      background: #fff;
-      -webkit-border-radius: 10px;
-      -moz-border-radius: 10px;
-      border-radius: 10px;
-      -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-      -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-      box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
-    }
-    .col-3 {
-   	margin-top: 31px;
-    }
-    .mb-3{
-    text-align: center;
-    }
-  </style>
-
 <body>
-	<div class="panel panel-default" layout:fragment="content1" >
-				<div class="container">
-	<div class="input-form-backgroud">
-	<div class="input-form col-md-12 mz-auto" style="margin-left: 19%">
-	<h4 class="mb-3">유저 회원가입</h4>
-	<form class="signup-form" action="./signUp" method="post">
-	<div class="validation-form" novalidate>
-	
-	
-	<!-- 아이디 폼 -->
-	<div class="row">
-		<div class="col">
-				<label for="userId">아이디</label>
-				<input id="userId" name="userId" type="text" placeholder="아이디을 입력하세요" class="form-control"/>
-		</div> 
-		<div class="col-3">
-				<input type="button" id="checkId" value="중복확인" class="form-control">
-		</div>
-	</div>	 
-	<br>
-	
-	<!-- 비밀번호 -->
-	<div class="row">
-		<div class="col">
-				<label for="userPw">비밀번호</label> 
-				<input id="userPw" name="userPw" type="password" placeholder="비밀번호를 입력하세요."class="form-control" />
-		</div>
-	</div>
-	<br>
-	
-	<!-- 이름 -->
-	<div class="row">
-		<div class="col">
-			<label for="userName">이름</label>
-			<input id="userName" name="userName" type="text" placeholder="이름을 입력하세요." class="form-control" />
-		</div>
-	</div>
-	<br>
-		
-	<!-- 휴대폰 번호 -->
-	<div class="row">
-		<div class="col">
-			<label for="userPhone">휴대폰 번호</label> 
-			<input id="userPhone" name="userPhone" type="text" placeholder="'-'을 제외하고 입력하세요." class="form-control" />
-		</div>
-		<div class="col-3">
-			<input type="button" id="sendPhoneButton" value="인증" class="form-control">
-		</div> 
-	</div>
-	<br>
-	
-	<!-- 휴대폰 인증 -->
-	<div class="row">
-		<div class="col">
-			<label for="userPhone2">인증번호</label> 
-			<input type="text" id="inputCertifiedNumber" readonly="readonly" class="form-control"> 
-		</div>
-		<div class="col-3">
-			<input type="button" id="CertiUserNum" value="번호 인증" readonly="readonly" class="form-control">
-			<input type="hidden" id="numStr" name="numStr">
-		</div>
-	</div>
-	<br>
+	<div class="panel panel-default" layout:fragment="content1">
+		<div class="container">
+		<div class="input-form-backgroud">
+		<div class="input-form col-md-12 mz-auto" style="margin-left: 19%">
+		<h4 class="mb-3">유저 회원가입</h4>
+			<form class="signup-form" action="./signup" method="post">
+			<div class="validation-form" novalidate>
 			
-	<!-- 닉네임 --> 
-	<div class="row">
-		<div class="col">
-			<label for="nickName"> 닉네임 </label> 
-			<input id="nickName" name="nickName" type="text" placeholder="닉네임을 입력하세요" class="form-control" /> 
+			
+			<!-- 아이디 폼 -->
+			<div class="row">
+				<div class="col">
+						<label for="mId">아이디</label>
+						<input id="mId" name="mId" type="text" placeholder="아이디을 입력하세요" class="form-control"/>
+				</div> 
+				<div class="col-3">
+						<input type="button" id="checkId" value="중복확인" class="form-control">
+				</div>
+			</div>	 
+			<br>
+			
+			<!-- 비밀번호 -->
+			<div class="row">
+				<div class="col">
+						<label for="mPw">비밀번호</label> 
+						<input id="mPw" name="mPw" type="password" placeholder="비밀번호를 입력하세요."class="form-control" />
+				</div>
+			</div>
+			<br>
+			
+			<!-- 이름 -->
+			<div class="row">
+				<div class="col">
+					<label for="mName">이름</label>
+					<input id="mName" name="mName" type="text" placeholder="이름을 입력하세요." class="form-control" />
+				</div>
+			</div>
+			<br>
+				
+			<!-- 휴대폰 번호 -->
+			<div class="row">
+				<div class="col">
+					<label for="mPhone">휴대폰 번호</label> 
+					<input id="mPhone" name="mPhone" type="text" placeholder="'-'을 제외하고 입력하세요." class="form-control" />
+				</div>
+				<div class="col-3">
+					<input type="button" id="sendPhoneButton" value="인증" class="form-control">
+				</div> 
+			</div>
+			<br>
+			
+			<!-- 휴대폰 인증 -->
+			<div class="row">
+				<div class="col">
+					<label for="mPhone2">인증번호</label> 
+					<input type="text" id="inputCertifiedNumber" readonly="readonly" class="form-control"> 
+				</div>
+				<div class="col-3">
+					<input type="button" id="CertiUserNum" value="번호 인증" readonly="readonly" class="form-control">
+					<input type="hidden" id="numStr" name="numStr">
+				</div>
+			</div>
+			<br>
+					
+			<!-- 닉네임 --> 
+			<div class="row">
+				<div class="col">
+					<label for="mNickname"> 닉네임 </label> 
+					<input id="mNickname" name="mNickname" type="text" placeholder="닉네임을 입력하세요" class="form-control" /> 
+				</div>
+				<div class="col-3">
+					<input type="button" id="checkNick" value="중복확인" class="form-control">
+				</div>
+			</div>	 
+			<br>
+			
+			<!-- 이메일 -->
+			<div class="row">
+				<div class="col">
+					<label for="mEmail"> 이메일 </label> 
+					<input id="mEmail" name="mEmail" type="text" placeholder="abcd@email.com" class="form-control" />
+				</div>
+			</div>
+			<br>
+			
+			<!-- 주소 -->
+			<div class="row">
+				<div class="col">
+					<label for="memberAddress">주소</label> 
+					<input type="text" id="sample6_postcode" placeholder="우편번호" name="AddNum" class="form-control">
+					<input type="text" id="sample6_address" placeholder="주소" name="memberAddress1" class="form-control">
+					<input type="text" id="sample6_detailAddress" placeholder="상세주소" name="memberAddress2" class="form-control">
+					<input type="text" id="sample6_extraAddress" placeholder="참고항목" name="memberAddress3" class="form-control"> <br>  
+				</div>
+				<div class="col-3">	 
+					<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"  class="form-control"><br>
+				</div>
+				<div class="col-8">	
+				
+				</div>
+			</div>
+			<br>
+				<input type="submit" class="btn btn-primary btn-lg btn-block" value="가입하기" />
+				</div>
+			</form>
+		</div>	
 		</div>
-		<div class="col-3">
-			<input type="button" id="checkNick" value="중복확인" class="form-control">
-		</div>
-	</div>	 
-	<br>
-	
-	<!-- 이메일 -->
-	<div class="row">
-		<div class="col">
-			<label for="userEmail"> 이메일 </label> 
-			<input id="userEmail" name="userEmail" type="text" placeholder="abcd@email.com" class="form-control" />
 		</div>
 	</div>
-	<br>
-	
-	<!-- 주소 -->
-	<div class="row">
-		<div class="col">
-			<label for="userAddress">주소</label> 
-			<input type="text" id="sample6_postcode" placeholder="우편번호" name="AddNum" class="form-control">
-			<input type="text" id="sample6_address" placeholder="주소" name="userAddress1" class="form-control">
-			<input type="text" id="sample6_detailAddress" placeholder="상세주소" name="userAddress2" class="form-control">
-			<input type="text" id="sample6_extraAddress" placeholder="참고항목" name="userAddress3" class="form-control"> <br>  
-		</div>
-		<div class="col-3">	 
-			<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"  class="form-control"><br>
-		</div>
-		<div class="col-8">	
-		
-		</div>
-	</div>
-	<br>
-		<input type="submit" class="btn btn-primary btn-lg btn-block" value="가입하기" />
-		</div>
-	</form>
-</div>	
-</div>
-</div>
-	</div>
+
 	<th:block layout:fragment="script1">
-			<script>
-			$('#checkNick').click(function() {
-		$.ajax({
-			type : "GET",
-			url : "/login/nickCheck",
-			data : {
-				"nickName" : $('#nickName').val()
-			},
-			success : function(aa) {
-				console.log(aa);
-				if (aa == "1") {
-					Swal.fire('사용가능한 닉네임입니다.');
-					$('#nickName').attr('readonly', 'readonly');
-				} else {
-					Swal.fire('사용 불가능한 닉네임입니다.');
-					return $('#userPw').focus();
-				}
-			}
-		});
-	});
-	
-		$('#checkId').click(function() {
+		<script>
+		$('#checkNick').click(function() {
 			$.ajax({
 				type : "GET",
-				url : "/login/duCheck",
+				url : "/login/nickCheck",
 				data : {
-					"userId" : $('#userId').val()
+					"mNickname" : $('#mNickname').val()
 				},
 				success : function(aa) {
 					console.log(aa);
 					if (aa == "1") {
-						Swal.fire('사용가능한 아이디입니다.');
-						$('#userId').attr('readonly', 'readonly');
+						Swal.fire('사용가능한 닉네임입니다.');
+						$('#mNickname').attr('readonly', 'readonly');
 					} else {
-						Swal.fire('사용 불가능한 아이디입니다.');
-						return $('#userPw').focus();
+						Swal.fire('사용 불가능한 닉네임입니다.');
+						return $('#mPw').focus();
 					}
 				}
 			});
 		});
-
-		var numStr;
-		$('#CertiUserNum').click(function() {
-			if ($('#inputCertifiedNumber').val() == "") {
-				Swal.fire('인증번호가 입력되지않았습니다.');
-				$('#inputCertifiedNumber').focus();
-				return;
-			}
-			console.log($.trim(numStr));
-			console.log($('#inputCertifiedNumber').val());
-			if ($.trim(numStr) == $('#inputCertifiedNumber').val()) {
-				Swal.fire('인증성공!', '휴대폰 인증이 정상적으로 완료되었습니다.', 'success')
-			} else {
-				Swal.fire({
-					icon : 'error',
-					title : '인증오류',
-					text : '인증번호가 올바르지 않습니다!',
-					footer : '<a href="/home">다음에 인증하기</a>'
-				});
-			}
-		});
-
-		$('#sendPhoneButton').click(function() {
-			let phoneNumber = $('#userPhone').val();
-			if (phoneNumber == "") {
-				Swal.fire('휴대폰번호 오류입니다');
-				$('#userPhone').focus();
-				return;
-			}
-			Swal.fire('인증번호가 발송되었습니다')
-			$('#CertiUserNum').removeAttr('readonly');
-			$('#inputCertifiedNumber').removeAttr('readonly');
-
-			$.ajax({
-				type : "GET",
-				url : "/login/testtest",
-				data : {
-					"user_phone" : phoneNumber
-				}
-			}).done(function(responsedata) {
-				numStr = responsedata;
-				console.log("===numStr===" + numStr);
-			});
-		});
-
-		function sample6_execDaumPostcode() {
-			new daum.Postcode(
-					{
-						oncomplete : function(data) {
-							// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-							// 각 주소의 노출 규칙에 따라 주소를 조합한다.
-							// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-							var addr = ''; // 주소 변수
-							var extraAddr = ''; // 참고항목 변수
-
-							//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-							if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-								addr = data.roadAddress;
-							} else { // 사용자가 지번 주소를 선택했을 경우(J)
-								addr = data.jibunAddress;
-							}
-
-							// 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-							if (data.userSelectedType === 'R') {
-								// 법정동명이 있을 경우 추가한다. (법정리는 제외)
-								// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-								if (data.bname !== ''
-										&& /[동|로|가]$/g.test(data.bname)) {
-									extraAddr += data.bname;
-								}
-								// 건물명이 있고, 공동주택일 경우 추가한다.
-								if (data.buildingName !== ''
-										&& data.apartment === 'Y') {
-									extraAddr += (extraAddr !== '' ? ', '
-											+ data.buildingName
-											: data.buildingName);
-								}
-								// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-								if (extraAddr !== '') {
-									extraAddr = ' (' + extraAddr + ')';
-								}
-								// 조합된 참고항목을 해당 필드에 넣는다.
-								document.getElementById("sample6_extraAddress").value = extraAddr;
-
-							} else {
-								document.getElementById("sample6_extraAddress").value = '';
-							}
-
-							// 우편번호와 주소 정보를 해당 필드에 넣는다.
-							document.getElementById('sample6_postcode').value = data.zonecode;
-							document.getElementById("sample6_address").value = addr;
-							// 커서를 상세주소 필드로 이동한다.
-							document.getElementById("sample6_detailAddress")
-									.focus();
+		
+			$('#checkId').click(function() {
+				$.ajax({
+					type : "GET",
+					url : "/login/duCheck",
+					data : {
+						"mId" : $('#mId').val()
+					},
+					success : function(aa) {
+						console.log(aa);
+						if (aa == "1") {
+							Swal.fire('사용가능한 아이디입니다.');
+							$('#mId').attr('readonly', 'readonly');
+						} else {
+							Swal.fire('사용 불가능한 아이디입니다.');
+							return $('#mPw').focus();
 						}
-					}).open();
-		}
-			</script>
+					}
+				});
+			});
+	
+			var numStr;
+			$('#CertiUserNum').click(function() {
+				if ($('#inputCertifiedNumber').val() == "") {
+					Swal.fire('인증번호가 입력되지않았습니다.');
+					$('#inputCertifiedNumber').focus();
+					return;
+				}
+				console.log($.trim(numStr));
+				console.log($('#inputCertifiedNumber').val());
+				if ($.trim(numStr) == $('#inputCertifiedNumber').val()) {
+					Swal.fire('인증성공!', '휴대폰 인증이 정상적으로 완료되었습니다.', 'success')
+				} else {
+					Swal.fire({
+						icon : 'error',
+						title : '인증오류',
+						text : '인증번호가 올바르지 않습니다!',
+						footer : '<a href="/home">다음에 인증하기</a>'
+					});
+				}
+			});
+	
+			$('#sendPhoneButton').click(function() {
+				let phoneNumber = $('#mPhone').val();
+				if (phoneNumber == "") {
+					Swal.fire('휴대폰번호 오류입니다');
+					$('#mPhone').focus();
+					return;
+				}
+				Swal.fire('인증번호가 발송되었습니다')
+				$('#CertiUserNum').removeAttr('readonly');
+				$('#inputCertifiedNumber').removeAttr('readonly');
+	
+				$.ajax({
+					type : "GET",
+					url : "/login/testtest",
+					data : {
+						"user_phone" : phoneNumber
+					}
+				}).done(function(responsedata) {
+					numStr = responsedata;
+					console.log("===numStr===" + numStr);
+				});
+			});
+	
+			function sample6_execDaumPostcode() {
+				new daum.Postcode(
+						{
+							oncomplete : function(data) {
+								// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+	
+								// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+								// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+								var addr = ''; // 주소 변수
+								var extraAddr = ''; // 참고항목 변수
+	
+								//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+								if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+									addr = data.roadAddress;
+								} else { // 사용자가 지번 주소를 선택했을 경우(J)
+									addr = data.jibunAddress;
+								}
+	
+								// 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+								if (data.userSelectedType === 'R') {
+									// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+									// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+									if (data.bname !== ''
+											&& /[동|로|가]$/g.test(data.bname)) {
+										extraAddr += data.bname;
+									}
+									// 건물명이 있고, 공동주택일 경우 추가한다.
+									if (data.buildingName !== ''
+											&& data.apartment === 'Y') {
+										extraAddr += (extraAddr !== '' ? ', '
+												+ data.buildingName
+												: data.buildingName);
+									}
+									// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+									if (extraAddr !== '') {
+										extraAddr = ' (' + extraAddr + ')';
+									}
+									// 조합된 참고항목을 해당 필드에 넣는다.
+									document.getElementById("sample6_extraAddress").value = extraAddr;
+	
+								} else {
+									document.getElementById("sample6_extraAddress").value = '';
+								}
+	
+								// 우편번호와 주소 정보를 해당 필드에 넣는다.
+								document.getElementById('sample6_postcode').value = data.zonecode;
+								document.getElementById("sample6_address").value = addr;
+								// 커서를 상세주소 필드로 이동한다.
+								document.getElementById("sample6_detailAddress")
+										.focus();
+							}
+						}).open();
+			}
+		</script>
+		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+		<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	</th:block>
 </body>
 </html>

@@ -1,10 +1,6 @@
 package com.ssangyong.GreenMarket.controller;
 
-import java.security.Principal;
-import java.util.Random;
-
-import javax.servlet.http.HttpSession;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,27 +17,32 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping 
 public class LoginController {
 	
+	@Autowired
+	LoginService loginservice;
 	
-//	@GetMapping("/login")
-//	public void login() {
-//	}
-//	
-//	@GetMapping("/signup")
-//	public void signup() {
-//		
-//	}
-//	
-//	 @PostMapping( value = "/login/signUp")
-//	    public String signup(MemberEntity member, String userAddress1, String userAddress2, String userAddress3, String AddNum ) { // 회원 추가
-//	       MemberAddress memberAddress = new MemberAddress();
-//	       memberAddress.setAddNum(AddNum);
-////	       memberAddress.setUserAddress1(userAddress1);
-////	       memberAddress.setUserAddress2(userAddress2);
-////	       memberAddress.setUserAddress3(userAddress3);
-//	      
-//	  
-//	      return "redirect:/index";
-//	    }
 	
+	@GetMapping("/layout/login")
+	public void login() {
+	}
+	
+	
+	@PostMapping( value = "/layout/signup")
+	public String signup(MemberEntity member, String memberAddress1, String memberAddress2, String memberAddress3, String AddNum ) { // 회원 추가
+	   MemberAddress memberAddress = new MemberAddress();
+	   memberAddress.setAddNum(AddNum);
+	   memberAddress.setMemberAddress1(memberAddress1);
+	   memberAddress.setMemberAddress2(memberAddress2);
+	   memberAddress.setMemberAddress3(memberAddress3);
+	     
+	   loginservice.signup(member, memberAddress); 
+	   return "redirect:/index";
+	 }
+	
+	 @GetMapping("/layout/signup")
+	 public void signupget() { // 회원 추가
+		
+	 }
+	 
+	 
 	
 }

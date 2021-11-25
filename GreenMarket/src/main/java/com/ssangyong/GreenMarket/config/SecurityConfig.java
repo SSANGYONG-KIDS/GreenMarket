@@ -1,11 +1,6 @@
-package config;
-
-
-import java.util.ArrayList;
-import java.util.List;
+package com.ssangyong.GreenMarket.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,7 +8,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -35,8 +29,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 		return new BCryptPasswordEncoder();   //Spring Security에서 제공하는 비밀번호 암호화 객체
 	}
 	
-	
-	
 	@Override  //WebSecurity를 통해 HTTP 요청에 대한 웹 기반 보안을 구성
 	public void configure(WebSecurity web) throws Exception {
 		// 파일 기준은 resources/static 디렉터리의 하위 파일 목록은 인증 무시 ( = 항상통과 )
@@ -50,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 		// hasRole : 특정권한을 가진 사람만 접근가능하다는 의미
 		http.authorizeRequests() // HttpServletRequest에 따라 접근(access)을 제한
 
-			.antMatchers("/index/**","/fragments/**","/center/centerlist","/layout/login/**","/exerciseinfoboard/boardlist","/dietdiaryboard/boardlist","/healthboard/boardlist","/sharingboard/boardlist","/naversearch/**", "/upload/**", "/body/**").permitAll() //   누구나 접근 허용
+			.antMatchers("/**","/fragments/**","/community/boardlist","/layout/login/**", "/upload/**", "/body/**").permitAll() //   누구나 접근 허용
 			.antMatchers("/admin/**").hasRole("ADMIN") // /admin으로 시작하는 경로는  ADMIN롤을 가진 사용자만  접근 가능(자동으로 ROLE_가 삽입)
 			.antMatchers("/business/**").hasRole("BUSINESS")
 			.anyRequest().authenticated() // 나머지 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 가능
@@ -71,12 +63,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
          
 	}
 	
-//	@Override
-//	  public void configure(AuthenticationManagerBuilder auth) throws Exception { // 
-//	    auth.userDetailsService(loginService)
-//	    	// 해당 서비스(userService)에서는 UserDetailsService를 implements해서 
-//	        // loadUserByUsername() 구현해야함 (서비스 참고)
-//	    	.passwordEncoder(new BCryptPasswordEncoder()); 
-//	   }
+	@Override
+	  public void configure(AuthenticationManagerBuilder auth) throws Exception { // 
+	    auth.userDetailsService(loginService)
+	    	// 해당 서비스(userService)에서는 UserDetailsService를 implements해서 
+	        // loadUserByUsername() 구현해야함 (서비스 참고)
+	    	.passwordEncoder(new BCryptPasswordEncoder()); 
+	   }
 	
 }
