@@ -1,7 +1,5 @@
 package com.ssangyong.GreenMarket.model;
 
-import java.sql.Timestamp;
-
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -22,6 +20,6 @@ import lombok.Setter;
 public class ItemCartEntity {
 
 	@EmbeddedId
-	private ItemEntityId ieId;
+	private ItemCartEntityId icId;
 
 }

@@ -36,7 +36,7 @@ public class MemberTest {
 		rrepo.save(location);
 		
 		
-		IntStream.range(2, 10).forEach(i -> {
+		IntStream.range(1, 10).forEach(i -> {
 		
 		MemberAddress ma = new MemberAddress();
 		ma.setAddNum("08529");

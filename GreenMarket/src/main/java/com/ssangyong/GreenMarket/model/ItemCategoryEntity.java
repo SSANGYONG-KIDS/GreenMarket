@@ -23,6 +23,7 @@ import lombok.ToString;
 @Table(name="item_category")
 public class ItemCategoryEntity {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int icId;
 	private String icName;
 }

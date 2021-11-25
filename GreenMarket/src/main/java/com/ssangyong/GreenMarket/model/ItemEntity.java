@@ -32,13 +32,11 @@ import lombok.ToString;
 @AllArgsConstructor
 @Table(name="item")
 public class ItemEntity {
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.AUTO)
-//	private int iId;
 	
-	@EmbeddedId
-	private ItemEntityId ieId;
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int iId;
+
 	@ManyToOne
 	@JoinColumn(name = "mId")
 	private MemberEntity member;
