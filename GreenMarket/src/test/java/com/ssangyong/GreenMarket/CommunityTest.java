@@ -32,15 +32,30 @@ public class CommunityTest {
 	@Autowired
 	CommunityReplyRepository crrepo;
 	
-	@Transactional //commit 실행
+	@Transactional
 	@Test
+	public void insertCommunity2() {		
+		IntStream.range(10, 15).forEach(i->{
+			CommunityEntity community = CommunityEntity.builder()
+					.cTitle("게시글"+i)
+					.cViews(0)
+					.cContent("내용"+i)
+					.member(mrepo.getById("test5"))
+					.build();
+		
+			crepo.save(community);
+		});
+	}	
+	
+	//@Transactional //commit 실행
+	//@Test
 	public void insertCommunity() {
 		
 		CommunityEntity community = CommunityEntity.builder()
 				.cTitle("게시글")
 				.cViews(0)
 				.cContent("안녕하세요~~")
-				.member(mrepo.getById("test"))
+				.member(mrepo.getById("test2"))
 				.build();
 		
 		crepo.save(community);

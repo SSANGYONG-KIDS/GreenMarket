@@ -20,8 +20,8 @@ public class SecurityUser extends User {
 	private static final String ROLE_PREFIX = "ROLE_";
 	private MemberEntity member;
 
-	public SecurityUser(String userId, String userPw, Collection<? extends GrantedAuthority> authorities) {
-		super(userId, userPw, authorities);
+	public SecurityUser(String mId, String mPw, Collection<? extends GrantedAuthority> authorities) {
+		super(mId, mPw, authorities);
 	}
 
 	public SecurityUser(MemberEntity member) {

@@ -30,6 +30,18 @@ public class CommunityController {
 	@Autowired
 	CommunityService service;
 
+	
+	//getmapping? postmapping?
+	@GetMapping("/community/register")
+	public String CommunityPost() {
+		return "community/register";
+	}
+	
+	
+	
+	
+	
+	
 	@GetMapping("/community/boardlist")
 	public void selectAll(Model model, HttpServletRequest request, PageVO pagevo) {
 
@@ -56,12 +68,12 @@ public class CommunityController {
 	/*
 	@PostMapping("/community/register")
 	public String boardRegisterPost(DietDiaryBoardVO board, RedirectAttributes rttr, Authentication authentication) {
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		UserVO user = uservice.selectById(userDetails.getUsername());
-		board.setUser(user); 
-		DietDiaryBoardVO ins_board = service.insertBoard(board);
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal(); 
+		UserVO user = uservice.selectById(userDetails.getUsername()); //Community 엔티티로 바꾸고
+		board.setUser(user);  //글쓴이 배정
+		DietDiaryBoardVO ins_board = service.insertBoard(board); //DB에 넣는작업
 		
-		rttr.addFlashAttribute("resultMessage", ins_board==null?"입력실패":"입력성공");
+		rttr.addFlashAttribute("resultMessage", ins_board==null?"입력실패":"입력성공"); //밑에 redirect페이지로 변수 들고가고 싶을때 쓰느 함수
 		return "redirect:/dietdiaryboard/boardlist";
 	}
 
