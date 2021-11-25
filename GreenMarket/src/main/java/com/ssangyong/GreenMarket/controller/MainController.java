@@ -1,18 +1,29 @@
 package com.ssangyong.GreenMarket.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import lombok.RequiredArgsConstructor;
-
-@RequiredArgsConstructor //?
 @Controller
-@RequestMapping 
 public class MainController {
+	
+	   @RequestMapping("/index")
+	   public void main() {
+	      System.out.println("main");
+	   }
+	   
+	   @RequestMapping("/layout/about")
+	   public void about() {}
+	   
+	   @RequestMapping("/layout/destination")
+	   public void destination() {}
+	   
+	   @RequestMapping("/layout/hotel")
+	   public void hotel() {}
+	   
+	   @RequestMapping("/layout/blog")
+	   public void blog() {}
+	   
+	   @RequestMapping("/layout/contact")
+	   public void contact() {}
 
-	@RequestMapping("/index")
-	public void main() {
-		System.out.println("main");
-	}
 }
