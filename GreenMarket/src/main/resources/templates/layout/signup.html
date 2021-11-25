@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+        xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout1}"> 
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -47,9 +49,9 @@
     }
   </style>
 
-
 <body>
-	<div class="container">
+	<div class="panel panel-default" layout:fragment="content1" >
+				<div class="container">
 	<div class="input-form-backgroud">
 	<div class="input-form col-md-12 mz-auto" style="margin-left: 19%">
 	<h4 class="mb-3">유저 회원가입</h4>
@@ -156,9 +158,10 @@
 </div>	
 </div>
 </div>
-
-	<script>
-	$('#checkNick').click(function() {
+	</div>
+	<th:block layout:fragment="script1">
+			<script>
+			$('#checkNick').click(function() {
 		$.ajax({
 			type : "GET",
 			url : "/login/nickCheck",
@@ -295,6 +298,7 @@
 						}
 					}).open();
 		}
-	</script>
+			</script>
+	</th:block>
 </body>
 </html>

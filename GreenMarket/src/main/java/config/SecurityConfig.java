@@ -56,14 +56,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 			.anyRequest().authenticated() // 나머지 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 가능
 		.and()
 			.formLogin() // form 기반으로 인증을 하도록 한다. 로그인 정보는 기본적으로 HttpSession을 이용
-			.loginPage("user/login") // 로그인 페이지 링크 .... post의 이름이 같다면 loginProcessingUrl생략 	
+			.loginPage("/login") // 로그인 페이지 링크 .... post의 이름이 같다면 loginProcessingUrl생략 	
 	          //스프링시큐리티가 해당주소로 오는 요청을 가로채서 대신한다. 
-			.defaultSuccessUrl("/login") // 로그인 성공 후 리다이렉트 주소				
+			.defaultSuccessUrl("/") // 로그인 성공 후 리다이렉트 주소				
 			.permitAll()
 			.and()
 			.logout() // 로그아웃에 관한 설정을 의미
 			.logoutRequestMatcher(new AntPathRequestMatcher("/login/logout"))
-			.logoutSuccessUrl("/index") // 로그아웃 성공시 리다이렉트 주소
+			.logoutSuccessUrl("/login") // 로그아웃 성공시 리다이렉트 주소
 			.invalidateHttpSession(true)  // 세션 지우기
 		.and()
 			.csrf().disable() //csrf(크로스사이트 위조요청에 대한 설정) 토큰 비활성화 (test시에는 disable권장) 
