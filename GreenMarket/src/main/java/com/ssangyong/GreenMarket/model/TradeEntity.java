@@ -42,6 +42,8 @@ public class TradeEntity {
 	private TStateEnumType tState;
 
 	@ManyToOne
+//	@JoinColumn(name = "iId")
+//	private ItemEntity item; 
 	@JoinColumns({
 		@JoinColumn(name = "mId", referencedColumnName="mId"),
 		@JoinColumn(name = "iId", referencedColumnName="iId")
@@ -50,6 +52,6 @@ public class TradeEntity {
 	
 	@ManyToOne
 	@JoinColumn(name = "tBuyid")
-	private MemberEntity member; 
+	private MemberEntity buyMember; 
 	
 }

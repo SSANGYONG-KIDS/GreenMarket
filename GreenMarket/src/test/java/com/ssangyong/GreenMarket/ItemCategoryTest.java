@@ -16,28 +16,29 @@ import com.ssangyong.GreenMarket.repository.ItemCategoryRepository;
 @SpringBootTest
 public class ItemCategoryTest {
 	@Autowired
-	ItemCategoryRepository itemCategoryRepository;
+	ItemCategoryRepository itemCategoryRepo;
 	
 	/**
 	 * 아이템 카테고리 샘플 데이터 생성
 	 */
 	@Transactional
+//	@Test
 	public void insertItemCategory() {
 		ItemCategoryEntity itemCategoryEntity = ItemCategoryEntity.builder()
 				.icId(1)
 				.icName("도서")
 				.build();
 		
-		itemCategoryRepository.save(itemCategoryEntity);
+		itemCategoryRepo.save(itemCategoryEntity);
 	}
 	
 	/**
 	 * 아이템 카테고리 테이블의 모든 데이터 리스트로 가져오기
 	 */
 	@Transactional
-	@Test
+//	@Test
 	public void selectItemCategory() {
-		List<ItemCategoryEntity> itemCategoryEntities = (List<ItemCategoryEntity>) itemCategoryRepository.findAll();
+		List<ItemCategoryEntity> itemCategoryEntities = (List<ItemCategoryEntity>) itemCategoryRepo.findAll();
 		for (ItemCategoryEntity itemCategoryEntity: itemCategoryEntities) {
 			System.out.println(itemCategoryEntity);
 		}
@@ -46,7 +47,13 @@ public class ItemCategoryTest {
 	/**
 	 * 아이템 카테고리 테이블에서 이름으로 엔터티 찾기
 	 */
+	@Transactional
+	@Test
 	public void findItemCategoryByName() {
-//		itemCategoryRepository.find
+		ItemCategoryEntity itemCategory = itemCategoryRepo.findByIcName("도서");
+		System.out.println(itemCategory); // ItemCategoryEntity(icId=1, icName=도서)
+		
+		ItemCategoryEntity itemCategory2 = itemCategoryRepo.findByIcName("도"); // 테이블에 해당 매치되는 값 없는 경우
+		System.out.println(itemCategory2); // null
 	}
 }

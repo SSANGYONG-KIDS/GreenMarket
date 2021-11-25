@@ -21,19 +21,28 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="item")
 public class ItemEntity {
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
+//	private int iId;
 	
 	@EmbeddedId
 	private ItemEntityId ieId;
 	
+	@ManyToOne
+	@JoinColumn(name = "mId")
+	private MemberEntity member;
+
 	private String iTitle;
 	private String iContent;
 	
