@@ -42,7 +42,7 @@ public class ItemTest {
 				.iPrice(1300)
 				.iState(IStateEnumType.GOOD)
 				.iTstate(ItStateEnumType.POSSIBLE)
-				.itemCategory(icRepo.findByIcName("도서"))
+				.itemCategory(icRepo.findByIcName("디지털기기"))
 				.build();
 		
 		iRepo.save(item);
