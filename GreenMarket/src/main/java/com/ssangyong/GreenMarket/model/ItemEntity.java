@@ -57,8 +57,12 @@ public class ItemEntity {
 	@Column(nullable = true)
 	private ItStateEnumType iTstate;
 	
-	@ManyToOne
-	@JoinColumn(name = "icId")
-	private ItemCategoryEntity itemCategory; //icId 가져오는곳
-	
+//	@ManyToOne
+//	@JoinColumn(name = "icId")
+//	private ItemCategoryEntity itemCategory; //icId 가져오는곳
+
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = true)
+	private ICategoryEnumType iCategory;
+
 }

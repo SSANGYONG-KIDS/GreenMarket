@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 
+import com.ssangyong.GreenMarket.model.TStateEnumType;
 import com.ssangyong.GreenMarket.model.TradeEntity;
-import com.ssangyong.GreenMarket.repository.ItemCategoryRepository;
 import com.ssangyong.GreenMarket.repository.ItemRepository;
 import com.ssangyong.GreenMarket.repository.MemberRepository;
 import com.ssangyong.GreenMarket.repository.TradeRepository;
@@ -20,8 +20,8 @@ public class TradeTest {
 	ItemRepository iRepo;
 	@Autowired
 	MemberRepository mRepo;
-	@Autowired
-	ItemCategoryRepository icRepo;
+//	@Autowired
+//	ItemCategoryRepository icRepo;
 	@Autowired
 	TradeRepository tRepo;
 	
@@ -34,6 +34,7 @@ public class TradeTest {
 		TradeEntity trade = TradeEntity.builder()
 				.item(iRepo.findById(4).orElseThrow())
 				.buyMember(mRepo.findById("test2").orElseThrow())
+				.tState(TStateEnumType.WAIT)
 				.build();
 		tRepo.save(trade);
 	}
