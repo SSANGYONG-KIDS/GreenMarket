@@ -3,7 +3,6 @@ package com.ssangyong.GreenMarket.model;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -57,8 +56,12 @@ public class ItemEntity {
 	@Column(nullable = true)
 	private ItStateEnumType iTstate;
 	
-	@ManyToOne
-	@JoinColumn(name = "icId")
-	private ItemCategoryEntity itemCategory; //icId 가져오는곳
-	
+//	@ManyToOne
+//	@JoinColumn(name = "icId")
+//	private ItemCategoryEntity itemCategory; //icId 가져오는곳
+
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = true)
+	private ICategoryEnumType iCategory;
+
 }

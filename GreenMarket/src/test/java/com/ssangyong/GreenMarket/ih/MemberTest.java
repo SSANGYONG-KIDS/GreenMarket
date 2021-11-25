@@ -1,4 +1,4 @@
-package com.ssangyong.GreenMarket;
+package com.ssangyong.GreenMarket.ih;
 
 import java.util.stream.IntStream;
 
@@ -9,59 +9,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 
-import com.ssangyong.GreenMarket.model.CommunityEntity;
-import com.ssangyong.GreenMarket.model.CommunityReplyEntity;
 import com.ssangyong.GreenMarket.model.LocationEntity;
 import com.ssangyong.GreenMarket.model.MemberAddress;
 import com.ssangyong.GreenMarket.model.MemberEntity;
-import com.ssangyong.GreenMarket.repository.CommunityReplyRepository;
-import com.ssangyong.GreenMarket.repository.CommunityRepository;
 import com.ssangyong.GreenMarket.repository.LocationRepository;
 import com.ssangyong.GreenMarket.repository.MemberRepository;
 
 
 @Commit
 @SpringBootTest
-public class CommunityTest {
-	@Autowired
-	CommunityRepository crepo;
-	
+public class MemberTest {
 	@Autowired
 	MemberRepository mrepo;
 	
 	@Autowired
-	CommunityReplyRepository crrepo;
+	LocationRepository rrepo;
 	
-	@Transactional
+	@Transactional //commit 실행
 	@Test
-	public void insertCommunity2() {		
-		IntStream.range(10, 15).forEach(i->{
-			CommunityEntity community = CommunityEntity.builder()
-					.cTitle("게시글"+i)
-					.cViews(0)
-					.cContent("내용"+i)
-					.member(mrepo.getById("test5"))
-					.build();
+	public void insertUser() {
 		
-			crepo.save(community);
-		});
-	}	
-	
-	//@Transactional //commit 실행
-	//@Test
-	public void insertCommunity() {
-		
-		CommunityEntity community = CommunityEntity.builder()
-				.cTitle("게시글")
-				.cViews(0)
-				.cContent("안녕하세요~~")
-				.member(mrepo.getById("test2"))
+		LocationEntity location = LocationEntity.builder()
+				.locId("000")
+				.locName("서울")
 				.build();
+		rrepo.save(location);
 		
-		crepo.save(community);
 		
-		/*
-		IntStream.range(2, 10).forEach(i -> {
+		IntStream.range(1, 10).forEach(i -> {
 		
 		MemberAddress ma = new MemberAddress();
 		ma.setAddNum("08529");
@@ -84,7 +59,7 @@ public class CommunityTest {
 			mrepo.save(member);
 		
 		});
-		*/
+		
 	}
 	
 	//@Test

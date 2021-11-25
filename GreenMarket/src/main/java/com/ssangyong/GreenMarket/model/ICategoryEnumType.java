@@ -1,0 +1,27 @@
+package com.ssangyong.GreenMarket.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
+public enum ICategoryEnumType {
+	DIGITAL_DEVICE("CATEGORY_DIGITAL_DEVICE", "디지털기기"),
+	HOUSEHOLD_APPLIANCE("CATEGORY_HOUSEHOLD_APPLIANCE", "생활가전"),
+	FURNITURE_AND_INTERIOR("CATEGORY_FURNITURE_AND_INTERIOR", "가구/인테리어"),
+	BABY_PRODUCT("CATEGORY_BABY_PRODUCT", "유아용품"),
+	DAILY_NECESSITY("CATEGORY_DAILY_NECESSITY", "생활/가공식품"),
+	SPORTS_PRODUCT("CATEGORY_SPORTS_PRODUCT", "스포츠/레저"),
+	WOMEN_MERCHANDISE("CATEGORY_WOMAN_MERCHANDISE", "여성잡화"),
+	WOMAN_CLOTHES("CATEGORY_WOMAN_CLOTHES", "여성의류"),
+	MAN_PRODUCT("CATEGORY_MAN_PRODUCT", "남성패션/잡화"),
+	GAME_AND_HOBBY("CATEGORY_GAME_AND_HOBBY", "게임/취미"),
+	BEAUTY("CATEGORY_BEAUTY", "뷰티/미용"),
+	PET_PRODUCT("CATEGORY_PET_PRODUCT", "반려동물용품"),
+	BOOK_TICKET_RECORD("CATEGORY_BOOK_TICKET_RECORD", "도서/티켓/음반"),
+	PLANTS("CATEGORY_PLANTS", "식물"),
+	ETC("CATEGORY_ETC", "기타");
+	
+	private final String key;
+	private final String title;
+}
