@@ -22,15 +22,15 @@ import lombok.RequiredArgsConstructor;
 public class LoginController {
 	
 	
-	@GetMapping("/login")
-	public void login() {
-	}
-	
-	@GetMapping("/signup")
-	public void signup() {
-		
-	}
-	
+//	@GetMapping("/login")
+//	public void login() {
+//	}
+//	
+//	@GetMapping("/signup")
+//	public void signup() {
+//		
+//	}
+//	
 //	 @PostMapping( value = "/login/signUp")
 //	    public String signup(MemberEntity member, String userAddress1, String userAddress2, String userAddress3, String AddNum ) { // 회원 추가
 //	       MemberAddress memberAddress = new MemberAddress();

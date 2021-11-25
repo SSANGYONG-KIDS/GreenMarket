@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssangyong.GreenMarket.model.MemberAddress;
 import com.ssangyong.GreenMarket.model.MemberEntity;
-import com.ssangyong.GreenMarket.persistences.MemberRepository;
+import com.ssangyong.GreenMarket.repository.MemberRepository;
 
 @Service
 public class LoginService{

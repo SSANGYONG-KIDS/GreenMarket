@@ -25,5 +25,10 @@ public class MainController {
 	   
 	   @RequestMapping("/layout/contact")
 	   public void contact() {}
+	   
+	   @RequestMapping("/layout/login")
+	   public void login() {}
 
+	   @RequestMapping("/layout/signup")
+	   public void signup() {}
 }
