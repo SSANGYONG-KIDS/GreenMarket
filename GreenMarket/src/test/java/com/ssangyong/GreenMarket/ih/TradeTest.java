@@ -1,4 +1,4 @@
-package com.ssangyong.GreenMarket;
+package com.ssangyong.GreenMarket.ih;
 
 import javax.transaction.Transactional;
 
@@ -20,8 +20,6 @@ public class TradeTest {
 	ItemRepository iRepo;
 	@Autowired
 	MemberRepository mRepo;
-//	@Autowired
-//	ItemCategoryRepository icRepo;
 	@Autowired
 	TradeRepository tRepo;
 	
@@ -29,26 +27,28 @@ public class TradeTest {
 	 * 거래테이블에 샘플 데이터 삽입하기
 	 */
 	@Transactional
-	@Test
+//	@Test
 	public void insertTrade() {
 		TradeEntity trade = TradeEntity.builder()
-				.item(iRepo.findById(4).orElseThrow())
-				.buyMember(mRepo.findById("test2").orElseThrow())
+				.item(iRepo.findById(9).orElseThrow())
+				.buyMember(mRepo.findById("test3").orElseThrow())
 				.tState(TStateEnumType.WAIT)
 				.build();
 		tRepo.save(trade);
 	}
 	
 	/**
-	 * 
+	 * 한 거래에 대한 구매자 및 판매자 보여주기
 	 */
 	@Transactional
-//	@Test
+	@Test
 	public void showTrade() {
-		TradeEntity trade = tRepo.findById(5).orElseThrow();
+		TradeEntity trade = tRepo.findById(10).orElseThrow();
 		System.out.println(trade);
 		
 		System.out.println("구매자: " + trade.getBuyMember());
 		System.out.println("판매자: " + trade.getItem().getMember());
 	}
+	
+	
 }

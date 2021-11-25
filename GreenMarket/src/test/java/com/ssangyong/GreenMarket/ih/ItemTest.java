@@ -1,4 +1,4 @@
-package com.ssangyong.GreenMarket;
+package com.ssangyong.GreenMarket.ih;
 
 import javax.transaction.Transactional;
 
@@ -23,9 +23,6 @@ public class ItemTest {
 	
 	@Autowired
 	MemberRepository mRepo;
-	
-//	@Autowired
-//	ItemCategoryRepository icRepo;
 
 	/**
 	 * Item 샘플 데이터 생성하기
