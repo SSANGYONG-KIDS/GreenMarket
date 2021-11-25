@@ -41,7 +41,7 @@ public class CommunityEntity {
 	private int cId;
 	private String cTitle;
 	private String cContent;
-	private String cViews;
+	private int cViews;
 	
 	@CreationTimestamp
 	private Timestamp cRegdate;

@@ -1,7 +1,12 @@
 package com.ssangyong.GreenMarket.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -26,6 +31,8 @@ public class LocationEntity {
 	private String locId;
 	private String locName;
 	
-	
-
+	@OneToMany(mappedBy = "loc", //fk이름 "메여있다"
+			cascade = CascadeType.ALL,
+			fetch = FetchType.LAZY) //fetch = FetchType.EAGER
+	List<MemberEntity> members;
 }

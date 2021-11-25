@@ -10,5 +10,20 @@ public class MainController {
 	   public void main() {
 	      System.out.println("main");
 	   }
+	   
+	   @RequestMapping("/layout/about")
+	   public void about() {}
+	   
+	   @RequestMapping("/layout/destination")
+	   public void destination() {}
+	   
+	   @RequestMapping("/layout/hotel")
+	   public void hotel() {}
+	   
+	   @RequestMapping("/layout/blog")
+	   public void blog() {}
+	   
+	   @RequestMapping("/layout/contact")
+	   public void contact() {}
 
 }
