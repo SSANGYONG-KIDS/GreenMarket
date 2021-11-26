@@ -121,6 +121,9 @@
    </div>
 
    <th:block layout:fragment="script1">
+   	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+      <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
       <script>
       $('#checkNick').click(function() {
          $.ajax({
@@ -161,7 +164,7 @@
                }
             });
          });
-   
+         
          var numStr;
          $('#CertiUserNum').click(function() {
             if ($('#inputCertifiedNumber').val() == "") {
@@ -198,13 +201,14 @@
                type : "GET",
                url : "/login/testtest",
                data : {
-                  "user_phone" : phoneNumber
+                  "mPhone" : phoneNumber
                }
             }).done(function(responsedata) {
                numStr = responsedata;
                console.log("===numStr===" + numStr);
             });
          });
+   
    
          function sample6_execDaumPostcode() {
             new daum.Postcode(
@@ -260,9 +264,6 @@
                   }).open();
          }
       </script>
-      <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-      <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
       <!-- Bootstrap CSS -->
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
