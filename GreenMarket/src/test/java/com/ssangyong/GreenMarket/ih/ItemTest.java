@@ -48,7 +48,7 @@ public class ItemTest {
 				.iPrice(50000)
 				.iState(IStateEnumType.GOOD)
 				.iTstate(ItStateEnumType.POSSIBLE)
-				.itemCategory(icRepo.findByIcName("여성잡화"))
+				.iCategory(ICategoryEnumType.WOMEN_MERCHANDISE)
 				.build();
 		
 		iRepo.save(item2);
