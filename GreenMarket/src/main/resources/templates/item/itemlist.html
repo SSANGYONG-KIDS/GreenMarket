@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout1}">
+<body>
+<div class="panel panel-default" layout:fragment="content1">
+		<section class="hero-wrap hero-wrap-2 js-fullheight"
+			style="background-image: url('/bootstrap/images/bg_1.jpg');">
+			<div class="overlay"></div>
+			<div class="container">
+				<div
+					class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+					<div class="col-md-9 ftco-animate pb-5 text-center">
+						<p class="breadcrumbs">
+							<span class="mr-2"><a th:href="@{/index}">Home <i class="fa fa-chevron-right"></i></a></span> <span>Searching Items<i class="fa fa-chevron-right"></i></span>
+						</p>
+						<h1 class="mb-0 bread">Searching Items</h1>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="ftco-section">
+			<div class="container">
+				<div class="row d-flex">
+					<div class="col-md-4 d-flex ftco-animate" th:each="item:${itemResult}" th:onclick="'window.location.href=\'' + @{/item/itemdetail(iId=${item.iId})} +'\' '">
+						<div class="blog-entry justify-content-end">
+							<a th:href="@{/item/itemdetail(iId=${item.iId})}" class="block-20" style="background-image: url('/bootstrap/images/image_1.jpg');"></a>
+							<div class="text">
+								<div class="d-flex align-items-center mb-4 topp">
+									<div class="one">
+										<span class="day" th:text="${item.iId}"></span>
+									</div>
+									<div class="two">
+										<span class="yr" th:text="${item.iCategory.title}"></span> <span class="mos" th:text="${item.iRegdate}"></span>
+									</div>
+								</div>
+								<h3 class="heading">
+									<a href="#" th:text="${item.iTitle}"></a>
+								</h3>
+								<p th:text="${item.iContent}"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<nav>
+					<div aria-label="Page navigation example" class="row mt-5" style="text-align: center;">
+						<div class="col text-center">
+							<div class="block-27">
+								<ul class="pagination">
+									<li class="page-item" th:if="${result.prevPage}"><a th:href="${result.prevPage.pageNumber}+1"> 이전</a></li>
+									<li class="page-item" th:each="pg:${result.pageList}" th:classappend="${pg.pageNumber==result.currentPageNum-1}?active:''"><a th:href="${pg.pageNumber}+1">[[${pg.pageNumber}+1]]</a></li>
+									<li class="page-item" th:if="${result.nextPage}"><a th:href="${result.nextPage.pageNumber}+1"> 다음</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</nav>
+			</div>
+		</section>
+</div>
+
+
+<th:block layout:fragment="script1">
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script>
+	$(function(){
+		var formObj = $("#f1");
+		$(".pagination a").click(function(e){
+			e.preventDefault(); //본래의 기능(link)를 취소
+			formObj.find("[name='page']").val($(this).attr("href"));
+			//alert($(this).attr("href"));
+			formObj.submit();
+		});
+		
+		
+		$("#searchBtn").click(function(){
+			var typeStr = $("#searchType").find(":selected").val();
+			var keywordStr = $("#searchKeyword").val();
+			//alert(typeStr + ":" + keywordStr);
+			formObj.find("[name='type']").val(typeStr);
+			formObj.find("[name='keyword']").val(keywordStr);
+			formObj.submit();
+		});
+		
+	});
+	
+	</script>
+</th:block>
+</body>
+</html>
