@@ -44,8 +44,11 @@ public class ItemController {
 	
 	@GetMapping("/itemdetail")
 	public void selectById(Model model, Integer iId, Principal principal, Authentication authentication, PageVO pagevo ) {
-		model.addAttribute("item", itemService.selectById(iId));
+		ItemEntity item = itemService.selectById(iId);
+		model.addAttribute("item", item);
+		model.addAttribute("item_owner",item.getMember());
 		model.addAttribute("pagevo", pagevo);
+		
 		
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		MemberEntity member =  loginService.selectById(userDetails.getUsername());

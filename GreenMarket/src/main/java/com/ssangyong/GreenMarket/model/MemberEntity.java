@@ -40,6 +40,7 @@ public class MemberEntity {
 	private String mEmail;
 	private String mPhoto;
 	private String mPhone;
+	private String mInfo;
 	
 	private int mIsdropped;
 
