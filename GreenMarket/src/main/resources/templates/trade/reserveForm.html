@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout1}"
+>
+<head>
+<meta charset="UTF-8">
+<title>reserveForm</title>
+</head>
+<body>
+	<!-- 스타일 부분 -->
+	<th:block layout:fragment="style1">
+		<style>
+			#reserve_main {
+				margin-left: 16%;
+				color: black;
+			}
+			#reserve_header {
+				height: 76px;
+			}
+			#wrapper_reserve_prev {
+				width: 70px;
+				float: left;
+				color: black;
+			}
+			#reserve_header_subject {
+				font-size: 30px;
+				color: black;
+			}
+			
+		</style>
+	</th:block>
+	
+	<!-- 메인 부분 -->
+	<div class="panel panel-default" layout:fragment="content1">
+		 <section class="hero-wrap hero-wrap-2 js-myheight" style="background-image: url('/bootstrap/images/trade/reserveForm.png');">
+		  <div class="overlay"></div>
+		  <div class="container">
+		    <div class="row no-gutters slider-text js-myheight align-items-end justify-content-center">
+		      <div class="col-md-9 ftco-animate pb-5 text-center">
+		       <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="fa fa-chevron-right"></i></a></span> <span>예약하기 <i class="fa fa-chevron-right"></i></span></p>
+		       <h1 class="mb-0 bread">예약하기</h1>
+		     </div>
+		   </div>
+		 </div>
+		</section>
+		<div id="reserve_main" class="ftco-section">
+			<div id="reserve_header">
+				<div id="wrapper_reserve_prev">
+					<!-- 이전으로 돌아가기 버튼(물품 상세보기로 이동) -->
+					<span id="reserve_prev">
+						<svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" aria-label="뒤로" role="img" focusable="false" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 3; overflow: visible;"><g fill="none"><path d="m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932"></path></g></svg>
+					</span>
+				</div>
+				<div id="reserve_header_subject">
+					확인 및 예약
+				</div>
+			</div>
+			<div id="reserve_content">
+				<div id="reserve_content_info">
+					<div class="reserve_subject">예약 정보</div>
+					<div class="reserve_content_info_block">
+						<div class="block_subject">날짜</div>
+						<div id="block_content_date" class="block_content">2222년 2월 22일 – 2222년 2월 22일</div>
+					</div>
+					<div id="btn_edit_date" class="reserve_content_info_edit_wrapper">
+						수정
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<th:block layout:fragment="script1">
+		<script>
+			(function($) {
+				// 상단 메뉴 쪽 이미지 부분
+				let divisor = 3; 
+				var myHeight = function() {
+					$('.js-myheight').css('height', $(window).height()/divisor);
+					$('.overlay').css('height', $(window).height()/divisor);
+					$(window).resize(function(){
+						$('.js-myheight').css('height', $(window).height()/divisor);
+						$('.overlay').css('height', $(window).height()/divisor);
+					});
+				};
+				myHeight();					
+			})(jQuery);
+		</script>
+	</th:block>
+</body>
+</html>
