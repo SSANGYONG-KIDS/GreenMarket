@@ -80,8 +80,9 @@
 			    content: '';
 			    opacity: .3;
 			    background: #000000;
-				height: 100%;
-				width: 100%;				
+				height: 200%;
+				width: 100%;		
+				z-index: 1;		
 			}
 			#modal_date {
 				display: none;
@@ -90,7 +91,19 @@
 			    left: 40%;
 				background: rgb(255, 255, 255) !important;
 			    border-radius: 16px !important;
-			    padding: 64px 32px 16px !important;				
+			    padding: 22px 32px 35px !important;		
+				z-index: 10;		
+			}
+			#modal_date_close {
+				cursor: pointer;
+			}
+			#modal_date_save_button_wrapper {
+			    padding-top: 10px;
+			   	text-align: right;
+			}
+			#modal_date_close_wrapper {
+			    padding-left: 5px;
+    			padding-top: 5px;
 			}
 		</style>
 	</th:block>
@@ -131,7 +144,7 @@
 						<div class="reserve_subject">예약 정보</div>
 						<div class="reserve_content_info_block">
 							<div class="block_subject">날짜</div>
-							<div id="block_content_date" class="block_content">2222년 2월 22일 – 2222년 2월 22일</div>
+							<div id="block_content_date" class="block_content"><span id="span_startDate"> 2222년 22월 22일</span> – <span id="span_endDate">2222년 22월 22일</span></div>
 <!--							<div class="block_content">
 								임시: <span th:text="${itemPageVO.startDate}"></span> - <span th:text="${itemPageVO.endDate}"></span>
 							</div>-->
@@ -150,6 +163,9 @@
 		</div>
 		<!-- 날짜 변경 모달창 -->
 		<div id="modal_date" class="drag">
+			<div id="modal_date_close_wrapper">
+				<span id="modal_date_close" class="ic_gnb_x"></span>
+			</div>
 			<div class="col-md d-flex">
 				<div class="form-group p-4">
 					<label for="#">start date</label>
@@ -168,17 +184,22 @@
 					</div>
 				</div>
 			</div>
+			<div id="modal_date_save_button_wrapper">
+				<div id="modal_date_save_button" class="btn btn-primary py-2 px-3">
+					저장하기
+				</div>
+			</div>			
 		</div>
 		
 		
 		<!-- 데이터 -->
 		<div id="data">
-			<input id="iId" value="${iId}">
+			<input id="iId" th:value="${iId}">
 		</div>
 	</div>
 
 	<th:block layout:fragment="script1">
-		<script>
+		<script th:inline="javascript">
 			// data 가져오기
 			let iId = $('#iId').val();
 			
@@ -198,6 +219,18 @@
 			$("#reserve_button").click(e => {
 				let formData = new FormData();
 				formData.append('iId', iId);
+				
+				// 날짜 형식에 맞게 바꾸기
+				let startDate = $('#span_startDate').html();
+				let endDate = $('#span_endDate').html();
+				startDate = startDate.replace(/[^0-9]/g, "");
+				endDate = endDate.replace(/[^0-9]/g, "");
+				startDate = startDate.substr(0, 4) + '-' + startDate.substr(4, 2) + '-' + startDate.substr(6, 2);
+				endDate = endDate.substr(0, 4) + '-' + endDate.substr(4, 2) + '-' + endDate.substr(6, 2);
+				formData.append('startDate', startDate);
+				formData.append('endDate', endDate);
+				
+				// 서버에 예약 요청 
 				$.ajax({
 					type : 'POST',
 					url : '/trade/reserve',
@@ -207,18 +240,40 @@
 				}).done(res => {
 					console.log('ajax: /trade/reserve');
 					console.log(res);
-					alert(res);
+					alert('예약 완료');
+					location.href = '/item/itemdetail?iId=' + iId;
 				}).fail(err => {
 					console.log('ajax: /trade/reserve');
 					console.log(res);
 					alert(res);					
 				})				
 			});
-			
-			// 날짜 수정 눌렀을 때
-			$("#btn_edit_date").click(e => {
+		// 날짜 모달창	
+			// 메인에서 날짜 수정 버튼
+			$('#btn_edit_date').click(e => {
 				$('#modal_date').css('display', 'block');
 				$('#modal_background').css('display', 'block');
+			});
+			
+			// 날짜 수정 닫기 버튼
+			$('#modal_date_close').click(e => {
+				$('#modal_date').css('display', 'none');
+				$('#modal_background').css('display', 'none');				
+			});
+			
+			// 날짜 저장 버튼
+			$('#modal_date_save_button').click(e => {
+				
+				// 예약 메인에 수정한 날짜 반영하기
+				let startDate = $('#startDate').val();
+				let startDateKor = startDate.substr(0, 4) + '년 ' + startDate.substr(5, 2) + '월 ' + startDate.substr(8, 2) + '일';
+				let endDate = $('#endDate').val();
+				let endDateKor = endDate.substr(0, 4) + '년 ' + endDate.substr(5, 2) + '월 ' + endDate.substr(8, 2) + '일';				
+				$('#span_startDate').html(startDateKor);
+				$('#span_endDate').html(endDateKor);
+				
+				// 모달창 닫기
+				$('#modal_date_close').trigger('click');			
 			});
 		</script>
 	</th:block>
