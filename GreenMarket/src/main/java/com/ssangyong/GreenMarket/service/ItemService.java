@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.querydsl.core.types.Predicate;
 import com.ssangyong.GreenMarket.model.ItemEntity;
-import com.ssangyong.GreenMarket.model.PageVO;
+import com.ssangyong.GreenMarket.model.ItemPageVO;
 import com.ssangyong.GreenMarket.repository.ItemRepository;
 
 @Service
@@ -19,8 +19,8 @@ public class ItemService {
 	ItemRepository itemRepo;
 	
 	// page
-	public Page<ItemEntity> selectAll(PageVO pvo) {
-		Predicate p = itemRepo.makePredicate(pvo.getType(), pvo.getKeyword());
+	public Page<ItemEntity> selectAll(ItemPageVO pvo) {
+		Predicate p = itemRepo.makePredicate(pvo);
 
 		// makePaging(방향, sort할 field)
 		Pageable pageable = pvo.makePaging(0, "iId");

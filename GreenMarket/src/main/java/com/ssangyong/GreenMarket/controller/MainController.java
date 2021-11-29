@@ -1,14 +1,18 @@
 package com.ssangyong.GreenMarket.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.ssangyong.GreenMarket.model.ICategoryEnumType;
 
 @Controller
 public class MainController {
 	
 	   @RequestMapping("/index")
-	   public void main() {
+	   public void main(Model model) {
 	      System.out.println("main");
+	      model.addAttribute("itemSorts", ICategoryEnumType.values());
 	   }
 	   
 	   @RequestMapping("/layout/about")
