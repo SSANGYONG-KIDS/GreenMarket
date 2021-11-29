@@ -20,10 +20,6 @@ public class TradeController {
 	
 	/**
 	 * 예약 작성 페이지
-	 * @param iId
-	 * @param principal
-	 * @param model
-	 * @return
 	 */
 	@RequestMapping("reserveForm/{iId:.+}")
 	public String reserveForm(@PathVariable int iId, @AuthenticationPrincipal SecurityUser principal, Model model) {

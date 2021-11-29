@@ -55,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 			.formLogin() // form 기반으로 인증을 하도록 한다. 로그인 정보는 기본적으로 HttpSession을 이용
 			.loginPage("/layout/login") // 로그인 페이지 링크 .... post의 이름이 같다면 loginProcessingUrl생략 	
 	          //스프링시큐리티가 해당주소로 오는 요청을 가로채서 대신한다. 
-			.defaultSuccessUrl("/") // 로그인 성공 후 리다이렉트 주소				
+			.defaultSuccessUrl("/index") // 로그인 성공 후 리다이렉트 주소				
 			.permitAll()
 			.and()
 			.logout() // 로그아웃에 관한 설정을 의미

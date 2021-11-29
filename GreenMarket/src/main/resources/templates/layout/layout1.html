@@ -7,7 +7,8 @@
 
 <body>
 	<!-- 공통 스크립트-->
-    <th:block th:replace="~{fragments/script :: scriptFragment}"></th:block>	
+    <th:block th:replace="~{fragments/script :: scriptFragment}"></th:block>
+    
 	<!-- 공통 헤더-->
     <th:block th:replace="~{fragments/head :: headFragment}"></th:block>
   	<header id="header_css" th:replace="~{fragments/header::header1}">
@@ -28,7 +29,5 @@
 	<!-- 개별 페이지 script 지정공간 -->
 	<th:block layout:fragment="script1">
 	</th:block> 
-	
-
 </body>
 </html>

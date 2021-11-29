@@ -1,95 +1,267 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="https://www.thymeleaf.org"
-	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+        xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout1}">
-<body style="background-color: #D9E5FF">
-	<th:block layout:fragment="style1">
-		<style>
-			.hideDelete {
-				display: none;
-			}
-		</style>
-	</th:block>
-	<div class="panel panel-default" layout:fragment="content1"
-		style="background-color: #D9E5FF">
-		<div class="form-group">
-			<form id="myfrm" th:action="@{/item/update}" method="post"
-				style="background-color: #D9E5FF">
-				<input type="hidden" id="iId" name="iId" th:value="${item.iId}">
-				<br>
-
-				<div class="form-group"
-					style="padding: 0px 200px 0px 200px; width: 100%;">
-					<!-- item 제목  -->
-					<label for="iTitle"></label> <input type="text"
-						class="form-control" id="iTitle" name="iTitle"
-						th:value="${item.iTitle}"
-						style="text-align: center; font-size: x-large; padding-top: 25px; padding-bottom: 25px;">
-				</div>
-
-				<div class="form-inline"
-					style="padding: 0px 200px 0px 815px; width: 100%">
-					<!-- item 작성자  -->
-					<div class="form-group">
-						<label for="writer">writer:</label> <input type="text"
-							class="form-control" id="writer" name="writer"
-							th:value="${item.member.mNickname}" readonly="readonly">
+<body>
+<th:block layout:fragment="style1">
+	<style>
+		.hideDelete {
+			display: none;
+		}
+	</style>
+</th:block>
+<div class="panel panel-default" layout:fragment="content1">
+	<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/bootstrap/images/bg_1.jpg');">
+		<div class="overlay"></div>
+		<div class="container">
+		    <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+		    	<div class="col-md-9 ftco-animate pb-5 text-center">
+		    	<p class="breadcrumbs"><span class="mr-2"><a th:href="@{/index}">Home <i class="fa fa-chevron-right"></i></a></span> <span>item detail<i class="fa fa-chevron-right"></i></span></p>
+				<h1 class="mb-0 bread">item detail</h1>
+		     	</div>
+		   	</div>
+		 </div>
+	</section>
+	
+	<!-- 물건 정보조회 -->
+	<section class="ftco-section services-section">
+		<div class="container">
+			<div class="row d-flex">
+				<div class="col-md-6 order-md-last heading-section pl-md-5 ftco-animate d-flex align-items-center">
+					<div class="w-100">
+						<span class="subheading" th:text="${item.iCategory.title}"></span>
+						<h2 class="mb-4" th:text="${item.iTitle}"></h2>
+						<p style="color: black">
+						<span th:text="${item.iPrice}"></span><span> 원/1day</span>
+						</p>
+						<p th:text="${item.iContent}"></p>
+						<p>
+							<a href="#" class="btn btn-primary py-3 px-4" th:text="${item.iState.title}"></a>
+						</p>
+						<p>
+							<a href="#" class="btn btn-primary py-3 px-4" th:text="${item.iTstate.title}"></a>
+						</p>
 					</div>
-
-					<!-- item 작성일  -->
-					<div class="form-group">
-						<label for="iRegdate">작성일:</label> <input type="text"
-							class="form-control" id="iRegdate" name="iRegdate"
-							th:value="${item.iRegdate}" readonly="readonly">
+				</div>
+				<div class="col-md-6">
+					<div class="row">
+						<div class="col-md-12 col-lg-6 d-flex align-self-stretch ftco-animate" th:each="item_photo:${item_photos}">
+							<div class="services services-1 color-1 d-block img" style="background-image: url(${item_photo});">
+								<div class="icon d-flex align-items-center justify-content-center">
+									<span class="flaticon-paragliding"></span>
+								</div>
+								<div class="media-body">
+									<h3 class="heading mb-3">Activities</h3>
+									<p>A small river named Duden flows by their place and supplies it with the necessary</p>
+								</div>
+							</div>
+						</div>
 					</div>
-
-					<input type="hidden" id="mId" name="mId"
-						th:value="${item.member.mId}">
 				</div>
-
-				<!-- item 사진 
-				<div class="form-group" style="text-align: center;">
-					<img
-						th:src="@{${'https://kosta-server.s3.ap-northeast-2.amazonaws.com/dietdiaryboard/' + dboard.photo}}"
-						width="50%" height="5%" style="padding: 30px 200px 10px 200px">
-				</div>
-				 -->
-
-				<!-- item 내용  -->
-				<div class="form-group"
-					style="width: 100%; height: 5%; padding: 20px 200px 10px 200px;">
-					<label for="iContent">content:</label>
-					<textarea class="form-control" rows="3" cols="" id="iContent"
-						name="iContent" style="width: 100%; height: 5%;">[[${item.iContent}]]</textarea>
-				</div>
-
-				<input type="hidden" name='page' th:value=${pagevo.page}> <input
-					type='hidden' name='size' th:value=${pagevo.size}> <input
-					type="hidden" name="type" th:value="${pagevo.type}"> <input
-					type="hidden" name="keyword" th:value="${pagevo.keyword}">
-				<!-- 버튼구현 -->
-
-				<div class="pull-right"
-					style="width: 100%; height: 5%; padding: 0px 200px 0px 200px;">
-					<a href="javascript:call()" class="btn btn-info"
-						th:classappend="${(item.member.mId != member.mId) ? 'hideDelete' : ''}">수정하기</a>
-
-					<a th:href="@{/item/delete(iId=${item.iId})}" class="btn btn-info"
-						th:classappend="${(item.member.mId != member.mId) ? 'hideDelete' : ''}">삭제하기</a>
-					<a th:href="@{/item/itemlist}" class="btn btn-info">목록보기</a>
-				</div>
-			</form>
+			</div>
+			<div align="right" style="margin-top: 20px">
+				<form id='reserve' th:action="@{/trade/reserveForm/(iId=${item.iId})}" method="get">
+					<input type="hidden" name='page' th:value=${pagevo.page}> 
+			    	<input type='hidden' name='size' th:value=${pagevo.size}> 
+					<input type="hidden" name="itemName" th:value="${pagevo.itemName}">	
+					<input type="hidden" name="itemSort" th:value="${pagevo.itemSort}">	
+					<input type="hidden" name="startDate" th:value="${pagevo.startDate}">	
+					<input type="hidden" name="endDate" th:value="${pagevo.endDate}">	
+					<input type="hidden" name="priceLimit" th:value="${pagevo.priceLimit}">	
+					
+					<input type="submit" value="예약하기">
+				</form>
+			</div>
 		</div>
+	</section>
+
+		<!-- 유튜브 연결 => ?? -->
+	<section class="ftco-section ftco-about img"style="background-image: url(/bootstrap/images/bg_4.jpg);">
+	 <div class="overlay"></div>
+	 <div class="container py-md-5">
+	  <div class="row py-md-5">
+	   <div class="col-md d-flex align-items-center justify-content-center">
+	    <a href="https://vimeo.com/45830194" class="icon-video popup-vimeo d-flex align-items-center justify-content-center mb-4">
+	     <span class="fa fa-play"></span>
+	   </a>
+	 </div>
 	</div>
-	<th:block layout:fragment="script1">
-		<script>
-			function call() {
-				var myfrm = $("#myfrm")
-				myfrm.submit();
-			}
-		</script>
-	</th:block>
+	</div>
+	</section>
+	
+	<!-- 판매자 정보 조회 -->
+	<section class="ftco-section ftco-about ftco-no-pt img">
+	 <div class="container">
+	  <div class="row d-flex">
+	   <div class="col-md-12 about-intro">
+	    <div class="row">
+	     <div class="col-md-6 d-flex align-items-stretch">
+	      <div class="img d-flex w-100 align-items-center justify-content-center" style="background-image:url(/bootstrap/images/about-1.jpg);"><!-- 판매자 프사(mPhoto) -->
+	      </div>
+	    </div>
+	    <div class="col-md-6 pl-md-5 py-5">
+	      <div class="row justify-content-start pb-3">
+	        <div class="col-md-12 heading-section ftco-animate">
+	         <span class="subheading">Saler</span>
+	         <h2 class="mb-4" th:text="${item_owner.mNickname}"></h2>
+	         <p th:text="${item_owner.mInfo}"></p>
+	         <p><a href="#" class="btn btn-primary">[[${item_owner.mEmail}]]</a></p>
+	       </div>
+	     </div>
+	   </div>
+	 </div>
+	</div>
+	</div>
+	</div>
+	</section>
+	
+	<!-- 판매자와 거래 후기 -->
+	<section class="ftco-section testimony-section bg-bottom" style="background-image: url(/bootstrap/images/bg_1.jpg);">
+	 <div class="overlay"></div>
+	 <div class="container">
+	  <div class="row justify-content-center pb-4">
+	    <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
+	     <span class="subheading">Testimonial</span>
+	     <h2 class="mb-4">Tourist Feedback</h2>
+	   </div>
+	 </div>
+	 <div class="row ftco-animate">
+	  <div class="col-md-12">
+	    <div class="carousel-testimony owl-carousel">
+	      <div class="item">
+	        <div class="testimony-wrap py-4">
+	          <div class="text">
+	           <p class="star">
+	            <span class="fa fa-star"></span>
+	            <span class="fa fa-star"></span>
+	            <span class="fa fa-star"></span>
+	            <span class="fa fa-star"></span>
+	            <span class="fa fa-star"></span>
+	          </p>
+	          <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+	          <div class="d-flex align-items-center">
+	           <div class="user-img" style="background-image: url(/bootstrap/images/person_1.jpg)"></div>
+	           <div class="pl-3">
+	            <p class="name">Roger Scott</p>
+	            <span class="position">Marketing Manager</span>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="item">
+	    <div class="testimony-wrap py-4">
+	      <div class="text">
+	       <p class="star">
+	        <span class="fa fa-star"></span>
+	        <span class="fa fa-star"></span>
+	        <span class="fa fa-star"></span>
+	        <span class="fa fa-star"></span>
+	        <span class="fa fa-star"></span>
+	      </p>
+	      <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+	      <div class="d-flex align-items-center">
+	       <div class="user-img" style="background-image: url(/bootstrap/images/person_2.jpg)"></div>
+	       <div class="pl-3">
+	        <p class="name">Roger Scott</p>
+	        <span class="position">Marketing Manager</span>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	</div>
+	<div class="item">
+	  <div class="testimony-wrap py-4">
+	    <div class="text">
+	     <p class="star">
+	      <span class="fa fa-star"></span>
+	      <span class="fa fa-star"></span>
+	      <span class="fa fa-star"></span>
+	      <span class="fa fa-star"></span>
+	      <span class="fa fa-star"></span>
+	    </p>
+	    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+	    <div class="d-flex align-items-center">
+	     <div class="user-img" style="background-image: url(/bootstrap/images/person_3.jpg)"></div>
+	     <div class="pl-3">
+	      <p class="name">Roger Scott</p>
+	      <span class="position">Marketing Manager</span>
+	    </div>
+	  </div>
+	</div>
+	</div>
+	</div>
+	<div class="item">
+	  <div class="testimony-wrap py-4">
+	    <div class="text">
+	     <p class="star">
+	      <span class="fa fa-star"></span>
+	      <span class="fa fa-star"></span>
+	      <span class="fa fa-star"></span>
+	      <span class="fa fa-star"></span>
+	      <span class="fa fa-star"></span>
+	    </p>
+	    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+	    <div class="d-flex align-items-center">
+	     <div class="user-img" style="background-image: url(/bootstrap/images/person_1.jpg)"></div>
+	     <div class="pl-3">
+	      <p class="name">Roger Scott</p>
+	      <span class="position">Marketing Manager</span>
+	    </div>
+	  </div>
+	</div>
+	</div>
+	</div>
+	<div class="item">
+	  <div class="testimony-wrap py-4">
+	    <div class="text">
+	     <p class="star">
+	      <span class="fa fa-star"></span>
+	      <span class="fa fa-star"></span>
+	      <span class="fa fa-star"></span>
+	      <span class="fa fa-star"></span>
+	      <span class="fa fa-star"></span>
+	    </p>
+	    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+	    <div class="d-flex align-items-center">
+	     <div class="user-img" style="background-image: url(/bootstrap/images/person_2.jpg)"></div>
+	     <div class="pl-3">
+	      <p class="name">Roger Scott</p>
+	      <span class="position">Marketing Manager</span>
+	    </div>
+	  </div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</section>
+	
+	<!-- 판매자와 거래하기 -->
+	<section class="ftco-intro ftco-section ftco-no-pt">
+	 <div class="container">
+	  <div class="row justify-content-center">
+	   <div class="col-md-12 text-center">
+	    <div class="img"  style="background-image: url(/bootstrap/images/bg_2.jpg);">
+		 
+			<div class="pull-right" style="width: 100%; height: 5%; padding: 0px 200px 0px 200px;">
+				<a th:href="@{/item/updateItem}" class="btn btn-info" th:classappend="${(item.member.mId != member.mId) ? 'hideDelete' : ''}">수정하기</a>
+				<a th:href="@{/item/deleteItem(iId=${item.iId})}" class="btn btn-info" th:classappend="${(item.member.mId != member.mId) ? 'hideDelete' : ''}">삭제하기</a>
+				<a th:href="@{/item/itemlist}" class="btn btn-info">목록보기</a>
+			</div>
+	   </div>
+	 </div>
+	</div>
+	</div>
+	</section>
+</div>
+<th:block layout:fragment="script1">
+	<script>
+	
+	</script>
+</th:block>
 </body>
 </html>
