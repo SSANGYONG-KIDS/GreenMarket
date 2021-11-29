@@ -61,7 +61,7 @@
 				</div>
 			</div>
 			<div align="right" style="margin-top: 20px">
-				<form id='reserve' th:action="@{/trade/reserveForm/(iId=${item.iId})}" method="get">
+				<form id='reserve' th:action="@{|/trade/reserveForm/${item.iId}|}" method="get">
 					<input type="hidden" name='page' th:value=${pagevo.page}> 
 			    	<input type='hidden' name='size' th:value=${pagevo.size}> 
 					<input type="hidden" name="itemName" th:value="${pagevo.itemName}">	

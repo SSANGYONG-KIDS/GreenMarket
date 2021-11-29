@@ -13,28 +13,93 @@
 	<!-- 스타일 부분 -->
 	<th:block layout:fragment="style1">
 		<style>
+		/* 예약 메인 */
+			#data {
+				display: none;
+			}
 			#reserve_main {
-				margin-left: 16%;
+				margin-left: 21%;
 				color: black;
 			}
+			#reserve_main_left {
+				width: 546px;
+			}
 			#reserve_header {
-				height: 76px;
+				height: 81px;
 			}
 			#wrapper_reserve_prev {
-				width: 70px;
+				width: 52px;
 				float: left;
 				color: black;
 			}
 			#reserve_header_subject {
 				font-size: 30px;
 				color: black;
+			    font-weight: 600;
 			}
-			
+			#reserve_content {
+				height: 159px;
+			}
+			.reserve_content_info_block {
+				float: left;
+			    width: 510px;
+			}
+			.reserve_subject {
+				font-weight: 600;
+				font-size: 22px;
+				height: 56px;
+			}
+			.block_subject {
+				height: 34px;
+				font-weight: 600;
+				font-size: 16px
+			}
+			.block_content {
+				font-weight: 300;
+				font-size: 15px;
+			}
+			.reserve_content_info_edit_wrapper {
+			    text-decoration: underline !important;
+				font-weight: 600;
+				cursor: pointer;
+			}
+			#reserve_button_wrapper {
+				border-top-color: rgb(221, 221, 221);
+				border-top-width: 1px !important;
+			    border-top-style: solid !important;
+    			padding-top: 32px;
+			}
+		/* 모달창 */
+			#modal_background {
+				display: none;
+			    position: absolute;
+			    top: 0;
+			    left: 0;
+			    right: 0;
+			    bottom: 0;
+			    content: '';
+			    opacity: .3;
+			    background: #000000;
+				height: 100%;
+				width: 100%;				
+			}
+			#modal_date {
+				display: none;
+			    position: absolute;
+			    top: 30%;
+			    left: 40%;
+				background: rgb(255, 255, 255) !important;
+			    border-radius: 16px !important;
+			    padding: 64px 32px 16px !important;				
+			}
 		</style>
 	</th:block>
 	
 	<!-- 메인 부분 -->
 	<div class="panel panel-default" layout:fragment="content1">
+		<!-- 모달창 배경 -->
+		<div id="modal_background"></div>
+		<!-- 예약 상단 부분 -->
 		 <section class="hero-wrap hero-wrap-2 js-myheight" style="background-image: url('/bootstrap/images/trade/reserveForm.png');">
 		  <div class="overlay"></div>
 		  <div class="container">
@@ -46,48 +111,115 @@
 		   </div>
 		 </div>
 		</section>
+		
+		<!-- 예약 메인 부분 -->
 		<div id="reserve_main" class="ftco-section">
-			<div id="reserve_header">
-				<div id="wrapper_reserve_prev">
-					<!-- 이전으로 돌아가기 버튼(물품 상세보기로 이동) -->
-					<span id="reserve_prev">
-						<svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" aria-label="뒤로" role="img" focusable="false" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 3; overflow: visible;"><g fill="none"><path d="m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932"></path></g></svg>
-					</span>
-				</div>
-				<div id="reserve_header_subject">
-					확인 및 예약
-				</div>
-			</div>
-			<div id="reserve_content">
-				<div id="reserve_content_info">
-					<div class="reserve_subject">예약 정보</div>
-					<div class="reserve_content_info_block">
-						<div class="block_subject">날짜</div>
-						<div id="block_content_date" class="block_content">2222년 2월 22일 – 2222년 2월 22일</div>
+			<div id="reserve_main_left">
+				<div id="reserve_header">
+					<div id="wrapper_reserve_prev">
+						<!-- 이전으로 돌아가기 버튼(물품 상세보기로 이동) -->
+						<span id="reserve_prev">
+							<svg viewBox="0 -30 30 30" xmlns="http://www.w3.org/2000/svg" aria-label="뒤로" role="img" focusable="false" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 3; overflow: visible;"><g fill="none"><path d="m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932"></path></g></svg>
+						</span>
 					</div>
-					<div id="btn_edit_date" class="reserve_content_info_edit_wrapper">
-						수정
+					<div id="reserve_header_subject">
+						확인 및 예약
 					</div>
 				</div>
+				<div id="reserve_content">
+					<div id="reserve_content_info">
+						<div class="reserve_subject">예약 정보</div>
+						<div class="reserve_content_info_block">
+							<div class="block_subject">날짜</div>
+							<div id="block_content_date" class="block_content">2222년 2월 22일 – 2222년 2월 22일</div>
+<!--							<div class="block_content">
+								임시: <span th:text="${itemPageVO.startDate}"></span> - <span th:text="${itemPageVO.endDate}"></span>
+							</div>-->
+						</div>
+						<div id="btn_edit_date" class="reserve_content_info_edit_wrapper">
+							수정
+						</div>
+					</div>
+				</div>
+				<div id="reserve_button_wrapper">
+					<div id="reserve_button" class="btn btn-primary py-2 px-3">
+						예약하기
+					</div>
+				</div>			
 			</div>
+		</div>
+		<!-- 날짜 변경 모달창 -->
+		<div id="modal_date" class="drag">
+			<div class="col-md d-flex">
+				<div class="form-group p-4">
+					<label for="#">start date</label>
+					<div class="form-field">
+						<div class="icon"><span class="fa fa-calendar"></span></div>
+						<input type="text" class="form-control checkin_date" id="startDate" name="startDate" placeholder="start date">
+					</div>
+				</div>
+			</div>
+			<div class="col-md d-flex">
+				<div class="form-group p-4">
+					<label for="#">end date</label>
+					<div class="form-field">
+						<div class="icon"><span class="fa fa-calendar"></span></div>
+						<input type="text" class="form-control checkout_date"  id="endDate" name="endDate" placeholder="end date">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<!-- 데이터 -->
+		<div id="data">
+			<input id="iId" value="${iId}">
 		</div>
 	</div>
 
 	<th:block layout:fragment="script1">
 		<script>
-			(function($) {
-				// 상단 메뉴 쪽 이미지 부분
-				let divisor = 3; 
-				var myHeight = function() {
+			// data 가져오기
+			let iId = $('#iId').val();
+			
+			// 상단 메뉴 쪽 이미지 부분
+			let divisor = 3; 
+			var myHeight = function() {
+				$('.js-myheight').css('height', $(window).height()/divisor);
+				$('.overlay').css('height', $(window).height()/divisor);
+				$(window).resize(function() {
 					$('.js-myheight').css('height', $(window).height()/divisor);
 					$('.overlay').css('height', $(window).height()/divisor);
-					$(window).resize(function(){
-						$('.js-myheight').css('height', $(window).height()/divisor);
-						$('.overlay').css('height', $(window).height()/divisor);
-					});
-				};
-				myHeight();					
-			})(jQuery);
+				});
+			};
+			myHeight();			
+		
+			// 예약하기 버튼 눌렀을 때
+			$("#reserve_button").click(e => {
+				let formData = new FormData();
+				formData.append('iId', iId);
+				$.ajax({
+					type : 'POST',
+					url : '/trade/reserve',
+					data : formData,
+					processData : false,
+					contentType : false
+				}).done(res => {
+					console.log('ajax: /trade/reserve');
+					console.log(res);
+					alert(res);
+				}).fail(err => {
+					console.log('ajax: /trade/reserve');
+					console.log(res);
+					alert(res);					
+				})				
+			});
+			
+			// 날짜 수정 눌렀을 때
+			$("#btn_edit_date").click(e => {
+				$('#modal_date').css('display', 'block');
+				$('#modal_background').css('display', 'block');
+			});
 		</script>
 	</th:block>
 </body>

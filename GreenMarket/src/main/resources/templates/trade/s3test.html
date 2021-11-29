@@ -40,7 +40,7 @@
 				a = commonUploadFile('file_image', 'trade')
 				.then(response=>console.log(response))
 				.catch(()=>console.log('error'));
-			})
+			});
 			function uploadImage() {
 				var file = $('#btn_upload_file')[0].files[0]; // 이미지 파일 얻기
 				if (typeof file != "undefined") {

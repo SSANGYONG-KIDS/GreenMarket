@@ -267,7 +267,9 @@
 	});
 
 
-
+	// jquery-ui draggable
+	$('.drag').draggable({ 
+	});
 
 })(jQuery);
 
