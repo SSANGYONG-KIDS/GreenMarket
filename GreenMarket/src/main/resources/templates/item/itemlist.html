@@ -24,10 +24,10 @@
 		<section class="ftco-section">
 			<div class="container">
 				<div class="row d-flex">
-					<div class="col-md-4 d-flex ftco-animate" th:each="item:${itemResult}" th:onclick="'window.location.href=\'' + @{/item/itemdetail(iId=${item.iId})} +'\' '">
+					<div class="col-md-4 ftco-animate" th:each="item:${itemResult}" th:onclick="'window.location.href=\'' + @{/item/itemdetail(iId=${item.iId})} +'\' '">
 						<div class="blog-entry justify-content-end">
 							<a th:href="@{/item/itemdetail(iId=${item.iId})}" class="block-20" style="background-image: url('/bootstrap/images/image_1.jpg');"></a>
-							<div class="text">
+							<div class="text" width="200px;">
 								<div class="d-flex align-items-center mb-4 topp">
 									<div class="one">
 										<span class="day" th:text="${item.iId}"></span>
@@ -36,7 +36,7 @@
 										<span class="yr" th:text="${item.iCategory.title}"></span> <span class="mos" th:text="${item.iRegdate}"></span>
 									</div>
 								</div>
-								<h3 class="heading">
+								<h3 class="heading" width="200px;">
 									<a href="#" th:text="${item.iTitle}"></a>
 								</h3>
 								<p th:text="${item.iContent}"></p>
