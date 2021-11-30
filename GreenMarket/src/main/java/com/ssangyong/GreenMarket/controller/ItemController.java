@@ -1,6 +1,7 @@
 package com.ssangyong.GreenMarket.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ssangyong.GreenMarket.model.ICategoryEnumType;
+import com.ssangyong.GreenMarket.model.ItStateEnumType;
 import com.ssangyong.GreenMarket.model.ItemEntity;
 import com.ssangyong.GreenMarket.model.ItemPageVO;
 import com.ssangyong.GreenMarket.model.MemberEntity;
@@ -53,6 +55,7 @@ public class ItemController {
 		model.addAttribute("item_owner",item.getMember());
 		model.addAttribute("item_photos",itemPhotoService.selectById(item.getIId()));
 		model.addAttribute("pagevo", pagevo);
+		System.out.println(pagevo);
 		
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		MemberEntity member =  loginService.selectById(userDetails.getUsername());
@@ -60,34 +63,48 @@ public class ItemController {
 		
 	}
 	
-	@GetMapping("/registerItem")
+	@GetMapping("/myitemlist")
+	public void selectMyItem(Model model, HttpServletRequest request, Principal principal, Authentication authentication) {
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		MemberEntity member =  loginService.selectById(userDetails.getUsername());
+		model.addAttribute("member",member);
+		
+		List<ItemEntity> myitemlist = (List<ItemEntity>)itemService.selectMyList(member);
+
+		model.addAttribute("myitemlist", myitemlist);
+	}
+	
+	@GetMapping("/iteminsert")
 	public void itemInsertForm(Model model, Principal principal, Authentication authentication) {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		MemberEntity member =  loginService.selectById(userDetails.getUsername());
 		model.addAttribute("member",member);
 		
-		
+		model.addAttribute("tstates",ItStateEnumType.values());
+		model.addAttribute("categorys",ICategoryEnumType.values());
+		ItemEntity item = ItemEntity.builder().member(member).build();
+		model.addAttribute("item_id",itemService.insertItem(item).getIId());
 	}
 	
-	@PostMapping("/registerItem")
-	public String itemRegisterPost(ItemEntity item, RedirectAttributes rttr, Authentication authentication) {
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		MemberEntity member = loginService.selectById(userDetails.getUsername());
-		item.setMember(member); 
-		ItemEntity ins_item = itemService.insertItem(item);
+	
+	@PostMapping("/iteminsert")
+	public String itemRegisterPost(ItemEntity item, Integer iId, RedirectAttributes rttr, Authentication authentication) {
+		item.setIId(iId);
+		ItemEntity ins_item = itemService.updateItem(item);
 		
 		rttr.addFlashAttribute("resultMessage", ins_item==null?"입력실패":"입력성공");
-		return "redirect:/item/itemlist";
+		return "redirect:/item/myitemlist";
 	}
 	
-	@GetMapping("/deleteItem")
+	
+	@GetMapping("/itemdelete")
 	public String itemDelete(Integer iId, RedirectAttributes rttr ) {
 		int ret = itemService.deleteItem(iId);
 		rttr.addFlashAttribute("resultMessage", ret==0?"삭제실패":"삭제성공");
-		return "redirect:/item/itemlist";
+		return "redirect:/item/myitemlist";
 	}
 	
-	@GetMapping("/updateItem")
+	@GetMapping("/itemupdate")
 	public String itemUpdateForm(Model model, Integer iId, Principal principal, Authentication authentication) {
 		
 		model.addAttribute("item",itemService.selectById(iId));
@@ -95,10 +112,10 @@ public class ItemController {
 		MemberEntity member =  loginService.selectById(userDetails.getUsername());
 		model.addAttribute("member",member);
 		
-		return "/item/registerItem";
+		return "/item/iteminsert";
 	}
 	
-	@PostMapping("/updateItem")
+	@PostMapping("/itemupdate")
 	public String itemUpdate(ItemEntity item, String mId, RedirectAttributes rttr, Authentication authentication, Integer page, Integer size, String itemName, ICategoryEnumType itemSort, String startDate, String endDate, Integer priceLimit) {
 		item.setMember(loginService.selectById(mId));
 		ItemEntity update_item = itemService.updateItem(item);	
@@ -110,7 +127,7 @@ public class ItemController {
 						.build();
 		rttr.addFlashAttribute("pagevo", pagevo);
 		
-		return "redirect:/item/itemlist";
+		return "redirect:/item/myitemlist";
 		
 		//방법2...주소창에 보이기 
 		//String param = "page=" + page + "&size=" + size + "&type="+type + "&keyword=" + keyword;
