@@ -23,8 +23,8 @@ public class MainController {
 	   @RequestMapping("/layout/blog")
 	   public void blog() {}
 	   
-	   @RequestMapping("/layout/contact")
-	   public void contact() {}
+	   @RequestMapping("/layout/myPage")
+	   public void mypage() {}
 	   
 	   @RequestMapping("/layout/login")
 	   public void login() {}
