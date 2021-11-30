@@ -1,6 +1,7 @@
 package com.ssangyong.GreenMarket.controller;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -126,7 +127,14 @@ public class TradeController {
 //		return tradeService.listTradeForRenter(loginService.selectById("testtest")).toString();
 		
 		// 내가 판매한 거래 내역 가져오기
-		return tradeService.listTradeForSharer(loginService.selectById("test1")).toString();
+		List<TradeEntity> list = tradeService.listTradeForSharer(loginService.selectById("test1"));
+		System.out.println("before sysout");
+		for (TradeEntity val : list) {
+			System.out.println(val.getTId());
+			System.out.println(val.getItem().getMember().getMId());
+		}
+		
+		return null; 
 	}
 
 }
