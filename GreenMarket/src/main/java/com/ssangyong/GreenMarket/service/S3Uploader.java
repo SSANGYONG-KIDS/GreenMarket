@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -30,7 +31,9 @@ public class S3Uploader {
 	}
 
 	private String upload(File uploadFile, String dirName) {
-		String fileName = dirName + "/" + uploadFile.getName();
+//		String fileName = dirName + "/" + uploadFile.getName();
+		String extenstion = uploadFile.getName().substring(uploadFile.getName().lastIndexOf(".")); //확장자
+		String fileName = dirName + "/" + UUID.randomUUID() + extenstion;
 		String uploadImageUrl = putS3(uploadFile, fileName);
 		removeNewFile(uploadFile); // 로컬 directory에 저장 된 파일 삭제
 		return uploadImageUrl; // 업로드된 파일의 S3 url 주소 반환

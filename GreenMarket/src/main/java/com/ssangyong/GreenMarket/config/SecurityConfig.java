@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 		// permitAll: 모든사용자가 접근가능하다는 의미
 		// hasRole : 특정권한을 가진 사람만 접근가능하다는 의미
 		http.authorizeRequests() // HttpServletRequest에 따라 접근(access)을 제한
-			.antMatchers("/trade/**").authenticated() // 로그인 필요
+//			.antMatchers("/trade/**").authenticated() // 로그인 필요
 			.antMatchers("/**","/fragments/**","/center/centerlist","/layout/login/**","/exerciseinfoboard/boardlist","/dietdiaryboard/boardlist","/healthboard/boardlist","/sharingboard/boardlist","/naversearch/**", "/upload/**", "/body/**").permitAll() //   누구나 접근 허용
 //			.antMatchers("/user/**").hasRole("USER") // /user으로 시작하는 경로는  USER롤을 가진 사용자만  접근 가능(자동으로 ROLE_가 삽입)
 			.antMatchers("/user/**").authenticated()

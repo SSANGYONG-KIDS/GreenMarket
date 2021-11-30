@@ -39,7 +39,7 @@ public class TradeController {
 	
 	/**
 	 * 예약 작성 페이지
-	 * df
+	 * 
 	 */
 	@RequestMapping("reserveForm/{iId:.+}")
 	public String reserveForm(@PathVariable int iId, @AuthenticationPrincipal SecurityUser principal, Model model, ItemPageVO itemPageVO) {
@@ -107,4 +107,23 @@ public class TradeController {
 	public void s3Test() {
 		
 	}
+	
+	/**
+	 * 채팅하기
+	 */
+	@RequestMapping("chatMain")
+	public void chatMain(@AuthenticationPrincipal SecurityUser principal) {
+		System.out.println("controller: trade/chatMain");
+	}
+	
+	/**
+	 * 테스트
+	 */
+	@RequestMapping("test")
+	@ResponseBody
+	public String test() {
+		tradeService.listLiveTradeAboutRenter(loginService.selectById("testtest"));
+		return null;
+	}
+
 }
