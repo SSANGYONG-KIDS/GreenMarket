@@ -122,8 +122,11 @@ public class TradeController {
 	@RequestMapping("test")
 	@ResponseBody
 	public String test() {
-		tradeService.listLiveTradeAboutRenter(loginService.selectById("testtest"));
-		return null;
+		// 내가 구매한 거래 내역 가져오기
+//		return tradeService.listTradeForRenter(loginService.selectById("testtest")).toString();
+		
+		// 내가 판매한 거래 내역 가져오기
+		return tradeService.listTradeForSharer(loginService.selectById("test1")).toString();
 	}
 
 }

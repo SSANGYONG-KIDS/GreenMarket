@@ -25,12 +25,19 @@ public class TradeService {
 	}
 	
 	/**
-	 * 자기가 구매자(Renter)이면서 거래 완료가 아닌 것 모두 들고하기
+	 * 한 멤버가 구매(Rent)한 거래 내역 가져오기
 	 */
-	public List<TradeEntity> listLiveTradeAboutRenter(MemberEntity member) {
+	public List<TradeEntity> listTradeForRenter(MemberEntity member) {
 		List<TradeEntity> list = tradeRepo.findAllByBuyMember(member);
-		System.out.println(list);
-		return null;
+		return list;
+	}
+	
+	/**
+	 * 한 멤버가 판매(Share)한 거래 내역 가져오기
+	 */
+	public List<TradeEntity> listTradeForSharer(MemberEntity member) {
+		List<TradeEntity> list = tradeRepo.findByMIdOfItem(member.getMId());
+		return list;
 	}
 
 }

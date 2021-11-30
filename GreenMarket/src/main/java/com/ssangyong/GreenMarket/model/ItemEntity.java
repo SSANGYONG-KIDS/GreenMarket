@@ -28,7 +28,7 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude={"photos", "trades"})
 @Entity
 @Builder
 @NoArgsConstructor
@@ -67,4 +67,9 @@ public class ItemEntity {
 	@OneToMany(mappedBy = "item", //fk이름 "메여있다"
 			cascade = CascadeType.ALL, fetch = FetchType.LAZY) //fetch = FetchType.EAGER
 	List<ItemPhotoEntity> photos;
+	
+	@OneToMany(mappedBy = "item",
+			cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	List<TradeEntity> trades;
+	
 }

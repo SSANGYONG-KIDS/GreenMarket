@@ -9,10 +9,11 @@ import com.ssangyong.GreenMarket.model.ICategoryEnumType;
 @Controller
 public class MainController {
 	
-	   @RequestMapping("/index")
-	   public void main(Model model) {
+	   @RequestMapping(value = {"/", "/index"})
+	   public String main(Model model) {
 	      System.out.println("main");
 	      model.addAttribute("itemSorts", ICategoryEnumType.values());
+	      return "index";
 	   }
 	   
 	   @RequestMapping("/layout/about")
