@@ -44,6 +44,16 @@
 						</div>
 					</div>
 				</div>
+				<!-- 페이징처리 -->
+				<form id='f1' th:action="@{/item/itemlist}" method="get">
+					<input type="hidden" name='page' th:value=${result.currentPageNum}>
+					<input type='hidden' name='size' th:value=${result.currentPage.pageSize}>
+					<input type="hidden" name="itemName" th:value="${pagevo.itemName}">	
+					<input type="hidden" name="itemSort" th:value="${pagevo.itemSort}">	
+					<input type="hidden" name="startDate" th:value="${pagevo.startDate}">	
+					<input type="hidden" name="endDate" th:value="${pagevo.endDate}">	
+					<input type="hidden" name="priceLimit" th:value="${pagevo.priceLimit}">	
+				</form>
 				<nav>
 					<div aria-label="Page navigation example" class="row mt-5" style="text-align: center;">
 						<div class="col text-center">
@@ -63,7 +73,6 @@
 
 
 <th:block layout:fragment="script1">
-	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 	<script>
 	$(function(){
 		var formObj = $("#f1");
@@ -73,17 +82,6 @@
 			//alert($(this).attr("href"));
 			formObj.submit();
 		});
-		
-		
-		$("#searchBtn").click(function(){
-			var typeStr = $("#searchType").find(":selected").val();
-			var keywordStr = $("#searchKeyword").val();
-			//alert(typeStr + ":" + keywordStr);
-			formObj.find("[name='type']").val(typeStr);
-			formObj.find("[name='keyword']").val(keywordStr);
-			formObj.submit();
-		});
-		
 	});
 	
 	</script>

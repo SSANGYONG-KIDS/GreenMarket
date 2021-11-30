@@ -7,29 +7,24 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.ssangyong.GreenMarket.model.ItStateEnumType;
 import com.ssangyong.GreenMarket.model.ItemEntity;
+import com.ssangyong.GreenMarket.model.ItemPageVO;
 import com.ssangyong.GreenMarket.model.QItemEntity;
 
 public interface ItemRepository extends CrudRepository<ItemEntity, Integer>, QuerydslPredicateExecutor<ItemEntity> {
 	
-	public default Predicate makePredicate(String type, String keyword) {
+	public default Predicate makePredicate(ItemPageVO pvo) {
 		BooleanBuilder builder = new BooleanBuilder();
 		QItemEntity item = QItemEntity.itemEntity;
-		builder.and(item.iId.gt(0)); //and diaryNum>0
-		if(type==null) return builder;
-		switch (type) {
-		case "title":
-			builder.and(item.iTitle.like("%" + keyword + "%")); //and title like '%?%'
-			break;
-		case "content":
-			builder.and(item.iContent.like("%" + keyword + "%")); //and content like '%?%'
-			break;
-		case "writer":
-			builder.and(item.member.mNickname.like("%" + keyword + "%")); //and writer like '%?%'
-			break;
-		default:
-			break;
-		}
+		builder.and(item.iId.gt(0)); //and iId>0
+		if(pvo.getItemName()==null) return builder;
+		
+		builder.andAnyOf(item.iTitle.like("%" + pvo.getItemName() + "%"), item.iContent.like("%" + pvo.getItemName() + "%")); //물건 이름 검색
+		builder.and(item.iCategory.eq(pvo.getItemSort()));
+		builder.and(item.iTstate.eq(ItStateEnumType.POSSIBLE)); //거래 가능 상태
+		builder.and(item.iPrice.lt(pvo.getPriceLimit())); //최대 가능 금액
+		
 		return builder;
 	}
 	

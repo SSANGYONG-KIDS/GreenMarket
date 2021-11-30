@@ -32,21 +32,21 @@ import lombok.ToString;
 public class TradeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int tId;
+	private int tId; // PK
 
-	private Timestamp tStartdate;
-	private Timestamp tEnddate;	
+	private Timestamp tStartdate; // 대여 시작일
+	private Timestamp tEnddate;	// 대여 종료일
 	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = true)
-	private TStateEnumType tState;
+	private TStateEnumType tState; // 거래 상태
 
 	@ManyToOne
 	@JoinColumn(name = "iId")
-	private ItemEntity item; 
+	private ItemEntity item; // 대여 물품
 	
 	@ManyToOne
 	@JoinColumn(name = "tBuyid")
-	private MemberEntity buyMember; 
+	private MemberEntity buyMember;	// 구매자 
 	
 }
