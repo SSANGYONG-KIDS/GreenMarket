@@ -24,9 +24,10 @@
 		<section class="ftco-section">
 			<div class="container">
 				<div class="row d-flex">
-					<div class="col-md-4 d-flex ftco-animate" th:each="item:${itemResult}" th:onclick="'window.location.href=\'' + @{/item/itemdetail(iId=${item.iId})} +'\' '">
+					<div class="col-md-4 ftco-animate" th:each="item:${itemResult}" >
+						<form th:action="@{/item/itemdetail}" method="get">
 						<div class="blog-entry justify-content-end">
-							<a th:href="@{/item/itemdetail(iId=${item.iId})}" class="block-20" style="background-image: url('/bootstrap/images/image_1.jpg');"></a>
+							<div class="block-20"><img style="color: white;" width="100%" height="100%" th:src="@{${item.photos[0].ipFilename}}"></div>
 							<div class="text">
 								<div class="d-flex align-items-center mb-4 topp">
 									<div class="one">
@@ -40,8 +41,18 @@
 									<a href="#" th:text="${item.iTitle}"></a>
 								</h3>
 								<p th:text="${item.iContent}"></p>
+								<input type="hidden" name='iId' th:value=${item.iId}>
+								<input type="hidden" name='page' th:value=${result.currentPageNum}>
+								<input type='hidden' name='size' th:value=${result.currentPage.pageSize}>
+								<input type="hidden" name="itemName" th:value="${pagevo.itemName}">	
+								<input type="hidden" name="itemSort" th:value="${pagevo.itemSort}">	
+								<input type="hidden" name="startDate" th:value="${pagevo.startDate}">	
+								<input type="hidden" name="endDate" th:value="${pagevo.endDate}">	
+								<input type="hidden" name="priceLimit" th:value="${pagevo.priceLimit}">
+								<input type="submit" value="상세보기">
 							</div>
 						</div>
+						</form> 
 					</div>
 				</div>
 				<!-- 페이징처리 -->

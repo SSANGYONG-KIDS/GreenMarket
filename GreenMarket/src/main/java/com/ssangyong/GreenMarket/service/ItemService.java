@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.querydsl.core.types.Predicate;
 import com.ssangyong.GreenMarket.model.ItemEntity;
 import com.ssangyong.GreenMarket.model.ItemPageVO;
+import com.ssangyong.GreenMarket.model.MemberEntity;
 import com.ssangyong.GreenMarket.repository.ItemRepository;
 
 @Service
@@ -31,6 +32,11 @@ public class ItemService {
 	// list조회
 	public List<ItemEntity> selectAll() {
 		return (List<ItemEntity>) itemRepo.findAll();
+	}
+	
+	// mylist 조회
+	public List<ItemEntity> selectMyList(MemberEntity member) {
+		return (List<ItemEntity>)itemRepo.findByMember(member);
 	}
 
 	// 아이디로 찾기
