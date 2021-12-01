@@ -24,20 +24,21 @@
 	</section>
 	<section class="ftco-section">
 		<div class="container">
-			<div class="">
+			<div class="row d-flex">
 				<div class="col-md-4 ftco-animate" th:each="item:${myitemlist}">
 					<form th:action="@{/item/myitem}" method="get">
 						<div class="blog-entry justify-content-end">
-							<div class="block-20"
-								style="background-image: url('/bootstrap/images/image_1.jpg');"></div>
+							<div class="block-20">
+							<img style="color: white;" width="100%" height="100%" alt="item이미지" th:src="@{${item.photos[0].ipFilename}}">
+							</div>
 							<div class="text">
 								<div class="d-flex align-items-center mb-4 topp">
 									<div class="one">
-										<span class="day" th:text="${item.iId}"></span>
+										<span class="day" style="font-size: 30px;" th:text="${item.iId}"></span>
 									</div>
 									<div class="two">
-										<span class="yr" th:text="${item.iCategory.title}"></span> <span
-											class="mos" th:text="${item.iRegdate}"></span>
+										<span class="yr" th:text="${item.iCategory.title}"></span> 
+										<span class="mos" th:text="${#dates.format(new java.util.Date(item.iRegdate), 'yyyy-MM-dd hh:mm')}"></span>
 									</div>
 								</div>
 								<h3 class="heading">
@@ -53,7 +54,7 @@
 			</div>
 			<div>
 				<p style="text-align:right">
-					<a th:href="@{/item/iteminsert}" class="btn btn-primary py-3 px-4">물품 입력</a>
+					<a th:href="@{/item/insertform}" class="btn btn-primary py-3 px-4">물품 입력</a>
 				</p>
 			</div>
 		</div>
@@ -61,7 +62,9 @@
 </div>
 <th:block layout:fragment="script1">
 	<script>
+	$(function(){ 
 		
+	});
 	</script>
 </th:block>
 </body>

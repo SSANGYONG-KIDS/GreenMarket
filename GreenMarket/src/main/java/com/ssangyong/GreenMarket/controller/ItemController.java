@@ -1,6 +1,9 @@
 package com.ssangyong.GreenMarket.controller;
 
 import java.security.Principal;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ssangyong.GreenMarket.model.ICategoryEnumType;
+import com.ssangyong.GreenMarket.model.IStateEnumType;
 import com.ssangyong.GreenMarket.model.ItStateEnumType;
 import com.ssangyong.GreenMarket.model.ItemEntity;
 import com.ssangyong.GreenMarket.model.ItemPageVO;
+import com.ssangyong.GreenMarket.model.ItemPhotoEntity;
 import com.ssangyong.GreenMarket.model.MemberEntity;
 import com.ssangyong.GreenMarket.model.PageMaker;
 import com.ssangyong.GreenMarket.service.ItemPhotoService;
@@ -64,7 +69,7 @@ public class ItemController {
 	}
 	
 	@GetMapping("/myitemlist")
-	public void selectMyItem(Model model, HttpServletRequest request, Principal principal, Authentication authentication) {
+	public void selectMyItemList(Model model, HttpServletRequest request, Principal principal, Authentication authentication) {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		MemberEntity member =  loginService.selectById(userDetails.getUsername());
 		model.addAttribute("member",member);
@@ -74,23 +79,51 @@ public class ItemController {
 		model.addAttribute("myitemlist", myitemlist);
 	}
 	
-	@GetMapping("/iteminsert")
+	@GetMapping("/myitem")
+	public void selectMyItem(Model model, Integer iId, HttpServletRequest request, Principal principal, Authentication authentication) {
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		MemberEntity member =  loginService.selectById(userDetails.getUsername());
+		model.addAttribute("member",member);
+		
+		ItemEntity item = itemService.selectById(iId);
+		model.addAttribute("item", item);
+		model.addAttribute("istates",IStateEnumType.values());
+		model.addAttribute("tstates",ItStateEnumType.values());
+		model.addAttribute("categorys",ICategoryEnumType.values());
+	}
+	
+	@GetMapping("/insertform")
 	public void itemInsertForm(Model model, Principal principal, Authentication authentication) {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		MemberEntity member =  loginService.selectById(userDetails.getUsername());
 		model.addAttribute("member",member);
 		
+		model.addAttribute("istates",IStateEnumType.values());
 		model.addAttribute("tstates",ItStateEnumType.values());
 		model.addAttribute("categorys",ICategoryEnumType.values());
-		ItemEntity item = ItemEntity.builder().member(member).build();
-		model.addAttribute("item_id",itemService.insertItem(item).getIId());
 	}
 	
 	
 	@PostMapping("/iteminsert")
-	public String itemRegisterPost(ItemEntity item, Integer iId, RedirectAttributes rttr, Authentication authentication) {
-		item.setIId(iId);
-		ItemEntity ins_item = itemService.updateItem(item);
+	public String itemRegisterPost(ItemEntity item, String iIds, String writer, String iTstate, String iCategory, RedirectAttributes rttr, Authentication authentication) {
+		item.setMember(MemberEntity.builder().mId(writer).build());
+		item.setICategory(ICategoryEnumType.valueOf(iCategory));
+		item.setITstate(ItStateEnumType.valueOf(iTstate));
+		item.setIRegdate(Timestamp.valueOf(LocalDateTime.now()));
+
+		ItemEntity ins_item = itemService.insertItem(item);
+		
+		List<Integer> iId_list = new ArrayList();
+		String[] splitStr = iIds.split(",");
+		for(int i=0; i<splitStr.length; i++){
+			iId_list.add(Integer.parseInt(splitStr[i]));
+		}
+		
+		for(Integer i: iId_list) {
+			ItemPhotoEntity iphoto = itemPhotoService.selectById(i);
+			iphoto.setItem(ins_item);
+			itemPhotoService.updateItemPhoto(iphoto);
+		}
 		
 		rttr.addFlashAttribute("resultMessage", ins_item==null?"입력실패":"입력성공");
 		return "redirect:/item/myitemlist";
