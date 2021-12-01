@@ -2,10 +2,13 @@ package com.ssangyong.GreenMarket.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ssangyong.GreenMarket.model.MemberEntity;
@@ -29,7 +32,18 @@ public class MemberService implements UserDetailsService{
   	public MemberEntity selectById(String mId) {
   		return memberrepository.findById(mId).get();
   	}
-
+  	
+    // 글 수정
+    @Transactional
+    public void updateMember(MemberEntity member) {
+    	MemberEntity memberEntity = memberrepository.findById(member.getMId()).get(); //영속화
+    	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    	memberEntity.setMPw(encoder.encode(member.getMPw()));
+    	memberEntity.setMEmail(member.getMEmail());
+    	memberEntity.setMPhone(member.getMPhone());
+    	memberEntity.setMAddress(member.getMAddress());
+       //함수 종료시(service종료) 트랜잭션 종료 후 더티체킹=> 자동 업데이트. DB flush
+    }
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
