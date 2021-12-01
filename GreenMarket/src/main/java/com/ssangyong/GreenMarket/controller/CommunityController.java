@@ -1,5 +1,8 @@
 package com.ssangyong.GreenMarket.controller;
 
+//수연이 코드
+
+
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
@@ -8,20 +11,32 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.ssangyong.GreenMarket.model.CommunityEntity;
+import com.ssangyong.GreenMarket.model.MemberEntity;
 import com.ssangyong.GreenMarket.model.PageMaker;
 import com.ssangyong.GreenMarket.model.PageVO;
 import com.ssangyong.GreenMarket.service.CommunityService;
+import com.ssangyong.GreenMarket.service.LoginService;
 
 
 @Controller
@@ -30,17 +45,8 @@ public class CommunityController {
 	@Autowired
 	CommunityService service;
 
-	
-	//getmapping? postmapping?
-	@GetMapping("/community/register")
-	public String CommunityPost() {
-		return "community/register";
-	}
-	
-	
-	
-	
-	
+	@Autowired
+	LoginService log_service;
 	
 	@GetMapping("/community/boardlist")
 	public void selectAll(Model model, HttpServletRequest request, PageVO pagevo) {
@@ -51,13 +57,15 @@ public class CommunityController {
 		model.addAttribute("pagevo", pagevo);
 		model.addAttribute("result", new PageMaker<>(result));
 	}
-
 	
 	
 	@GetMapping("/community/boarddetail")
-	public void selectById(Model model, Integer cId, Principal principal, Authentication authentication, PageVO pagevo ) {
+	public String selectById(Model model, Integer cId, Principal principal, Authentication authentication, PageVO pagevo ) {
+		System.out.println("게시글 상세보기 controller");
 		model.addAttribute("board", service.selectById(cId));
 		model.addAttribute("pagevo", pagevo);
+		model.addAttribute("cId",cId);
+		return "community/boarddetail";
 		/*
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		UserVO user =  uservice.selectById(userDetails.getUsername());
@@ -65,25 +73,52 @@ public class CommunityController {
 		*/
 	}
 	
-	/*
-	@PostMapping("/community/register")
-	public String boardRegisterPost(DietDiaryBoardVO board, RedirectAttributes rttr, Authentication authentication) {
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal(); 
-		UserVO user = uservice.selectById(userDetails.getUsername()); //Community 엔티티로 바꾸고
-		board.setUser(user);  //글쓴이 배정
-		DietDiaryBoardVO ins_board = service.insertBoard(board); //DB에 넣는작업
-		
-		rttr.addFlashAttribute("resultMessage", ins_board==null?"입력실패":"입력성공"); //밑에 redirect페이지로 변수 들고가고 싶을때 쓰느 함수
-		return "redirect:/dietdiaryboard/boardlist";
-	}
-
-	@GetMapping("/community/delete")
-	public String boardDelete(Integer diaryNum, RedirectAttributes rttr ) {
-		int ret = service.deleteBoard(diaryNum);
-		rttr.addFlashAttribute("resultMessage", ret==0?"삭제실패":"삭제성공");
-		return "redirect:/dietdiaryboard/boardlist";
+	//글 등록 페이지로 이동
+	@GetMapping("community/register")
+	public String register() {
+		System.out.println("controller-getmapping-register()");
+		return "community/register";
 	}
 	
+	//글 등록완료
+	//@DeleteMapping("/community/register")
+	@RequestMapping(value="community/register", method= {RequestMethod.POST})
+	@ResponseBody
+	public void boardRegisterPost(CommunityEntity board, RedirectAttributes rttr, Authentication authentication) {
+		System.out.println("controller-글 등록하기");
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		MemberEntity user = log_service.selectById(userDetails.getUsername());
+		
+		//MemberEntity user = log_service.selectById("test"); // 임시로 세션 아이디 대신 test 가져오기
+		//System.out.println("board.getCTitle(): "+board.getCTitle());
+		//System.out.println("board.getCContent(): "+board.getCContent());
+		
+		service.insertBoard(board, user);
+		
+		//MemberEntity user = service.selectById(userDetails.getUsername());
+		/*
+		board.setMember(user);
+		//board.setUser(user); 
+		CommunityEntity ins_board = service.insertBoard(board);
+		//DietDiaryBoardVO ins_board = service.insertBoard(board);
+		
+		rttr.addFlashAttribute("resultMessage", ins_board==null?"입력실패":"입력성공");
+		return "redirect:/community/boardlist";
+		*/
+	}
+	
+	
+	//글 삭제하기
+	@RequestMapping(value="community/boarddetail", method= {RequestMethod.DELETE})
+	@ResponseBody
+	public void boardDelete(Integer cId, RedirectAttributes rttr ) {
+		System.out.println("controller-boardDelete() 실행");
+		System.out.println("cId(data): "+cId);
+		int ret = service.deleteBoard(cId);
+		System.out.println("ret: "+ret);
+		rttr.addFlashAttribute("resultMessage", ret==0?"삭제실패":"삭제성공");
+	}
+/*	
 	@PostMapping("/community/update")
 	public String boardUpdate(DietDiaryBoardVO board, String userId, RedirectAttributes rttr, Authentication authentication, Integer page, Integer size, String type, String keyword) {
 		board.setUser(uservice.selectById(userId));

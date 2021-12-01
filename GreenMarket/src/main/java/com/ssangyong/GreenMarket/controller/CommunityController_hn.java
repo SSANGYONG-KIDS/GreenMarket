@@ -1,6 +1,3 @@
-//
-////수연이 코드
-//
 //package com.ssangyong.GreenMarket.controller;
 //
 //import java.security.Principal;
@@ -11,42 +8,72 @@
 //
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.data.domain.Page;
+//import org.springframework.data.domain.Pageable;
 //import org.springframework.security.core.Authentication;
 //import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.stereotype.Controller;
 //import org.springframework.ui.Model;
 //import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.ModelAttribute;
 //import org.springframework.web.bind.annotation.PostMapping;
 //import org.springframework.web.bind.annotation.PutMapping;
+//import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 //import org.springframework.web.servlet.support.RequestContextUtils;
 //
 //import com.ssangyong.GreenMarket.model.CommunityEntity;
-//import com.ssangyong.GreenMarket.model.PageMaker;
-//import com.ssangyong.GreenMarket.model.PageVO;
+//import com.ssangyong.GreenMarket.model.MemberEntity;
+//import com.ssangyong.GreenMarket.model.PageMaker_hn;
+//import com.ssangyong.GreenMarket.model.PageVO_hn;
+//import com.ssangyong.GreenMarket.repository.CommunityRepository;
 //import com.ssangyong.GreenMarket.service.CommunityService;
 //
+//import lombok.extern.java.Log;
 //
 //@Controller
-//public class CommunityController_sy {
+//@RequestMapping("/community/*")
+//public class CommunityController_hn {
 //
 //	@Autowired
 //	CommunityService service;
 //
-//	@GetMapping("/community/boardlist")
-//	public void selectAll(Model model, HttpServletRequest request, PageVO pagevo) {
+//	//@Autowired
+//	//private CommunityRepository repo;
+//	
+//	@GetMapping("/register")
+//	public void CommunityPost() {
+//		System.out.println("Community 컨트롤러의 CommunityPost()");
+//		//return 안해줘도 ㄱㅊ
+//	}
+//	
+//	
+//	@GetMapping("/boardlist")
+//	public void selectAll(Model model, HttpServletRequest request, PageVO_hn pagevo) {
 //
 //		Page<CommunityEntity> result = service.selectAll(pagevo);
 //
 //		model.addAttribute("boardResult", result);
 //		model.addAttribute("pagevo", pagevo);
-//		model.addAttribute("result", new PageMaker<>(result));
+//		model.addAttribute("result", new PageMaker_hn<>(result));
 //	}
-//
+//	
+///*	
+//	@GetMapping("/boardlist")
+//	public void selectAll(@ModelAttribute("pageVO") PageVO vo, Model model) {
+//		Pageable page = vo.makePageable(0, "cId");
+//		Page<CommunityEntity> result = repo.findAll(repo.makePredicate(vo.getType(), vo.getKeyword()), page);
+//		
+//		log.info(""+page);
+//		log.info(""+result);
+//		log.info("total page number : "+result.getTotalPages());
+//		model.addAttribute("pagevo", vo);
+//		model.addAttribute("result", new PageMaker(result));
+//	}
+//*/	
 //	
 //	
-//	@GetMapping("/community/boarddetail")
-//	public void selectById(Model model, Integer cId, Principal principal, Authentication authentication, PageVO pagevo ) {
+//	@GetMapping("/boarddetail")
+//	public void selectById(Model model, Integer cId, Principal principal, Authentication authentication, PageVO_hn pagevo ) {
 //		model.addAttribute("board", service.selectById(cId));
 //		model.addAttribute("pagevo", pagevo);
 //		/*
@@ -56,18 +83,23 @@
 //		*/
 //	}
 //	
-//	/*
-//	@PostMapping("/community/register")
-//	public String boardRegisterPost(DietDiaryBoardVO board, RedirectAttributes rttr, Authentication authentication) {
-//		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-//		UserVO user = uservice.selectById(userDetails.getUsername());
-//		board.setUser(user); 
-//		DietDiaryBoardVO ins_board = service.insertBoard(board);
+//	
+//	// MemberService는 아직 pull 전이라서 없엉
+//	@PostMapping("/register")
+//	public String boardRegisterPost(CommunityEntity board, RedirectAttributes rttr, Authentication authentication) {
+//		System.out.println("Community 컨트롤러의 boardRegisterPost()");
 //		
-//		rttr.addFlashAttribute("resultMessage", ins_board==null?"입력실패":"입력성공");
-//		return "redirect:/dietdiaryboard/boardlist";
+//		UserDetails userDetails = (UserDetails) authentication.getPrincipal(); 
+////		MemberEntity user = MemberService.selectById(userDetails.getUsername()); //Community 엔티티로 바꾸고
+////		board.setMember(user);  //글쓴이 배정
+//		CommunityEntity ins_board = service.insertBoard(board); //DB에 넣는작업
+//		
+//		rttr.addFlashAttribute("resultMessage", ins_board==null?"입력실패":"입력성공"); //밑에 redirect페이지로 변수 들고가고 싶을때 쓰느 함수
+//		return "redirect:/community/boardlist";
 //	}
-//
+//	
+//	
+//	/*
 //	@GetMapping("/community/delete")
 //	public String boardDelete(Integer diaryNum, RedirectAttributes rttr ) {
 //		int ret = service.deleteBoard(diaryNum);

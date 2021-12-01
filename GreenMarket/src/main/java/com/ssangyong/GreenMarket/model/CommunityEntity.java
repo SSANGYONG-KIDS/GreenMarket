@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -40,6 +41,7 @@ public class CommunityEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int cId;
 	private String cTitle;
+	@Lob  //어노테이션 추가
 	private String cContent;
 	private int cViews;
 	

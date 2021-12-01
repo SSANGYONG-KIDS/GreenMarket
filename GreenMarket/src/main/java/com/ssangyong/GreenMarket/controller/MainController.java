@@ -20,8 +20,8 @@ public class MainController {
 	   @RequestMapping("/layout/hotel")
 	   public void hotel() {}
 	   
-	   @RequestMapping("/layout/blog")
-	   public void blog() {}
+	   @RequestMapping("/community/boardlist") // /layout/blog 에서 변경
+	   public void community() {}  // blog()->community()
 	   
 	   @RequestMapping("/layout/contact")
 	   public void contact() {}

@@ -1,26 +1,19 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-        xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="https://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout1}"> 
+<style>
 
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-
-</head>
-
-<body>
-
-	<class="panel panel-default" layout:fragment="content1"> <!--style="width: 100%; height: 5%; padding: 0px 200px 0px 200px;"-->
+</style>
+<body class="text-center">
+	<div class="panel panel-default" layout:fragment="content1">
 		<h1 class="panel-heading" style="text-align: center; background-color: #D9E5FF">Community</h1>
 	
-
-	<p>[[${resultMessage}]]</p>
+		<p>[[${resultMessage}]]</p>
 	
-
-
-	<table class="table table-bordered table-hover " id="xxx">
+		<table class="table table-bordered table-hover " id="xxx">
 			<tr>
 				<th>게시글 번호</th>
 				<th>게시글 제목</th>
@@ -40,29 +33,50 @@
 			</tr>
 		</table>
 		
-		
 		<div style="padding-left: 96%"> <!--등록하기 버튼-->
 			<h3>
-				<a class="btn btn-default dropdown-toggle" th:href="@{/community/register}">등록</a>
+				<a class="btn btn-default button" th:href="@{/community/register}">등록</a>
 			</h3>
 		</div>
 		<!-- 검색 박스 -->
 		<div style="text-align: center;">
 			<select id="searchType" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-				<option>전체</option>
+				<option>전체보기</option >
 				<option value="title" th:selected="${pagevo.type=='title'}">제목</option>
 				<option value="content" th:selected="${pagevo.type=='content'}">내용</option>
 			</select> 
 			<input type="text" id="searchKeyword">
-			<button id="searchBtn" class="btn btn-default dropdown-toggle">조건검색</button>
+			<button id="searchBtn" class="btn btn-default button">검색</button>
 		</div>
-		<!-- 페이징처리 -->
+
+		<!-- 페이징처리
+		<nav>
+			<div>
+				<ul class="pagination">
+					<li class="page-item" th:if="${result.prevPage}"><a
+						th:href="${result.prevPage.pageNumber} + 1">PREV
+							[[${result.prevPage.pageNumber} + 1]]</a></li>
+
+					<li class="page-item"
+						th:classappend="${p.pageNumber == result.currentPageNum -1}?active: '' "
+						th:each="p:${result.pageList}"><a
+						th:href="${p.pageNumber} +1">[[${p.pageNumber} +1]]</a></li>
+
+					<li class="page-item" th:if="${result.nextPage}"><a
+						th:href="${result.nextPage.pageNumber} + 1">NEXT
+							[[${result.nextPage.pageNumber} + 1]]</a></li>
+				</ul>
+			</div>>
+		</nav>
+		-->		
+		
 		<form id='f1' th:action="@{/community/boardlist}" method="get">
 			<input type="hidden" name='page' th:value=${result.currentPageNum}>
 			<input type='hidden' name='size' th:value=${result.currentPage.pageSize}>
 			<input type="hidden" name="type" th:value="${pagevo.type}">	
 			<input type="hidden" name="keyword" th:value="${pagevo.keyword}">	
 		</form>
+
 
 
 		<nav>
@@ -74,22 +88,23 @@
 				</ul>
 			</div>
 		</nav>
-			
-	
-</div>
 
-<th:block layout:fragment="script1">
+
+
+	</div>
+
+	<th:block layout:fragment="script1">
+		<script src="/bootstrap/js/jquery.min.js"></script>
 		<script>
-	$(function(){
-		var formObj = $("#f1");
-		$(".pagination a").click(function(e){
-			e.preventDefault(); //본래의 기능(link)를 취소
-			formObj.find("[name='page']").val($(this).attr("href"));
-			//alert($(this).attr("href"));
-			formObj.submit();
-		});
-		
-		
+		$(function(){
+			var formObj = $("#f1");
+			$(".pagination a").click(function(e){
+				e.preventDefault(); //본래의 기능(link)를 취소
+				formObj.find("[name='page']").val($(this).attr("href"));
+				//alert($(this).attr("href"));
+				formObj.submit();
+			});
+			
 		$("#searchBtn").click(function(){
 			var typeStr = $("#searchType").find(":selected").val();
 			var keywordStr = $("#searchKeyword").val();
@@ -112,8 +127,22 @@
 	});
 	
 	</script>
-
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+			integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+			crossorigin="anonymous"></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+			integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+			crossorigin="anonymous"></script>
+		<script
+			src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+			integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+			crossorigin="anonymous"></script>
+		</script>
+		<link rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+			integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+			crossorigin="anonymous">	
 	</th:block>
-
-</body>
+</body >
 </html>
