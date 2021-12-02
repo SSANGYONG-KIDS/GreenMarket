@@ -13,18 +13,55 @@
 	<!-- 스타일 부분 -->
 	<th:block layout:fragment="style1">
 		<style>
+		/* 메인 공통 */
+			#main_wrapper {
+				height:1000px;
+				margin-left: 5%;
+				margin-top: 30px;
+				margin-bottom: 50px;
+			}
+			#main_tab, #main_left, #main_right {
+				height:100%;
+			}
+		
+		/* 메인 탭 */
+			#main_tab {
+				background-color: skyblue;
+				float: left;
+				width: 10%
+			}
+		
+		/* --- 메인 탭 끝 --- */
 		
 		/* 메인 왼쪽 창 */
 			#main_left {
-				
+				background-color: lightgreen;
+				float: left;
+				width: 30%
 			}
-
-		/* --- 메인 왼쪽 창 끝 */
-					
+			#div_my_id {
+			    border-bottom-color: rgb(221, 221, 221);
+			    border-bottom-width: 1px !important;
+			    border-bottom-style: solid !important;
+			    padding-bottom: 16px;
+			    padding-top: 14px;
+			    padding-left: 12px;
+			}
+			#left_top_span_my_id {
+				color: black;
+   		 		font-weight: 600;
+    			font-size: 20px;
+			}			
+			.tr_trade {
+				cursor: pointer;
+			}
+		/* --- 메인 왼쪽 창 끝 --- */
 		
 		/* 메인 오른쪽 창 */
 			#main_right {
-				
+				background-color: skyblue;
+				float: left;
+				width: 55%
 			}
 		/* --- 메인 오른쪽 창 끝 */
 		
@@ -45,7 +82,7 @@
 			}
 		/* data	*/
 			#data {
-				
+				display: none;
 			}
 		</style>
 	</th:block>
@@ -54,21 +91,56 @@
 	<div class="panel panel-default" layout:fragment="content1">
 		<!-- 모달창 배경 -->
 		<div id="modal_background"></div>
-		
-		<!-- 메인 탭 -->
-		<div id=main_tab>
-		</div>
-		
-		<!-- 메인 왼쪽 -->
-		<div id=main_left>
-			메인 왼쪽
-		</div> <!-- 메인 왼쪽 끝-->
 
-		<!-- 메인 오른쪽 -->
-		<div id=main_right>
-			메인 오른쪽
-		</div> <!-- 메인 오른쪽 끝-->
-		
+		<!-- 상단 부분 -->
+		 <section class="hero-wrap hero-wrap-2 js-myheight" style="background-image: url('/bootstrap/images/trade/chatMain.png');">
+		  <div class="overlay"></div>
+		  <div class="container">
+		    <div class="row no-gutters slider-text js-myheight align-items-end justify-content-center">
+		      <div class="col-md-9 ftco-animate pb-5 text-center">
+		       <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="fa fa-chevron-right"></i></a></span> <span>채팅하기 <i class="fa fa-chevron-right"></i></span></p>
+		       <h1 class="mb-0 bread">채팅하기</h1>
+		     </div>
+		   </div>
+		 </div>
+		</section>
+
+		<!-- 메인 wrapper -->
+		<div id="main_wrapper">
+			<!-- 메인 탭 -->
+			<div id="main_tab">
+				ALL<br>
+				RENT<br>
+				SHARE<br>
+			</div> <!-- 메인 탭 끝 -->
+			
+			<!-- 메인 왼쪽 -->
+			<div id="main_left">
+				<div id="div_my_id">
+					<span id="left_top_span_my_id" th:text="${mapOfPrincipal.mNickname}"></span>
+				</div>
+				<div id="chat_list_wraaper">
+					채팅목록이 나올 곳
+					<table>
+						<tr>
+							<th>거래아이템</th>
+							<th>구매자아이디</th>
+						</tr>
+						<th:block th:each="trade : ${tradesForSharer}">
+							<tr th:id="${trade.tId}" th:classappend="${('tr_trade') + (' tt')}">
+								<td th:id="${trade.tId + '_iTitle'}" th:text="${trade.item.iTitle}"></td>
+								<td th:id="${trade.tId + '_mId'}"th:text="${trade.buyMember.mId}"></td>
+							</tr>
+						</th:block>
+					</table>
+				</div>
+			</div> <!-- 메인 왼쪽 끝-->
+	
+			<!-- 메인 오른쪽 -->
+			<div id="main_right">
+				메인 오른쪽
+			</div> <!-- 메인 오른쪽 끝-->
+		</div> <!-- 메인 wrapper 끝 -->
 		<!-- 데이터 -->
 		<div id="data">
 			<input id="iId" th:value="${iId}">
@@ -90,6 +162,16 @@
 			};
 			myHeight();
 			
+			// 채팅방 목록에서 채팅 클릭 이벤트
+			$(document).on('click', ".tr_trade", e => {
+				let tId = e.target.id.replace(/[^0-9]/g, ""); // 거래 아이디
+				console.log(tId);
+				
+				// DB에서 채팅 내용 가져와서 뿌려주기 (TODO)
+				
+				// 소켓 연결하기 (TODO)
+			});
+
 
 		</script>
 	</th:block>
