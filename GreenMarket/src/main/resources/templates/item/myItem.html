@@ -1,5 +1,5 @@
 <!DOCTYPE html>
- <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
         xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout1}">
@@ -26,10 +26,11 @@
 		</div>
 	</section>
 	<section>
-		<h1 class="panel-heading" style="text-align: center;">Detail Item</h1>
 		<div class="panel-body">
 			<form th:action="@{/item/itemupdate}" method="post" id="itemform" >
+				<input type="hidden" th:value="${item.iId}" id="iId" name="iId"/> 
 				<input type="hidden" th:value="${item.photos}" id="iIds" name="iIds"/> 
+				<input type="hidden" id="delete_pids" name="delete_pids"/> 
 				<!-- 제목 -->
 				<div class="form-group">
 					<label for="Title">title:</label> 
@@ -38,7 +39,7 @@
 				<!-- 내용 -->
 				<div class="form-group">
 					<label for="Content">content:</label>
-					<textarea class="form-control" rows="3" cols="" id="iContent" name="iContent" th:value="${item.iContent}"></textarea>
+					<textarea class="form-control" rows="3" id="iContent" name="iContent" th:text="${item.iContent}"></textarea>
 				</div>
 				<!-- 작성자 -->
 				<div class="form-group">
@@ -79,7 +80,11 @@
 			  	<div style="margin:40px;">
 					<span>첨부 파일</span>
 					<br />
-					<div id="articlefileChange" style="font-size:10px; color: gray;">
+					<div id="articlefileChange" style="font-size:10px; color: gray;"> 
+						<div th:each="num: ${#numbers.sequence(0,item.photos.size-1)}" th:id="'file' + ${num}" th:onclick="'fileDelete(\'file' + ${num}+'\')'">
+							<font style="font-size:15px" th:text="${item.photos[num].ipOfilename}"></font>
+							<img src="/bootstrap/images/icon_minus.png" style="width:20px; height:auto; vertical-align: middle; cursor: pointer;">
+						</div>
 					</div>
 				</div>
 			  	<button type="submit" style="border: 1px solid #ddd; outline: none;">전송</button>
@@ -107,13 +112,24 @@ $(function () {
 });
 
 // 파일 현재 필드 숫자 totalCount랑 비교값
-var fileCount = 0;
+var origin_fileCount = parseInt('[[${item.photos.size}]]');
+var fileCount = parseInt('[[${item.photos.size}]]');
 // 해당 숫자를 수정하여 전체 업로드 갯수를 정한다.
 var totalCount = 4;
 // 파일 고유넘버
-var fileNum = 0;
+var fileNum = parseInt('[[${item.photos.size}]]');
 // 첨부파일 배열
 var content_files = new Array();
+var delete_idx = new Array(); //origin_files에서 지울 index 넣기
+
+var origin_files = new Array(); //원래 있던 사진 ipId 배열 형식으로 받아오기
+var list = '[[${ori_ipids}]]';
+var sublist=list.slice(1,-1); //양쪽 [,] 잘라내기
+var listSplit = sublist.split(',');
+
+for ( var str in listSplit ) {
+	origin_files.push(parseInt(listSplit[str]));
+}
 
 function fileCheck(e) {
     var files = e.target.files;
@@ -123,7 +139,8 @@ function fileCheck(e) {
     
     // 파일 개수 확인 및 제한
     if (fileCount + filesArr.length > totalCount) {
-      $.alert('파일은 최대 '+totalCount+'개까지 업로드 할 수 있습니다.');
+
+      alert('파일은 최대 '+totalCount+'개까지 업로드 할 수 있습니다.');
       return;
     } else {
     	 fileCount = fileCount + filesArr.length;
@@ -144,7 +161,7 @@ function fileCheck(e) {
       };
       reader.readAsDataURL(f);
     });
-    console.log(content_files);
+
     //초기화 한다.
     $("#input_file").val("");
   }
@@ -152,10 +169,14 @@ function fileCheck(e) {
 // 파일 부분 삭제 함수
 function fileDelete(fileNum){
     var no = fileNum.replace(/[^0-9]/g, "");
-    content_files[no].is_delete = true;
+    
+    if(parseInt(no)<origin_fileCount){
+    	delete_idx.push(parseInt(no)); //지울 파일 index push
+    }else{
+    	content_files[no-origin_fileCount].is_delete = true;
+    }
 	$('#' + fileNum).remove();
 	fileCount --;
-    console.log(content_files);
 }
 
 /*
@@ -163,16 +184,22 @@ function fileDelete(fileNum){
  */
 	function registerAction(){
 		var form = $("form")[0];
-		var item_id= $("#iId").val();
 		
-		if(typeof form != "undefined") {
-		 	var formData = new FormData(form);
-				for (var x = 0; x < content_files.length; x++) {
-					// 삭제 안한것만 담아 준다. 
-					if(!content_files[x].is_delete){
-						 formData.append("article_file", content_files[x]);
-					}
+		var formData = new FormData(form);
+		var delete_files = new Array();
+			for (var x = 0; x < content_files.length; x++) {
+				// 삭제 안한것만 담아 준다. 
+				if(!content_files[x].is_delete){
+					formData.append("article_file", content_files[x]);
 				}
+			}
+			
+			for (var y = 0; y < delete_idx.length; y++) {
+				// 삭제 한것만 담아 준다. 
+				delete_files.push(origin_files[delete_idx[y]]);
+			}
+			$('#delete_pids').val(delete_files);
+			
 		   /*
 		   * 파일업로드 multiple ajax처리
 		   */
@@ -185,21 +212,13 @@ function fileDelete(fileNum){
 		       	  processData: false,
 		   	      contentType: false
 		   	    }).done(function(responseBody) {
-		   	    	alert(responseBody);
-		   	    	
-		   	    	$.each(responseBody , function(idx, val) {
-		   	    	console.log(idx + " " + val.title);
-		   	    	});
-		   	    	
 		   	    	$('#iIds').val(responseBody);
 					
 					$('#itemform').submit();
 				}).fail(function(error) {
 					alert('사진을 입력해주세요.');
 				})
-			}else {
-		    	$('#itemform').submit();
-		      }    
+			  
 		return false;
 	}
 </script>
