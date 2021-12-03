@@ -24,5 +24,11 @@
 	<!-- <script src="/bootstrap/js/google-map.js"></script>  -->
 	<script defer src="/bootstrap/js/main.js"></script>
 
+	<!-- contextPath 관련 -->	
+	<link id="contextPathHolder" th:data-contextPath="${#httpServletRequest.getContextPath()}"/>
+	<script>
+		let contextPath = $('#contextPathHolder').attr('data-contextPath') ? $('#contextPathHolder').attr('data-contextPath') : '';
+	</script>
+
 </th:block>
 </html>
