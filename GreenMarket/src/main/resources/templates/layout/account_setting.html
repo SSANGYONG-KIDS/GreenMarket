@@ -34,7 +34,6 @@
 					<form class="modify-form" method="POST" >
 						<div class="validation-form" novalidate>
 
-
 							<!-- 아이디 폼 -->
 							<div class="row">
 								<div class="col">
@@ -145,7 +144,7 @@
 							<br> 
 							<input type="button"
 								class="btn btn-primary btn-lg btn-block" id="modify"value="수정하기" /> 
-								<input type="submit" class="btn btn-danger btn-lg btn-block"
+								<input type="button" class="btn btn-danger btn-lg btn-block" id="delete_account"
 								 value="회원 탈퇴하기" />
 						</div>
 					</form>
@@ -313,6 +312,29 @@
          		alert("수정실패");
          	});		
 	}
+	
+	
+	$("#delete_account").on('click', delete_account);
+   	function delete_account() {
+   		    alert("회원을 탈퇴하시겠습니까?");
+ 	 		let data = {
+ 	 		mId : $("#mId").val(),
+	 		};
+	 		
+ 			$.ajax({
+				type: "POST",
+				url: "/delete",
+				data: data
+			}).done(function(resp){
+         		alert("회원이 탈퇴되었습니다.");
+         		location.href="/";
+         	}).fail(function(error) {
+         		alert("회원 탈퇴 실패");
+         	});		
+	}
+	
+	
+	
       </script>
 		<!-- Bootstrap CSS -->
 		<!--       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" -->

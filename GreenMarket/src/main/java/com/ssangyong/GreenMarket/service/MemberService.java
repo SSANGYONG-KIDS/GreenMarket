@@ -33,7 +33,7 @@ public class MemberService implements UserDetailsService{
   		return memberrepository.findById(mId).get();
   	}
   	
-    // 글 수정
+    // 회원 수정
     @Transactional
     public void updateMember(MemberEntity member) {
     	MemberEntity memberEntity = memberrepository.findById(member.getMId()).get(); //영속화
@@ -44,6 +44,14 @@ public class MemberService implements UserDetailsService{
     	memberEntity.setMAddress(member.getMAddress());
        //함수 종료시(service종료) 트랜잭션 종료 후 더티체킹=> 자동 업데이트. DB flush
     }
+    
+    @Transactional
+    public void deleteById(String mId) {
+    	memberrepository.deleteById(mId);
+    	
+    }
+    
+    
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

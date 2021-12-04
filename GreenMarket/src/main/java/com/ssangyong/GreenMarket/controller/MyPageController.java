@@ -42,4 +42,11 @@ public class MyPageController {
 		 member.setMId(principal.getUsername());
 		 memberservice.updateMember(member);
 	 }
+	 
+	 @PostMapping("/delete")
+	 @ResponseBody
+		public void delete(String mId) {
+		 System.out.println("회원 탈퇴");
+		 memberservice.deleteById(mId);
+	 }
 }
