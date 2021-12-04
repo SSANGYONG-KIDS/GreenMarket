@@ -149,9 +149,13 @@
 
 	<th:block layout:fragment="script1">
 		<script th:inline="javascript">
+			// 웹소켓 전역 변수 선언
+			let ws;
 			// 웹소켓 열기 함수
 			function openWs(tId) {
-				console.log("wsOpen");
+				console.log('openWs - location.host:' + location.host + ' tId:' + tId);
+				let wsUri = 'ws://' + location.host + '/chat/' + tId;
+				ws = new WebSocket(wsUri);
 			}
 			
 			

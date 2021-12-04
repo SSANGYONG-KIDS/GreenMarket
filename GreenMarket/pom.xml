@@ -12,7 +12,7 @@
 	<groupId>com.ssangyong</groupId>
 	<artifactId>GreenMarket</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>GreenMarket</name>
 	<description>green market project</description>
 	<properties>
@@ -129,13 +129,20 @@
 		    <version>1.2.1.RELEASE</version>
 		</dependency>
 		
-		<!-- 자바 파일 바껴도 서버 자동 재시작되지 않도록 -->
+		<!-- 자바 파일 변경됐을 때 서버 자동 재시작 여부 결정(properties에서 설정) -->
 	    <dependency>
 	        <groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-devtools</artifactId>
 	        <scope>runtime</scope>
 	        <optional>true</optional>
 	    </dependency>	
+	    
+	    <!-- 웹소켓 -->
+   		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+	    
 	</dependencies>
 
 	<build>
