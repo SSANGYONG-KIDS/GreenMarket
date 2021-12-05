@@ -14,7 +14,7 @@ import org.springframework.web.socket.server.standard.ServletServerContainerFact
 @Configuration
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer{
-	
+	static final int BUFFER_SIZE = 3000000; // 메시지 버퍼 크기
 	
 	// 채팅 소켓
 	@Autowired
@@ -28,7 +28,6 @@ public class WebSocketConfig implements WebSocketConfigurer{
 	}
 
 	// 메시지 버퍼 크기 설정
-	static final int BUFFER_SIZE = 3000000;
 	@Bean
 	public ServletServerContainerFactoryBean createWebSocketContainer() {
 		ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();
