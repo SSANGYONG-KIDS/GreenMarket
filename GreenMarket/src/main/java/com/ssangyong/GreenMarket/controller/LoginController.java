@@ -30,10 +30,6 @@ public class LoginController {
    @Autowired
    MemberService memberservice;
    
-   
-   @GetMapping("/layout/login")
-   public void login() {
-   }
 
    @PostMapping( value = "/layout/signup")
    public String signup(MemberEntity member, String memberAddress1, String memberAddress2, String memberAddress3, String AddNum ) { // 회원 추가

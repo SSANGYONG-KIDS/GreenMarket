@@ -26,9 +26,6 @@ public class MainController {
 	   @RequestMapping("/layout/myPage")
 	   public void mypage() {}
 	   
-	   @RequestMapping("/layout/login")
-	   public void login() {}
-
 	   @RequestMapping("/layout/signup")
 	   public void signup() {}
 }

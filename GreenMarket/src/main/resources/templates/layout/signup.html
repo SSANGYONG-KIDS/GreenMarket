@@ -49,6 +49,31 @@
          </div>
          <br>
             
+         <!-- 닉네임 --> 
+         <div class="row">
+            <div class="col">
+               <label for="mPhoto"> 프로필 사진 업로드 </label> 
+               <input id="mPhoto" name="mPhoto" type="file" class="" /> 
+               <div class="img_wrap">
+					<img id="img" />
+				</div>
+            </div>
+         </div>    
+         <br>
+         
+          <!-- 닉네임 --> 
+         <div class="row">
+            <div class="col">
+               <label for="mNickname"> 닉네임 </label> 
+               <input id="mNickname" name="mNickname" type="text" placeholder="닉네임을 입력하세요" class="form-control" /> 
+            </div>
+            <div class="col-3">
+               <input type="button" id="checkNick" value="중복확인" class="form-control">
+            </div>
+         </div>    
+         <br>
+         
+         
          <!-- 휴대폰 번호 -->
          <div class="row">
             <div class="col">
@@ -74,17 +99,6 @@
          </div>
          <br>
                
-         <!-- 닉네임 --> 
-         <div class="row">
-            <div class="col">
-               <label for="mNickname"> 닉네임 </label> 
-               <input id="mNickname" name="mNickname" type="text" placeholder="닉네임을 입력하세요" class="form-control" /> 
-            </div>
-            <div class="col-3">
-               <input type="button" id="checkNick" value="중복확인" class="form-control">
-            </div>
-         </div>    
-         <br>
          
          <!-- 이메일 -->
          <div class="row">
@@ -271,6 +285,36 @@
                      }
                   }).open();
          }
+         
+         
+     var mPhoto;
+
+	$(document).ready(function() {
+		$('#mPhoto').on("change", handleImgFileSelect);
+	});
+
+	function handleImgFileSelect(e) {
+		var files = e.target.files;
+		var filesArr = Array.prototype.slice.call(files);
+
+		filesArr.forEach(function(f) {
+			if (!f.type.match("image.*")) {
+				alert("확장자는 이미지 확장자만 가능합니다.");
+				return;
+			}
+
+			mPhoto = f;
+
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('#img').attr('src', e.target.result);
+			}
+			reader.readAsDataURL(f);
+		});
+	}
+         
+         
+         
       </script>
       <!-- Bootstrap CSS -->
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
