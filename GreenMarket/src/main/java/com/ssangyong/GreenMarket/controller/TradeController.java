@@ -50,12 +50,23 @@ public class TradeController {
 	 */
 	@RequestMapping("reserveForm/{iId:.+}")
 	public String reserveForm(@PathVariable int iId, @AuthenticationPrincipal SecurityUser principal, Model model, ItemPageVO itemPageVO) {
-		System.out.println("reserveForm in TradeController");
+		System.out.println("-- reserveForm in TradeController");
 		System.out.println("iId: " + iId);
 		System.out.println("principal: " + principal);
+		System.out.println("itemPageVO: " + itemPageVO);
 		
+		// 날짜 한글 형식으로 바꾸기
+		if (itemPageVO.getStartDate() == null) itemPageVO.setStartDate("---");
+		if (itemPageVO.getEndDate() == null) itemPageVO.setEndDate("---");
+		String startDateKor = tradeService.convertFormToKorDate(itemPageVO.getStartDate());
+		String endDateKor = tradeService.convertFormToKorDate(itemPageVO.getEndDate());
+		System.out.println("startDateKor: " + startDateKor + ", endDateKor: " + endDateKor);
+		
+		// model에 값 넣기
 		model.addAttribute("iId", iId);
 		model.addAttribute("itemPageVO", itemPageVO);
+		model.addAttribute("startDateKor", startDateKor);
+		model.addAttribute("endDateKor", endDateKor);
 		
 		return "trade/reserveForm";
 	}
@@ -73,7 +84,7 @@ public class TradeController {
 	@PostMapping("reserve")
 	@ResponseBody
 	public String reserve(int iId, String startDate, String endDate, @AuthenticationPrincipal SecurityUser principal, Model model) {
-		System.out.println("controller: trade/reserve");
+		System.out.println("-- reserve in TradeController");
 		
 		// Timestamp 형식으로 변경
 		startDate += " 00:00:00";
@@ -134,7 +145,8 @@ public class TradeController {
 		model.addAttribute("tradesForSharer", tradesForSharer);
 		
 		// 내가 예약한 거래 목록 가져오기 (TODO)
-		
+		List<TradeEntity> tradeForRenter = tradeService.listTradeForRenter(loginService.selectById(principal.getUsername()));
+		model.addAttribute("tradeForRenter", tradeForRenter);
 	}
 	
 	/**

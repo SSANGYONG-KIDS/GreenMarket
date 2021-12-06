@@ -173,7 +173,11 @@
 						<div class="reserve_subject">예약 정보</div>
 						<div class="reserve_content_info_block">
 							<div class="block_subject">날짜</div>
-							<div id="block_content_date" class="block_content"><span id="span_startDate"> 2222년 22월 22일</span> – <span id="span_endDate">2222년 22월 22일</span></div>
+							<div id="block_content_date" class="block_content">
+								<span id="span_startDate" th:text="${startDateKor}"></span>
+								–
+								<span id="span_endDate" th:text="${endDateKor}"></span>
+							</div>
 <!--							<div class="block_content">
 								임시: <span th:text="${itemPageVO.startDate}"></span> - <span th:text="${itemPageVO.endDate}"></span>
 							</div>-->

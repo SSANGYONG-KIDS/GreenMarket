@@ -120,7 +120,7 @@
 					<span id="left_top_span_my_id" th:text="${mapOfPrincipal.mNickname}"></span>
 				</div>
 				<div id="chat_list_wraaper">
-					채팅목록이 나올 곳
+					<br>내 아이템에 대한 거래 목록<br>
 					<table>
 						<tr>
 							<th>거래아이템</th>
@@ -133,6 +133,20 @@
 							</tr>
 						</th:block>
 					</table>
+					
+					<br>내가 신청한 거래 목록<br>
+					<table>
+						<tr>
+							<th>거래아이템</th>
+							<th>판매자아이디</th>
+						</tr>
+						<th:block th:each="trade : ${tradesForRenter}">
+							<tr th:id="${trade.tId}" th:classappend="${('tr_trade') + (' tt')}">
+								<td th:id="${trade.tId + '_iTitle'}" th:text="${trade.item.iTitle}"></td>
+								<td th:id="${trade.tId + '_mId'}"th:text="${trade.item.member.mId}"></td>
+							</tr>
+						</th:block>
+					</table>					
 				</div>
 			</div> <!-- 메인 왼쪽 끝-->
 	

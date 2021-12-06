@@ -14,6 +14,17 @@ public class TradeService {
 	
 	@Autowired
 	TradeRepository tradeRepo;
+	
+	
+	/**
+	 * "YYYY-MM-DD" 형식의 String을 "YYYY년 MM월 DD일" 형식의 String으로 바꾸기
+	 */
+	public String convertFormToKorDate(String date) {
+		String dateKor = date.replaceFirst("-", "년 ");
+		dateKor = dateKor.replaceFirst("-", "월 ");
+		dateKor = dateKor + "일";
+		return dateKor;
+	}
 
 	/**
 	 * Trade 테이블에 거래 데이터 삽입하기

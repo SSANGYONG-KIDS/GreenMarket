@@ -21,16 +21,17 @@ public class ChatSocketHandler extends TextWebSocketHandler{
 	@SuppressWarnings("unchecked")	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		System.out.println("afterConnectionEstablished in ChatSocketHandler");
+		System.out.println("-- afterConnectionEstablished in ChatSocketHandler");
 		System.out.println("session.getId(): " + session.getId());
 		
 		// 세션 연결
 		super.afterConnectionEstablished(session);
 		String roomNumber = session.getUri().toString().split("/" + PATH +"/")[1]; // 방번호
+		System.out.println("roomNumber: " + roomNumber);
 		System.out.println("session.getPrincipal().getName(): " + session.getPrincipal().getName()); // 세션 m_id
 		
 		/**
-		 * 맵에 연결한 세션 저장
+		 * 맵에 세션 저장
 		 */
 		// 해당 방 번호가 맵에 없다면 put
 		if (!mapOfRoom.containsKey(roomNumber)) {
