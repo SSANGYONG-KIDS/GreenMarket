@@ -24,6 +24,7 @@
 		<section class="ftco-section">
 			<div class="container">
 				<div class="row d-flex">
+				<!-- d-flex 가변 길이 태그 제거 -->
 					<div class="col-md-4 ftco-animate" th:each="item:${itemResult}" th:onclick="'window.location.href=\'' + @{/item/itemdetail(iId=${item.iId})} +'\' '">
 						<div class="blog-entry justify-content-end">
 							<a th:href="@{/item/itemdetail(iId=${item.iId})}" class="block-20" style="background-image: url('/bootstrap/images/image_1.jpg');"></a>
