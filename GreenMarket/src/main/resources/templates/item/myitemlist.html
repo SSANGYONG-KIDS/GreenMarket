@@ -38,7 +38,6 @@
 									</div>
 									<div class="two">
 										<span class="yr" th:text="${item.iCategory.title}"></span> 
-										<!--  <span class="mos" th:text="${item.iRegdate}"></span> -->
 										<span class="mos" th:text="${#dates.format(new java.util.Date(item.iRegdate), 'yyyy-MM-dd hh:mm')}"></span> 
 									</div>
 								</div>
@@ -61,12 +60,5 @@
 		</div>
 	</section>
 </div>
-<th:block layout:fragment="script1">
-	<script>
-	$(function(){ 
-		
-	});
-	</script>
-</th:block>
 </body>
 </html>

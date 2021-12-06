@@ -29,6 +29,7 @@
 		    align-items: flex-end !important;
 		    display: flex !important;
 		    justify-content: space-between !important;
+		    padding-bottom: 50px;
 	    }
 	    ._544wcx {
 		    display: flex !important;
@@ -185,6 +186,19 @@
 		._14tkmhr {
 		    margin-right: 8px !important;
 		}
+		.image-box {
+		    width:380px;
+		    height:220px;
+		    overflow:hidden;
+		    margin:0 auto;
+		    padding-right: 50px;
+		}
+		
+		.image-thumbnail {
+		    width:100%;
+		    height:100%;
+		    object-fit:cover;
+		}
 	</style>
 </th:block>
 <div class="panel panel-default" layout:fragment="content1">
@@ -212,9 +226,7 @@
 				<div class="_544wcx">
 					<span class="_fardlj">
 						<span class="_hyestb">
-							<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false" style="display: block; height: 14px; width: 14px; fill: currentcolor;">
-								<path d="M15.094 1.579l-4.124 8.885-9.86 1.27a1 1 0 0 0-.542 1.736l7.293 6.565-1.965 9.852a1 1 0 0 0 1.483 1.061L16 25.951l8.625 4.997a1 1 0 0 0 1.482-1.06l-1.965-9.853 7.293-6.565a1 1 0 0 0-.541-1.735l-9.86-1.271-4.127-8.885a1 1 0 0 0-1.814 0z" fill-rule="evenodd"></path>
-							</svg>
+							<span style="color:red">★</span>
 							<span class="_1ne5r4rt" aria-hidden="true">[평점출력]</span>
 						</span>
 						<span class="_142pbzop">
@@ -224,7 +236,7 @@
 					<span class="_5oadh0" aria-hidden="true">·</span>
 					<span class="_fardlj">
 						<span class="_hyestb">
-							<span class="_8tbpu3" aria-hidden="true">▶</span>
+							<span class="_8tbpu3" style="color:red" aria-hidden="true">▶</span>
 						</span>
 						<span aria-hidden="false" class="_63km3vu">슈퍼호스트</span>
 					</span>
@@ -254,19 +266,20 @@
 			</div>
 			<div class="">
 				<div class="col-md-6 order-md-last heading-section pl-md-5 ftco-animate d-flex align-items-center">
+					<div class="image-box">
+						<img class="image-thumbnail" th:src="${item.photos[0].ipFilename}"/>
+					</div>
 					<div class="w-100">
-						<span class="subheading" th:text="${item.iCategory.title}"></span>
-						<h2 class="mb-4" th:text="${item.iTitle}"></h2>
+						<p style="color: black" th:text="${item.iContent}"></p>
+						<p>
+							<select id="iState" name="iState">
+								<option th:selected="${state}=='${item.iState}'" th:each="state:${istates}" th:value="${state}">[[${state.title}]]</option>
+							</select>
+						</p>
 						<p style="color: black">
-							<span></span><span style="font-size: 30px; font-style: bold; color: black;" th:text="${item.iPrice}"></span><span>원/1day</span>
-						</p>
-						<p th:text="${item.iContent}"></p>
-						<p>
-							<a href="#" class="btn btn-primary py-3 px-4" th:text="${item.iState.title}"></a>
-						</p>
-						<p>
-							<a href="#" class="btn btn-primary py-3 px-4" th:text="${item.iTstate.title}"></a>
-						</p>
+							<span style="font-size: 30px; font-style: bold; color: black;" th:text="${item.iPrice}"></span><span style="padding-right: 30px">원/1day</span>
+							<a href="#"  th:text="${item.iTstate.title}"></a>
+						</p>	
 					</div>
 				</div>
 			</div>
@@ -280,13 +293,13 @@
 					<input type="hidden" name="endDate" th:value="${pagevo.endDate}">	
 					<input type="hidden" name="priceLimit" th:value="${pagevo.priceLimit}">	
 					
-					<input type="submit" value="예약하기">
+					<input type="submit" class="btn btn-primary py-3 px-4" value="예약하기">
 				</form>
 			</div>
 		</div>
 	</section>
 
-		<!-- 유튜브 연결 => ?? -->
+	<!-- 유튜브 연결 => ?? -->
 	<section class="ftco-section ftco-about img"style="background-image: url(/bootstrap/images/bg_4.jpg);">
 	 <div class="overlay"></div>
 	 <div class="container py-md-5">
@@ -456,10 +469,7 @@
 	  <div class="row justify-content-center">
 	   <div class="col-md-12 text-center">
 	    <div class="img"  style="background-image: url(/bootstrap/images/bg_2.jpg);">
-		 
 			<div class="pull-right" style="width: 100%; height: 5%; padding: 0px 200px 0px 200px;">
-				<a th:href="@{/item/updateItem}" class="btn btn-info" th:classappend="${(item.member.mId != member.mId) ? 'hideDelete' : ''}">수정하기</a>
-				<a th:href="@{/item/deleteItem(iId=${item.iId})}" class="btn btn-info" th:classappend="${(item.member.mId != member.mId) ? 'hideDelete' : ''}">삭제하기</a>
 				<a th:href="@{/item/itemlist}" class="btn btn-info">목록보기</a>
 			</div>
 	   </div>

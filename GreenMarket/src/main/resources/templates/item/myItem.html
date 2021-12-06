@@ -75,7 +75,7 @@
 			</form>
 				
 			<form name="dataForm" id="dataForm" onsubmit="return registerAction()">
-			  	<button id="btn-upload" type="button" style="border: 1px solid #ddd; outline: none;">파일 추가</button>
+			  	<button id="btn-upload" type="button" class="btn btn-primary py-3 px-4">파일 추가</button>
 			  	<input id="input_file" multiple="multiple" type="file" style="display:none;">
 			  	<div style="margin:40px;">
 					<span>첨부 파일</span>
@@ -87,7 +87,8 @@
 						</div>
 					</div>
 				</div>
-			  	<button type="submit" style="border: 1px solid #ddd; outline: none;">전송</button>
+			  	<button type="submit" class="btn btn-primary py-3 px-4">수정</button>
+			  	<input type="button" onclick="handleOnClick()" value="삭제" class="btn btn-primary py-3 px-4"></button>
 			  </form>
 		</div>
 	</section>
@@ -100,6 +101,26 @@ $(document).ready(function()
 		{
 			$("#input_file").on("change", fileCheck);
 		});
+		
+function handleOnClick()  {
+	  let like = confirm("해당 물품을 삭제 하시겠습니까?\n(* 관련 데이터가 모두 삭제됩니다.)");
+	  var obj = {"iId":"[[${item.iId}]]" };
+
+	  if(like){
+		  $.ajax({
+	   	      type: 'delete',
+	   	   	  enctype: 'multipart/form-data',
+	   	      url: '/item/itemdelete/'+obj["iId"],
+	   	    }).done(function(response) {
+	 	   	    if(response=="삭제실패")
+	 				alert("거래 내역이 존재할 경우 삭제할 수 없습니다.");
+	 			else
+	 				window.location.href='/item/myitemlist';
+			}).fail(function(error) {
+				alert("거래 내역이 존재할 경우 삭제할 수 없습니다.");
+			})
+	  }
+	}
 
 /**
  * 첨부파일로직

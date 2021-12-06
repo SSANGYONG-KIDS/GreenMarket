@@ -15,7 +15,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -62,7 +64,8 @@ public class ItemController {
 		model.addAttribute("item_owner",item.getMember());
 		model.addAttribute("item_photos",itemPhotoService.selectById(item.getIId()));
 		model.addAttribute("pagevo", pagevo);
-		System.out.println(pagevo);
+		model.addAttribute("istates",IStateEnumType.values());
+		model.addAttribute("tstates",ItStateEnumType.values());
 		
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		MemberEntity member =  loginService.selectById(userDetails.getUsername());
@@ -173,8 +176,8 @@ public class ItemController {
 	}
 	
 	
-	@GetMapping("/itemdelete")
-	public String itemDelete(Integer iId, RedirectAttributes rttr ) {
+	@DeleteMapping("/item/itemdelete/{iId}")
+	public String itemDelete(@PathVariable int iId, RedirectAttributes rttr ) {
 		int ret = itemService.deleteItem(iId);
 		rttr.addFlashAttribute("resultMessage", ret==0?"삭제실패":"삭제성공");
 		return "redirect:/item/myitemlist";
