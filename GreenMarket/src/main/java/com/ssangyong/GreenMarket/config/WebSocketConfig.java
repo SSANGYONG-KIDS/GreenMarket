@@ -24,7 +24,7 @@ public class WebSocketConfig implements WebSocketConfigurer{
 	// 핸들러 등록
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(chatSocketHandler, "/chat/{roomNumber}");
+		registry.addHandler(chatSocketHandler, "/chat/{tId}");
 	}
 
 	// 메시지 버퍼 크기 설정

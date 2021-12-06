@@ -127,7 +127,7 @@ public class TradeController {
 	}
 	
 	/**
-	 * 채팅하기
+	 * 채팅 메인 화면
 	 */
 	@RequestMapping("chatMain")
 	public void chatMain(Model model, @AuthenticationPrincipal SecurityUser principal) {
@@ -145,8 +145,8 @@ public class TradeController {
 		model.addAttribute("tradesForSharer", tradesForSharer);
 		
 		// 내가 예약한 거래 목록 가져오기 (TODO)
-		List<TradeEntity> tradeForRenter = tradeService.listTradeForRenter(loginService.selectById(principal.getUsername()));
-		model.addAttribute("tradeForRenter", tradeForRenter);
+		List<TradeEntity> tradesForRenter = tradeService.listTradeForRenter(loginService.selectById(principal.getUsername()));
+		model.addAttribute("tradesForRenter", tradesForRenter);
 	}
 	
 	/**
@@ -156,17 +156,16 @@ public class TradeController {
 	@ResponseBody
 	public String test() {
 		// 내가 구매한 거래 내역 가져오기
-//		return tradeService.listTradeForRenter(loginService.selectById("testtest")).toString();
+		return tradeService.listTradeForRenter(loginService.selectById("test1")).toString();
 		
 		// 내가 판매한 거래 내역 가져오기
-		List<TradeEntity> list = tradeService.listTradeForSharer(loginService.selectById("test1"));
-		System.out.println("before sysout");
-		for (TradeEntity val : list) {
-			System.out.println(val.getTId());
-			System.out.println(val.getItem().getMember().getMId());
-		}
-		
-		return null; 
+//		List<TradeEntity> list = tradeService.listTradeForSharer(loginService.selectById("test1"));
+//		System.out.println("before sysout");
+//		for (TradeEntity val : list) {
+//			System.out.println(val.getTId());
+//			System.out.println(val.getItem().getMember().getMId());
+//		}
+//		return null; 
 	}
 
 }

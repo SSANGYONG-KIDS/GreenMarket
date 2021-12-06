@@ -171,6 +171,7 @@
 			// 웹 소켓 열기 함수
 			function openWsOfChat(tId) {
 				console.log('openWsOfChat - location.host:' + location.host + ' tId:' + tId);
+				// TODO 이미 열린 채팅 소켓 닫기
 				let wsUriOfChat = 'ws://' + location.host + '/chat/' + tId;
 				wsOfChat = new WebSocket(wsUriOfChat);
 				configWsOfChat(wsOfChat); // 웹 소켓 세팅
@@ -187,12 +188,21 @@
 					if (resObj.type == 'afterChatConnection') {
 						myChatSessionId = resObj.chatSessionId; // 전역 변수에 내 채팅 세션 아이디 넣기
 					}
-					
-					debugger;
 				};
 			}
 			
+			// 서버에 msg 보내기
+			function sendMsg(msg) {
+				let payload = {
+					type: 'msg',
+					msg: msg
+				}
+				wsOfChat.send(JSON.stringify(payload));
+			}
 			
+		</script> <!-- 채팅 웹소켓 관련 스크립트 끝 -->
+		
+		<script th:inline="javascript">
 			// 상단 메뉴 쪽 이미지 부분
 			let divisor = 3; 
 			var myHeight = function() {
