@@ -1,6 +1,7 @@
 package com.ssangyong.GreenMarket.controller;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -39,7 +40,7 @@ public class TradeController {
 	
 	/**
 	 * 예약 작성 페이지
-	 * df
+	 * 
 	 */
 	@RequestMapping("reserveForm/{iId:.+}")
 	public String reserveForm(@PathVariable int iId, @AuthenticationPrincipal SecurityUser principal, Model model, ItemPageVO itemPageVO) {
@@ -107,4 +108,33 @@ public class TradeController {
 	public void s3Test() {
 		
 	}
+	
+	/**
+	 * 채팅하기
+	 */
+	@RequestMapping("chatMain")
+	public void chatMain(@AuthenticationPrincipal SecurityUser principal) {
+		System.out.println("controller: trade/chatMain");
+	}
+	
+	/**
+	 * 테스트
+	 */
+	@RequestMapping("test")
+	@ResponseBody
+	public String test() {
+		// 내가 구매한 거래 내역 가져오기
+//		return tradeService.listTradeForRenter(loginService.selectById("testtest")).toString();
+		
+		// 내가 판매한 거래 내역 가져오기
+		List<TradeEntity> list = tradeService.listTradeForSharer(loginService.selectById("test1"));
+		System.out.println("before sysout");
+		for (TradeEntity val : list) {
+			System.out.println(val.getTId());
+			System.out.println(val.getItem().getMember().getMId());
+		}
+		
+		return null; 
+	}
+
 }

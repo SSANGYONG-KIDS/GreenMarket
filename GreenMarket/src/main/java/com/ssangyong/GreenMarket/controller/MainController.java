@@ -20,13 +20,12 @@ import com.ssangyong.GreenMarket.service.LoginService;
 @Controller
 public class MainController {
 	
-		@RequestMapping(value = {"/", "/index"})
-	    public String main(Model model) {
-	       System.out.println("main");
-	       model.addAttribute("itemSorts", ICategoryEnumType.values());
-	       return "index";
-	    }
-		
+	   @RequestMapping(value = {"/", "/index"})
+	   public String main(Model model) {
+	      System.out.println("main");
+	      model.addAttribute("itemSorts", ICategoryEnumType.values());
+	      return "index";
+	   }
 	   
 	   @RequestMapping("/layout/about")
 	   public void about() {

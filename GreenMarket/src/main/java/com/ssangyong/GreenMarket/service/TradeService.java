@@ -1,8 +1,11 @@
 package com.ssangyong.GreenMarket.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssangyong.GreenMarket.model.MemberEntity;
 import com.ssangyong.GreenMarket.model.TradeEntity;
 import com.ssangyong.GreenMarket.repository.TradeRepository;
 
@@ -19,6 +22,22 @@ public class TradeService {
 	 */
 	public TradeEntity insertTrade(TradeEntity trade) {
 		return tradeRepo.save(trade);
+	}
+	
+	/**
+	 * 한 멤버가 구매(Rent)한 거래 내역 가져오기
+	 */
+	public List<TradeEntity> listTradeForRenter(MemberEntity member) {
+		List<TradeEntity> list = tradeRepo.findAllByBuyMember(member);
+		return list;
+	}
+	
+	/**
+	 * 한 멤버가 판매(Share)한 거래 내역 가져오기
+	 */
+	public List<TradeEntity> listTradeForSharer(MemberEntity member) {
+		List<TradeEntity> list = tradeRepo.findByMIdOfItem(member.getMId());
+		return list;
 	}
 
 }

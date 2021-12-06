@@ -20,17 +20,21 @@
 			#reserve_main {
 				margin-left: 21%;
 				color: black;
+			    height: 800px;
 			}
 			#reserve_main_left {
 				width: 546px;
+				float: left;
 			}
 			#reserve_header {
 				height: 81px;
 			}
 			#wrapper_reserve_prev {
 				width: 52px;
+				height: 52px;
 				float: left;
 				color: black;
+				cursor: pointer;
 			}
 			#reserve_header_subject {
 				font-size: 30px;
@@ -69,6 +73,30 @@
 			    border-top-style: solid !important;
     			padding-top: 32px;
 			}
+			
+			/* 예약 메인 오른쪽 부분 */
+			#reserve_right {
+				position: sticky !important;
+			    top: var(--navigation-bar-offset, 80px) !important;
+			    z-index: 1 !important;
+			    width: 20% !important;
+			    display: inline-block !important;
+			    padding-right: 1px !important;
+			    padding: 24px !important;
+			    border: 1px solid rgb(221, 221, 221) !important;
+			    border-radius: 12px !important;
+				margin-left: 6.5%;
+						
+			}
+			#reserve_right_price_info {
+				border-top-color: rgb(221, 221, 221);
+				border-top-width: 1px !important;
+			    border-top-style: solid !important;
+    			padding-top: 32px;
+    			margin-top: 23px;		
+			}
+			
+			
 		/* 모달창 */
 			#modal_background {
 				display: none;
@@ -127,6 +155,7 @@
 		
 		<!-- 예약 메인 부분 -->
 		<div id="reserve_main" class="ftco-section">
+			<!-- 예약 메인 왼쪽 부분 -->
 			<div id="reserve_main_left">
 				<div id="reserve_header">
 					<div id="wrapper_reserve_prev">
@@ -159,8 +188,23 @@
 						예약하기
 					</div>
 				</div>			
-			</div>
-		</div>
+			</div> <!-- 예약 메인 왼쪽 부분 끝 -->
+
+			<!-- 예약 메인 오른쪽 부분 -->
+			<div id="reserve_right">
+				<div class="reserve_right_item_info">
+					사진과 물건 내용 넣을 공간
+				</div>
+				<div id="reserve_right_price_info">
+					<div class="reserve_subject">요금 세부 정보</div>
+				</div>
+			</div> <!-- 예약 메인 오른쪽 부분 끝-->
+				
+		</div> <!-- 예약 메인 부분 끝 -->
+		
+
+		
+		
 		<!-- 날짜 변경 모달창 -->
 		<div id="modal_date" class="drag">
 			<div id="modal_date_close_wrapper">
@@ -213,7 +257,12 @@
 					$('.overlay').css('height', $(window).height()/divisor);
 				});
 			};
-			myHeight();			
+			myHeight();
+			
+			// 이전으로 돌아가기 버튼
+			$("#wrapper_reserve_prev").click(e => {
+				location.href = '/item/itemdetail?iId=' + iId;
+			});
 		
 			// 예약하기 버튼 눌렀을 때
 			$("#reserve_button").click(e => {
