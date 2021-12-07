@@ -27,7 +27,7 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 					<li class="nav-item"><a th:href="@{/layout/community}" class="nav-link">Community</a></li>
 					<li class="nav-item" sec:authorize-expr="!isAuthenticated()"><a href="#" data-toggle="modal" data-target="#exampleModal" class="nav-link">로그인</a></li>
 					<li class="nav-item" sec:authorize-expr="isAuthenticated()"><a th:href="@{/login/logout}" class="nav-link">로그아웃</a></li>
-					<li class="nav-item"><a th:href="@{/layout/signup}" class="nav-link">회원가입</a></li>
+					<li class="nav-item" sec:authorize-expr="!isAuthenticated()"><a th:href="@{/layout/signup}" class="nav-link">회원가입</a></li>
 					<li class="nav-item" sec:authorize-expr="isAuthenticated()"><a th:href="@{/layout/myPage}" class="nav-link">마이페이지</a></li>
 				</ul>
 				<div class="info">
