@@ -1,7 +1,9 @@
 package com.ssangyong.GreenMarket.controller;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ssangyong.GreenMarket.model.ItemEntity;
 import com.ssangyong.GreenMarket.model.ItemPageVO;
+import com.ssangyong.GreenMarket.model.MemberEntity;
 import com.ssangyong.GreenMarket.model.SecurityUser;
 import com.ssangyong.GreenMarket.model.TStateEnumType;
 import com.ssangyong.GreenMarket.model.TradeEntity;
@@ -33,6 +36,9 @@ public class TradeController {
 	@Autowired
 	LoginService loginService;
 	
+	/**
+	 * 아이템 가져오기 테스트
+	 */
 	@RequestMapping("tempShowItemList")
 	public void tempShowItemList() {
 
@@ -44,12 +50,23 @@ public class TradeController {
 	 */
 	@RequestMapping("reserveForm/{iId:.+}")
 	public String reserveForm(@PathVariable int iId, @AuthenticationPrincipal SecurityUser principal, Model model, ItemPageVO itemPageVO) {
-		System.out.println("reserveForm in TradeController");
+		System.out.println("-- reserveForm in TradeController");
 		System.out.println("iId: " + iId);
 		System.out.println("principal: " + principal);
+		System.out.println("itemPageVO: " + itemPageVO);
 		
+		// 날짜 한글 형식으로 바꾸기
+		if (itemPageVO.getStartDate() == null) itemPageVO.setStartDate("---");
+		if (itemPageVO.getEndDate() == null) itemPageVO.setEndDate("---");
+		String startDateKor = tradeService.convertFormToKorDate(itemPageVO.getStartDate());
+		String endDateKor = tradeService.convertFormToKorDate(itemPageVO.getEndDate());
+		System.out.println("startDateKor: " + startDateKor + ", endDateKor: " + endDateKor);
+		
+		// model에 값 넣기
 		model.addAttribute("iId", iId);
 		model.addAttribute("itemPageVO", itemPageVO);
+		model.addAttribute("startDateKor", startDateKor);
+		model.addAttribute("endDateKor", endDateKor);
 		
 		return "trade/reserveForm";
 	}
@@ -67,7 +84,7 @@ public class TradeController {
 	@PostMapping("reserve")
 	@ResponseBody
 	public String reserve(int iId, String startDate, String endDate, @AuthenticationPrincipal SecurityUser principal, Model model) {
-		System.out.println("controller: trade/reserve");
+		System.out.println("-- reserve in TradeController");
 		
 		// Timestamp 형식으로 변경
 		startDate += " 00:00:00";
@@ -110,11 +127,26 @@ public class TradeController {
 	}
 	
 	/**
-	 * 채팅하기
+	 * 채팅 메인 화면
 	 */
 	@RequestMapping("chatMain")
-	public void chatMain(@AuthenticationPrincipal SecurityUser principal) {
+	public void chatMain(Model model, @AuthenticationPrincipal SecurityUser principal) {
 		System.out.println("controller: trade/chatMain");
+		
+		// 세션 멤버 정보 가져오기
+		MemberEntity MemberOfPrincipal = loginService.selectById(principal.getUsername());
+		Map<Object, Object> mapOfPrincipal = new HashMap<>(); // 필요한 정보만 맵에 담기
+		mapOfPrincipal.put("mId", MemberOfPrincipal.getMId());
+		mapOfPrincipal.put("mNickname", MemberOfPrincipal.getMNickname());
+		model.addAttribute("mapOfPrincipal", mapOfPrincipal);
+		
+		// 내 아이템에 대한 거래 목록 가져오기
+		List<TradeEntity> tradesForSharer = tradeService.listTradeForSharer(loginService.selectById(principal.getUsername()));
+		model.addAttribute("tradesForSharer", tradesForSharer);
+		
+		// 내가 예약한 거래 목록 가져오기 (TODO)
+		List<TradeEntity> tradesForRenter = tradeService.listTradeForRenter(loginService.selectById(principal.getUsername()));
+		model.addAttribute("tradesForRenter", tradesForRenter);
 	}
 	
 	/**
@@ -124,17 +156,16 @@ public class TradeController {
 	@ResponseBody
 	public String test() {
 		// 내가 구매한 거래 내역 가져오기
-//		return tradeService.listTradeForRenter(loginService.selectById("testtest")).toString();
+		return tradeService.listTradeForRenter(loginService.selectById("test1")).toString();
 		
 		// 내가 판매한 거래 내역 가져오기
-		List<TradeEntity> list = tradeService.listTradeForSharer(loginService.selectById("test1"));
-		System.out.println("before sysout");
-		for (TradeEntity val : list) {
-			System.out.println(val.getTId());
-			System.out.println(val.getItem().getMember().getMId());
-		}
-		
-		return null; 
+//		List<TradeEntity> list = tradeService.listTradeForSharer(loginService.selectById("test1"));
+//		System.out.println("before sysout");
+//		for (TradeEntity val : list) {
+//			System.out.println(val.getTId());
+//			System.out.println(val.getItem().getMember().getMId());
+//		}
+//		return null; 
 	}
 
 }
