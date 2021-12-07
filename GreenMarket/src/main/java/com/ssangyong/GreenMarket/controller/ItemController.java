@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,11 +15,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ssangyong.GreenMarket.model.ICategoryEnumType;
 import com.ssangyong.GreenMarket.model.IStateEnumType;
 import com.ssangyong.GreenMarket.model.ItStateEnumType;
@@ -60,7 +64,8 @@ public class ItemController {
 		model.addAttribute("item_owner",item.getMember());
 		model.addAttribute("item_photos",itemPhotoService.selectById(item.getIId()));
 		model.addAttribute("pagevo", pagevo);
-		System.out.println(pagevo);
+		model.addAttribute("istates",IStateEnumType.values());
+		model.addAttribute("tstates",ItStateEnumType.values());
 		
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		MemberEntity member =  loginService.selectById(userDetails.getUsername());
@@ -80,7 +85,7 @@ public class ItemController {
 	}
 	
 	@GetMapping("/myitem")
-	public void selectMyItem(Model model, Integer iId, HttpServletRequest request, Principal principal, Authentication authentication) {
+	public void selectMyItem(Model model, Integer iId, HttpServletRequest request, Principal principal, Authentication authentication) throws JsonProcessingException {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		MemberEntity member =  loginService.selectById(userDetails.getUsername());
 		model.addAttribute("member",member);
@@ -90,6 +95,47 @@ public class ItemController {
 		model.addAttribute("istates",IStateEnumType.values());
 		model.addAttribute("tstates",ItStateEnumType.values());
 		model.addAttribute("categorys",ICategoryEnumType.values());
+		
+		int[] ori_ipids= new int[item.getPhotos().size()];
+		for(int i=0;i<item.getPhotos().size();i++) {
+			ori_ipids[i]= item.getPhotos().get(i).getIpId();
+		}
+		model.addAttribute("ori_ipids", Arrays.toString(ori_ipids));
+	}
+	
+	@PostMapping("/itemupdate")
+	public String itemUpdatePost(ItemEntity item, String iIds, String delete_pids,String writer, String iTstate, String iCategory, RedirectAttributes rttr, Authentication authentication) {
+		//item 정보 수정
+		item.setMember(MemberEntity.builder().mId(writer).build());
+		item.setICategory(ICategoryEnumType.valueOf(iCategory));
+		item.setITstate(ItStateEnumType.valueOf(iTstate));
+		item.setIRegdate(Timestamp.valueOf(LocalDateTime.now()));
+		ItemEntity ins_item = itemService.updateItem(item);
+		
+		//등록된 새로운 사진들 ipid받아와서, photo객체에 iId설정해주기 
+		List<Integer> iId_list = new ArrayList();
+		String[] splitStr = iIds.split(",");
+		for(int i=0; i<splitStr.length; i++){
+			iId_list.add(Integer.parseInt(splitStr[i]));
+		}
+		for(Integer i: iId_list) {
+			ItemPhotoEntity iphoto = itemPhotoService.selectById(i);
+			iphoto.setItem(ins_item);
+			itemPhotoService.updateItemPhoto(iphoto);
+		}
+		
+		//사용자가 지운 사진들 객체 테이블에서 제거하기!
+		List<Integer> deletelist = new ArrayList();
+		String[] delete_pid_str = delete_pids.split(",");
+		for(int i=0; i<delete_pid_str.length; i++){
+			deletelist.add(Integer.parseInt(delete_pid_str[i]));
+		}
+		for(Integer j: deletelist) {
+			itemPhotoService.deleteItemPhoto(j);
+		}
+		
+		rttr.addFlashAttribute("resultMessage", ins_item==null?"입력실패":"입력성공");
+		return "redirect:/item/myitemlist";
 	}
 	
 	@GetMapping("/insertform")
@@ -130,41 +176,11 @@ public class ItemController {
 	}
 	
 	
-	@GetMapping("/itemdelete")
-	public String itemDelete(Integer iId, RedirectAttributes rttr ) {
+	@DeleteMapping("/item/itemdelete/{iId}")
+	public String itemDelete(@PathVariable int iId, RedirectAttributes rttr ) {
 		int ret = itemService.deleteItem(iId);
 		rttr.addFlashAttribute("resultMessage", ret==0?"삭제실패":"삭제성공");
 		return "redirect:/item/myitemlist";
 	}
 	
-	@GetMapping("/itemupdate")
-	public String itemUpdateForm(Model model, Integer iId, Principal principal, Authentication authentication) {
-		
-		model.addAttribute("item",itemService.selectById(iId));
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		MemberEntity member =  loginService.selectById(userDetails.getUsername());
-		model.addAttribute("member",member);
-		
-		return "/item/iteminsert";
-	}
-	
-	@PostMapping("/itemupdate")
-	public String itemUpdate(ItemEntity item, String mId, RedirectAttributes rttr, Authentication authentication, Integer page, Integer size, String itemName, ICategoryEnumType itemSort, String startDate, String endDate, Integer priceLimit) {
-		item.setMember(loginService.selectById(mId));
-		ItemEntity update_item = itemService.updateItem(item);	
-		rttr.addFlashAttribute("resultMessage", update_item==null?"수정실패":"수정성공");
-		
-		//방법1...주소창에 안보이기 
-		ItemPageVO pagevo = ItemPageVO.builder()
-						.page(page).size(size).itemName(itemName).itemSort(itemSort).startDate(startDate).endDate(endDate).priceLimit(priceLimit)
-						.build();
-		rttr.addFlashAttribute("pagevo", pagevo);
-		
-		return "redirect:/item/myitemlist";
-		
-		//방법2...주소창에 보이기 
-		//String param = "page=" + page + "&size=" + size + "&type="+type + "&keyword=" + keyword;
-		//return "redirect:/item/itemlist?" + param;
-			
-	}
 }

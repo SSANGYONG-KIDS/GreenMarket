@@ -1,5 +1,5 @@
 <!DOCTYPE html>
- <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
         xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout1}">
@@ -26,7 +26,6 @@
 		</div>
 	</section>
 	<section>
-		<h1 class="panel-heading" style="text-align: center;">Insert Item</h1>
 		<div class="panel-body">
 			<form th:action="@{/item/iteminsert}" method="post" id="itemform" >
 				<input type="hidden" id="iIds" name="iIds"/> 
@@ -82,7 +81,7 @@
 					<div id="articlefileChange" style="font-size:10px; color: gray;">
 					</div>
 				</div>
-			  	<button type="submit" class="btn btn-primary py-3 px-4">전송</button>
+			  	<button type="submit" class="btn btn-primary py-3 px-4">등록</button>
 			  </form>
 		</div>
 	</section>
@@ -149,18 +148,18 @@ function fileCheck(e) {
     $("#input_file").val("");
   }
 
-// 파일 부분 삭제 함수
-function fileDelete(fileNum){
-    var no = fileNum.replace(/[^0-9]/g, "");
-    content_files[no].is_delete = true;
-	$('#' + fileNum).remove();
-	fileCount --;
-    console.log(content_files);
-}
-
-/*
- * 폼 submit 로직
- */
+	// 파일 부분 삭제 함수
+	function fileDelete(fileNum){
+	    var no = fileNum.replace(/[^0-9]/g, "");
+	    content_files[no].is_delete = true;
+		$('#' + fileNum).remove();
+		fileCount --;
+	    console.log(content_files);
+	}
+	
+	/*
+	 * 폼 submit 로직
+	 */
 	function registerAction(){
 		var form = $("form")[0];
 		var item_id= $("#iId").val();
@@ -185,12 +184,6 @@ function fileDelete(fileNum){
 		       	  processData: false,
 		   	      contentType: false
 		   	    }).done(function(responseBody) {
-		   	    	alert(responseBody);
-		   	    	
-		   	    	$.each(responseBody , function(idx, val) {
-		   	    	console.log(idx + " " + val.title);
-		   	    	});
-		   	    	
 		   	    	$('#iIds').val(responseBody);
 					
 					$('#itemform').submit();
