@@ -171,7 +171,14 @@
 			// 웹 소켓 열기 함수
 			function openWsOfChat(tId) {
 				console.log('openWsOfChat - location.host:' + location.host + ' tId:' + tId);
-				// TODO 이미 열린 채팅 소켓 닫기
+				
+				// 이미 열린 채팅 있다면 닫기
+				if (wsOfChat != null && wsOfChat.readyState == 1) {
+					console.log('previous connection is closed - ' + 'url: ' + wsOfChat.url);
+					wsOfChat.close();
+				}
+				
+				// 웹 소켓 열기
 				let wsUriOfChat = 'ws://' + location.host + '/chat/' + tId;
 				wsOfChat = new WebSocket(wsUriOfChat);
 				configWsOfChat(wsOfChat); // 웹 소켓 세팅
@@ -179,7 +186,6 @@
 			
 			// 소켓 세팅 설정 함수 (소켓 열 때 사용)
 			function configWsOfChat(ws) {
-				
 				// 서버에서 메시지 받았을 때
 				wsOfChat.onmessage = res => {
 					resObj = JSON.parse(res.data);
@@ -188,6 +194,12 @@
 					if (resObj.type == 'afterChatConnection') {
 						myChatSessionId = resObj.chatSessionId; // 전역 변수에 내 채팅 세션 아이디 넣기
 					}
+					
+					// 일반 세미지라면
+					if (resObj.type == 'msg') {
+						console.log('received msg: resOBj');
+						debugger;
+					}
 				};
 			}
 			
@@ -195,7 +207,7 @@
 			function sendMsg(msg) {
 				let payload = {
 					type: 'msg',
-					msg: msg
+					content: msg
 				}
 				wsOfChat.send(JSON.stringify(payload));
 			}
