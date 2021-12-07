@@ -2,6 +2,7 @@ package com.ssangyong.GreenMarket.model;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
