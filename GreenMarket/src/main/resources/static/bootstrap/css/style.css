@@ -10085,3 +10085,5 @@ textarea.form-control {
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -136px; } }
+
+span.ic_gnb_x {display:inline-block;width: 16px;height: 16px;background:url(./images/ic_gnb.png) no-repeat -100px -100px;vertical-align:middle;}

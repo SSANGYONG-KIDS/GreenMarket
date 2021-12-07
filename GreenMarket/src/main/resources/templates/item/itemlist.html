@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout1}">
+<body>
+<div class="panel panel-default" layout:fragment="content1">
+		<section class="hero-wrap hero-wrap-2 js-fullheight"
+			style="background-image: url('/bootstrap/images/bg_1.jpg');">
+			<div class="overlay"></div>
+			<div class="container">
+				<div
+					class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+					<div class="col-md-9 ftco-animate pb-5 text-center">
+						<p class="breadcrumbs">
+							<span class="mr-2"><a th:href="@{/index}">Home <i class="fa fa-chevron-right"></i></a></span> <span>Searching Items<i class="fa fa-chevron-right"></i></span>
+						</p>
+						<h1 class="mb-0 bread">Searching Items</h1>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="ftco-section">
+			<div class="container">
+				<div class="row d-flex">
+					<div class="col-md-4 ftco-animate" th:each="item:${itemResult}" >
+						<form th:action="@{/item/itemdetail}" method="get">
+						<div class="blog-entry justify-content-end">
+							<div class="block-20"><img style="color: white;" width="100%" height="100%" th:src="@{${item.photos[0].ipFilename}}"></div>
+							<div class="text">
+								<div class="d-flex align-items-center mb-4 topp">
+									<div class="one">
+										<span class="day" style="font-size: 30px;" th:text="${item.iId}"></span>
+									</div>
+									<div class="two">
+										<span class="yr" th:text="${item.iCategory.title}"></span> 
+										<span class="mos" th:text="${#dates.format(new java.util.Date(item.iRegdate), 'yyyy-MM-dd hh:mm')}"></span>
+									</div>
+								</div>
+								<h3 class="heading">
+									<a href="#" th:text="${item.iTitle}"></a>
+								</h3>
+								<p th:text="${item.iContent}"></p>
+								<input type="hidden" name='iId' th:value=${item.iId}>
+								<input type="hidden" name='page' th:value=${result.currentPageNum}>
+								<input type='hidden' name='size' th:value=${result.currentPage.pageSize}>
+								<input type="hidden" name="itemName" th:value="${pagevo.itemName}">	
+								<input type="hidden" name="itemSort" th:value="${pagevo.itemSort}">	
+								<input type="hidden" name="startDate" th:value="${pagevo.startDate}">	
+								<input type="hidden" name="endDate" th:value="${pagevo.endDate}">	
+								<input type="hidden" name="priceLimit" th:value="${pagevo.priceLimit}">
+								<input type="submit" value="상세보기">
+							</div>
+						</div>
+						</form> 
+					</div>
+				</div>
+				<!-- 페이징처리 -->
+				<form id='f1' th:action="@{/item/itemlist}" method="get">
+					<input type="hidden" name='page' th:value=${result.currentPageNum}>
+					<input type='hidden' name='size' th:value=${result.currentPage.pageSize}>
+					<input type="hidden" name="itemName" th:value="${pagevo.itemName}">	
+					<input type="hidden" name="itemSort" th:value="${pagevo.itemSort}">	
+					<input type="hidden" name="startDate" th:value="${pagevo.startDate}">	
+					<input type="hidden" name="endDate" th:value="${pagevo.endDate}">	
+					<input type="hidden" name="priceLimit" th:value="${pagevo.priceLimit}">	
+				</form>
+				<nav>
+					<div aria-label="Page navigation example" class="row mt-5" style="text-align: center;">
+						<div class="col text-center">
+							<div class="block-27">
+								<ul class="pagination">
+									<li class="page-item" th:if="${result.prevPage}"><a th:href="${result.prevPage.pageNumber}+1"> 이전</a></li>
+									<li class="page-item" th:each="pg:${result.pageList}" th:classappend="${pg.pageNumber==result.currentPageNum-1}?active:''"><a th:href="${pg.pageNumber}+1">[[${pg.pageNumber}+1]]</a></li>
+									<li class="page-item" th:if="${result.nextPage}"><a th:href="${result.nextPage.pageNumber}+1"> 다음</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</nav>
+			</div>
+		</section>
+</div>
+
+
+<th:block layout:fragment="script1">
+	<script>
+	$(function(){
+		var formObj = $("#f1");
+		$(".pagination a").click(function(e){
+			e.preventDefault(); //본래의 기능(link)를 취소
+			formObj.find("[name='page']").val($(this).attr("href"));
+			//alert($(this).attr("href"));
+			formObj.submit();
+		});
+	});
+	
+	</script>
+</th:block>
+</body>
+</html>
