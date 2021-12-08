@@ -23,7 +23,7 @@
 		   </div>
 		 </div>
 		</section>	
-		<div>
+		<div class="container">
 			<br>
 			<button class="btn btn-primary" onclick="history.back()">돌아가기</button>		
 			<br><br>
@@ -40,35 +40,134 @@
 			</div>
 			<hr/>
 			<div class="form-group">
-	 			작성일: <span th:text="${board.cRegdate}">작성일</span>
-			</div>
-			<div class="form-group">
+	 			작성일: <span th:text="${board.cRegdate}">작성일</span>&nbsp;&nbsp;&nbsp;&nbsp;
 	 			수정일: <span th:text="${board.cUpdate}">수정일</span>
 			</div>
-			<hr/>
-				
-			<div class="row justify-content-center">
-				<button id="btn-update" class="btn btn-warning">수정</button>&nbsp;&nbsp;&nbsp;&nbsp;
-				<button id="btn-delete" class="btn btn-primary">삭제</button>			
+		
+			<table style="margin: auto; text-align: center;">
+				<tr>
+					<td><a th:href="@{/community/update(cId=${board.cId})}" class="btn btn-warning">수정</td >
+					<td>&nbsp;&nbsp;&nbsp;</td>
+					<td th:if="${board.member.mId == user.mId}"><button id="btn-delete" class="btn btn-primary">삭제</button></td >
+				</tr >
+			</table  >
+			<hr/>	
+			<!--댓글쓰기-->
+			<div class="card">
+				<div class="card-body">
+					<textarea id="reply-content" class="form-control" rows="1" placeholder="댓글을 입력하세요."></textarea >
+				</div >
+				<div class="card-footer">
+					<button id="btn-reply-save" class="btn btn-primary">등록</button >
+				</div >
+			</div >
+			<br>
+			
+			<!--댓글 리스트-->
+			<div class="card">
+				<div class="card-header">댓글 리스트</div>
+				<ul id="reply-box" class="list-group">
+					<div th:each="reply, i : ${board.creplies}">
+						<div th:if="${reply.crOrder == 0}">
+							<li id="'reply-'+${i.index}" class="list-group-item d-flex justify-content-between"> <!--justify-content-between-->
+								<div th:text="${reply.crContent}"> </div>
+								<div class="d-flex">
+									<div class="font-italic" th:text="'작성자: '+${reply.member.mNickname}"></div> &nbsp;&nbsp;&nbsp;
+									<button th:onclick="|javascript:replyDelete('${board.cId}, ${reply.crId}')|" class="btn btn-primary">삭제</button >
+									<a th:href="@{/community/boarddetail/{cId}/{crId}(cId=${board.cId}, crId=${reply.crId})}"><button>이걸로는 되려나 삭제버튼</button></a>
+								</div>
+							</li >
+							
+							<!--대댓글 (버튼 클릭시 조회)
+							<div id="re-reply" style="display:none">
+								<input th:text="'rereply_btn'+${i.index}"></input>
+					
+							</div>
+							-->
+					
+						</div>
+					</div>
+			
+				</ul>
 			</div>
-			<br><br>
-		</div>
+			
+		</div >
 
 
 <th:block layout:fragment="script1">
 <script th:inline="javascript">
 	
+	//댓글 삭제
+	function replyDelete(cId, crId){
+		
+	//	alert(cId);
+	//	alert(crId);
+		
+		
+	//	let data = { 
+	//		
+	//	};
+		
+		$.ajax({
+			type: "DELETE",
+			url: `/community/boarddetail/${crId}`,
+		//	data: data
+		}).done(function(resp){
+			alert("댓글을 삭제하였습니다.");
+			location.href = window.location.href;
+		}).fail(function(error){
+			alert("댓글 삭제 실패!");
+			console.log(error);
+		});
+		
+		
+	}
+	
+	/*
+	//대댓글 버튼
+	$('#rereply_btn0').on('click',re_reply);
+	function re_reply(){
+		document.getElementById("re--reply").style.display="block";
+		
+	}
+	*/
+	
+	//댓글 작성
+	$('#btn-reply-save').on('click',reply_save);
+	function reply_save(){
+		let data = { 
+			cId: "[[${cId}]]",
+			crContent: $("#reply-content").val()
+		};
+		
+		$.ajax({
+			type: "POST",
+			url: "/community/boarddetail/",
+			data: data
+		}).done(function(resp){
+			alert("댓글을 등록하였습니다.");
+			location.href = window.location.href;
+		}).fail(function(error){
+			alert("cId값 넘겨주기 실패");
+			alert(data.cId);
+			alert(data.crContent);
+			console.log(error);
+		});	
+		
+	}
+	
+	//댓글 삭제
+	
+	
+	
 	//삭제버튼
     $('#btn-delete').on('click',delete_board);
     function delete_board(){
 		
-	//	let id = [[${cId}]];
-	//	alert("cId: "+id); //잘뜸
-		
 		$.ajax({
 			type: "DELETE",
 			url: "/community/boarddetail",
-			data: {"cId" : [[${cId}]] }
+			data: {"cId" : "[[${cId}]]" }
 		}).done(function(resp){
 			alert("삭제가 완료되었습니다.");
 			location.href="/community/boardlist";
@@ -77,8 +176,25 @@
 			alert(data);
 			alert(JSON.stringfy(data));
 			console.log(error);
-		});
-		
+		});	
+	}
+	
+	//수정버튼
+	$('#btn-update').on('click',update_board);
+	function update_board(){
+		$.ajax({
+			type: "POST",
+			url: "/community/update",
+			data: {"cId" : "[[${cId}]]" }
+		}).done(function(resp){
+			alert("cId값을 넘겨주기 성공");
+			location.href="/community/update";
+		}).fail(function(error){
+			alert("cId값 넘겨주기 실패");
+			alert(data);
+			alert(JSON.stringfy(data));
+			console.log(error);
+		});	
 	}
 
 </script >

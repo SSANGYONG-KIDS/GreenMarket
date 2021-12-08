@@ -32,15 +32,13 @@ public class CommunityService {
 	}
 	
 	
-	
 	// 원래 코드!!list조회
 	public List<CommunityEntity> selectAll() {
 		return (List<CommunityEntity>) repo.findAll();
 	}
 
-
 	
-	// 아이디로 찾기
+	// 아이디로 찾기 (글 상세보기)
 	public CommunityEntity selectById(Integer cId) {
 		return repo.findById(cId).get();
 	}
@@ -53,18 +51,18 @@ public class CommunityService {
 		board.setMember(user);
 		repo.save(board);
 	}
-	
-	//삽입 오리지날
-//	public CommunityEntity insertBoard(CommunityEntity board) {
-//		System.out.println("insert board() 호출");
-//		return repo.save(board);
-//	}
 
-	// 수정
-	public CommunityEntity updateBoard(CommunityEntity board) {
-		return repo.save(board);
+	// 글 수정
+	@Transactional
+	public void updateBoard(CommunityEntity requestBoard) {
+		System.out.println("service-updateBoard() 호출");
+		CommunityEntity board = repo.findById(requestBoard.getCId()).get(); //영속화
+		board.setCTitle(requestBoard.getCTitle());
+		board.setCContent(requestBoard.getCContent());
+		//함수 종료시(service종료) 트랜잭션 종료 후 더티체킹=> 자동 업데이트. DB flush
 	}
-
+	
+	
 	// 제거
 	public int deleteBoard(Integer cId) {
 		int ret = 0;

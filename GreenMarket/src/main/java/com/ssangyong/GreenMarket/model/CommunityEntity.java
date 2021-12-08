@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -56,6 +57,7 @@ public class CommunityEntity {
 	private MemberEntity member; //mId 가져오는곳
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "community", cascade = CascadeType.ALL, fetch = FetchType.EAGER) //LAZY에서 변경
+	@OneToMany(mappedBy = "community", cascade = CascadeType.ALL, fetch = FetchType.LAZY) //LAZY에서 변경
+	@OrderBy("crId desc")
 	private List<CommunityReplyEntity> creplies; 
 }

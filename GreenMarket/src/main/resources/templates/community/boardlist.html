@@ -24,7 +24,7 @@
 		   </div>
 		 </div>
 		</section>
-		<div>
+		<div class="container">
 			
 			<!--게시판 위 상단바. 카테고리, 내 동네 표시 등 구현할 곳-->
 			<div>
@@ -35,11 +35,11 @@
 			<p>[[${resultMessage}]]</p>
 		
 	
-			<div style="padding-left: 94%"> <!--등록하기 버튼-->
-				<h3>
-					<a class="btn btn-primary" th:href="@{/community/register}">등록하기</a>
-				</h3>
-			</div>	
+			<div align="right"> <!--등록하기 버튼-->
+				<a class="btn btn-warning" th:href="@{/community/register}">내가 쓴 글</a>
+				<a class="btn btn-primary" th:href="@{/community/register}">등록하기</a>
+			</div >	
+			<br>
 			<table class="table table-bordered table-hover " id="xxx">
 				<tr>
 					<th>게시글 번호</th>
@@ -75,7 +75,6 @@
 	
 			<nav>
 				<div aria-label="Page navigation example" style="text-align: center;">
-					페이징 안뜨는중
 					<ul class="pagination">
 						<li class="page-item" th:if="${result.prevPage}"><a th:href="${result.prevPage.pageNumber}+1">PREV
 								[[${result.prevPage.pageNumber} + 1]]</a></li>
@@ -92,7 +91,7 @@
 				<input type="hidden" name="type" th:value="${pagevo.type}">	
 				<input type="hidden" name="keyword" th:value="${pagevo.keyword}">	
 			</form>		
-		</div>
+		</div >
 
 
 

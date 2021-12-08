@@ -32,11 +32,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.ssangyong.GreenMarket.model.CommunityEntity;
+import com.ssangyong.GreenMarket.model.CommunityReplyEntity;
 import com.ssangyong.GreenMarket.model.MemberEntity;
 import com.ssangyong.GreenMarket.model.PageMaker;
 import com.ssangyong.GreenMarket.model.PageVO;
 import com.ssangyong.GreenMarket.service.CommunityService;
 import com.ssangyong.GreenMarket.service.LoginService;
+import com.ssangyong.GreenMarket.service.CommunityReplyService;
 
 
 @Controller
@@ -48,6 +50,9 @@ public class CommunityController {
 	@Autowired
 	LoginService log_service;
 	
+	@Autowired
+	CommunityReplyService reply_service;
+	
 	@GetMapping("/community/boardlist")
 	public void selectAll(Model model, HttpServletRequest request, PageVO pagevo) {
 
@@ -58,20 +63,45 @@ public class CommunityController {
 		model.addAttribute("result", new PageMaker<>(result));
 	}
 	
-	
+	//글 상세보기
 	@GetMapping("/community/boarddetail")
 	public String selectById(Model model, Integer cId, Principal principal, Authentication authentication, PageVO pagevo ) {
 		System.out.println("게시글 상세보기 controller");
 		model.addAttribute("board", service.selectById(cId));
 		model.addAttribute("pagevo", pagevo);
 		model.addAttribute("cId",cId);
-		return "community/boarddetail";
-		/*
+	
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		UserVO user =  uservice.selectById(userDetails.getUsername());
+		MemberEntity user =  log_service.selectById(userDetails.getUsername());
 		model.addAttribute("user",user);
-		*/
+		System.out.println("user.mId: "+user.getMId());
+		return "community/boarddetail";
 	}
+	
+	// 댓글 등록
+	@RequestMapping(value="community/boarddetail", method= {RequestMethod.POST})
+	@ResponseBody
+	public void replySave(CommunityReplyEntity reply, Integer cId, Authentication authentication) {
+		System.out.println("댓글등록 controller");
+	//	System.out.println("reply: "+reply);
+	//	System.out.println("cId: "+cId);
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		MemberEntity user = log_service.selectById(userDetails.getUsername());
+		reply.setMember(user);
+		
+		CommunityEntity board = service.selectById(cId);
+		reply.setCommunity(board);
+	
+		//대댓글 해야하는데 ...일단 안하기
+		reply.setCrDepth(0);
+		reply.setCrOrder(0);
+		reply.setCrTopno(0);
+		
+		System.out.println("여기까지 되는지 확인");
+		reply_service.updateOrInsert(reply);
+		System.out.println("댓글등록 contoller 끝\n");
+	}
+	
 	
 	//글 등록 페이지로 이동
 	@GetMapping("community/register")
@@ -81,7 +111,6 @@ public class CommunityController {
 	}
 	
 	//글 등록완료
-	//@DeleteMapping("/community/register")
 	@RequestMapping(value="community/register", method= {RequestMethod.POST})
 	@ResponseBody
 	public void boardRegisterPost(CommunityEntity board, RedirectAttributes rttr, Authentication authentication) {
@@ -108,6 +137,29 @@ public class CommunityController {
 	}
 	
 	
+	//글 수정 페이지로 이동
+	@GetMapping("community/update")
+	public String update(Model model, Integer cId) {
+		System.out.println("controller-getmapping-update()");
+		System.out.println("cId: "+cId);
+		//model.addAttribute("cId", cId);
+		model.addAttribute("board", service.selectById(cId));
+		return "community/update";
+	}
+	
+	//댓글 삭제하기
+	@GetMapping("community/boarddetail/{cId}/{crId}")
+	public String replyDelete(@PathVariable Integer cId, @PathVariable Integer crId) {
+		System.out.println("controller-댓글 삭제() 실행");
+		System.out.println("cId: "+cId);
+		System.out.println("crId: "+crId);
+		
+		int ret = reply_service.deleteReply(crId);
+		System.out.println("ret: "+ret);
+		
+		return "redirect:/community/boarddetail?cId="+cId;
+	}
+	
 	//글 삭제하기
 	@RequestMapping(value="community/boarddetail", method= {RequestMethod.DELETE})
 	@ResponseBody
@@ -117,6 +169,15 @@ public class CommunityController {
 		int ret = service.deleteBoard(cId);
 		System.out.println("ret: "+ret);
 		rttr.addFlashAttribute("resultMessage", ret==0?"삭제실패":"삭제성공");
+	}
+	
+	
+	//글 수정
+	@RequestMapping(value="community/update", method= {RequestMethod.POST})
+	@ResponseBody
+	public void update(CommunityEntity board) {
+		System.out.println("controller-putmapping-update()");
+		service.updateBoard(board);
 	}
 /*	
 	@PostMapping("/community/update")
