@@ -11,15 +11,23 @@
 </head>
 <body>
    <div class="panel panel-default" layout:fragment="content1">
+      <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/bootstrap/images/bg_1.jpg');">
+		  <div class="overlay"></div>
+		  <div class="container">
+		    <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+		      <div class="col-md-9 ftco-animate pb-5 text-center">
+		       <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="fa fa-chevron-right"></i></a></span> <span>My Page <i class="fa fa-chevron-right"></i></span></p>
+		       <h1 class="mb-0 bread">회원가입</h1>
+		     </div>
+		   </div>
+		 </div>
+		</section>
       <div class="container">
       <div class="input-form-backgroud">
       <div class="input-form col-md-12 mz-auto" style="margin-left: 19%">
       <h4 class="mb-3">유저 회원가입</h4>
-         <form class="signup-form" action="./signup" method="POST">
+         <form id="signup-form" action="./signup" method="POST">
          <div class="validation-form" novalidate>
-         
-         
-         <!-- 아이디 폼 -->
          <div class="row">
             <div class="col">
                   <label for="mId">아이디</label>
@@ -31,7 +39,6 @@
          </div>    
          <br>
          
-         <!-- 비밀번호 -->
          <div class="row">
             <div class="col">
                   <label for="mPw">비밀번호</label> 
@@ -40,7 +47,6 @@
          </div>
          <br>
          
-         <!-- 이름 -->
          <div class="row">
             <div class="col">
                <label for="mName">이름</label>
@@ -49,19 +55,18 @@
          </div>
          <br>
             
-         <!-- 닉네임 --> 
          <div class="row">
             <div class="col">
                <label for="mPhoto"> 프로필 사진 업로드 </label> 
-               <input id="mPhoto" name="mPhoto" type="file" class="" /> 
+               <input id="file_img" name="file_img" type="file"/> 
                <div class="img_wrap">
 					<img id="img" />
 				</div>
             </div>
-         </div>    
+         </div>
+         <input type="hidden" id="mPhoto" name="mPhoto"/>
          <br>
          
-          <!-- 닉네임 --> 
          <div class="row">
             <div class="col">
                <label for="mNickname"> 닉네임 </label> 
@@ -74,7 +79,6 @@
          <br>
          
          
-         <!-- 휴대폰 번호 -->
          <div class="row">
             <div class="col">
                <label for="mPhone">휴대폰 번호</label> 
@@ -86,7 +90,6 @@
          </div>
          <br>
          
-         <!-- 휴대폰 인증 -->
          <div class="row">
             <div class="col">
                <label for="mPhone2">인증번호</label> 
@@ -99,8 +102,6 @@
          </div>
          <br>
                
-         
-         <!-- 이메일 -->
          <div class="row">
             <div class="col">
                <label for="mEmail"> 이메일 </label> 
@@ -109,7 +110,6 @@
          </div>
          <br>
          
-         <!-- 주소 -->
          <div class="row">
             <div class="col">
                <label for="memberAddress">주소</label> 
@@ -126,7 +126,7 @@
             </div>
          </div>
          <br>
-            <input type="submit" class="btn btn-primary btn-lg btn-block" value="가입하기" />
+            <input type="submit" id="btn_upload_file" class="btn btn-primary btn-lg btn-block" value="가입하기" />
             </div>
          </form>
       </div>   
@@ -135,9 +135,9 @@
    </div>
 
    <th:block layout:fragment="script1">
-   	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<!--    	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> -->
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-      <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<!--       <script src="https://code.jquery.com/jquery-3.4.1.js"></script> -->
       <script>  
       $('#checkNick').click(function() {
       		if($("#mId").val() == ""){
@@ -287,10 +287,10 @@
          }
          
          
-     var mPhoto;
+     var file_img;
 
 	$(document).ready(function() {
-		$('#mPhoto').on("change", handleImgFileSelect);
+		$('#file_img').on("change", handleImgFileSelect);
 	});
 
 	function handleImgFileSelect(e) {
@@ -303,7 +303,7 @@
 				return;
 			}
 
-			mPhoto = f;
+			file_img = f;
 
 			var reader = new FileReader();
 			reader.onload = function(e) {
@@ -313,12 +313,63 @@
 		});
 	}
          
+   		$("#btn_upload_file").click(function(e) {
+				e.preventDefault();
+				uploadImage();
+			});
+			
+			function uploadImage() {
+				var file = $('#file_img')[0].files[0]; // 이미지 파일 얻기
+				if (typeof file != "undefined") {
+						var formData = new FormData();
+						formData.append('data', file); // data 안에 파일 넣기
+						formData.append('path', "signup"); // web 서버에 만들 폴더 이름
+						$.ajax({
+							type : 'POST',
+							url : '/profile_upload',
+							data : formData,
+							processData : false,
+							contentType : false
+						}).done(function(responseBody) {
+							$("#mPhoto").val(responseBody);
+							$("#signup-form").submit();
+						}).fail(function(error) {
+						})
+					} else {
+						alert("파일첨부를 해주세요.");
+						$("#file_img").focus();
+					}
+			}
+			function commonUploadFile(id, path) {
+				return new Promise((resolve, reject) => {
+					var file = $("#" + id)[0].files[0]; // 이미지 파일 얻기
+					if (typeof file != "undefined") {
+							var formData = new FormData();
+							formData.append('data', file); // data 안에 파일 넣기
+							formData.append('path', path); // web 서버에 만들 폴더 이름
+							$.ajax({
+								type : 'POST',
+								url : '/profile_upload',
+								data : formData,
+								processData : false,
+								contentType : false
+							})
+							.done(resolve)
+							.fail(reject);
+						} else {
+							alert("파일첨부를 해주세요.");
+							$("#" + id).focus();
+							reject();
+						}					
+				});
+			}	
+         
          
          
       </script>
       <!-- Bootstrap CSS -->
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!--       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" -->
+<!--           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
    </th:block>
 </body>
 </html>

@@ -41,14 +41,15 @@ public class MemberService implements UserDetailsService{
     	memberEntity.setMPw(encoder.encode(member.getMPw()));
     	memberEntity.setMEmail(member.getMEmail());
     	memberEntity.setMPhone(member.getMPhone());
+    	memberEntity.setMPhoto(member.getMPhoto());
     	memberEntity.setMAddress(member.getMAddress());
        //함수 종료시(service종료) 트랜잭션 종료 후 더티체킹=> 자동 업데이트. DB flush
     }
     
     @Transactional
     public void deleteById(String mId) {
-    	memberrepository.deleteById(mId);
-    	
+    	MemberEntity member = selectById(mId);
+    	member.setMIsdropped(1);
     }
     
     
