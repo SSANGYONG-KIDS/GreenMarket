@@ -24,7 +24,9 @@ public interface ItemRepository extends CrudRepository<ItemEntity, Integer>, Que
 		if(pvo.getItemName()==null) return builder;
 		
 		builder.andAnyOf(item.iTitle.like("%" + pvo.getItemName() + "%"), item.iContent.like("%" + pvo.getItemName() + "%")); //물건 이름 검색
-		builder.and(item.iCategory.eq(pvo.getItemSort()));
+		if(pvo.getItemSort()!=null) {
+			builder.and(item.iCategory.eq(pvo.getItemSort()));
+		}
 		builder.and(item.iTstate.eq(ItStateEnumType.POSSIBLE)); //거래 가능 상태
 		if(pvo.getPriceLimit()!=0) {
 			builder.and(item.iPrice.lt(pvo.getPriceLimit())); //최대 가능 금액

@@ -41,7 +41,7 @@ public class ReviewService {
 	}
 
 	// 제거
-	public int deleteItem(Integer rId) {
+	public int deleteReview(Integer rId) {
 		int ret = 0;
 		try {
 			reviewRepo.deleteById(rId);
