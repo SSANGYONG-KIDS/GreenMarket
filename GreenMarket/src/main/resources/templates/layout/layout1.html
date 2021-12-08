@@ -6,8 +6,19 @@
 </head>
 
 <body>
+
 	<!-- 공통 스크립트-->
     <th:block th:replace="~{fragments/script :: scriptFragment}"></th:block>
+
+	<!-- 탈퇴 회원 확인 -->
+	<input type="hidden" id="is_dropped" th:value="${isDropped}">
+	<script th:inline="javascript">
+		let isDropped = $('#is_dropped').val();
+		if (isDropped == 1) {
+			alert('이미 탈퇴한 회원입니다.');
+			location.href = '/layout/droppedMember';
+		}
+	</script>
     
 	<!-- 공통 헤더-->
     <th:block th:replace="~{fragments/head :: headFragment}"></th:block>

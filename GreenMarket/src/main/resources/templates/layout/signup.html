@@ -15,7 +15,7 @@
       <div class="input-form-backgroud">
       <div class="input-form col-md-12 mz-auto" style="margin-left: 19%">
       <h4 class="mb-3">유저 회원가입</h4>
-         <form class="signup-form" action="./signup" method="POST">
+         <form id="signup-form" action="./signup" method="POST">
          <div class="validation-form" novalidate>
          
          
@@ -49,16 +49,17 @@
          </div>
          <br>
             
-         <!-- 닉네임 --> 
+         <!--프로필 --> 
          <div class="row">
             <div class="col">
                <label for="mPhoto"> 프로필 사진 업로드 </label> 
-               <input id="mPhoto" name="mPhoto" type="file" class="" /> 
+               <input id="file_img" name="file_img" type="file"/> 
                <div class="img_wrap">
 					<img id="img" />
 				</div>
             </div>
-         </div>    
+         </div>
+         <input type="hidden" id="mPhoto" name="mPhoto"/>
          <br>
          
           <!-- 닉네임 --> 
@@ -126,7 +127,7 @@
             </div>
          </div>
          <br>
-            <input type="submit" class="btn btn-primary btn-lg btn-block" value="가입하기" />
+            <input type="submit" id="btn_upload_file" class="btn btn-primary btn-lg btn-block" value="가입하기" />
             </div>
          </form>
       </div>   
@@ -287,10 +288,10 @@
          }
          
          
-     var mPhoto;
+     var file_img;
 
 	$(document).ready(function() {
-		$('#mPhoto').on("change", handleImgFileSelect);
+		$('#file_img').on("change", handleImgFileSelect);
 	});
 
 	function handleImgFileSelect(e) {
@@ -303,7 +304,7 @@
 				return;
 			}
 
-			mPhoto = f;
+			file_img = f;
 
 			var reader = new FileReader();
 			reader.onload = function(e) {
@@ -312,6 +313,57 @@
 			reader.readAsDataURL(f);
 		});
 	}
+         
+   		$("#btn_upload_file").click(function(e) {
+				e.preventDefault();
+				uploadImage();
+			});
+			
+			function uploadImage() {
+				var file = $('#file_img')[0].files[0]; // 이미지 파일 얻기
+				if (typeof file != "undefined") {
+						var formData = new FormData();
+						formData.append('data', file); // data 안에 파일 넣기
+						formData.append('path', "signup"); // web 서버에 만들 폴더 이름
+						$.ajax({
+							type : 'POST',
+							url : '/profile_upload',
+							data : formData,
+							processData : false,
+							contentType : false
+						}).done(function(responseBody) {
+							$("#mPhoto").val(responseBody);
+							$("#signup-form").submit();
+						}).fail(function(error) {
+						})
+					} else {
+						alert("파일첨부를 해주세요.");
+						$("#file_img").focus();
+					}
+			}
+			function commonUploadFile(id, path) {
+				return new Promise((resolve, reject) => {
+					var file = $("#" + id)[0].files[0]; // 이미지 파일 얻기
+					if (typeof file != "undefined") {
+							var formData = new FormData();
+							formData.append('data', file); // data 안에 파일 넣기
+							formData.append('path', path); // web 서버에 만들 폴더 이름
+							$.ajax({
+								type : 'POST',
+								url : '/profile_upload',
+								data : formData,
+								processData : false,
+								contentType : false
+							})
+							.done(resolve)
+							.fail(reject);
+						} else {
+							alert("파일첨부를 해주세요.");
+							$("#" + id).focus();
+							reject();
+						}					
+				});
+			}	
          
          
          

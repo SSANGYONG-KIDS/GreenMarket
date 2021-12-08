@@ -45,8 +45,8 @@ public class MyPageController {
 	 
 	 @PostMapping("/delete")
 	 @ResponseBody
-		public void delete(String mId) {
+		public void delete(@AuthenticationPrincipal SecurityUser principal) {
 		 System.out.println("회원 탈퇴");
-		 memberservice.deleteById(mId);
+		 memberservice.deleteById(principal.getUsername());
 	 }
 }

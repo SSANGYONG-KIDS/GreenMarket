@@ -37,12 +37,15 @@
 	<th:block layout:fragment="script1">
 		<script>
 			$("#btn_upload_file").click(function() {
+				/*
 				a = commonUploadFile('file_image', 'trade')
 				.then(response=>console.log(response))
 				.catch(()=>console.log('error'));
+				*/
+				uploadImage();
 			});
 			function uploadImage() {
-				var file = $('#btn_upload_file')[0].files[0]; // 이미지 파일 얻기
+				var file = $('#file_image')[0].files[0]; // 이미지 파일 얻기
 				if (typeof file != "undefined") {
 						var formData = new FormData();
 						formData.append('data', file); // data 안에 파일 넣기
@@ -59,7 +62,7 @@
 						})
 					} else {
 						alert("파일첨부를 해주세요.");
-						$("#btn_upload_file").focus();
+						$("#file_image").focus();
 					}
 			}
 			function commonUploadFile(id, path) {
