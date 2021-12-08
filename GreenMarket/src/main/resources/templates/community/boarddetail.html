@@ -46,7 +46,7 @@
 		
 			<table style="margin: auto; text-align: center;">
 				<tr>
-					<td><a th:href="@{/community/update(cId=${board.cId})}" class="btn btn-warning">수정</td >
+					<td th:if="${board.member.mId == user.mId}"><a th:href="@{/community/update(cId=${board.cId})}" class="btn btn-warning">수정</td  >
 					<td>&nbsp;&nbsp;&nbsp;</td>
 					<td th:if="${board.member.mId == user.mId}"><button id="btn-delete" class="btn btn-primary">삭제</button></td >
 				</tr >
@@ -73,8 +73,9 @@
 								<div th:text="${reply.crContent}"> </div>
 								<div class="d-flex">
 									<div class="font-italic" th:text="'작성자: '+${reply.member.mNickname}"></div> &nbsp;&nbsp;&nbsp;
-									<button th:onclick="|javascript:replyDelete('${board.cId}, ${reply.crId}')|" class="btn btn-primary">삭제</button >
-									<a th:href="@{/community/boarddetail/{cId}/{crId}(cId=${board.cId}, crId=${reply.crId})}"><button>이걸로는 되려나 삭제버튼</button></a>
+									<div th:if="${reply.member.mId == user.mId}">
+										<a th:href="@{/community/boarddetail/{cId}/{crId}(cId=${board.cId}, crId=${reply.crId})}"><button class="btn btn-primary">삭제</button ></a>
+									</div>
 								</div>
 							</li >
 							
