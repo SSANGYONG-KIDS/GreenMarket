@@ -56,6 +56,7 @@
 																<div class="select-wrap">
 																	<div class="icon"><span class="fa fa-chevron-down"></span></div>
 																	<select name="itemSort" class="form-control">
+																	 	<option value="">Select item</option>
 																		<option th:selected="${is}=='DIGITAL_DEVICE'" th:each="is:${itemSorts}" th:value="${is}" >[[${is.title}]]</option>
 																	</select>
 																</div>
@@ -108,6 +109,8 @@
 				</div>
 			</section>
 	
+	<!--메인페이지 필요 없는 거 1 -->
+	<!--
 			<section class="ftco-section services-section">
 				<div class="container">
 					<div class="row d-flex">
@@ -164,76 +167,46 @@
 					</div>
 				</div>
 			</section>
+	-->
 	
-			<section class="ftco-section img ftco-select-destination" style="background-image: url(/bootstrap/images/bg_3.jpg);">
+	<!-- 최근 게시글 -->
+			<section class="ftco-section">
 				<div class="container">
 					<div class="row justify-content-center pb-4">
 						<div class="col-md-12 heading-section text-center ftco-animate">
-							<span class="subheading">Pacific Provide Places</span>
-							<h2 class="mb-4">Select Your Destination</h2>
+							<span class="subheading">Our Blog</span>
+							<h2 class="mb-4">Recent Post</h2>
 						</div>
 					</div>
-				</div>
-				<div class="container container-2">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="carousel-destination owl-carousel ftco-animate">
-								<div class="item">
-									<div class="project-destination">
-										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-1.jpg);">
-											<div class="text">
-												<h3>Philippines</h3>
-												<span>8 Tours</span>
-											</div>
-										</a>
+					<div class="row d-flex">
+					<!-- d-flex 가변 길이 태그 제거 -->
+						
+						<div class="col-md-4 ftco-animate" th:each="item:${itemResult}" th:onclick="'window.location.href=\'' + @{/item/itemdetail(iId=${item.iId})} +'\' '">
+						<div class="blog-entry justify-content-end">
+							<a th:href="@{/item/itemdetail(iId=${item.iId})}" class="block-20" style="background-image: url('/bootstrap/images/image_1.jpg');"></a>
+							<div class="text" width="200px;">
+								<div class="d-flex align-items-center mb-4 topp">
+									<div class="one">
+										<span class="day" th:text="${item.iId}"></span>
+									</div>
+									<div class="two">
+										<span class="yr" th:text="${item.iCategory.title}"></span> <span class="mos" th:text="${item.iRegdate}"></span>
 									</div>
 								</div>
-								<div class="item">
-									<div class="project-destination">
-										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-2.jpg);">
-											<div class="text">
-												<h3>Canada</h3>
-												<span>2 Tours</span>
-											</div>
-										</a>
-									</div>
-								</div>
-								<div class="item">
-									<div class="project-destination">
-										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-3.jpg);">
-											<div class="text">
-												<h3>Thailand</h3>
-												<span>5 Tours</span>
-											</div>
-										</a>
-									</div>
-								</div>
-								<div class="item">
-									<div class="project-destination">
-										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-4.jpg);">
-											<div class="text">
-												<h3>Autralia</h3>
-												<span>5 Tours</span>
-											</div>
-										</a>
-									</div>
-								</div>
-								<div class="item">
-									<div class="project-destination">
-										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-5.jpg);">
-											<div class="text">
-												<h3>Greece</h3>
-												<span>7 Tours</span>
-											</div>
-										</a>
-									</div>
-								</div>
+								<h3 class="heading" width="200px;">
+									<a href="#" th:text="${item.iTitle}"></a>
+								</h3>
+								<p th:text="${item.iContent}"></p>
 							</div>
 						</div>
+					</div>
 					</div>
 				</div>
 			</section>
 	
+	
+	
+	<!-- 안쓰는 부분
 			<section class="ftco-section">
 				<div class="container">
 					<div class="row justify-content-center pb-4">
@@ -349,7 +322,9 @@
 					</div>
 				</div>
 			</section>
+			-->
 			
+			<!--
 			<section class="ftco-section ftco-about img"style="background-image: url(/bootstrap/images/bg_4.jpg);">
 				<div class="overlay"></div>
 				<div class="container py-md-5">
@@ -362,6 +337,7 @@
 					</div>
 				</div>
 			</section>
+			
 	
 			<section class="ftco-section ftco-about ftco-no-pt img">
 				<div class="container">
@@ -387,14 +363,17 @@
 					</div>
 				</div>
 			</section>
+			-->
 	
+	
+	<!-- 평점 -->
 			<section class="ftco-section testimony-section bg-bottom" style="background-image: url(/bootstrap/images/bg_1.jpg);">
 				<div class="overlay"></div>
 				<div class="container">
 					<div class="row justify-content-center pb-4">
 						<div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
 							<span class="subheading">Testimonial</span>
-							<h2 class="mb-4">Tourist Feedback</h2>
+							<h2 class="mb-4">Customer Feedback</h2>
 						</div>
 					</div>
 					<div class="row ftco-animate">
@@ -510,80 +489,82 @@
 					</div>
 				</div>
 			</section>
-	
-	
-			<section class="ftco-section">
+			
+			
+			<!-- 한나 커뮤니티 부분 -->
+			<section class="ftco-section img ftco-select-destination" style="background-image: url(/bootstrap/images/bg_3.jpg);">
 				<div class="container">
 					<div class="row justify-content-center pb-4">
 						<div class="col-md-12 heading-section text-center ftco-animate">
-							<span class="subheading">Our Blog</span>
-							<h2 class="mb-4">Recent Post</h2>
+							<span class="subheading">Pacific Provide Places</span>
+							<h2 class="mb-4">Select Your Destination</h2>
 						</div>
 					</div>
-					<div class="row d-flex">
-						<div class="col-md-4 d-flex ftco-animate">
-							<div class="blog-entry justify-content-end">
-								<a href="blog-single.html" class="block-20" style="background-image: url('/bootstrap/images/image_1.jpg');">
-								</a>
-								<div class="text">
-									<div class="d-flex align-items-center mb-4 topp">
-										<div class="one">
-											<span class="day">11</span>
-										</div>
-										<div class="two">
-											<span class="yr">2020</span>
-											<span class="mos">September</span>
-										</div>
+				</div>
+				<div class="container container-2">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="carousel-destination owl-carousel ftco-animate">
+								<div class="item">
+									<div class="project-destination">
+										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-1.jpg);">
+											<div class="text">
+												<h3>Philippines</h3>
+												<span>8 Tours</span>
+											</div>
+										</a>
 									</div>
-									<h3 class="heading"><a href="#">Most Popular Place In This World</a></h3>
-									<!-- <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p> -->
-									<p><a href="#" class="btn btn-primary">Read more</a></p>
 								</div>
-							</div>
-						</div>
-						<div class="col-md-4 d-flex ftco-animate">
-							<div class="blog-entry justify-content-end">
-								<a href="blog-single.html" class="block-20" style="background-image: url('/bootstrap/images/image_2.jpg');">
-								</a>
-								<div class="text">
-									<div class="d-flex align-items-center mb-4 topp">
-										<div class="one">
-											<span class="day">11</span>
-										</div>
-										<div class="two">
-											<span class="yr">2020</span>
-											<span class="mos">September</span>
-										</div>
+								<div class="item">
+									<div class="project-destination">
+										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-2.jpg);">
+											<div class="text">
+												<h3>Canada</h3>
+												<span>2 Tours</span>
+											</div>
+										</a>
 									</div>
-									<h3 class="heading"><a href="#">Most Popular Place In This World</a></h3>
-									<!-- <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p> -->
-									<p><a href="#" class="btn btn-primary">Read more</a></p>
 								</div>
-							</div>
-						</div>
-						<div class="col-md-4 d-flex ftco-animate">
-							<div class="blog-entry">
-								<a href="blog-single.html" class="block-20" style="background-image: url('/bootstrap/images/image_3.jpg');">
-								</a>
-								<div class="text">
-									<div class="d-flex align-items-center mb-4 topp">
-										<div class="one">
-											<span class="day">11</span>
-										</div>
-										<div class="two">
-											<span class="yr">2020</span>
-											<span class="mos">September</span>
-										</div>
+								<div class="item">
+									<div class="project-destination">
+										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-3.jpg);">
+											<div class="text">
+												<h3>Thailand</h3>
+												<span>5 Tours</span>
+											</div>
+										</a>
 									</div>
-									<h3 class="heading"><a href="#">Most Popular Place In This World</a></h3>
-									<!-- <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p> -->
-									<p><a href="#" class="btn btn-primary">Read more</a></p>
+								</div>
+								<div class="item">
+									<div class="project-destination">
+										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-4.jpg);">
+											<div class="text">
+												<h3>Autralia</h3>
+												<span>5 Tours</span>
+											</div>
+										</a>
+									</div>
+								</div>
+								<div class="item">
+									<div class="project-destination">
+										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-5.jpg);">
+											<div class="text">
+												<h3>Greece</h3>
+												<span>7 Tours</span>
+											</div>
+										</a>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</section>
+	
+
+			
+			<!-- 마이페이지 -->
+			<div style="margin-top: 70px"></div >
 	
 			<section class="ftco-intro ftco-section ftco-no-pt">
 				<div class="container">
