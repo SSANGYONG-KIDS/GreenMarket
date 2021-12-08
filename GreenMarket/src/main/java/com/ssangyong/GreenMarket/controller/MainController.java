@@ -1,5 +1,8 @@
 package com.ssangyong.GreenMarket.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +24,20 @@ import com.ssangyong.GreenMarket.service.LoginService;
 public class MainController {
 	
 	   @RequestMapping(value = {"/", "/index"})
-	   public String main(Model model) {
-	      System.out.println("main");
+	   public String main(Model model, HttpServletRequest request, ItemPageVO pagevo) {
+	     
+		  System.out.println("main 실행");
+		  // main에 게시물 6개까지 보여주기
+	      int numOfItem = 6;
+	      List<ItemEntity> resultAll = itemService.selectAll();
+	      List<ItemEntity> result = new ArrayList<>();
+	      for (int i =0; i < numOfItem; i++) {
+	    	  result.add(resultAll.get(i));
+	      }
+	      
+//	      model.addAttribute("pagevo", pagevo);
+//	      model.addAttribute("result", new PageMaker<>(result));
+	      model.addAttribute("itemResult", result);
 	      model.addAttribute("itemSorts", ICategoryEnumType.values());
 	      return "index";
 	   }
