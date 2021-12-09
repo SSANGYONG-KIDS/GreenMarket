@@ -18,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.ssangyong.GreenMarket.service.LoginService;
@@ -84,6 +85,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 		http.rememberMe()
 				.userDetailsService(loginService)
 				.tokenRepository(tokenRepository());
+
+		// 에러 핸들링 (CookieTheftException 등)
+		http.addFilterAfter(new ExceptionHandlerFilter(), SecurityContextHolderAwareRequestFilter.class);
 	}
 	
 	@Override
