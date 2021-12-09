@@ -7,11 +7,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,10 +40,17 @@ public class ReviewEntity {
 	@CreationTimestamp
 	private Timestamp rRegdate;
 	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "mId")
+	private MemberEntity member;
+	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "iId")
 	private ItemEntity item; 
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "tId")
 	private TradeEntity trade; 
