@@ -1,28 +1,42 @@
 package com.ssangyong.GreenMarket.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ssangyong.GreenMarket.model.ICategoryEnumType;
-import com.ssangyong.GreenMarket.model.ItemEntity;
-import com.ssangyong.GreenMarket.model.ItemPageVO;
-import com.ssangyong.GreenMarket.model.PageMaker;
+import com.ssangyong.GreenMarket.model.SecurityUser;
 import com.ssangyong.GreenMarket.service.ItemPhotoService;
 import com.ssangyong.GreenMarket.service.ItemService;
 import com.ssangyong.GreenMarket.service.LoginService;
+import com.ssangyong.GreenMarket.service.MemberService;
 
 @Controller
 public class MainController {
 	
+		@Autowired
+		MemberService memberService;
+		@Autowired
+		ItemService itemService;
+		@Autowired
+		ItemPhotoService itemPhotoService;
+		@Autowired
+		LoginService loginService;	   
+	   
 	   @RequestMapping(value = {"/", "/index"})
-	   public String main(Model model) {
+	   public String main(Model model, @AuthenticationPrincipal SecurityUser principal) {
 	      System.out.println("main");
+	      
+	      // 탈퇴한 회원인 경우
+	      if (principal != null && memberService.selectById(principal.getUsername()).getMIsdropped() == 1) {
+	    	  model.addAttribute("isDropped", 1);
+	      } else {
+	    	  model.addAttribute("isDropped", 0);
+	      }
+	      
 	      model.addAttribute("itemSorts", ICategoryEnumType.values());
 	      return "index";
 	   }
@@ -50,6 +64,9 @@ public class MainController {
 	   @RequestMapping("/layout/myPage")
 	   public void mypage() {}
 	   
+	   @RequestMapping("/community/boardlist") // /layout/blog 에서 변경
+	   public void community() {}  // blog()->community()
+	   
 	   @RequestMapping("/layout/contact")
 	   public void contact() {
 		   
@@ -65,11 +82,6 @@ public class MainController {
 		   
 	   }
 	   
-	   @Autowired
-		ItemService itemService;
-		@Autowired
-		ItemPhotoService itemPhotoService;
-		@Autowired
-		LoginService loginService;
+
 		
 }

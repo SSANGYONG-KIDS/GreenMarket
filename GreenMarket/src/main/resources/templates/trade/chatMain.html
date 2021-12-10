@@ -22,6 +22,18 @@
 			}
 			#main_tab, #main_left, #main_right {
 				height:100%;
+				border-bottom-color: rgb(221, 221, 221);
+			    border-bottom-width: 1px !important;
+			    border-bottom-style: solid !important;		
+				border-top-color: rgb(221, 221, 221);
+			    border-top-width: 1px !important;
+			    border-top-style: solid !important;					
+		
+			}
+			.m_photo {
+			    width: 60px;
+			    height: 60px;
+			    border-radius: 100%;
 			}
 		
 		/* 메인 탭 */
@@ -30,14 +42,47 @@
 				float: left;
 				width: 10%
 			}
+			
 		
 		/* --- 메인 탭 끝 --- */
 		
 		/* 메인 왼쪽 창 */
 			#main_left {
-				background-color: lightgreen;
+				background-color: white;
 				float: left;
-				width: 30%
+				width: 25%;
+			}
+			#chat_list_wraaper {
+			    padding-top: 20px;
+			}
+			.chat_list_title {
+			    color: black;
+			    font-weight: 600;
+			    margin-bottom: 8px;
+			    padding-left: 13px;
+				font-size: 26px;		
+			}
+			.chat_list_table {
+				width: 100%;
+			    margin-bottom: 48px;
+			}
+			.chat_list_table td{
+				padding: 13px 15px;
+				/*
+				border-bottom-color: rgb(221, 221, 221);
+			    border-bottom-width: 1px !important;
+			    border-bottom-style: solid !important;		
+				border-top-color: rgb(221, 221, 221);
+			    border-top-width: 1px !important;
+			    border-top-style: solid !important;
+				*/
+			}
+			.td_chat_list_mphoto {
+			    width: 85px;
+				padding-right: 0px !important;
+			}
+			.chat_list_mid {
+				color: black;
 			}
 			#div_my_id {
 			    border-bottom-color: rgb(221, 221, 221);
@@ -55,6 +100,9 @@
 			.tr_trade {
 				cursor: pointer;
 			}
+			.tr_trade:hover {
+				background-color: rgb(199 199 199 / 30%);
+			}
 		/* --- 메인 왼쪽 창 끝 --- */
 		
 		/* 메인 오른쪽 창 */
@@ -62,6 +110,26 @@
 				background-color: skyblue;
 				float: left;
 				width: 55%
+			}
+			#main_right_top {
+				height: 105px;
+				background-color: darkseagreen;
+			}
+			#main_right_middle {
+				height: 495px;
+				background-color: azure;
+			}
+			#main_right_bottom {
+				height: 167px;
+				background-color: sandybrown;			
+			    padding-top: 18px;
+    			padding-left: 11px;
+			}
+			.myMsg {
+				text-align: right;
+			}
+			.otherMsg {
+				
 			}
 		/* --- 메인 오른쪽 창 끝 */
 		
@@ -120,30 +188,51 @@
 					<span id="left_top_span_my_id" th:text="${mapOfPrincipal.mNickname}"></span>
 				</div>
 				<div id="chat_list_wraaper">
-					<br>내 아이템에 대한 거래 목록<br>
-					<table>
-						<tr>
-							<th>거래아이템</th>
-							<th>구매자아이디</th>
-						</tr>
+					<div class="chat_list_title">
+						나의 물품 거래
+					</div>
+					<table class="chat_list_table">
 						<th:block th:each="trade : ${tradesForSharer}">
-							<tr th:id="${trade.tId}" th:classappend="${('tr_trade') + (' tt')}">
-								<td th:id="${trade.tId + '_iTitle'}" th:text="${trade.item.iTitle}"></td>
-								<td th:id="${trade.tId + '_mId'}"th:text="${trade.buyMember.mId}"></td>
+							<tr th:id="${'trade_' + trade.tId}" 
+								th:data-ititle="${trade.item.iTitle}"
+								th:data-mid="${trade.buyMember.mNickname}"
+								th:classappend="${('tr_trade') + (' tt')}">
+								<td th:id="${trade.tId + '_mPhoto'}" class="td_chat_list_mphoto">
+									<img th:id="${trade.tId + '_mPhoto_img'}" class="m_photo" th:src="${trade.buyMember.mPhoto}">
+								</td>
+								<td th:id="${trade.tId + '_info'}">
+									<div th:id="${trade.tId + '_mId'}" class="chat_list_mid">
+										[[${trade.buyMember.mNickname}]]
+									</div>								
+									<div th:id="${trade.tId + '_iTitle'}">
+										[[${trade.item.iTitle}]]
+									</div>
+
+								</td>
 							</tr>
 						</th:block>
 					</table>
-					
-					<br>내가 신청한 거래 목록<br>
-					<table>
-						<tr>
-							<th>거래아이템</th>
-							<th>판매자아이디</th>
-						</tr>
+					<div class="chat_list_title">
+						내가 신청한 거래
+					</div>
+					<table class="chat_list_table">
 						<th:block th:each="trade : ${tradesForRenter}">
-							<tr th:id="${trade.tId}" th:classappend="${('tr_trade') + (' tt')}">
-								<td th:id="${trade.tId + '_iTitle'}" th:text="${trade.item.iTitle}"></td>
-								<td th:id="${trade.tId + '_mId'}"th:text="${trade.item.member.mId}"></td>
+							<tr th:id="${'trade_' + trade.tId}" 
+								th:data-ititle="${trade.item.iTitle}"
+								th:data-mid="${trade.buyMember.mNickname}"
+								th:classappend="${('tr_trade') + (' tt')}">
+								<td th:id="${trade.tId + '_mPhoto'}" class="td_chat_list_mphoto">
+									<img th:id="${trade.tId + '_mPhoto_img'}" class="m_photo" th:src="${trade.item.member.mPhoto}">
+								</td>
+								<td th:id="${trade.tId + '_info'}">
+									<div th:id="${trade.tId + '_mId'}" class="chat_list_mid">
+										[[${trade.item.member.mNickname}]]
+									</div>								
+									<div th:id="${trade.tId + '_iTitle'}">
+										[[${trade.item.iTitle}]]
+									</div>
+
+								</td>
 							</tr>
 						</th:block>
 					</table>					
@@ -152,7 +241,25 @@
 	
 			<!-- 메인 오른쪽 -->
 			<div id="main_right">
-				메인 오른쪽
+				<div id="main_right_top"> <!-- 채팅 메시지 상단 -->
+					<div id="div_other_m_id">
+						상대방 id:
+						<span class="other_m_id"></span> 
+					</div>
+					<div id="div_other_i_title">
+						물품 이름:
+						<span class="other_i_title"></span> 
+					</div>
+				</div>
+				<div id="main_right_middle"> <!-- 채팅 메시지 기록 -->
+					<div id="chat_view">
+					</div>
+				</div>
+				<div id="main_right_bottom"> <!-- 채팅 입력창 -->
+					<input type="text" id="input_msg" 
+						onKeypress="javascript:if(event.keyCode==13) {sendMsg();}">
+					<button id="btn_input_msg" class="btn btn-primary py-1.5 px-2.5">전송</button>		
+				</div>
 			</div> <!-- 메인 오른쪽 끝-->
 		</div> <!-- 메인 wrapper 끝 -->
 		<!-- 데이터 -->
@@ -167,6 +274,8 @@
 			// 웹소켓 전역 변수 선언
 			let wsOfChat; // 내 채팅 웹소켓 객체
 			let myChatSessionId; // 내 채팅 세션 아이디
+			const MSG_TYPE_ME = 'myMsg';
+			const MSG_TYPE_OTHER = 'otherMsg';
 			
 			// 웹 소켓 열기 함수
 			function openWsOfChat(tId) {
@@ -180,6 +289,7 @@
 				
 				// 웹 소켓 열기
 				let wsUriOfChat = 'ws://' + location.host + '/chat/' + tId;
+				console.log('wsUriOfChat: ' + wsUriOfChat);
 				wsOfChat = new WebSocket(wsUriOfChat);
 				configWsOfChat(wsOfChat); // 웹 소켓 세팅
 			}
@@ -195,25 +305,50 @@
 						myChatSessionId = resObj.chatSessionId; // 전역 변수에 내 채팅 세션 아이디 넣기
 					}
 					
-					// 일반 세미지라면
+					// 일반 메시지라면
 					if (resObj.type == 'msg') {
 						console.log('received msg: resOBj');
-						debugger;
+						insertMsg(MSG_TYPE_OTHER, resObj.content); // 채팅창에 메시지 띄우기
 					}
 				};
 			}
 			
 			// 서버에 msg 보내기
-			function sendMsg(msg) {
-				let payload = {
+			function sendMsg() {
+				let content = $('#input_msg').val(); // 채팅 입력창에 적은 내용
+				
+				let payload = { // 웹소켓으로 보낼 내용
 					type: 'msg',
-					content: msg
+					content: content // 채팅 입력창에 적은 내용
 				}
 				wsOfChat.send(JSON.stringify(payload));
+				
+				// UI 처리
+				$('#input_msg').val(''); // 채팅 입력창 빈 값으로 만들기
+				insertMsg(MSG_TYPE_ME, content);
+				
 			}
 			
 		</script> <!-- 채팅 웹소켓 관련 스크립트 끝 -->
 		
+		<!-- UI 변경 관련 -->
+		<script th:inline="javascript">
+			/*
+			 	메시지 채팅창에 뿌리기
+				@Param type: MSG_TYPE_ME('myMsg'), MSG_TYPE_OTHER('otherMsg')
+			*/
+			function insertMsg(type, content) {
+				console.log('-- function: insertMsg');
+				let htmlAdded;
+				htmlAdded = '' 
+					+ '<div' + ' class='+ type + '>'
+					+ content
+					+ '</div>';
+				$('#chat_view').append(htmlAdded);
+			}
+		</script>
+		
+		<!-- 클릭 이벤트 등 -->
 		<script th:inline="javascript">
 			// 상단 메뉴 쪽 이미지 부분
 			let divisor = 3; 
@@ -227,17 +362,27 @@
 			};
 			myHeight();
 			
-			// 채팅방 목록에서 채팅 클릭 이벤트
+			// 채팅방 목록에서 거래 클릭 이벤트
 			$(document).on('click', ".tr_trade", e => {
 				let tId = e.target.id.replace(/[^0-9]/g, ""); // 거래 아이디
 				console.log('click event of tr_trade - tId: ' + tId);
+				
+				// 채팅창 상단에 정보 뿌려주기
+				let otherMId = $('#trade_' + tId).attr('data-mid');
+				let otherITitle = $('#trade_' + tId).attr('data-ititle');
+				$('.other_m_id').text(otherMId);
+				$('.other_i_title').text(otherITitle);
 				
 				// DB에서 채팅 내용 가져와서 뿌려주기 (TODO) (콜백함수로 소켓 연결하기 넣기)
 				
 				// 소켓 연결하기 (TODO)
 				openWsOfChat(tId);
 			});
-
+			
+			// 채팅 메시지 전송 버튼 클릭 이벤트
+			$(document).on('click', "#btn_input_msg", e=> {
+				sendMsg();
+			});
 
 		</script>
 	</th:block>
