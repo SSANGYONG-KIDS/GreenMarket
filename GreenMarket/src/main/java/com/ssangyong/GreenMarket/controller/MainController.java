@@ -64,6 +64,9 @@ public class MainController {
 	   @RequestMapping("/layout/myPage")
 	   public void mypage() {}
 	   
+	   @RequestMapping("/community/boardlist") // /layout/blog 에서 변경
+	   public void community() {}  // blog()->community()
+	   
 	   @RequestMapping("/layout/contact")
 	   public void contact() {
 		   

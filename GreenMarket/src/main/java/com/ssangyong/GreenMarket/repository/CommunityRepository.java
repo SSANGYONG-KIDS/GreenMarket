@@ -32,6 +32,7 @@ public interface CommunityRepository extends CrudRepository<CommunityEntity, Int
 		default:
 			break;
 		}
+		//builder.and(board.cId.gt(0)); //내가 추가함.
 		return builder;
 	}
 	

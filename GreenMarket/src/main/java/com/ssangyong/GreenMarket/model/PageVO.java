@@ -47,7 +47,7 @@ public class PageVO {
 	}
 
 
-
+	
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}

@@ -23,7 +23,7 @@
 			
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-<title>register</title>
+<title>update</title>
 
 </head>
 <body >
@@ -34,7 +34,7 @@
 		    <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
 		      <div class="col-md-9 ftco-animate pb-5 text-center">
 		       <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Community <i class="fa fa-chevron-right"></i></a></span> <span>About us <i class="fa fa-chevron-right"></i></span></p>
-		       <h1 class="mb-0 bread">새 글 등록</h1>
+		       <h1 class="mb-0 bread">글 수정</h1>
 		     </div>
 		   </div>
 		 </div>
@@ -42,18 +42,19 @@
 		<div class="container">
 			<br><br>
 			<form>   
+				<input type="hidden" id="cId" th:value="${board.cId}"/>
 				<div class="form-group">
 					<label for="cTitle">제목</label>
-					<input type="text" class="form-control" placeholder="제목을 입력하세요" name="cTitle" id="cTitle">
+					<input type="text" class="form-control" placeholder="제목을 입력하세요" name="cTitle" id="cTitle" th:value="${board.cTitle}">
 				</div>
 	
 				<div class="form-group">
 	  				<label for="cComment">내용</label>
-	 				<textarea class="form-control summernote" rows="5" name="cContent" id="cContent"></textarea>
+	 				<textarea class="form-control summernote" rows="5" name="cContent" id="cContent" th:value="${board.cContent}" th:text="${board.cContent}"></textarea>
 				</div>
 			</form >
 			<div class="row justify-content-center">
-				<button id="btn-save" class="btn btn-primary">등록하기</button>			
+				<button id="btn-update" class="btn btn-primary">수정하기</button>			
 			</div>
 			<br><br>
 		</div >
@@ -68,31 +69,32 @@
     });
 
 	
-	$('#btn-save').on('click',register);
-	function register(){
+	$('#btn-update').on('click',update);
+	function update(){
+		//let id = $("#cId").val();
 		
 		let data = {
+			cId : $("#cId").val(),
 			cTitle: $("#cTitle").val(),
 			cContent: $("#cContent").val()
 		};
 		
-		var c = $('#cTitle').val();
-		console.log(c);
 		
 		$.ajax({
 			type : "POST",
-			url: "/community/register",
+			url: "/community/update",
 			data: data
 			// contentType: "application/json; charset=utf-8",
 			// dataType: "json"
 			
 		}).done(function(resp){
-			alert("등록이 완료되었습니다.");
+			alert("글 수정이 완료되었습니다.");
+			//alert(JSON.stringify(data));
 			location.href="/community/boardlist";
-			
+			//location.reload();
 		}).fail(function(error){
 			alert("등록 실패");
-			console.log(error);
+			alert(JSON.stringify(data));
 		});
 		
 	}
