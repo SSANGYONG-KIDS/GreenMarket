@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,23 +35,22 @@ public class ReviewEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int rId;
 
+	@JsonProperty("rContent")
 	private String rContent;
+	@JsonProperty("rStar")
 	private double rStar;
 	
 	@CreationTimestamp
 	private Timestamp rRegdate;
 	
-	//@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "mId")
 	private MemberEntity member;
 	
-	//@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "iId")
 	private ItemEntity item; 
 	
-	//@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "tId")
 	private TradeEntity trade; 

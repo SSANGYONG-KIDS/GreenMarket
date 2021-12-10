@@ -202,18 +202,21 @@
 	</style>
 </th:block>
 <div class="panel panel-default" layout:fragment="content1">
-	<section class="hero-wrap hero-wrap-2 js-myheight" style="background-image: url('/bootstrap/images/item/itemdetail.jpg');">
-		<div class="overlay"></div>
-		<div class="container">
-		    <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
-		    	<div class="col-md-9 ftco-animate pb-5 text-center">
-		    	<p class="breadcrumbs"><span class="mr-2"><a th:href="@{/index}">Home <i class="fa fa-chevron-right"></i></a></span> <span>item detail<i class="fa fa-chevron-right"></i></span></p>
-				<h1 class="mb-0 bread">item detail</h1>
-		     	</div>
-		   	</div>
-		 </div>
-	</section>
-	
+	<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/bootstrap/images/item/itemdetail.jpg');">
+			<div class="overlay"></div>
+			<div class="container">
+				<div
+					class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+					<div class="col-md-9 ftco-animate pb-5 text-center">
+						<p class="breadcrumbs">
+							<span class="mr-2"><a th:href="@{/index}">Home <i class="fa fa-chevron-right"></i></a></span> <span>Item Detail<i class="fa fa-chevron-right"></i></span>
+						</p>
+						<h1 class="mb-0 bread">Item Detail</h1>
+					</div>
+				</div>
+			</div>
+		</section>
+
 	<!-- 물건 정보조회 -->
 	<section class="ftco-section services-section">
 		<div class="container">
@@ -227,10 +230,10 @@
 					<span class="_fardlj">
 						<span class="_hyestb">
 							<span style="color:red">★</span>
-							<span class="_1ne5r4rt" aria-hidden="true">[평점출력]</span>
+							<span class="_1ne5r4rt" aria-hidden="true">[[${review_avg}]]</span>
 						</span>
 						<span class="_142pbzop">
-							<button aria-label="후기 131개로부터 5점 만점에 4.62점을 받은 숙소입니다." type="button" class="_17wfx63m">(후기 [후기갯수출력]개)</button>
+							<button aria-label="후기 131개로부터 5점 만점에 4.62점을 받은 숙소입니다." type="button" class="_17wfx63m">(후기 [[${item_review.size}]]개)</button>
 						</span>
 					</span>
 					<span class="_5oadh0" aria-hidden="true">·</span>
@@ -299,19 +302,9 @@
 		</div>
 	</section>
 
-	<!-- 유튜브 연결 => ?? -->
-	<section class="ftco-section ftco-about img"style="background-image: url(/bootstrap/images/bg_4.jpg);">
-	 <div class="overlay"></div>
-	 <div class="container py-md-5">
-	  <div class="row py-md-5">
-	   <div class="col-md d-flex align-items-center justify-content-center">
-	    <a href="https://vimeo.com/45830194" class="icon-video popup-vimeo d-flex align-items-center justify-content-center mb-4">
-	     <span class="fa fa-play"></span>
-	   </a>
-	 </div>
-	</div>
-	</div>
-	</section>
+	<br><br><br><br><br>
+	<hr>
+	<br><br><br><br><br>
 	
 	<!-- 판매자 정보 조회 -->
 	<section class="ftco-section ftco-about ftco-no-pt img">
@@ -341,7 +334,7 @@
 	</section>
 	
 	<!-- 판매자와 거래 후기 -->
-	<section class="ftco-section testimony-section bg-bottom" style="background-image: url(/bootstrap/images/bg_1.jpg);">
+	<section class="ftco-section testimony-section bg-bottom" style="background-image: url(/bootstrap/images/item/detailreview.jpg);">
 	 <div class="overlay"></div>
 	 <div class="container">
 	  <div class="row justify-content-center pb-4">
@@ -382,9 +375,9 @@
 	 <div class="container">
 	  <div class="row justify-content-center">
 	   <div class="col-md-12 text-center">
-	    <div class="img"  style="background-image: url(/bootstrap/images/bg_2.jpg);">
+	    <div class="img">
 			<div class="pull-right" style="width: 100%; height: 5%; padding: 0px 200px 0px 200px;">
-				<a th:href="@{/item/itemlist}" class="btn btn-info">목록보기</a>
+				<a th:href="@{/item/itemlist}" class="btn btn-primary py-3 px-4">목록보기</a>
 			</div>
 	   </div>
 	 </div>

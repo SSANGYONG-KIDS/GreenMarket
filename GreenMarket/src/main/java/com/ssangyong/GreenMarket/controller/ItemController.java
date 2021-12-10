@@ -31,6 +31,7 @@ import com.ssangyong.GreenMarket.model.ItemPageVO;
 import com.ssangyong.GreenMarket.model.ItemPhotoEntity;
 import com.ssangyong.GreenMarket.model.MemberEntity;
 import com.ssangyong.GreenMarket.model.PageMaker;
+import com.ssangyong.GreenMarket.model.ReviewEntity;
 import com.ssangyong.GreenMarket.service.ItemPhotoService;
 import com.ssangyong.GreenMarket.service.ItemService;
 import com.ssangyong.GreenMarket.service.LoginService;
@@ -66,7 +67,18 @@ public class ItemController {
 		model.addAttribute("item", item);
 		model.addAttribute("item_owner",item.getMember());
 		model.addAttribute("item_photos",itemPhotoService.selectById(item.getIId()));
-		model.addAttribute("item_review",reviewService.selectItemReviewList(item));
+		
+		List<ReviewEntity> item_review = reviewService.selectItemReviewList(item);
+		model.addAttribute("item_review",item_review);
+		//평점
+		double total = 0;
+		double avg = 0;
+		for(ReviewEntity review: item_review) {
+			total+=review.getRStar();
+		}
+		avg = total /  item_review.size();
+		
+		model.addAttribute("review_avg", Math.round(avg*100)/100.0); //소수점 둘째자리까지
 		model.addAttribute("pagevo", pagevo);
 		model.addAttribute("istates",IStateEnumType.values());
 		model.addAttribute("tstates",ItStateEnumType.values());
