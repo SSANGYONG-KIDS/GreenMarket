@@ -39,7 +39,7 @@
 								<div class="col">
 									<label for="mId">아이디</label> <input id="mId" name="mId"
 										type="text" placeholder="아이디을 입력하세요" class="form-control"
-										th:value="${member.mId}" />
+										th:value="${member.mId}" readonly="readonly" />
 								</div>
 
 							</div>
@@ -92,18 +92,38 @@
 								</div>
 								<div class="col-3">
 									<input type="button" id="CertiUserNum" value="번호 인증"
-										readonly="readonly" class="form-control"> <input
-										type="hidden" id="numStr" name="numStr">
+										readonly="readonly" class="form-control"> 
+										<input type="hidden" id="numStr" name="numStr">
 								</div>
 							</div>
 							<br>
+
+							<!--프로필 -->
+							<div class="row">
+								<div class="col">
+									<label for="mPhoto"> 프로필 사진</label>
+									
+									<div th:if="${member.mPhoto == null}"> 
+									<img src="/bootstrap/images/user.png" id="current_img">
+									<input id="file_img" name="file_img" type="file" />
+									 </div>
+									 
+									<div th:unless="${member.mPhoto == null}">
+									<img th:src="${member.mPhoto}" id="current_img"> 
+									<input id="file_img" name="file_img" type="file" />
+									 </div>
+									
+								</div>
+							</div>
+							<input type="hidden" id="mPhoto" name="mPhoto" /> <br>
+
 
 							<!-- 닉네임 -->
 							<div class="row">
 								<div class="col">
 									<label for="mNickname"> 닉네임 </label> <input id="mNickname"
 										name="mNickname" type="text" placeholder="닉네임을 입력하세요"
-										class="form-control" th:value="${member.mNickname}" />
+										class="form-control" th:value="${member.mNickname}" readonly="readonly"/>
 								</div>
 								<div class="col-3">
 									<input type="button" id="checkNick" value="중복확인"
@@ -181,7 +201,7 @@
                   $('#mNickname').attr('readonly', 'readonly');
                } else {
                   Swal.fire('사용 불가능한 닉네임입니다.');
-                  return $('#mPw').focus();
+                  return $('#mNickname').focus();
                }
             }
          });
@@ -288,6 +308,33 @@
                   }).open();
          }
          
+    var file_img;
+         
+    $(document).ready(function() {
+    	$('#file_img').on("change", handleImgFileSelect);
+    });
+    
+    	function handleImgFileSelect(e) {
+		var files = e.target.files;
+		var filesArr = Array.prototype.slice.call(files);
+
+		filesArr.forEach(function(f) {
+			if (!f.type.match("image.*")) {
+				alert("확장자는 이미지 확장자만 가능합니다.");
+				return;
+			}
+
+			file_img = f;
+
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('#current_img').attr('src', e.target.result);
+			}
+			reader.readAsDataURL(f);
+		});
+    }
+         
+         
    	$("#modify").on('click',update);
    	
    	function update() {
@@ -298,20 +345,43 @@
  	 		mPw : $("#mPw").val(),
 	 		mEmail : $("#mEmail").val(),
 	 		mPhone : $("#mPhone").val(),
-	 		mAddress : $("#mAddress").val()
+	 		mAddress : $("#mAddress").val(),
 	 		};
+			
+			// 사진
+			var file = $('#file_img')[0].files[0];
+			var formData = new FormData();
+			formData.append('data', file); // data 안에 파일 넣기
+			formData.append('path', "signup"); // web 서버에 만들 폴더 이름
+			
+			// 사진 S3서버에 등록
+			$.ajax({
+				type : 'POST',
+				url : '/profile_upload',
+				data : formData,
+				processData : false,
+				contentType : false
+			}).done(function(responseBody) { // 사진을 S3서버에 등록한 후
+				data.mPhoto = responseBody; // 사진 주소 data에 넣기
+	 			
+	 			// 회원정보수정
+	 			$.ajax({
+					type: "POST",
+					url: "/modify",
+					data: data
+				}).done(function(resp){
+	         		alert("수정이 완료되었습니다.");
+	         		location.href="/layout/account_setting";
+	         	}).fail(function(error) {
+	         		alert("수정실패");
+	         	});						
+			}).fail(function(error) {
+			})
+
 	 		
- 			$.ajax({
-				type: "POST",
-				url: "/modify",
-				data: data
-			}).done(function(resp){
-         		alert("수정이 완료되었습니다.");
-         		location.href="/layout/account_setting";
-         	}).fail(function(error) {
-         		alert("수정실패");
-         	});		
+	
 	}
+
 	
 	
 	$("#delete_account").on('click', delete_account);
@@ -327,7 +397,7 @@
 				data: data
 			}).done(function(resp){
          		alert("회원이 탈퇴되었습니다.");
-         		location.href="/";
+         		location.href="/login/logout";
          	}).fail(function(error) {
          		alert("회원 탈퇴 실패");
          	});		

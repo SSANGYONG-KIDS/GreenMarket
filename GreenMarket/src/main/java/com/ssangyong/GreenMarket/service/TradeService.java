@@ -50,5 +50,10 @@ public class TradeService {
 		List<TradeEntity> list = tradeRepo.findByMIdOfItem(member.getMId());
 		return list;
 	}
+	
+	// 아이디로 찾기
+	public TradeEntity selectById(Integer tId) {
+		return tradeRepo.findById(tId).get();
+	}
 
 }
