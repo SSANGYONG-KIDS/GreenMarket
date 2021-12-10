@@ -18,10 +18,6 @@
 		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
-		<dependency>
-		  <groupId>com.fasterxml.jackson.core</groupId>
-		  <artifactId>jackson-databind</artifactId>
-		</dependency>  
 		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
 		<!-- 대용량 파일 처리 -->
 		<dependency>

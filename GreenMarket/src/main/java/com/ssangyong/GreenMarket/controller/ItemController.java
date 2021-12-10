@@ -34,6 +34,7 @@ import com.ssangyong.GreenMarket.model.PageMaker;
 import com.ssangyong.GreenMarket.service.ItemPhotoService;
 import com.ssangyong.GreenMarket.service.ItemService;
 import com.ssangyong.GreenMarket.service.LoginService;
+import com.ssangyong.GreenMarket.service.ReviewService;
 
 @Controller
 @RequestMapping("/item/*")
@@ -45,6 +46,8 @@ public class ItemController {
 	ItemPhotoService itemPhotoService;
 	@Autowired
 	LoginService loginService;
+	@Autowired
+	ReviewService reviewService;
 	
 	
 	@GetMapping("/itemlist")
@@ -63,6 +66,7 @@ public class ItemController {
 		model.addAttribute("item", item);
 		model.addAttribute("item_owner",item.getMember());
 		model.addAttribute("item_photos",itemPhotoService.selectById(item.getIId()));
+		model.addAttribute("item_review",reviewService.selectItemReviewList(item));
 		model.addAttribute("pagevo", pagevo);
 		model.addAttribute("istates",IStateEnumType.values());
 		model.addAttribute("tstates",ItStateEnumType.values());
@@ -126,14 +130,15 @@ public class ItemController {
 		
 		//사용자가 지운 사진들 객체 테이블에서 제거하기!
 		List<Integer> deletelist = new ArrayList();
-		String[] delete_pid_str = delete_pids.split(",");
-		for(int i=0; i<delete_pid_str.length; i++){
-			deletelist.add(Integer.parseInt(delete_pid_str[i]));
+		if(!delete_pids.equals("")) {
+			String[] delete_pid_str = delete_pids.split(",");
+			for(int i=0; i<delete_pid_str.length; i++){
+				deletelist.add(Integer.parseInt(delete_pid_str[i]));
+			}
+			for(Integer j: deletelist) {
+				itemPhotoService.deleteItemPhoto(j);
+			}
 		}
-		for(Integer j: deletelist) {
-			itemPhotoService.deleteItemPhoto(j);
-		}
-		
 		rttr.addFlashAttribute("resultMessage", ins_item==null?"입력실패":"입력성공");
 		return "redirect:/item/myitemlist";
 	}

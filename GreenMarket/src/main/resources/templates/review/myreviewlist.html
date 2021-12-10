@@ -159,8 +159,6 @@
 	   		rStar.val("");
      	});
 		
-		reviewManager.getAll("[[${member.mId}]]", printReviewList);
-		
 		function printReviewList(rlist){
 			console.log(rlist);
 			var str=""
@@ -177,7 +175,7 @@
 				}
 				str+="</p>"
 				str+="<p class='mb-4'>"+item["rContent"]+"</p>"
-				str+="<p class='mb-4'><a th:href='/item/itemdetail?iId="+item["item"]["iId"]+"'>"+item["item"]["iTitle"]+"</a></p>"
+				str+="<p class='mb-4'><a th:href='/item/itemdetail?iId="+item["item"].iId+"'>"+item["item"].iTitle+"</a></p>"
 				str+="<p class='mb-4'><span th:text='"+Date.format(new java.util.Date(item["rRegdate"]), 'yyyy-MM-dd hh:mm')+"'></span></p>"
 				str+="</div></div></div></form>"
 			});
@@ -193,7 +191,7 @@
 			str+="<div class='testimony-wrap py-4'>"
 			str+="<div class='text'>"
 			str+="<p class='re_star'>"
-			for(let i = 0; i < review.star; i++){
+			for(let i = 0; i < review.rStar; i++){
 				str+="<span class='fa fa-star'></span>"
 			}
 			str+="</p>"

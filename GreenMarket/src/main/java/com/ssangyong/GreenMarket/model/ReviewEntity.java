@@ -40,17 +40,17 @@ public class ReviewEntity {
 	@CreationTimestamp
 	private Timestamp rRegdate;
 	
-	@JsonIgnore
+	//@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "mId")
 	private MemberEntity member;
 	
-	@JsonIgnore
+	//@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "iId")
 	private ItemEntity item; 
 	
-	@JsonIgnore
+	//@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "tId")
 	private TradeEntity trade; 
