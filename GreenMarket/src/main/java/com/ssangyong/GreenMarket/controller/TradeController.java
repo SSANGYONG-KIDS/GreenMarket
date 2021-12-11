@@ -62,11 +62,18 @@ public class TradeController {
 		String endDateKor = tradeService.convertFormToKorDate(itemPageVO.getEndDate());
 		System.out.println("startDateKor: " + startDateKor + ", endDateKor: " + endDateKor);
 		
+		// item 가져오기
+		ItemEntity item = itemService.selectById(iId);
+		
+		
 		// model에 값 넣기
 		model.addAttribute("iId", iId);
 		model.addAttribute("itemPageVO", itemPageVO);
 		model.addAttribute("startDateKor", startDateKor);
 		model.addAttribute("endDateKor", endDateKor);
+		model.addAttribute("startDate", itemPageVO.getStartDate());
+		model.addAttribute("endDate", itemPageVO.getEndDate());
+		model.addAttribute("item", item);
 		
 		return "trade/reserveForm";
 	}
