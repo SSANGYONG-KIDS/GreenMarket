@@ -188,7 +188,7 @@
 		}
 		.image-box {
 		    width:380px;
-		    height:220px;
+		    text-align: center;
 		    overflow:hidden;
 		    margin:0 auto;
 		    padding-right: 50px;
@@ -223,6 +223,10 @@
 			<div class="_b8stb0">
 				<span class="_1n81at5">
 					<h1 tabindex="-1" class="_fecoyn4" th:text="${item.iTitle}"></h1>
+				</span>
+				<span style="margin-left:30px">
+					<img width="100px" height="90px" th:if="${item.iTstate.title}=='대여가능'" th:src="@{/bootstrap/images/item/available.png}">
+					<img width="100px" height="90px" th:if="${item.iTstate.title}!='대여가능'" th:src="@{/bootstrap/images/item/na.png}">
 				</span>
 			</div>
 			<div class="_1qdp1ym">
@@ -271,17 +275,16 @@
 				<div class="col-md-6 order-md-last heading-section pl-md-5 ftco-animate d-flex align-items-center">
 					<div class="image-box">
 						<img class="image-thumbnail" th:src="${item.photos[0].ipFilename}"/>
+						<input type="button" style="margin-top:10px;" class="btn btn-secondary py-3 px-4" th:value="모두보기" id="showPhotos" data-toggle="modal" data-target="#photoModal"> 
 					</div>
 					<div class="w-100">
 						<p style="color: black" th:text="${item.iContent}"></p>
-						<p>
-							<select id="iState" name="iState">
-								<option th:selected="${state}=='${item.iState}'" th:each="state:${istates}" th:value="${state}">[[${state.title}]]</option>
-							</select>
+						<p style="color: black">
+							<span style="padding-right: 15px">물건 상태:</span>
+							<span th:text="${item.iState.title}" style="color:green"></span>
 						</p>
 						<p style="color: black">
-							<span style="font-size: 30px; font-style: bold; color: black;" th:text="${item.iPrice}"></span><span style="padding-right: 30px">원/1day</span>
-							<a href="#"  th:text="${item.iTstate.title}"></a>
+							<span style="padding-right: 15px">가격:</span><span style="font-size: 30px; font-style: bold; color: black;" th:text="${item.iPrice}"></span><span style="padding-right: 30px">원/1day</span>
 						</p>	
 					</div>
 				</div>
@@ -298,6 +301,33 @@
 					
 					<input type="submit" class="btn btn-primary py-3 px-4" value="예약하기">
 				</form>
+			</div>
+		</div>
+		
+		<!-- Modal -->
+		<div id="photoModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+	    		<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+			        	<h4 class="modal-title">item photos</h4>
+			        	<button type="button" class="close" data-dismiss="modal">&times;</button>
+			      	</div>
+			      	<div class="modal-body">
+			      		<div class="container">
+							<div class="row d-flex">
+								<div class="col-md-12 ftco-animate" th:each="photo:${item.photos}">
+									<div class="blog-entry justify-content-end">
+										<img width="100%" height="100%" th:src="@{${photo.ipFilename}}">
+									</div>
+			        			</div>
+			        		</div>
+			        	</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+			    </div>
 			</div>
 		</div>
 	</section>

@@ -40,7 +40,6 @@ import com.ssangyong.GreenMarket.service.ReviewService;
 @Controller
 @RequestMapping("/item/*")
 public class ItemController {
-	
 	@Autowired
 	ItemService itemService;
 	@Autowired
@@ -66,8 +65,7 @@ public class ItemController {
 		ItemEntity item = itemService.selectById(iId);
 		model.addAttribute("item", item);
 		model.addAttribute("item_owner",item.getMember());
-		model.addAttribute("item_photos",itemPhotoService.selectById(item.getIId()));
-		
+	
 		List<ReviewEntity> item_review = reviewService.selectItemReviewList(item);
 		model.addAttribute("item_review",item_review);
 		//평점
@@ -80,13 +78,10 @@ public class ItemController {
 		
 		model.addAttribute("review_avg", Math.round(avg*100)/100.0); //소수점 둘째자리까지
 		model.addAttribute("pagevo", pagevo);
-		model.addAttribute("istates",IStateEnumType.values());
-		model.addAttribute("tstates",ItStateEnumType.values());
 		
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		MemberEntity member =  loginService.selectById(userDetails.getUsername());
 		model.addAttribute("member",member);
-		
 	}
 	
 	@GetMapping("/myitemlist")
