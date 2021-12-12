@@ -199,6 +199,36 @@
 		    height:100%;
 		    object-fit:cover;
 		}
+		
+		#like_button {
+			display: inline-block;
+			color: #cca2a3;
+			cursor: pointer;
+			font-size: 15px;
+			-webkit-transition: all 0.1s ease-in-out;
+			        transition: all 0.1s ease-in-out;
+		}
+		
+		#like_button.liked {
+			font-size: 0px;
+		}
+		
+		#like_button:after {
+			content: "♥";
+			color: #D61F12;
+			opacity: 0;
+			-webkit-transition: all 0.2s ease-in-out;
+			        transition: all 0.2s ease-in-out;
+		}
+		
+		#like_button.liked:after {
+			font-size: 15px;
+			opacity: 1;
+		}
+		
+		#like {
+			padding: 15px;
+		}
 	</style>
 </th:block>
 <div class="panel panel-default" layout:fragment="content1">
@@ -264,7 +294,10 @@
 							</div>
 							<div>
 								<button aria-label="목록에 숙소 추가하기" data-testid="pdp-save-button-unsaved" type="button" class="_kvaiv9k">
-									<div aria-hidden="true" class="_5kaapu"><span class="_14tkmhr"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 2; overflow: visible;"><path d="m16 28c7-4.733 14-10 14-17 0-1.792-.683-3.583-2.05-4.95-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05l-2.051 2.051-2.05-2.051c-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05-1.367 1.367-2.051 3.158-2.051 4.95 0 7 7 12.267 14 17z"></path></svg></span>저장</div>
+									<div aria-hidden="true" class="_5kaapu">
+										<span id="like_button">♥</span>
+										<span id="like_num">[[${like_num}]]</span>
+									</div>
 								</button>
 							</div>
 						</div>
@@ -428,6 +461,24 @@
 		});
 	};
 	myHeight();
+	
+	$(function(){
+		var like_me = "[[${like_me}]]";
+		
+		$("#like_button").on("click", function(){
+			$(this).toggleClass("liked");
+			$.ajax({
+				url:`updateGood/[[${member.mId}]]/[[${item.iId}]]`,
+				type: "post",
+				success: function(data){	
+					$("#like_num").text(data);
+				},
+				error: function(){}
+			});
+		});
+		
+		if(like_me==1) {$("#like_button").toggleClass("liked"); like_me=0;}
+	});
 	</script>
 </th:block>
 </body>

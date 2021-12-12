@@ -26,12 +26,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ssangyong.GreenMarket.model.ICategoryEnumType;
 import com.ssangyong.GreenMarket.model.IStateEnumType;
 import com.ssangyong.GreenMarket.model.ItStateEnumType;
+import com.ssangyong.GreenMarket.model.ItemCartEntityId;
 import com.ssangyong.GreenMarket.model.ItemEntity;
 import com.ssangyong.GreenMarket.model.ItemPageVO;
 import com.ssangyong.GreenMarket.model.ItemPhotoEntity;
 import com.ssangyong.GreenMarket.model.MemberEntity;
 import com.ssangyong.GreenMarket.model.PageMaker;
 import com.ssangyong.GreenMarket.model.ReviewEntity;
+import com.ssangyong.GreenMarket.service.ItemCartService;
 import com.ssangyong.GreenMarket.service.ItemPhotoService;
 import com.ssangyong.GreenMarket.service.ItemService;
 import com.ssangyong.GreenMarket.service.LoginService;
@@ -48,6 +50,8 @@ public class ItemController {
 	LoginService loginService;
 	@Autowired
 	ReviewService reviewService;
+	@Autowired
+	ItemCartService icService;
 	
 	
 	@GetMapping("/itemlist")
@@ -55,6 +59,8 @@ public class ItemController {
 
 		Page<ItemEntity> result = itemService.selectAll(pagevo);
 
+
+	    model.addAttribute("itemSorts", ICategoryEnumType.values());
 		model.addAttribute("itemResult", result);
 		model.addAttribute("pagevo", pagevo);
 		model.addAttribute("result", new PageMaker<>(result));
@@ -82,6 +88,13 @@ public class ItemController {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		MemberEntity member =  loginService.selectById(userDetails.getUsername());
 		model.addAttribute("member",member);
+		
+		//관심 물품
+		model.addAttribute("like_num",icService.selectList(iId).size());
+		ItemCartEntityId icId= new ItemCartEntityId();
+		icId.setItem(item);
+		icId.setMember(member);
+		model.addAttribute("like_me",icService.selectByItemCartEntityId(icId)==null?0:1);
 	}
 	
 	@GetMapping("/myitemlist")
