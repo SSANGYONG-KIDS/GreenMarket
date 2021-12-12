@@ -26,7 +26,7 @@
       <div class="input-form-backgroud">
       <div class="input-form col-md-12 mz-auto" style="margin-left: 19%">
       <h4 class="mb-3">유저 회원가입</h4>
-         <form id="signup-form" action="./signup" method="POST">
+         <form id="signup-form" action="./signup" method="POST" onsubmit="return checks()">
          <div class="validation-form" novalidate>
          <div class="row">
             <div class="col">
@@ -43,6 +43,9 @@
             <div class="col">
                   <label for="mPw">비밀번호</label> 
                   <input id="mPw" name="mPw" type="password" placeholder="비밀번호를 입력하세요."class="form-control" />
+                  <div class="col-3">
+                  <input type="button" id="checkpwd" value="비밀번호 확인" class="form-control">
+            </div>
             </div>
          </div>
          <br>
@@ -135,10 +138,11 @@
    </div>
 
    <th:block layout:fragment="script1">
-<!--    	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> -->
+   	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <!--       <script src="https://code.jquery.com/jquery-3.4.1.js"></script> -->
       <script>  
+      
       $('#checkNick').click(function() {
       		if($("#mId").val() == ""){
 			swal("아이디를 입력하세요");
@@ -230,7 +234,6 @@
                console.log("===numStr===" + numStr);
             });
          });
-   
    
          function sample6_execDaumPostcode() {
             new daum.Postcode(
@@ -360,16 +363,11 @@
 							alert("파일첨부를 해주세요.");
 							$("#" + id).focus();
 							reject();
-						}					
+						}				
 				});
 			}	
          
-         
-         
       </script>
-      <!-- Bootstrap CSS -->
-<!--       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" -->
-<!--           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
    </th:block>
 </body>
 </html>

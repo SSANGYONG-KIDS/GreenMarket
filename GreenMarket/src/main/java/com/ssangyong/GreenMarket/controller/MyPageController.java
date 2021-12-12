@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ssangyong.GreenMarket.model.MemberAddress;
 import com.ssangyong.GreenMarket.model.MemberEntity;
 import com.ssangyong.GreenMarket.model.SecurityUser;
 import com.ssangyong.GreenMarket.service.MemberService;
@@ -37,10 +38,15 @@ public class MyPageController {
 	 
 	 @PostMapping("/modify")
 	 @ResponseBody
-		public void myModify(MemberEntity member, @AuthenticationPrincipal SecurityUser principal) {
+		public void myModify(MemberEntity member,String memberAddress1, String memberAddress2, String memberAddress3, String AddNum, @AuthenticationPrincipal SecurityUser principal) {
 		 System.out.println("회원정보 수정하기");
 		 member.setMId(principal.getUsername());
-		 memberservice.updateMember(member);
+		 MemberAddress memberAddress = new MemberAddress();
+	      memberAddress.setAddNum(AddNum);
+	      memberAddress.setMemberAddress1(memberAddress1);
+	      memberAddress.setMemberAddress2(memberAddress2);
+	      memberAddress.setMemberAddress3(memberAddress3);
+	      memberservice.updateMember(member);
 	 }
 	 
 	 @PostMapping("/delete")

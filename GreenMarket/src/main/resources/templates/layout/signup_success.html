@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout1}">
+<th:block layout:fragment="style1">
+	<style>
+		.mypagename {
+		font-size : 70px;
+		font-weight : 800;
+		margin-left : 10%;
+		}
+		
+		.detail {
+		font-size : 30px;
+		}
+		
+		._1p0spma2 {
+			margin: 0px !important;
+			word-wrap: break-word !important;
+			font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif !important;
+			font-size: 18px !important;
+			font-weight: 800 !important;
+			line-height: 1.4444444444444444em !important;
+			color: #484848 !important;
+		}
+	
+		body {
+			font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
+			font-size: 14px;
+			line-height: 1.43;
+			color: #484848;
+			background-color: #fff;
+			margin: 0;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+		}
+	
+		.account-setting,
+		.trade,
+		.product {
+			float: left;
+			margin-left: 10%;
+		}
+		.mycart {
+		margin-left:30%;
+		margin-right:10%;
+		}
+		
+		._1cvdx4x:hover {
+			box-shadow: rgb(0 0 0 / 16%) 0px 2px 8px !important;
+		}
+	
+		a,
+		a:hover,
+		a:focus {
+			color: inherit;
+			text-decoration: none;
+		}
+	
+		._1cvdx4x {
+			display: block !important;
+			width: 100% !important;
+			box-shadow: rgb(0 0 0 / 16%) 0px 2px 8px !important;
+			padding: 24px !important;
+			margin: 8px 0px !important;
+			border-radius: 8px !important;
+			text-decoration: none !important;
+		}
+	</style>
+
+<head>
+	<meta charset="UTF-8">
+	<title>signup_success</title>
+</head>
+
+<body>
+	<div class="panel panel-default" layout:fragment="content1">
+		<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/bootstrap/images/bg_1.jpg');">
+		  <div class="overlay"></div>
+		  <div class="container">
+		    <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+		      <div class="col-md-9 ftco-animate pb-5 text-center">
+		       <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="fa fa-chevron-right"></i></a></span> <span>My Page <i class="fa fa-chevron-right"></i></span></p>
+		       <h1 class="mb-0 bread">signup_success</h1>
+		     </div>
+		   </div>
+		 </div>
+		</section>
+		<main id="site-content">
+			<div class="_88xxct">
+				<div class="_1gw6tte">
+					<div class="_mwt4r90">
+						<div style="margin: 0px;">
+							<section>
+								<div style="margin-top: 64px; margin-bottom: 56px; margin-left: 16px;">
+									<div tabindex="-1" class="">
+										<h1 tabindex="-1" class="_14i3z6h">
+										</h1>
+									</div>
+									<div style="margin-top: 8px; margin-bottom: 16px;">
+									<span class="_1p3joamp"></span>
+										<span class="mypagename"></span>
+										<span class="detail">그린마켓에 오신것을 환영합니다!</span>
+									</div>
+								</div>
+							</section>
+
+							<div class="box">
+							<div class="account-setting"><a th:href="@{/layout/account_setting}" class="_1cvdx4x">
+									<div data-showat="mediumAndAbove">
+										<div style="margin-bottom: 16px;"><svg viewBox="0 0 24 24" role="presentation"
+												aria-hidden="true" focusable="false"
+												style="height: 32px; width: 32px; display: block; fill: rgb(96, 182, 181);">
+												<path
+													d="m18.66 6.51-14.84 9.65a1 1 0 0 0 .55 1.84h15.62a1 1 0 0 0 1-1v-9.24a1.5 1.5 0 0 0 -2.32-1.26z">
+												</path>
+												<path
+													d="m9.25 12a1.25 1.25 0 1 1 -1.25-1.25 1.25 1.25 0 0 1 1.25 1.25zm11.75-8h-14a .5.5 0 0 0 0 1h14a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-1.5a.5.5 0 0 0 0 1h1.5a2 2 0 0 0 2-2v-12a2 2 0 0 0 -2-2zm-5 15h-13a1 1 0 0 1 -1-1v-12a1 1 0 0 1 1-1h1a .5.5 0 0 0 0-1h-1a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h13a .5.5 0 0 0 0-1zm-7.17-11.17a4.25 4.25 0 1 0 3.42 4.17 4.21 4.21 0 0 0 -.46-1.92.5.5 0 0 0 -.89.45 3.25 3.25 0 0 1 -.61 3.77 3.67 3.67 0 0 0 -4.56.02 3.25 3.25 0 0 1 2.27-5.57 3.3 3.3 0 0 1 .63.06.5.5 0 1 0 .19-.98zm5.67 3.17h5.5a.5.5 0 0 0 0-1h-5.5a.5.5 0 0 0 0 1zm0 2h5.5a.5.5 0 0 0 0-1h-5.5a.5.5 0 0 0 0 1zm0 2h5.5a.5.5 0 0 0 0-1h-5.5a.5.5 0 0 0 0 1z"
+													fill="#484848"></path>
+											</svg></div>
+									</div>
+									<div class="_1nlu9oc">
+										<div class="_djxl322">
+											<div class="_ni9axhe">
+												<div data-showat="mediumAndAbove">
+													<div class="_q19b5h"><span class="_1p0spma2">메인화면으로 가기</span>
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</a>
+							</div>
+							<div class="trade"><a href="/" class="_1cvdx4x">
+									<div data-showat="mediumAndAbove">
+										<div style="margin-bottom: 16px;"><svg viewBox="0 0 24 24" role="presentation"
+												aria-hidden="true" focusable="false"
+												style="height: 32px; width: 32px; display: block; fill: rgb(255, 180, 0);">
+												<path
+													d="m18.5 22a .5.5 0 1 1 .5-.5.5.5 0 0 1 -.5.5zm3.73-12.54a19.71 19.71 0 0 0 -5.88-.4c-.66.06-1.26.15-1.84.25a5.89 5.89 0 0 1 .36 2.66c-.22 2.57-1.93 4.51-3.82 4.34s-3.25-2.39-3.03-4.95a6.13 6.13 0 0 1 .27-1.3c-.16-.01-.3 0-.46-.02a27.97 27.97 0 0 1 -5.2-.8.5.5 0 0 0 -.63.48v9.14a.5.5 0 0 0 .34.47 17.04 17.04 0 0 0 5.49.86c3.14 0 5.83-.98 8.52-.98a23.25 23.25 0 0 1 5.65.82.5.5 0 0 0 .62-.48v-9.6a.5.5 0 0 0 -.39-.49zm-17.23-5.96a.5.5 0 1 0 -.5.5.5.5 0 0 0 .5-.5zm-2.5-1.5h-.5v-.5a.5.5 0 0 0 -1 0v .5h-.5a.5.5 0 0 0 0 1h .5v.5a.5.5 0 0 0 1 0v-.5h.5a.5.5 0 0 0 0-1zm20 20h-.5v-.5a.5.5 0 0 0 -1 0v .5h-.5a.5.5 0 0 0 0 1h .5v.5a.5.5 0 0 0 1 0v-.5h.5a.5.5 0 0 0 0-1z">
+												</path>
+												<path
+													d="m21.59 6.02a23.21 23.21 0 0 0 -1.45-.26 21.33 21.33 0 0 0 -4.83-.2 26.76 26.76 0 0 0 -3.13.48l-.46.09a16.94 16.94 0 0 1 -4.87.4 18.25 18.25 0 0 1 -3.37-.53 11.23 11.23 0 0 1 -1.24-.4 4.54 4.54 0 0 1 -.39-.17.62.62 0 0 0 -.87.55v1.45a.5.5 0 0 0 1 0v-.86a12.83 12.83 0 0 0 1.24.39 17.42 17.42 0 0 0 1.73.36c-.17 1.82-1.75 2.68-3.47 2.68a.5.5 0 0 0 -.5.5v6.75c0 .76 3.14 1.85 5.83 1.85a24.54 24.54 0 0 0 4.51-.49 21.51 21.51 0 0 1 4.01-.48q.32 0 .66.02a19.02 19.02 0 0 1 3.07.45 24.07 24.07 0 0 1 1.77.47 1.5 1.5 0 0 0 .47.03c.4-.03.68-.15.68-.61a425.81 425.81 0 0 0 0-1.5.5.5 0 0 0 -1 0 230.48 230.48 0 0 0 0 1.08 25.1 25.1 0 0 0 -1.71-.45c-.24-.05-.47-.09-.7-.13a3.79 3.79 0 0 1 2.91-2.5.5.5 0 0 0 .48-.5c0-.3.01-.68.02-1.25l.05-1.74c.05-1.73.07-3.19.07-4.81a.7.7 0 0 0 -.54-.69zm-19.59 11.23v-.22a1.39 1.39 0 0 1 0 .22zm1.15.24a8.18 8.18 0 0 1 -1.03-.43 4.27 4.27 0 0 1 -.12-.06v-1.28a2.53 2.53 0 0 1 2.11 2.06c-.33-.08-.65-.17-.96-.28zm17.9-6-.05 1.74-.02.84a4.91 4.91 0 0 0 -3.38 3.25 17.2 17.2 0 0 0 -1.55-.16q-.36-.02-.71-.02a22.22 22.22 0 0 0 -4.18.49 23.71 23.71 0 0 1 -4.34.48 11.31 11.31 0 0 1 -1.7-.14c-.08-1.68-1.23-2.83-3.13-3.27v-3.72a3.94 3.94 0 0 0 3.95-3.52c.27.03.55.06.84.08a17.86 17.86 0 0 0 5.12-.42l.46-.09a25.89 25.89 0 0 1 3.01-.46 17.46 17.46 0 0 1 2.18-.04 4.56 4.56 0 0 0 3.53 3.39c-.01.51-.02 1.03-.04 1.58zm.06-2.6a3.63 3.63 0 0 1 -2.51-2.3 22.37 22.37 0 0 1 2.4.33l.12.03c0 .66-.01 1.3-.02 1.95zm-6.49 1.14a6.5 6.5 0 0 1 .26 2.48c-.24 2.82-2.16 5-4.37 4.8-2.2-.2-3.72-2.68-3.48-5.5a6.48 6.48 0 0 1 .67-2.39c.14-.28.29-.55.39-.7a.5.5 0 1 1 .83.55 8.08 8.08 0 0 0 -.33.6 5.49 5.49 0 0 0 -.56 2.02c-.2 2.32.99 4.27 2.57 4.41s3.08-1.57 3.28-3.89a5.5 5.5 0 0 0 -.21-2.1.5.5 0 1 1 .95-.3z"
+													fill="#484848"></path>
+											</svg></div>
+									</div>
+									<div class="_1nlu9oc">
+										<div class="_djxl322">
+											<div class="_ni9axhe">
+												<div data-showat="mediumAndAbove">
+													<div class="_q19b5h"><span class="_1p0spma2">로그인 하기</span>
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</a>
+							</div>
+							
+		</main>
+		<th:block layout:fragment="script1">
+		</th:block>
+</body>
+
+
+</html>
