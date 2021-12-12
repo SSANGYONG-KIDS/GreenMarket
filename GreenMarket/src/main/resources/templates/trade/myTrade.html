@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout1}"
+>
+<head>
+<meta charset="UTF-8">
+<title>myTrade</title>
+</head>
+<body>
+	<!-- 스타일 부분 -->
+	<th:block layout:fragment="style1">
+		<style>
+		/* 메인 공통 */
+			#main_wrapper {
+				margin-left: 5%;
+				margin-top: 30px;
+				margin-bottom: 50px;
+			}
+			#data {
+				display: none;
+			}			
+			.black {
+				color: black;
+			}
+			.bold {
+				font-weight: 600;
+			}
+		/* -- 메인 공통 끝 -- */
+			.blog-entry {
+				min-width: 403px;
+			}
+			.blog-entry .one {
+			    text-align: center;
+			    width: auto;
+			    margin-right: 12px;
+			}	
+			.blog-entry .two {
+			    width: auto;
+			}	
+		</style>
+	</th:block>
+	
+	<!-- 메인 부분 -->
+	<div class="panel panel-default" layout:fragment="content1">
+		<!-- 모달창 배경 -->
+		<div id="modal_background"></div>
+
+		<!-- 상단 부분 -->
+		 <section class="hero-wrap hero-wrap-2 js-myheight" style="background-image: url('/bootstrap/images/trade/chatMain.png');">
+		  <div class="overlay"></div>
+		  <div class="container">
+		    <div class="row no-gutters slider-text js-myheight align-items-end justify-content-center">
+		      <div class="col-md-9 ftco-animate pb-5 text-center">
+		       <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="fa fa-chevron-right"></i></a></span> <span>채팅하기 <i class="fa fa-chevron-right"></i></span></p>
+		       <h1 class="mb-0 bread">거래 관리</h1>
+		     </div>
+		   </div>
+		 </div>
+		</section>
+
+		<!-- 메인 wrapper -->
+		<div id="main_wrapper">
+			<div class="row d-flex">
+				<!-- 내 물품 거래 목록 -->
+				<th:block th:each="trade : ${tradesForSharer}">
+	        		<div class="col-md-4 d-flex ftco-animate">
+	          			<div class="blog-entry justify-content-end">
+				            <a href="#" class="block-20" th:style="'background-image: url(' + ${trade.item.photos[0].ipFilename} + ');'">
+				            </a>
+			            	<div class="text">
+		              			<div class="d-flex align-items-center mb-4 topp">
+					                <div class="one">
+			                  			<span class="day">[[${trade.tId}]]</span>
+					                </div>
+					                <div class="two">
+						  				<span class="yr">[[${#dates.format(trade.tStartdate, 'yyyy-MM-dd')}]]</span>
+								  		<span class="mos">[[${#dates.format(trade.tEnddate, 'yyyy-MM-dd')}]]</span>
+					                </div>
+      							</div>
+			              		<h3 class="heading"><a href="#">[[${trade.item.iTitle}]]</a></h3>
+			              		<p>
+								  	<span class="black">물품 소유자: </span><span class="black bold">[[${trade.item.member.mNickname}]] <br></span>
+									[[${trade.item.member.mAddress.memberAddress1}]]
+						  		</p>
+						  		<p>
+									<span class="black">거래 신청자: </span><span class="black bold">[[${trade.buyMember.mNickname}]] <br></span>
+									[[${trade.buyMember.mAddress.memberAddress1}]]
+		  						</p>
+						  		<p>
+									<span class="black">거래 상태: &nbsp;</span>
+									<select th:id="${'tstates_' + trade.tId}" class="tStates" name="tStateValue">
+										<option th:selected="${state} == ${trade.tState}" th:each="state:${tStates}" th:value="${state}">[[${state.title}]]</option>
+									</select>
+							  	</p>
+				              	<p>
+									<a th:href="${'/item/itemdetail?iId=' + trade.item.iId}" class="btn btn-primary">Detail item</a>
+							  	</p>
+    						</div>
+          				</div>
+		        	</div>
+				</th:block>
+				
+				<!-- 내 신청 거래 목록 -->
+				<th:block th:each="trade : ${tradesForRenter}">
+	        		<div class="col-md-4 d-flex ftco-animate">
+	          			<div class="blog-entry justify-content-end">
+				            <a href="#" class="block-20" th:style="'background-image: url(' + ${trade.item.photos[0].ipFilename} + ');'">
+				            </a>
+			            	<div class="text">
+		              			<div class="d-flex align-items-center mb-4 topp">
+					                <div class="one">
+			                  			<span class="day">[[${trade.tId}]]</span>
+					                </div>
+					                <div class="two">
+						  				<span class="yr">[[${#dates.format(trade.tStartdate, 'yyyy-MM-dd')}]]</span>
+								  		<span class="mos">[[${#dates.format(trade.tEnddate, 'yyyy-MM-dd')}]]</span>
+					                </div>
+      							</div>
+			              		<h3 class="heading"><a href="#">[[${trade.item.iTitle}]]</a></h3>
+			              		<p>
+								  	<span class="black">물품 소유자: </span><span class="black bold">[[${trade.item.member.mNickname}]] <br></span>
+									[[${trade.item.member.mAddress.memberAddress1}]]
+						  		</p>
+						  		<p>
+									<span class="black">거래 신청자: </span><span class="black bold">[[${trade.buyMember.mNickname}]] <br></span>
+									[[${trade.buyMember.mAddress.memberAddress1}]]
+		  						</p>
+						  		<p>
+									<span class="black">거래 상태: &nbsp;</span>
+									<select th:id="${'tstates_' + trade.tId}" class="tStates" name="tStateValue">
+										<option th:selected="${state} == ${trade.tState}" th:each="state:${tStates}" th:value="${state}">[[${state.title}]]</option>
+									</select>
+							  	</p>
+				              	<p>
+									<a th:href="${'/item/itemdetail?iId=' + trade.item.iId}" class="btn btn-primary">Detail item</a>
+							  	</p>
+    						</div>
+          				</div>
+		        	</div>
+				</th:block>				
+			</div>
+			
+		</div> <!-- 메인 wrapper 끝 -->
+		
+		<!-- 데이터 -->
+		<div id="data">
+			<input id="iId" th:value="${iId}">
+		</div> <!-- 데이터 끝 -->
+	</div>
+
+	<th:block layout:fragment="script1">
+		<!-- 상단 크기 조절 -->
+		<script th:inline="javascript">
+			// 상단 메뉴 쪽 이미지 부분
+			let divisor = 3; 
+			var myHeight = function() {
+				$('.js-myheight').css('height', $(window).height()/divisor);
+				$('.overlay').css('height', $(window).height()/divisor);
+				$(window).resize(function() {
+					$('.js-myheight').css('height', $(window).height()/divisor);
+					$('.overlay').css('height', $(window).height()/divisor);
+				});
+			};
+			myHeight();
+		</script>
+		
+		<!-- 클릭 이벤트 -->
+		<script th:inline="javascript">
+			$(document).on('change', '.tStates', e => {
+				
+				tId = e.target.id.substr(e.target.id.indexOf('_') + 1);
+				tStateValue = e.target.value;
+				changeTStates(tId, tStateValue);
+			});
+		</script>
+		
+		<!-- ajax -->
+		<script th:inline="javascript">
+			function changeTStates(tId, tStateValue){
+				$.ajax({
+					type : 'POST',
+					url : '/trade/changeTStates',
+					data : {
+						tId: tId,
+						tStateValue: tStateValue
+					}
+				}).done(res => {
+					alert('거래 상태가 변경되었습니다.');
+				})
+				  .fail(err => {
+					console.log('fail -- trade/changeTStates');
+				});				
+			};
+
+		</script>
+	</th:block>
+</body>
+</html>

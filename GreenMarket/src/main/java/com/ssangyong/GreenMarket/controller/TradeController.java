@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ssangyong.GreenMarket.model.ItStateEnumType;
 import com.ssangyong.GreenMarket.model.ItemEntity;
 import com.ssangyong.GreenMarket.model.ItemPageVO;
 import com.ssangyong.GreenMarket.model.MemberEntity;
@@ -114,17 +115,41 @@ public class TradeController {
 		return "success";
 	}
 	
-	
 	/**
-	 * 세션 테스트
+	 * 내 거래 목록 보기
 	 */
-	@RequestMapping("sessionTest")
-	@ResponseBody
-	public String sessionTest(@AuthenticationPrincipal SecurityUser principal) {
-		System.out.println(principal);
-		return null;
+	@RequestMapping("myTrade")
+	public void myTrade(Model model, @AuthenticationPrincipal SecurityUser principal) {
+		// 세션 멤버 정보 가져오기
+		MemberEntity MemberOfPrincipal = loginService.selectById(principal.getUsername());
+		Map<Object, Object> mapOfPrincipal = new HashMap<>(); // 필요한 정보만 맵에 담기
+		mapOfPrincipal.put("mId", MemberOfPrincipal.getMId());
+		mapOfPrincipal.put("mNickname", MemberOfPrincipal.getMNickname());
+		model.addAttribute("mapOfPrincipal", mapOfPrincipal);
+		
+		// 내 아이템에 대한 거래 목록 가져오기
+		List<TradeEntity> tradesForSharer = tradeService.listTradeForSharer(loginService.selectById(principal.getUsername()));
+		model.addAttribute("tradesForSharer", tradesForSharer);
+		
+		// 내가 예약한 거래 목록 가져오기
+		List<TradeEntity> tradesForRenter = tradeService.listTradeForRenter(loginService.selectById(principal.getUsername()));
+		model.addAttribute("tradesForRenter", tradesForRenter);
+		
+		// 아이템 거래상태 정보 가져오기
+		model.addAttribute("tStates", TStateEnumType.values());
 	}
 	
+	/**
+	 * 거래상태 변경하기
+	 */
+	@PostMapping("changeTStates")
+	@ResponseBody
+	public String changeTStates(int tId, String tStateValue) {
+		// tState 변경하기
+		tradeService.changeTState(tId, tStateValue);
+		return "";
+	}
+
 	/**
 	 * s3테스트
 	 */
@@ -151,7 +176,7 @@ public class TradeController {
 		List<TradeEntity> tradesForSharer = tradeService.listTradeForSharer(loginService.selectById(principal.getUsername()));
 		model.addAttribute("tradesForSharer", tradesForSharer);
 		
-		// 내가 예약한 거래 목록 가져오기 (TODO)
+		// 내가 예약한 거래 목록 가져오기
 		List<TradeEntity> tradesForRenter = tradeService.listTradeForRenter(loginService.selectById(principal.getUsername()));
 		model.addAttribute("tradesForRenter", tradesForRenter);
 	}
