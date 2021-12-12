@@ -13,13 +13,21 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.ssangyong.GreenMarket.model.MessageEntity;
+import com.ssangyong.GreenMarket.model.MsgEnumType;
+import com.ssangyong.GreenMarket.service.LoginService;
 import com.ssangyong.GreenMarket.service.TradeChatService;
+import com.ssangyong.GreenMarket.service.TradeService;
 
 // 채팅 소켓 핸들러
 @Component("chatSocketHandler")
 public class ChatSocketHandler extends TextWebSocketHandler{
 	@Autowired
 	TradeChatService tradeChatService;
+	@Autowired
+	LoginService loginService;
+	@Autowired
+	TradeService tradeService;
 	
 	// url
 	static final String PATH = "chat";
@@ -61,7 +69,15 @@ public class ChatSocketHandler extends TextWebSocketHandler{
 			System.out.println("mIdOfsender: " + session.getPrincipal().getName());
 			System.out.println("content: " + content);
 			
-			// TODO DB에 메시지 저장
+			// DB에 메시지 저장
+			MessageEntity messageEntity = MessageEntity.builder()
+								   					   .member(loginService.selectById(principalMId))
+								   					   .msgContent(content)
+								   					   .msgIsread(0)
+								   					   .msgType(MsgEnumType.TEXT)
+								   					   .trade(tradeService.selectById(Integer.parseInt(tId)))
+								   					   .build();
+			tradeChatService.insert(messageEntity);
 			
 			// 같은 방 소켓 멤버들에게 메시지 보내기
 			List<String> mIdsRoom = mapOfMIdOfRoom.get(tId); // 같은 방에 있는 아이디(mId) 리스트
@@ -82,7 +98,6 @@ public class ChatSocketHandler extends TextWebSocketHandler{
 				// 메시지 보내기
 				sessionOfTarget.sendMessage(new TextMessage(objForTarget.toJSONString()));
 			}
-			
 		}
 	}	
 	

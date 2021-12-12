@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -34,5 +36,6 @@ public class LocationEntity {
 	@OneToMany(mappedBy = "loc", //fk이름 "메여있다"
 			cascade = CascadeType.ALL,
 			fetch = FetchType.LAZY) //fetch = FetchType.EAGER
+	@JsonBackReference
 	List<MemberEntity> members;
 }

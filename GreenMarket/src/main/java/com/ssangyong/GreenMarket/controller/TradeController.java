@@ -125,6 +125,7 @@ public class TradeController {
 		Map<Object, Object> mapOfPrincipal = new HashMap<>(); // 필요한 정보만 맵에 담기
 		mapOfPrincipal.put("mId", MemberOfPrincipal.getMId());
 		mapOfPrincipal.put("mNickname", MemberOfPrincipal.getMNickname());
+		mapOfPrincipal.put("mPhoto", MemberOfPrincipal.getMPhoto());
 		model.addAttribute("mapOfPrincipal", mapOfPrincipal);
 		
 		// 내 아이템에 대한 거래 목록 가져오기
@@ -170,6 +171,7 @@ public class TradeController {
 		Map<Object, Object> mapOfPrincipal = new HashMap<>(); // 필요한 정보만 맵에 담기
 		mapOfPrincipal.put("mId", MemberOfPrincipal.getMId());
 		mapOfPrincipal.put("mNickname", MemberOfPrincipal.getMNickname());
+		mapOfPrincipal.put("mPhoto", MemberOfPrincipal.getMPhoto());
 		model.addAttribute("mapOfPrincipal", mapOfPrincipal);
 		
 		// 내 아이템에 대한 거래 목록 가져오기
