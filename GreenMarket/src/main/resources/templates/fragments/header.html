@@ -31,7 +31,7 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 					<li class="nav-item" sec:authorize-expr="isAuthenticated()"><a th:href="@{/layout/myPage}" class="nav-link">마이페이지</a></li>
 				</ul>
 				<div class="info">
-					<span sec:authorize-expr="isAuthenticated()"><a sec:authentication="name" class="nav-link"></a></span>
+					<span sec:authorize-expr="isAuthenticated()"><a sec:authentication="name" class="nav-link">님 반갑습니다!</a></span>
 					<span sec:authorize-expr="isAuthenticated()">님 반갑습니다!</span>
 				</div>
 			</div>
