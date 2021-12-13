@@ -69,21 +69,27 @@ public class ChatSocketHandler extends TextWebSocketHandler{
 			System.out.println("mIdOfsender: " + session.getPrincipal().getName());
 			System.out.println("content: " + content);
 			
+			List<String> mIdsRoom = mapOfMIdOfRoom.get(tId); // 같은 방에 있는 아이디(mId) 리스트
+			int msgIsread = mIdsRoom.size() > 1 ? 1 : 0; // 읽은여부
+			
 			// DB에 메시지 저장
 			MessageEntity messageEntity = MessageEntity.builder()
 								   					   .member(loginService.selectById(principalMId))
 								   					   .msgContent(content)
-								   					   .msgIsread(0)
+								   					   .msgIsread(msgIsread)
 								   					   .msgType(MsgEnumType.TEXT)
 								   					   .trade(tradeService.selectById(Integer.parseInt(tId)))
 								   					   .build();
-			tradeChatService.insert(messageEntity);
+			tradeChatService.insert(messageEntity);		
 			
-			// 같은 방 소켓 멤버들에게 메시지 보내기
-			List<String> mIdsRoom = mapOfMIdOfRoom.get(tId); // 같은 방에 있는 아이디(mId) 리스트
+			// 같은 방 소켓 멤버들에게 메시지 보내기		
 			for (String mIdOfTarget : mIdsRoom) {
-				// 보낸 사람(자기 자신)은 넘어가기
-				if (mIdOfTarget.equals(principalMId)) continue;
+				
+				// 보낸 사람(자기 자신)에게 읽은여부 값 보내기
+				if (mIdOfTarget.equals(principalMId)) {
+					
+					continue;
+				}
 				
 				// 메시지 보낼 대상
 				String sessionIdOfTarget = mapOfSessionId.get(mIdOfTarget);
@@ -97,7 +103,7 @@ public class ChatSocketHandler extends TextWebSocketHandler{
 				
 				// 메시지 보내기
 				sessionOfTarget.sendMessage(new TextMessage(objForTarget.toJSONString()));
-			}
+			}	
 		}
 	}	
 	

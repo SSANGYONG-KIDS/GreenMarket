@@ -172,6 +172,8 @@
 			.myMsg, .otherMsg {
 			    margin: 39px 0px;
 			    margin-right: 10px;	
+				position: relative;
+				height: 40px;
 			}
 			.myMsg {
 				text-align: right;
@@ -196,20 +198,26 @@
 			    height: 43px;
 			    border-radius: 100%;
 			    float: left;
-			    margin-right: 22px;
+			    margin-right: 19px;
     			margin-top: -8.1px;		
 			}
 			.myMsg_msg_time {
 				margin-right: 13px;
 			    font-weight: 300;
-			    font-size: 14px;
-				vertical-align: sub;				
+			    font-size: 14px;				
 			}
 			.otherMsg_msg_time {
 				margin-left: 13px;
 			    font-weight: 300;
 			    font-size: 14px;
-				vertical-align: sub;
+			}
+			.msg_unread {
+				color: #aab13b;
+    			font-weight: 500;
+				
+			}
+			.msg_unread_0 {
+				color: white;
 			}
 						
 			.my_m_photo {
@@ -232,6 +240,36 @@
 			    text-align: right;
 			    margin-top: 12px;
 			    margin-right: 15px;				
+			}
+			
+			.div_msg_unread {
+			    margin-bottom: -12px;
+			    margin-right: 13px;				
+			}
+			
+
+			
+			.div_myMsg_msg_time {
+				
+			}
+			
+			.wrapper_msg_info_myMsg {
+				float: right;
+    			margin-top: -7.6px;
+				margin-right: 0px;
+			}
+			
+			.wrapper_msg_info_otherMsg {
+				float: left;
+    			margin-top: -7.6px;
+				margin-left: 0px;				
+			}
+			
+			.div_myMsg_span {
+				float: right;
+			}
+			.div_otherMsg_span {
+				float: left;
 			}
 		/* --- 메인 오른쪽 창 끝 */
 		
@@ -430,7 +468,7 @@
 				// UI 처리
 				$('#input_msg').val(''); // 채팅 입력창 빈 값으로 만들기
 				// $('#input_msg').selectRange(0, 0); // 채팅 입력창 커서 처음으로 이동하기
-				insertMsg(MSG_TYPE_ME, content, new Date().toLocaleString());		
+				insertMsg(MSG_TYPE_ME, content, new Date().toLocaleString(), 1);		
 			}
 			
 			/*
@@ -468,41 +506,50 @@
 			 	메시지 채팅창에 뿌리기
 				@Param type: MSG_TYPE_ME('myMsg'), MSG_TYPE_OTHER('otherMsg')
 			*/
-			function insertMsg(type, content, time) {
+			function insertMsg(type, content, time, isUnread) {
 				console.log('-- function: insertMsg');
+				if (isUnread == null) isUnread = 0;
 				let htmlAdded;
-				htmlAdded = '' 
-					+ '<div class='+ type + '>';
-				
-				// 상대방 프로필 이미지
-				if (type == MSG_TYPE_OTHER) { 
+	
+				htmlAdded = '' // 하나의 메시지
+					+ '<div class="'+ type + '">';
+					
+				if (type == MSG_TYPE_OTHER) { // 상대방 프로필 이미지
 					htmlAdded += ''	
-					+ '<img class="' + type + '_m_photo" src="' + otherMPhoto + '">';					
+					+ 	'<img class="' + type + '_m_photo" src="' + otherMPhoto + '">';					
 				}
+				
+				htmlAdded += ''	// 메시지
+					+ 	'<div class="div_' + type + '_span">'
+					+		'<span class="' + type + '_span">'
+					+ 			content
+					+		'</span>'
+					+	'</div>';
 
-				// 내 메시지 시간
-				if (type == MSG_TYPE_ME) {
-					htmlAdded += ''	
-					+	'<span class=' + type + '_msg_time>'
-					+		time
-					+	'</span>';					
-				}
+				htmlAdded += '' // 읽은 여부, 시간 wrapper
+				+		'<div class="wrapper_msg_info_'+ type + '">';
 				
-				htmlAdded += ''	
-					+ 	'<span class=' + type + '_span>'
-					+ 		content
-					+	'</span>';
+				htmlAdded += '' // 내 메시지 읽은 여부
+				+			'<div class="div_msg_unread">'
+				+				'<span class= "msg_unread msg_unread_' + isUnread + '">'
+				+ 					isUnread
+				+				'</span>'
+				+ 			'</div>';
 				
-				// 상대방 메시지 시간
-				if (type == MSG_TYPE_OTHER) {
-					htmlAdded += ''	
-					+	'<span class=' + type + '_msg_time>'
-					+		time
-					+	'</span>';					
-				}
+				htmlAdded += ''	// 메시지 시간
+				+			'<div class="div_'+ type + '_msg_time">'
+				+				'<span class="' + type + '_msg_time">'
+				+					time
+				+				'</span>'
+				+			'</div>';					
+						
+				htmlAdded += '' // 읽은 여부, 시간 wrapper 끝
+				+		'</div>'; 
 				
-				htmlAdded += ''
-					+ '</div>';
+				htmlAdded += '' // 하나의 메시지 끝
+				+ 	'</div>'; 
+				
+				// DOM 변경
 				$('#chat_view').append(htmlAdded);
 				$('#chat_view').scrollTop($('#chat_view').prop('scrollHeight')); // 스크롤바 최하단으로 내리기
 			}
