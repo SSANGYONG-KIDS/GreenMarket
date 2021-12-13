@@ -38,15 +38,10 @@ public class MyPageController {
 	 
 	 @PostMapping("/modify")
 	 @ResponseBody
-		public void myModify(MemberEntity member,String memberAddress1, String memberAddress2, String memberAddress3, String AddNum, @AuthenticationPrincipal SecurityUser principal) {
+		public void myModify(MemberEntity member, @AuthenticationPrincipal SecurityUser principal) {
 		 System.out.println("회원정보 수정하기");
 		 member.setMId(principal.getUsername());
-		 MemberAddress memberAddress = new MemberAddress();
-	      memberAddress.setAddNum(AddNum);
-	      memberAddress.setMemberAddress1(memberAddress1);
-	      memberAddress.setMemberAddress2(memberAddress2);
-	      memberAddress.setMemberAddress3(memberAddress3);
-	      memberservice.updateMember(member);
+	     memberservice.updateMember(member);
 	 }
 	 
 	 @PostMapping("/delete")

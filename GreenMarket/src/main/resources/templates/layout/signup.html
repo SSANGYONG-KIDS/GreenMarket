@@ -3,6 +3,18 @@
         xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
    layout:decorate="~{layout/layout1}"> 
+<th:block layout:fragment="style1">
+	<style>
+	body {
+	
+	}
+	#img {
+	 width : 100px;
+	 height: 100px;
+	 border-radius : 70%;
+	 object-fit: cover;
+	}
+	</style>
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,12 +23,12 @@
 </head>
 <body>
    <div class="panel panel-default" layout:fragment="content1">
-      <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/bootstrap/images/bg_1.jpg');">
+      <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/bootstrap/images/회원가입.png');">
 		  <div class="overlay"></div>
 		  <div class="container">
 		    <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
 		      <div class="col-md-9 ftco-animate pb-5 text-center">
-		       <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="fa fa-chevron-right"></i></a></span> <span>My Page <i class="fa fa-chevron-right"></i></span></p>
+		       <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="fa fa-chevron-right"></i></a></span> 
 		       <h1 class="mb-0 bread">회원가입</h1>
 		     </div>
 		   </div>
@@ -25,9 +37,21 @@
       <div class="container">
       <div class="input-form-backgroud">
       <div class="input-form col-md-12 mz-auto" style="margin-left: 19%">
-      <h4 class="mb-3">유저 회원가입</h4>
-         <form id="signup-form" action="./signup" method="POST" onsubmit="return checks()">
+         <form id="signup-form" action="./signup" method="POST">
          <div class="validation-form" novalidate>
+         
+         <div class="profile">
+            <div class="col">
+               <label for="mPhoto"> 프로필 사진 업로드 </label> 
+					
+               <div class="img_wrap">
+				<img id="img" src="/bootstrap/images/user.png"/>
+				</div>
+				<br>
+               <input id="file_img" name="file_img" type="file" class=""/> 
+            </div>
+         </div>
+         <br>
          <div class="row">
             <div class="col">
                   <label for="mId">아이디</label>
@@ -44,7 +68,6 @@
                   <label for="mPw">비밀번호</label> 
                   <input id="mPw" name="mPw" type="password" placeholder="비밀번호를 입력하세요."class="form-control" />
                   <div class="col-3">
-                  <input type="button" id="checkpwd" value="비밀번호 확인" class="form-control">
             </div>
             </div>
          </div>
@@ -58,15 +81,6 @@
          </div>
          <br>
             
-         <div class="row">
-            <div class="col">
-               <label for="mPhoto"> 프로필 사진 업로드 </label> 
-               <input id="file_img" name="file_img" type="file"/> 
-               <div class="img_wrap">
-					<img id="img" />
-				</div>
-            </div>
-         </div>
          <input type="hidden" id="mPhoto" name="mPhoto"/>
          <br>
          
@@ -85,10 +99,10 @@
          <div class="row">
             <div class="col">
                <label for="mPhone">휴대폰 번호</label> 
-               <input id="mPhone" name="mPhone" type="text" placeholder="'-'을 제외하고 입력하세요." class="form-control" />
+               <input id="mPhone" name="mPhone" type="text" placeholder="'-'을 제외하고 입력하세요." class="" />
             </div>
             <div class="col-3">
-               <input type="button" id="sendPhoneButton" value="인증" class="form-control">
+               <input type="button" id="sendPhoneButton" value="인증" class="">
             </div> 
          </div>
          <br>
@@ -96,10 +110,10 @@
          <div class="row">
             <div class="col">
                <label for="mPhone2">인증번호</label> 
-               <input type="text" id="inputCertifiedNumber" readonly="readonly" class="form-control"> 
+               <input type="text" id="inputCertifiedNumber" readonly="readonly" class=""> 
             </div>
             <div class="col-3">
-               <input type="button" id="CertiUserNum" value="번호 인증" readonly="readonly" class="form-control">
+               <input type="button" id="CertiUserNum" value="번호 인증" readonly="readonly" class="">
                <input type="hidden" id="numStr" name="numStr">
             </div>
          </div>
@@ -108,7 +122,7 @@
          <div class="row">
             <div class="col">
                <label for="mEmail"> 이메일 </label> 
-               <input id="mEmail" name="mEmail" type="text" placeholder="abcd@email.com" class="form-control" />
+               <input id="mEmail" name="mEmail" type="text" placeholder="abcd@email.com" class="" />
             </div>
          </div>
          <br>
@@ -116,13 +130,13 @@
          <div class="row">
             <div class="col">
                <label for="memberAddress">주소</label> 
-               <input type="text" id="sample6_postcode" placeholder="우편번호" name="AddNum" class="form-control">
-               <input type="text" id="sample6_address" placeholder="주소" name="memberAddress1" class="form-control">
-               <input type="text" id="sample6_detailAddress" placeholder="상세주소" name="memberAddress2" class="form-control">
-               <input type="text" id="sample6_extraAddress" placeholder="참고항목" name="memberAddress3" class="form-control"> <br>  
+               <input type="text" id="sample6_postcode" placeholder="우편번호" name="AddNum" class="">
+               <input type="text" id="sample6_address" placeholder="주소" name="memberAddress1" class="">
+               <input type="text" id="sample6_detailAddress" placeholder="상세주소" name="memberAddress2" class="">
+               <input type="text" id="sample6_extraAddress" placeholder="참고항목" name="memberAddress3" class=""> <br>  
             </div>
             <div class="col-3">    
-               <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"  class="form-control"><br>
+               <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"  class=""><br>
             </div>
             <div class="col-8">   
             
@@ -274,7 +288,6 @@
                            }
                            // 조합된 참고항목을 해당 필드에 넣는다.
                            document.getElementById("sample6_extraAddress").value = extraAddr;
-   
                         } else {
                            document.getElementById("sample6_extraAddress").value = '';
                         }
@@ -366,7 +379,6 @@
 						}				
 				});
 			}	
-         
       </script>
    </th:block>
 </body>
