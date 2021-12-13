@@ -16,8 +16,10 @@
 		/* 메인 공통 */
 			#main_wrapper {
 				margin-left: 5%;
-				margin-top: 30px;
-				margin-bottom: 50px;
+			    margin-top: 30px;
+			    margin-bottom: 50px;
+			    width: 90%;
+			    margin-right: 5%;
 			}
 			#data {
 				display: none;
@@ -39,7 +41,50 @@
 			}	
 			.blog-entry .two {
 			    width: auto;
+			}
+		/* 탭 */
+		    .section_tab_content {
+	            display: none;
+	            padding: 20px 0 0;
+	            border-top: 1px solid #ddd;
 			}	
+	        /*라디오버튼 숨김*/
+          	.input_tab {
+	              display: none;}
+	
+	        label {
+	            display: inline-block;
+	            margin: 0 0 -1px;
+	            padding: 15px 25px;
+	            font-weight: 600;
+	            text-align: center;
+	            color: #bbb;
+	            border: 1px solid transparent;
+				width: 49.84%;
+			}
+			
+			.label_hidden {
+				width: 0%;
+				display: none;
+			}
+	
+	        label:hover {
+	            color: #25a757;
+	            cursor: pointer;}	
+	
+	        /*input 클릭시, label 스타일*/
+	        input:checked + label {
+	              color: #555;
+	              border: 1px solid #ddd;
+	              border-top: 2px solid #25a757;
+	              border-bottom: 1px solid #ffffff;}
+	
+	        #tab1:checked ~ #content1,
+	        #tab2:checked ~ #content2,
+	        #tab3:checked ~ #content3,
+	        #tab4:checked ~ #content4 {
+	            display: block;}			
+		/* -- 탭 끝 -- */
 		</style>
 	</th:block>
 	
@@ -60,88 +105,105 @@
 		   </div>
 		 </div>
 		</section>
-
 		<!-- 메인 wrapper -->
 		<div id="main_wrapper">
-			<div class="row d-flex">
-				<!-- 내 물품 거래 목록 -->
-				<th:block th:each="trade : ${tradesForSharer}">
-	        		<div class="col-md-4 d-flex ftco-animate">
-	          			<div class="blog-entry justify-content-end">
-				            <a href="#" class="block-20" th:style="'background-image: url(' + ${trade.item.photos[0].ipFilename} + ');'">
-				            </a>
-			            	<div class="text">
-		              			<div class="d-flex align-items-center mb-4 topp">
-					                <div class="one">
-			                  			<span class="day">[[${trade.tId}]]</span>
-					                </div>
-					                <div class="two">
-						  				<span class="yr">[[${#dates.format(trade.tStartdate, 'yyyy-MM-dd')}]]</span>
-								  		<span class="mos">[[${#dates.format(trade.tEnddate, 'yyyy-MM-dd')}]]</span>
-					                </div>
-      							</div>
-			              		<h3 class="heading"><a href="#">[[${trade.item.iTitle}]]</a></h3>
-			              		<p>
-								  	<span class="black">물품 소유자: </span><span class="black bold">[[${trade.item.member.mNickname}]] <br></span>
-									[[${trade.item.member.mAddress.memberAddress1}]]
-						  		</p>
-						  		<p>
-									<span class="black">거래 신청자: </span><span class="black bold">[[${trade.buyMember.mNickname}]] <br></span>
-									[[${trade.buyMember.mAddress.memberAddress1}]]
-		  						</p>
-						  		<p>
-									<span class="black">거래 상태: &nbsp;</span>
-									<select th:id="${'tstates_' + trade.tId}" class="tStates" name="tStateValue">
-										<option th:selected="${state} == ${trade.tState}" th:each="state:${tStates}" th:value="${state}">[[${state.title}]]</option>
-									</select>
-							  	</p>
-				              	<p>
-									<a th:href="${'/item/itemdetail?iId=' + trade.item.iId}" class="btn btn-primary">Detail item</a>
-							  	</p>
-    						</div>
-          				</div>
-		        	</div>
-				</th:block>
-				
-				<!-- 내 신청 거래 목록 -->
-				<th:block th:each="trade : ${tradesForRenter}">
-	        		<div class="col-md-4 d-flex ftco-animate">
-	          			<div class="blog-entry justify-content-end">
-				            <a href="#" class="block-20" th:style="'background-image: url(' + ${trade.item.photos[0].ipFilename} + ');'">
-				            </a>
-			            	<div class="text">
-		              			<div class="d-flex align-items-center mb-4 topp">
-					                <div class="one">
-			                  			<span class="day">[[${trade.tId}]]</span>
-					                </div>
-					                <div class="two">
-						  				<span class="yr">[[${#dates.format(trade.tStartdate, 'yyyy-MM-dd')}]]</span>
-								  		<span class="mos">[[${#dates.format(trade.tEnddate, 'yyyy-MM-dd')}]]</span>
-					                </div>
-      							</div>
-			              		<h3 class="heading"><a href="#">[[${trade.item.iTitle}]]</a></h3>
-			              		<p>
-								  	<span class="black">물품 소유자: </span><span class="black bold">[[${trade.item.member.mNickname}]] <br></span>
-									[[${trade.item.member.mAddress.memberAddress1}]]
-						  		</p>
-						  		<p>
-									<span class="black">거래 신청자: </span><span class="black bold">[[${trade.buyMember.mNickname}]] <br></span>
-									[[${trade.buyMember.mAddress.memberAddress1}]]
-		  						</p>
-						  		<p>
-									<span class="black">거래 상태: &nbsp;</span>
-									<select th:id="${'tstates_' + trade.tId}" class="tStates" name="tStateValue">
-										<option th:selected="${state} == ${trade.tState}" th:each="state:${tStates}" th:value="${state}">[[${state.title}]]</option>
-									</select>
-							  	</p>
-				              	<p>
-									<a th:href="${'/item/itemdetail?iId=' + trade.item.iId}" class="btn btn-primary">Detail item</a>
-							  	</p>
-    						</div>
-          				</div>
-		        	</div>
-				</th:block>				
-			</div>
+			<!-- 탭 버튼 -->
+			<label class="label_hidden" for="tabn"></label>
+			
+		    <input class="input_tab" id="tab1" type="radio" name="tabs" checked> <!--디폴트 메뉴-->
+		    <label for="tab1">SHARE</label>
+		
+		    <input class="input_tab" id="tab2" type="radio" name="tabs">
+		    <label for="tab2">RENT</label>
+			
+			<label class="label_hidden" for="tabn"></label>
+			<!-- 첫번째 탭 -->	
+			<section id="content1" class="section_tab_content">
+				<div class="row d-flex">
+					<!-- 내 물품 거래 목록 -->
+					<th:block th:each="trade : ${tradesForSharer}">
+		        		<div class="col-md-4 d-flex ftco-animate">
+		          			<div class="blog-entry justify-content-end">
+					            <a href="#" class="block-20" th:style="'background-image: url(' + ${trade.item.photos[0].ipFilename} + ');'">
+					            </a>
+				            	<div class="text">
+			              			<div class="d-flex align-items-center mb-4 topp">
+						                <div class="one">
+				                  			<span class="day">[[${trade.tId}]]</span>
+						                </div>
+						                <div class="two">
+							  				<span class="yr">[[${#dates.format(trade.tStartdate, 'yyyy-MM-dd')}]]</span>
+									  		<span class="mos">[[${#dates.format(trade.tEnddate, 'yyyy-MM-dd')}]]</span>
+						                </div>
+	      							</div>
+				              		<h3 class="heading"><a href="#">[[${trade.item.iTitle}]]</a></h3>
+				              		<p>
+									  	<span class="black">물품 소유자: </span><span class="black bold">[[${trade.item.member.mNickname}]] <br></span>
+										[[${trade.item.member.mAddress.memberAddress1}]]
+							  		</p>
+							  		<p>
+										<span class="black">거래 신청자: </span><span class="black bold">[[${trade.buyMember.mNickname}]] <br></span>
+										[[${trade.buyMember.mAddress.memberAddress1}]]
+			  						</p>
+							  		<p>
+										<span class="black">거래 상태: &nbsp;</span>
+										<select th:id="${'tstates_' + trade.tId}" class="tStates" name="tStateValue">
+											<option th:selected="${state} == ${trade.tState}" th:each="state:${tStates}" th:value="${state}">[[${state.title}]]</option>
+										</select>
+								  	</p>
+					              	<p>
+										<a th:href="${'/item/itemdetail?iId=' + trade.item.iId}" class="btn btn-primary">Detail item</a>
+								  	</p>
+	    						</div>
+	          				</div>
+			        	</div>
+					</th:block>
+				</div>
+			</section>
+			
+			<!-- 두번째 탭 -->
+			<section id="content2" class="section_tab_content">
+				<div class="row d-flex">	
+					<!-- 내 신청 거래 목록 -->
+					<th:block th:each="trade : ${tradesForRenter}">
+		        		<div class="col-md-4 d-flex ftco-animate">
+		          			<div class="blog-entry justify-content-end">
+					            <a href="#" class="block-20" th:style="'background-image: url(' + ${trade.item.photos[0].ipFilename} + ');'">
+					            </a>
+				            	<div class="text">
+			              			<div class="d-flex align-items-center mb-4 topp">
+						                <div class="one">
+				                  			<span class="day">[[${trade.tId}]]</span>
+						                </div>
+						                <div class="two">
+							  				<span class="yr">[[${#dates.format(trade.tStartdate, 'yyyy-MM-dd')}]]</span>
+									  		<span class="mos">[[${#dates.format(trade.tEnddate, 'yyyy-MM-dd')}]]</span>
+						                </div>
+	      							</div>
+				              		<h3 class="heading"><a href="#">[[${trade.item.iTitle}]]</a></h3>
+				              		<p>
+									  	<span class="black">물품 소유자: </span><span class="black bold">[[${trade.item.member.mNickname}]] <br></span>
+										[[${trade.item.member.mAddress.memberAddress1}]]
+							  		</p>
+							  		<p>
+										<span class="black">거래 신청자: </span><span class="black bold">[[${trade.buyMember.mNickname}]] <br></span>
+										[[${trade.buyMember.mAddress.memberAddress1}]]
+			  						</p>
+							  		<p>
+										<span class="black">거래 상태: &nbsp;</span>
+										<select th:id="${'tstates_' + trade.tId}" class="tStates" name="tStateValue">
+											<option th:selected="${state} == ${trade.tState}" th:each="state:${tStates}" th:value="${state}">[[${state.title}]]</option>
+										</select>
+								  	</p>
+					              	<p>
+										<a th:href="${'/item/itemdetail?iId=' + trade.item.iId}" class="btn btn-primary">Detail item</a>
+								  	</p>
+	    						</div>
+	          				</div>
+			        	</div>
+					</th:block>		
+				</div>
+			</section>
 			
 		</div> <!-- 메인 wrapper 끝 -->
 		
