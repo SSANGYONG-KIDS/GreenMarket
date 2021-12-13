@@ -6,15 +6,22 @@
 	layout:decorate="~{layout/layout1}">
 <th:block layout:fragment="style1">
 	<style>
-	body {
-	
-	}
+
 	#current_img {
 	 width : 100px;
 	 height: 100px;
 	 border-radius : 70%;
 	 object-fit: cover;
 	}
+	
+	#mId, #mName, #mNickname{
+	  background-color: #ccc;
+	}
+	
+	#modify_pw {
+		display:none;
+	}
+	
 	</style>
 <head>
 <meta charset="UTF-8">
@@ -42,14 +49,13 @@
 		<div class="container">
 			<div class="input-form-backgroud">
 				<div class="input-form col-md-12 mz-auto" style="margin-left: 19%">
-					<h4 class="mb-3">회원 정보 수정</h4>
 					<form class="modify-form" method="POST" >
 						<div class="validation-form" novalidate>
 							
 							<!--프로필 -->
 							<div class="row">
 								<div class="col">
-									<label for="mPhoto"> 프로필 사진</label>
+									<label for="mPhoto"> 프로필 사진 수정</label>
 									
 									<div th:if="${member.mPhoto == null}"> 
 									<img src="/bootstrap/images/user.png" id="current_img">
@@ -58,9 +64,9 @@
 									 
 									<div th:unless="${member.mPhoto == null}">
 									<img th:src="${member.mPhoto}" id="current_img"> 
-									<input id="file_img" name="file_img" type="file" />
-									 </div>
-									
+									</div>
+									<br>
+										<input id="file_img" name="file_img" type="file" />
 								</div>
 							</div>
 							<input type="hidden" id="mPhoto" name="mPhoto" /> <br>
@@ -68,8 +74,8 @@
 							<!-- 아이디 폼 -->
 							<div class="row">
 								<div class="col">
-									<label for="mId">아이디</label> <input id="mId" name="mId"
-										type="text" placeholder="아이디을 입력하세요" class="form-control"
+									<label for="mId">아이디</label> 
+									<input id="mId" name="mId" type="text"  class=""
 										th:value="${member.mId}" readonly="readonly" />
 								</div>
 
@@ -78,13 +84,14 @@
 
 							<!-- 비밀번호 -->
 							<div class="row">
-								<div class="col">
-									<label for="mPw">비밀번호</label> <input id="mPw" name="mPw"
-										type="password" placeholder="비밀번호를 입력하세요." 
-										class="form-control" />
-								</div>
+<!-- 								<div class="col"> -->
+									<label for="mPw">비밀번호</label> 
+<!-- 									<input type="hidden" id="mpw" th:value="${member.mPw}"> -->
+<!-- 									<input id="mPw" name="mPw" type="password" placeholder="비밀번호를 입력하세요."  -->
+<!-- 										class="form-control" /> -->
+<!-- 								</div> -->
 								<div class="col-3">
-									<input type="button" id="checkPwd" value="비밀번호 확인"
+									<input type="button" id="checkPwd" value="비밀번호 수정"
 										class="form-control" readonly>
 								</div>
 							</div>
@@ -93,8 +100,8 @@
 							<!-- 이름 -->
 							<div class="row">
 								<div class="col">
-									<label for="mName">이름</label> <input id="mName" name="mName"
-										type="text" placeholder="이름을 입력하세요." class="form-control"
+									<label for="mName">이름</label> 
+									<input id="mName" name="mName" type="text" class=""
 										th:value="${member.mName}" readonly="readonly" />
 								</div>
 							</div>
@@ -103,52 +110,54 @@
 							<!-- 휴대폰 번호 -->
 							<div class="row">
 								<div class="col">
-									<label for="mPhone">휴대폰 번호</label> <input id="mPhone"
-										name="mPhone" type="text" placeholder="'-'을 제외하고 입력하세요."
-										class="form-control" th:value="${member.mPhone}" />
+								<input type="button" id="modifyPhone" value="전화번호 수정"
+										class="form-control" readonly>
+<!-- 									<label for="mPhone">휴대폰 번호</label> <input id="mPhone" -->
+<!-- 										name="mPhone" type="text" placeholder="'-'을 제외하고 입력하세요." -->
+<!-- 										class="form-control" th:value="${member.mPhone}" /> -->
 								</div>
-								<div class="col-3">
-									<input type="button" id="sendPhoneButton" value="인증"
-										class="form-control">
-								</div>
+<!-- 								<div class="col-3"> -->
+<!-- 									<input type="button" id="sendPhoneButton" value="인증" -->
+<!-- 										class="form-control"> -->
+<!-- 								</div> -->
 							</div>
 							<br>
 
-							<!-- 휴대폰 인증 -->
-							<div class="row">
-								<div class="col">
-									<label for="mPhone2">인증번호</label> <input type="text"
-										id="inputCertifiedNumber" readonly="readonly"
-										class="form-control">
-								</div>
-								<div class="col-3">
-									<input type="button" id="CertiUserNum" value="번호 인증"
-										readonly="readonly" class="form-control"> 
-										<input type="hidden" id="numStr" name="numStr">
-								</div>
-							</div>
-							<br>
+<!-- 							휴대폰 인증 -->
+<!-- 							<div class="row"> -->
+<!-- 								<div class="col"> -->
+<!-- 									<label for="mPhone2">인증번호</label>  -->
+<!-- 									<input type="text" id="inputCertifiedNumber" readonly="readonly" -->
+<!-- 										class="form-control"> -->
+<!-- 								</div> -->
+<!-- 								<div class="col-3"> -->
+<!-- 									<input type="button" id="CertiUserNum" value="번호 인증" -->
+<!-- 										readonly="readonly" class="form-control">  -->
+<!-- 										<input type="hidden" id="numStr" name="numStr"> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 							<br> -->
 
 
 
 							<!-- 닉네임 -->
 							<div class="row">
 								<div class="col">
-									<label for="mNickname"> 닉네임 </label> <input id="mNickname"
-										name="mNickname" type="text" placeholder="닉네임을 입력하세요"
-										class="form-control" th:value="${member.mNickname}" readonly="readonly"/>
+									<label for="mNickname"> 닉네임 </label> 
+									<input id="mNickname" name="mNickname" type="text" 
+										class="" th:value="${member.mNickname}" readonly="readonly"/>
 								</div>
-								<div class="col-3">
-									<input type="button" id="checkNick" value="중복확인"
-										class="form-control">
-								</div>
+<!-- 								<div class="col-3"> -->
+<!-- 									<input type="button" id="checkNick" value="중복확인" -->
+<!-- 										class="form-control"> -->
+<!-- 								</div> -->
 							</div>
 							<br>
 
 							<!-- 이메일 -->
 							<div class="row">
 								<div class="col">
-									<label for="mEmail"> 이메일 </label> <input id="mEmail"
+									<label for="mEmail"> 이메일 수정 (수정할 이메일을 입력해주세요)</label> <input id="mEmail"
 										name="mEmail" type="text" placeholder="abcd@email.com"
 										class="form-control" th:value="${member.mEmail}" />
 								</div>
@@ -160,13 +169,13 @@
 								<div class="col">
 									<label for="memberAddress">주소</label> 
 									<input type="text" id="sample6_postcode" placeholder="우편번호" name="AddNum"
-										class="form-control"> 
+										class=""> 
 										<input type="text" id="sample6_address" placeholder="주소" name="mAddress.memberAddress1"
-										class="form-control" th:value="${member.mAddress.memberAddress1}">
+										class="" th:value="${member.mAddress.memberAddress1}">
 										<input type="text" id="sample6_detailAddress" placeholder="상세주소"
-										name="memberAddress2" class="form-control"> 
+										name="memberAddress2" class=""> 
 										<input type="text" id="sample6_extraAddress" placeholder="참고항목"
-										name="memberAddress3" class="form-control"> <br>
+										name="memberAddress3" class=""> <br>
 								</div>
 								<div class="col-3">
 									<input type="button" onclick="sample6_execDaumPostcode()"
@@ -185,6 +194,88 @@
 			</div>
 		</div>
 	</div>
+	
+<div class="modal fade" id="helloModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"> 비밀번호 수정 </h4>
+        </div>
+        <div class="modal-body">
+          <div id="userDiv" class="form-group">
+<!--           		<form id="userForm" action="/" method="post"> -->
+          			<div class="form-group">
+          	  		<label> 현재 비밀번호</label>
+          	  		<input type="password" id="current_pwd" name="username"  class="form-control"  placeholder="현재 비밀번호를 입력하세요"  required="required" autofocus/>
+          	  		<input type="button" id="checkcurrent" class="" value="비밀번호 확인 "/>
+          	  		</div>
+          	  <div class="form-group" id = "modify_pw"style="margin-bottom: 30px;">
+             	 <label> 수정할 비밀번호</label> 
+              	 <input type="password" id="new_pwd" name="password" class="form-control" placeholder="수정할 비밀번호를 입력하세요" required="required" autofocus/>
+             </div>
+             <button class="btn btn-primary btn-block" type="button" id="submit_pwd">확인</button>
+<!--           	</form>	 -->
+          		</div>
+          	<div class="signup">
+        </div>
+          <div class="modal-footer">
+           <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_modal">닫기</button>
+         </div>
+        
+      </div>
+    </div>
+    </div>
+    </div>
+
+
+
+<div class="modal fade" id="phoneModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"> 핸드폰번호 수정 </h4>
+        </div>
+        <div class="modal-body">
+          <div id="userDiv" class="form-group">
+          			<div class="form-group">
+          	  		<label> 현재 핸드폰 번호 -> 새로운 번호를 입력해주세요 </label> 
+          	  		<input type="text" id="mPhone" name="mPhone" th:value="${member.mPhone}" class="form-control"  required="required" autofocus/>
+          	  		</div>
+							<div class="col-3"> 
+									<input type="button" id="sendPhoneButton" value="인증"
+										class="form-control">
+								</div>
+          	  		
+          	  		<!-- 휴대폰 인증 -->
+							<div class="row">
+								<div class="col">
+									<label for="mPhone2">인증번호</label> 
+									<input type="text" id="inputCertifiedNumber" readonly="readonly"
+										class="form-control">
+								</div>
+								<div class="col-3">
+									<input type="button" id="CertiUserNum" value="번호 인증"
+										readonly="readonly" class="form-control"> 
+										<input type="hidden" id="numStr" name="numStr">
+								</div>
+							</div>
+							<br>
+          	 
+             <button class="btn btn-primary btn-block" id="submit_phone">확인</button>
+          		</div>
+          	<div class="signup">
+        </div>
+          <div class="modal-footer">
+           <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_modal">닫기</button>
+         </div>
+        
+      </div>
+    </div>
+    </div>
+    </div>
+
 
 	<th:block layout:fragment="script1">
 		<script
@@ -192,6 +283,70 @@
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 		<!--       <script src="https://code.jquery.com/jquery-3.4.1.js"></script> -->
 		<script>  
+		
+		$('#checkPwd').click(function() {
+         $('#helloModal').modal('show');
+    });
+
+		$('#checkcurrent').click(function() {
+
+		var pw = $('#current_pwd').val();	//입력한 비밀번호
+	
+	  $.ajax({
+            type : "POST",
+            url : "/checkCurrentPassword",
+            data : {
+               "password" : pw
+            },
+            success : function(aa) {
+               console.log(aa);
+               if (aa == "1") {
+                  Swal.fire('비밀번호가 일치합니다.');
+                   	if($("#modify_pw").css("display") == "none"){   
+       				 	$('#modify_pw').show();  
+     					 $('#submit_pwd').click(function() {
+							$.ajax({
+           		 				type : "POST",
+            	 				url : "/modifyPwd",
+           		 				data : {
+              			 			"mPw" : $('#new_pwd').val()
+            						}
+            						}).done(function(responseBody){
+		         						Swal.fire("수정이 완료되었습니다.");
+		         					}).fail(function(error) {
+		         						Swal.fire('수정이 불가 합니다.');
+		         					});	
+            					});
+  					} else {  
+     					   $('#modify_pw').hide();  
+   						}  
+               } else {
+                  Swal.fire('비밀번호가 불일치 합니다.');
+               }
+            }
+         });
+      });
+      
+		
+		$('#modifyPhone').click(function() {
+			$('#phoneModal').modal('show');
+		 
+		 });
+			
+			$('#submit_phone').click(function() {
+				$.ajax({
+           		 type : "POST",
+            	 url : "/modifyPhone",
+           		 data : {
+              			 "mPhone" : $('#mPhone').val()
+            			}
+            		}).done(function(responseBody){
+		         		Swal.fire("수정이 완료되었습니다.");
+		         	}).fail(function(error) {
+		         		Swal.fire('수정이 불가 합니다.');
+		         	});	
+            });
+		
       $('#checkNick').click(function() {
       		if($("#mId").val() == ""){
 			swal("아이디를 입력하세요");
@@ -220,8 +375,6 @@
          });
       });
       
-     
-         
          var numStr;
          $('#CertiUserNum').click(function() {
             if ($('#inputCertifiedNumber').val() == "") {
@@ -260,7 +413,7 @@
                data : {
                   "mPhone" : phoneNumber
                }
-            }).done(function(responsedata) {
+             }).done(function(responsedata) {
                numStr = responsedata;
                console.log("===numStr===" + numStr);
             });
@@ -354,10 +507,7 @@
    		    alert("회원정보를 수정하겠습니까?");
  	 		
  	 		let data = {
- 	 		
- 	 		mPw : $("#mPw").val(),
 	 		mEmail : $("#mEmail").val(),
-	 		mPhone : $("#mPhone").val(),
 	 		'mAddress.memberAddress1' : $("#sample6_address").val(),
 	 		};
 			

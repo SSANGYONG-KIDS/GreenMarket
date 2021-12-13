@@ -44,6 +44,30 @@ public class MyPageController {
 	     memberservice.updateMember(member);
 	 }
 	 
+	 
+	 @PostMapping("/checkCurrentPassword")
+	 @ResponseBody
+		public int checkCurrentPassword(String password, @AuthenticationPrincipal SecurityUser principal) {
+		 System.out.println("비밀번호 확인하기");
+	     return memberservice.checkCurrentPassword(principal.getUsername(), password) ? 1 : 0;
+	 }
+	 
+	 @PostMapping("/modifyPhone")
+	 @ResponseBody
+		public void CurrentPhone(MemberEntity member, @AuthenticationPrincipal SecurityUser principal ) {
+		 System.out.println("전화번호 수정하기");
+		 member.setMId(principal.getUsername());
+	     memberservice.updateMemberPhone(member);
+	 }
+	 
+	 @PostMapping("/modifyPwd")
+	 @ResponseBody
+		public void modifyPwd(MemberEntity member, @AuthenticationPrincipal SecurityUser principal ) {
+		 System.out.println("비밀번호 수정하기");
+		 member.setMId(principal.getUsername());
+	     memberservice.updateMember(member);
+	 }
+	 
 	 @PostMapping("/delete")
 	 @ResponseBody
 		public void delete(@AuthenticationPrincipal SecurityUser principal) {
