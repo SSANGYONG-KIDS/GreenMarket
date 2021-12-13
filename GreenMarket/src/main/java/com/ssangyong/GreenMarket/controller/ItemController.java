@@ -66,6 +66,14 @@ public class ItemController {
 		model.addAttribute("result", new PageMaker<>(result));
 	}
 	
+	//관심물품 목록 조회
+	@GetMapping("/itemcart")
+	public void selectMyItemCart(Model model, HttpServletRequest request, Authentication authentication) {
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		MemberEntity member =  loginService.selectById(userDetails.getUsername());
+		model.addAttribute("myitemcart", icService.selectItemList(member.getMId()));
+	}
+	
 	@GetMapping("/itemdetail")
 	public void selectById(Model model, Integer iId, Principal principal, Authentication authentication, ItemPageVO pagevo ) {
 		ItemEntity item = itemService.selectById(iId);

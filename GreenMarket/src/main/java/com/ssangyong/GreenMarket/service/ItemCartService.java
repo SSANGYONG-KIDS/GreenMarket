@@ -1,14 +1,19 @@
 package com.ssangyong.GreenMarket.service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssangyong.GreenMarket.model.ICategoryEnumType;
+import com.ssangyong.GreenMarket.model.IStateEnumType;
+import com.ssangyong.GreenMarket.model.ItStateEnumType;
 import com.ssangyong.GreenMarket.model.ItemCartEntity;
 import com.ssangyong.GreenMarket.model.ItemCartEntityId;
 import com.ssangyong.GreenMarket.model.ItemEntity;
+import com.ssangyong.GreenMarket.model.MemberEntity;
 import com.ssangyong.GreenMarket.repository.ItemCartRepository;
 import com.ssangyong.GreenMarket.repository.ItemRepository;
 
@@ -18,7 +23,31 @@ public class ItemCartService {
 	@Autowired
 	ItemCartRepository icRepository;
 	
-	// 조회
+	//한 사람이 좋아요 한 물품전체 조회
+	public List<ItemEntity> selectItemList(String mId) {
+		List<Object[]> objects= icRepository.allFindByMId(mId);
+	    List<ItemEntity> itemlist= new ArrayList<>();
+	      objects.forEach(arr->{
+	    	  MemberEntity member = MemberEntity.builder().mId((String)arr[7]).build();
+	    	  
+	    	  ItemEntity item = ItemEntity.builder()
+	               .iId(Integer.parseInt(String.valueOf(arr[0])))
+	               .iContent((String)arr[1])
+	               .iPrice(Integer.parseInt(String.valueOf(arr[2])))
+	               .iRegdate((Timestamp)arr[3])
+	               .iState(IStateEnumType.valueOf((String)arr[4]))
+	               .iTitle((String)arr[5])
+	               .iTstate(ItStateEnumType.valueOf((String)arr[6]))
+	               .member(member)
+	               .iCategory(ICategoryEnumType.valueOf((String)arr[8]))
+	               .build();
+	    	  itemlist.add(item);
+	      });
+	     
+		return itemlist;
+	}
+	
+	// 하나의 물품 좋아요 한 사람들을 조회
 	public List<ItemCartEntity> selectList(Integer iId) {
 		List<ItemCartEntity> alllist = (List<ItemCartEntity>)icRepository.findAll();
 		List<ItemCartEntity> itemCarts = new ArrayList();
