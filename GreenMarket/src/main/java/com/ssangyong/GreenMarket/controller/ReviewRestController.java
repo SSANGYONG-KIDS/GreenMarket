@@ -58,8 +58,6 @@ public class ReviewRestController {
 		review.setTrade(trade);
 		review.setMember(member);
 		review.setItem(trade.getItem());
-		
-		reviewService.insertReview(review);
 				
 		return new ResponseEntity<>(reviewService.insertReview(review), HttpStatus.CREATED);
 	}
