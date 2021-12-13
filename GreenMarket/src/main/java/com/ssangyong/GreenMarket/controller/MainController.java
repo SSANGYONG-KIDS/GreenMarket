@@ -28,11 +28,13 @@ public class MainController {
 	     
 		  System.out.println("main 실행");
 		  // main에 게시물 6개까지 보여주기
-	      int numOfItem = 6;
+	      int numOfItem = 0;
 	      List<ItemEntity> resultAll = itemService.selectAll();
 	      List<ItemEntity> result = new ArrayList<>();
-	      for (int i =0; i < numOfItem; i++) {
-	    	  result.add(resultAll.get(i));
+	      for (ItemEntity item: resultAll) {
+	    	  if(numOfItem >= 6) break;
+	    		  numOfItem ++;
+	    		  result.add(item);
 	      }
 	      
 //	      model.addAttribute("pagevo", pagevo);
