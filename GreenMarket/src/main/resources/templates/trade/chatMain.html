@@ -465,9 +465,10 @@
 				}
 				wsOfChat.send(JSON.stringify(payload));
 				
-				// UI 처리
+				/* UI 처리 */
 				$('#input_msg').val(''); // 채팅 입력창 빈 값으로 만들기
-				// $('#input_msg').selectRange(0, 0); // 채팅 입력창 커서 처음으로 이동하기
+				
+				// 메시지보내기: 내 메시지, 읽지 않음 상태
 				insertMsg(MSG_TYPE_ME, content, new Date().toLocaleString(), 1);		
 			}
 			
@@ -552,6 +553,16 @@
 				// DOM 변경
 				$('#chat_view').append(htmlAdded);
 				$('#chat_view').scrollTop($('#chat_view').prop('scrollHeight')); // 스크롤바 최하단으로 내리기
+			}
+			
+			
+			/*
+				모든 메시지 읽음 처리하기
+			*/
+			function changeViewToReadState() {
+				// msg_unread_1 -> msg_unread_0 으로 변경
+				$('.msg_unread_1').addClass('msg_unread_0');
+				$('.msg_unread_0').removeClass('msg_unread_1');
 			}
 		</script>
 		

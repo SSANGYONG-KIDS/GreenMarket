@@ -85,7 +85,7 @@ public class ChatSocketHandler extends TextWebSocketHandler{
 			// 같은 방 소켓 멤버들에게 메시지 보내기		
 			for (String mIdOfTarget : mIdsRoom) {
 				
-				// 보낸 사람(자기 자신)에게 읽은여부 값 보내기
+				// TODO 보낸 사람(자기 자신)에게 읽은여부 값 보내기
 				if (mIdOfTarget.equals(principalMId)) {
 					
 					continue;

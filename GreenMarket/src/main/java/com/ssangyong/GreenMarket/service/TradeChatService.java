@@ -46,7 +46,7 @@ public class TradeChatService {
 	 * 한 거래에 대한 모든 메시지 가져오기
 	 */
 	public List<MessageEntity> getAllMessage(int tId) {
-		return messageRepo.findAllByTrade(tradeRepo.findById(tId).orElseThrow());
+		return messageRepo.findAllByTradeWithOrder(tId);
 	}
 	
 	/**

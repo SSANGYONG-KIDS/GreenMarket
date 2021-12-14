@@ -17,6 +17,11 @@ public class TradeChatRestController {
 	@Autowired
 	TradeChatService tradeChatService;
 	
+	/**
+	 * 거래 메시지 가져오기
+	 * @param tId
+	 * @return
+	 */
 	@GetMapping("/getMessagesOfTrade/{tId}")
 	public List<MessageEntity> getMessagesOfTrade(@PathVariable int tId) {
 		List<MessageEntity> list = tradeChatService.getAllMessage(tId);
