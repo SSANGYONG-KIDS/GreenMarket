@@ -71,8 +71,11 @@ public class ItemController {
 	public void selectMyItemCart(Model model, HttpServletRequest request, Authentication authentication) {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		MemberEntity member =  loginService.selectById(userDetails.getUsername());
+		
 		model.addAttribute("myitemcart", icService.selectItemList(member.getMId()));
-	}
+		model.addAttribute("member", member);
+	}		
+
 	
 	@GetMapping("/itemdetail")
 	public void selectById(Model model, Integer iId, Principal principal, Authentication authentication, ItemPageVO pagevo ) {

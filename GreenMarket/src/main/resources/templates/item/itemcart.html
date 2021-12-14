@@ -5,6 +5,51 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout1}">
 <body>
+<th:block layout:fragment="style1">
+<style>
+	.like_button {
+		display: inline-block;
+		color: #cca2a3;
+		cursor: pointer;
+		font-size: 30px;
+		-webkit-transition: all 0.1s ease-in-out;
+		transition: all 0.1s ease-in-out;
+		position: absolute;
+    	left: 8em;
+	}
+	
+	.like_button:hover {
+			display: inline-block;
+			color: #cca2a3;
+			cursor: pointer;
+			font-weight:bold;
+			font-size: 22px;
+			position: absolute;
+   			left: 8em;
+		}
+	
+	.like_button.liked {
+		font-size: 0px;	
+	}
+	
+	.like_button:after {
+		content: "♥";
+		color: #D61F12;
+		opacity: 0;
+		-webkit-transition: all 0.2s ease-in-out;
+		transition: all 0.2s ease-in-out;
+		position: absolute;
+    	left: 0em;
+	}
+	
+	.like_button.liked:after {
+		font-size: 30px;
+		opacity: 1;
+	}
+	
+	
+</style>
+</th:block>
 <div class="panel panel-default" layout:fragment="content1">
 	<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/bootstrap/images/item/myitem.jpg');">
 		<div class="overlay"></div>
@@ -37,10 +82,10 @@
 										<span class="mos" th:text="${#dates.format(new java.util.Date(item.iRegdate), 'yyyy-MM-dd hh:mm')}"></span> 
 									</div>
 								</div>
-								<div aria-hidden="true" style="text-align:right">
-									<span id="like_button" style="font-size:20px">♥</span>
+								<div class="like" aria-hidden="true" style="text-align:right">
+									<span th:id="${item.iId}" class="like_button" style="font-size:30px">♥</span>
 								</div>
-								<h3 class="heading">
+								<h3 class="heading" style="margin-top:30px">
 									<a href="#" th:text="${item.iTitle}"></a>
 								</h3>
 								<p th:text="${item.iContent}"></p>
@@ -54,5 +99,26 @@
 		</div>
 	</section>
 </div>
+<th:block layout:fragment="script1">
+	<script>
+	$(function(){
+		
+		$(".like_button").on("click", function(){
+			$(this).toggleClass("liked");
+			var id = $(this).attr('id');
+			$.ajax({
+				url:`updateGood/[[${member.mId}]]/`+id,
+				type: "post",
+				success: function(data){	
+					alert('좋아요 상태가 업데이트 되었습니다.');
+				},
+				error: function(){}
+			});
+		});
+		
+		$(".like_button").toggleClass("liked");
+	});
+	</script>
+</th:block>
 </body>
 </html>

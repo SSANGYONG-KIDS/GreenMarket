@@ -204,9 +204,21 @@
 			display: inline-block;
 			color: #cca2a3;
 			cursor: pointer;
-			font-size: 15px;
+			font-size: 20px;
 			-webkit-transition: all 0.1s ease-in-out;
 			        transition: all 0.1s ease-in-out;
+			position: absolute;
+   			left: 0em;
+		}
+		
+		#like_button:hover {
+			display: inline-block;
+			color: #cca2a3;
+			cursor: pointer;
+			font-weight:bold;
+			font-size: 22px;
+			position: absolute;
+   			left: 0em;
 		}
 		
 		#like_button.liked {
@@ -219,15 +231,17 @@
 			opacity: 0;
 			-webkit-transition: all 0.2s ease-in-out;
 			        transition: all 0.2s ease-in-out;
+			position: absolute;
+    		left: 0em;
 		}
 		
 		#like_button.liked:after {
-			font-size: 15px;
+			font-size: 20px;
 			opacity: 1;
 		}
 		
 		#like {
-			padding: 15px;
+			padding: 20px;
 		}
 		
 		._9ofhsl {
@@ -363,7 +377,7 @@
 								<button aria-label="목록에 숙소 추가하기" data-testid="pdp-save-button-unsaved" type="button" class="_kvaiv9k">
 									<div aria-hidden="true" class="_5kaapu">
 										<span id="like_button">♥</span>
-										<span id="like_num">[[${like_num}]]</span>
+										<span id="like_num" style="margin-left:20px">[[${like_num}]]</span>
 									</div>
 								</button>
 							</div>
