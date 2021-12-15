@@ -38,7 +38,17 @@
 			<div class="form-group">
 	 			<div th:utext="${board.cContent}">내용</div> 
 			</div>
+			
+			<!-- 태그 -->
+			<div>
+				<div th:each="tag, i : ${tags}" style="display: inline-block;">
+					<a th:href="@{/community/tagBoardlist/{ctId}(ctId=${tag.ctId})}">
+						<button class="btn btn-info" th:text="'#'+${tag.ctName}"> </button>
+					</a>
+				</div>
+			</div>
 			<hr/>
+			
 			<div class="form-group">
 	 			작성일: <span th:text="${board.cRegdate}">작성일</span>&nbsp;&nbsp;&nbsp;&nbsp;
 	 			수정일: <span th:text="${board.cUpdate}">수정일</span>
@@ -100,15 +110,7 @@
 	
 	//댓글 삭제
 	function replyDelete(cId, crId){
-		
-	//	alert(cId);
-	//	alert(crId);
-		
-		
-	//	let data = { 
-	//		
-	//	};
-		
+
 		$.ajax({
 			type: "DELETE",
 			url: `/community/boarddetail/${crId}`,
