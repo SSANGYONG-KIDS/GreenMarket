@@ -46,7 +46,7 @@ public class LoginController {
       memberAddress.setMemberAddress3(memberAddress3);
         
       loginservice.signup(member, memberAddress); 
-      return "redirect:/index";
+      return "redirect:/";
     }
 
    @RequestMapping("/login/testtest")

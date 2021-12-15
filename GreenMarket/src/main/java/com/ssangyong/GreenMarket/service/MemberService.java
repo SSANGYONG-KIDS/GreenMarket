@@ -37,13 +37,39 @@ public class MemberService implements UserDetailsService{
     @Transactional
     public void updateMember(MemberEntity member) {
     	MemberEntity memberEntity = memberrepository.findById(member.getMId()).get(); //영속화
-    	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-    	memberEntity.setMPw(encoder.encode(member.getMPw()));
+//    	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//    	memberEntity.setMPw(encoder.encode(member.getMPw()));
     	memberEntity.setMEmail(member.getMEmail());
-    	memberEntity.setMPhone(member.getMPhone());
+//    	memberEntity.setMPhone(member.getMPhone());
     	memberEntity.setMPhoto(member.getMPhoto());
     	memberEntity.setMAddress(member.getMAddress());
        //함수 종료시(service종료) 트랜잭션 종료 후 더티체킹=> 자동 업데이트. DB flush
+    }
+    
+    // 비밀번호 수정
+    @Transactional
+    public void updateMemberPassword(MemberEntity member) {
+    	MemberEntity memberEntity = memberrepository.findById(member.getMId()).get(); //영속화
+    	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    	memberEntity.setMPw(encoder.encode(member.getMPw()));
+    }
+    
+    // 번호 수정
+    @Transactional
+    public void updateMemberPhone(MemberEntity member) {
+    	MemberEntity memberEntity = memberrepository.findById(member.getMId()).get(); //영속화
+    	memberEntity.setMPhone(member.getMPhone());
+    }
+    
+    // 비밀번호 확인
+    @Transactional
+    public boolean checkCurrentPassword(String mId, String password) {   	
+    	// 멤버 정보 가져오기
+    	MemberEntity memberEntity = memberrepository.findById(mId).get();
+    	
+    	// 비교하기
+    	return new BCryptPasswordEncoder().matches(password, memberEntity.getMPw());
+    	
     }
     
     @Transactional
@@ -51,7 +77,6 @@ public class MemberService implements UserDetailsService{
     	MemberEntity member = selectById(mId);
     	member.setMIsdropped(1);
     }
-    
     
 
 	@Override

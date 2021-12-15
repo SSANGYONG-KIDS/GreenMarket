@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ssangyong.GreenMarket.model.MemberAddress;
 import com.ssangyong.GreenMarket.model.MemberEntity;
 import com.ssangyong.GreenMarket.model.SecurityUser;
 import com.ssangyong.GreenMarket.service.MemberService;
@@ -40,7 +41,31 @@ public class MyPageController {
 		public void myModify(MemberEntity member, @AuthenticationPrincipal SecurityUser principal) {
 		 System.out.println("회원정보 수정하기");
 		 member.setMId(principal.getUsername());
-		 memberservice.updateMember(member);
+	     memberservice.updateMember(member);
+	 }
+	 
+	 
+	 @PostMapping("/checkCurrentPassword")
+	 @ResponseBody
+		public int checkCurrentPassword(String password, @AuthenticationPrincipal SecurityUser principal) {
+		 System.out.println("비밀번호 확인하기");
+	     return memberservice.checkCurrentPassword(principal.getUsername(), password) ? 1 : 0;
+	 }
+	 
+	 @PostMapping("/modifyPhone")
+	 @ResponseBody
+		public void CurrentPhone(MemberEntity member, @AuthenticationPrincipal SecurityUser principal ) {
+		 System.out.println("전화번호 수정하기");
+		 member.setMId(principal.getUsername());
+	     memberservice.updateMemberPhone(member);
+	 }
+	 
+	 @PostMapping("/modifyPwd")
+	 @ResponseBody
+		public void modifyPwd(MemberEntity member, @AuthenticationPrincipal SecurityUser principal ) {
+		 System.out.println("비밀번호 수정하기");
+		 member.setMId(principal.getUsername());
+	     memberservice.updateMemberPassword(member);
 	 }
 	 
 	 @PostMapping("/delete")
