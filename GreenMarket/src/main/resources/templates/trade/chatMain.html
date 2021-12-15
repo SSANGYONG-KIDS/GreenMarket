@@ -364,7 +364,7 @@
 								</td>
 								<td th:id="${'td_' + trade.tId + '_cntUnread'}">
 									<div th:id="${'div_' + trade.tId + '_cntUnread'}" class="cnt_unread"
-										 th:if="${cntsUnreadForSharer[i.index] > 0}" ${cntsUnreadForSharer[i.index]}>
+										 th:if="${cntsUnreadForSharer[i.index] > 0}" th:text="${cntsUnreadForSharer[i.index]}">
 									</div>
 								</td>
 							</tr>
