@@ -23,8 +23,9 @@ public class ItemCartController {
 	ItemService iService;
 	@Autowired
 	MemberService mService;
-
-	//특정 board의 댓글 입력=> 재조회
+	
+	
+	//관심 물품 목록에 저장하기
 	@PostMapping("/updateGood/{mId}/{iId}")
 	public ResponseEntity<Integer> addOrDeleteItemCart(@PathVariable String mId,@PathVariable int iId) {
 		System.out.println("mId= "+mId);

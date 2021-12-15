@@ -48,8 +48,7 @@ public class ReviewRestController {
 	//특정 board의 댓글 입력=> 재조회
 	@PostMapping("/{tnum}")
 	public ResponseEntity<ReviewEntity> addReview(@PathVariable int tnum, @RequestBody ReviewEntity review, Authentication authentication) {
-		System.out.println("tnum= "+tnum);
-		System.out.println(review);
+		
 		TradeEntity trade= tradeService.selectById(tnum);
 		
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -58,17 +57,8 @@ public class ReviewRestController {
 		review.setTrade(trade);
 		review.setMember(member);
 		review.setItem(trade.getItem());
-				
+
 		return new ResponseEntity<>(reviewService.insertReview(review), HttpStatus.CREATED);
-	}
-	
-	@DeleteMapping("/{rId}")
-	public ResponseEntity<List<ReviewEntity>> deleteByRid(@PathVariable int rId, Authentication authentication) {
-		reviewService.deleteReview(rId);
-		
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		MemberEntity member = memberService.selectById(userDetails.getUsername());
-		return new ResponseEntity<>(reviewService.selectMyList(member), HttpStatus.OK);
 	}
 
 }

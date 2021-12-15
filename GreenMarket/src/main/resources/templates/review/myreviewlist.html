@@ -8,7 +8,7 @@
 <th:block layout:fragment="style1">
 <style>
 	/* star rating */
-	.star_rating, .re_star {font-size:0; letter-spacing:-4px;}
+	.star_rating, .re_star {letter-spacing:-4px;}
 	.star_rating a, .re_star a{
 	    font-size:22px;
 	    letter-spacing:0;
@@ -40,7 +40,7 @@
 	</section>
 	<section class="ftco-section">
 		<div class="container">
-			<div class="row d-flex">
+			<div id="wrapper_products" class="row d-flex">
 				<div id="products" class="col-md-4 ftco-animate" th:each="review:${myreviewlist}">
 					<form th:action="@{/review/myreview}" method="get">
 						<input type="hidden" name="rId" id="rId"/>
@@ -48,15 +48,11 @@
 					        <div class="testimony-wrap py-4">
 					          	<div class="text">
 						        	<p class="re_star">
-							            <span class="fa fa-star"></span>
-							            <span class="fa fa-star"></span>
-							            <span class="fa fa-star"></span>
-							            <span class="fa fa-star"></span>
-							            <span class="fa fa-star"></span>
+							            <span style="color:red" th:if="${review.rStar}>0" th:each="num: ${#numbers.sequence(1,review.rStar)}">★</span>
 						          	</p>
 						         	<p class="mb-4">[[${review.rContent}]]</p>
 						         	<p class="mb-4"><a th:href="@{/item/itemdetail(iId=${review.item.iId})}">[[${review.item.iTitle}]]</a></p>
-						         	<p class="mb-4"><span th:text="${#dates.format(new java.util.Date(review.rRegdate), 'yyyy-MM-dd hh:mm')}"></span></p>     
+						         	<p class="mb-4"><span th:text="${#dates.format(new java.util.Date(review.rRegdate), 'yyyy-MM-dd HH:mm')}"></span></p>     
 									<p class="name">[[${review.member.mId}]]</p>
 					      		</div>
 					    	</div>
@@ -96,7 +92,6 @@
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" id="revInsertBtn" class="btn btn-default" data-dismiss="modal">등록</button>
-			        <button type="button" id="revDeleteBtn" class="btn btn-default" data-dismiss="modal">삭제</button>
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			      </div>
 			    </div>
@@ -116,7 +111,6 @@
 	   		var rStar = $("input[name='rStar']");
 	   		rContent.val("");
 			document.getElementById("revInsertBtn").style.display = "";
-    	 	document.getElementById("revDeleteBtn").style.display = "";
 			$("#reviewModal").show();
 			$(".modal-title").text("리뷰 작성");
 			mode="ADD";
@@ -132,6 +126,8 @@
 			if(mode=="ADD"){
 				if(rStar.val()==null){
 					alert("평점을 입력하세요.")
+				}else if(rStar.val()<1){
+					alert("평점을 1점 이상 입력해주세요.")
 				}else{
 					if(tnum!=0){
 						reviewManager.add(obj,printReview);
@@ -147,61 +143,35 @@
 			rStar.val("");
 		})
 		
-		$("#revDeleteBtn").click(function(){
-    	
-   		 var rContent = $("input[name='rContent']");
-   		 var rStar = $("input[name='rStar']");
-   		 var obj = { "rId": rId };
-   		reviewManager.remove(obj, printReviewList);
-   		 alert("삭제완료");
-   		$("#reviewModal").hide();
-	   		rContent.val("");
-	   		rStar.val("");
-     	});
-		
-		function printReviewList(rlist){
-			console.log(rlist);
-			var str=""
-			$.each(rlist, function(idx, item){
-				var str=""
-				str+="<form th:action='@{/review/myreview}' method='get'>"
-				str+="<input type='hidden' name='rId' id='rId' value="+item["rId"]+"/>"
-				str+="<div class='item'>"
-				str+="<div class='testimony-wrap py-4'>"
-				str+="<div class='text'>"
-				str+="<p class='re_star'>"
-				for(let i = 0; i < parseInt(item["rStar"]); i++){
-					str+="<span class='fa fa-star'></span>"
-				}
-				str+="</p>"
-				str+="<p class='mb-4'>"+item["rContent"]+"</p>"
-				str+="<p class='mb-4'><a th:href='/item/itemdetail?iId="+item["item"].iId+"'>"+item["item"].iTitle+"</a></p>"
-				str+="<p class='mb-4'><span th:text='"+Date.format(new java.util.Date(item["rRegdate"]), 'yyyy-MM-dd hh:mm')+"'></span></p>"
-				str+="</div></div></div></form>"
-			});
-			$("#products").html(str);
-		}
-		
 		
 		function printReview(review){
 			console.log(review);
 			var str=""
+			str+='<div id="products" class="col-md-4 ftco-animate fadeInUp ftco-animated">'
 			str+="<form th:action='@{/review/myreview}' method='get'>"
-			str+="<input type='hidden' name='rId' id='rId' value="+review.rId+"/>"
+			str+="<input type='hidden' name='rId' id='rId' value="+review.rid+"/>"
 			str+="<div class='item'>"
 			str+="<div class='testimony-wrap py-4'>"
 			str+="<div class='text'>"
 			str+="<p class='re_star'>"
 			for(let i = 0; i < review.rStar; i++){
-				str+="<span class='fa fa-star'></span>"
+				str+="<span style='color:red'>★</span>"
 			}
 			str+="</p>"
 			str+="<p class='mb-4'>"+review.rContent+"</p>"
-			str+="<p class='mb-4'><a th:href='/item/itemdetail?iId="+review.item.iId+"'>"+review.item.iTitle+"</a></p>"
-			str+="<p class='mb-4'><span th:text='"+Date.format(new java.util.Date(review.rRegdate), 'yyyy-MM-dd hh:mm')+"'></span></p>"
+			str+="<p class='mb-4'><a style='color:#006633' th:href='/item/itemdetail?iId="+review.item.iid+"'>"+review.item.ititle+"</a></p>"
+			let date = new Date(review.rregdate);		
+			let dateFormat = date.getFullYear() + '-' 
+				+ (date.getMonth() + 1 > 9 ? date.getMonth() + 1 : '0' + date.getMonth() + 1) + '-' 
+				+ (date.getDate() > 9 ? date.getDate() : '0' + date.getDate()) + ' ' 
+				+ (date.getHours() > 9 ? date.getHours() : '0' + date.getHours()) + ':' 
+				+ (date.getMinutes() > 9 ? date.getMinutes() : '0' + date.getMinutes());
+			str+="<p class='mb-4'><span>"+dateFormat+"</span></p>"
+			str+="<p class='name'>"+"[[${member.mId}]]"+"</p>"
 			str+="</div></div></div></form>"
+			str+='</div>'
 		
-			$("#products").append(str);
+			$("#wrapper_products").append(str);
 		}
 		
 		

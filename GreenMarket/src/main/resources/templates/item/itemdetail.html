@@ -204,9 +204,21 @@
 			display: inline-block;
 			color: #cca2a3;
 			cursor: pointer;
-			font-size: 15px;
+			font-size: 20px;
 			-webkit-transition: all 0.1s ease-in-out;
 			        transition: all 0.1s ease-in-out;
+			position: absolute;
+   			left: 0em;
+		}
+		
+		#like_button:hover {
+			display: inline-block;
+			color: #cca2a3;
+			cursor: pointer;
+			font-weight:bold;
+			font-size: 22px;
+			position: absolute;
+   			left: 0em;
 		}
 		
 		#like_button.liked {
@@ -219,15 +231,84 @@
 			opacity: 0;
 			-webkit-transition: all 0.2s ease-in-out;
 			        transition: all 0.2s ease-in-out;
+			position: absolute;
+    		left: 0em;
 		}
 		
 		#like_button.liked:after {
-			font-size: 15px;
+			font-size: 20px;
 			opacity: 1;
 		}
 		
 		#like {
-			padding: 15px;
+			padding: 20px;
+		}
+		
+		._9ofhsl {
+		    height: 100% !important;
+		    width: 100% !important;
+		    position: static !important;
+		}
+		._1c81x67 {
+		    background: rgb(221, 221, 221) !important;
+		    overflow: hidden !important;
+		    position: relative !important;
+		}
+		.dir.r1are2x1 {
+		    margin-bottom: 32px;
+		}
+		.dir.chnzxuf {
+		    margin-bottom: 12px;
+		}
+		.s189e1ab {
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: -ms-flexbox;
+		    display: flex;
+		    -webkit-align-items: baseline;
+		    -webkit-box-align: baseline;
+		    -ms-flex-align: baseline;
+		    align-items: baseline;
+		}
+		.s11wgnhd {
+		    color: "#717171";
+		    font-weight: normal;
+		}
+		.dir-ltr.t9gtck5 {
+		    margin-left: 12px;
+		}
+		.t9gtck5 {
+		    color: black;
+		    font-weight: bold;
+		}
+		.chnzxuf {
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: -ms-flexbox;
+		    display: flex;
+		    -webkit-align-items: center;
+		    -webkit-box-align: center;
+		    -ms-flex-align: center;
+		    align-items: center;
+		}
+		.modal-content{
+			overflow-y: initial !important
+		}
+		.modal-body{
+			height: 500px;
+			overflow-y: auto;
+		}
+		._14i3z6h {
+		    color: inherit !important;
+		    font-weight: bold;
+		    line-height: inherit !important;
+		    padding: 0px !important;
+		    margin-bottom: 20px;
+		}
+		._1d35qey {
+		    color: black;
+		    display: inline-flex !important;
+		    margin-right: 8px !important;
 		}
 	</style>
 </th:block>
@@ -267,7 +348,7 @@
 							<span class="_1ne5r4rt" aria-hidden="true">[[${review_avg}]]</span>
 						</span>
 						<span class="_142pbzop">
-							<button aria-label="후기 131개로부터 5점 만점에 4.62점을 받은 숙소입니다." type="button" class="_17wfx63m">(후기 [[${item_review.size}]]개)</button>
+							<button type="button" class="_17wfx63m">(후기 [[${item_review.size}]]개)</button>
 						</span>
 					</span>
 					<span class="_5oadh0" aria-hidden="true">·</span>
@@ -296,7 +377,7 @@
 								<button aria-label="목록에 숙소 추가하기" data-testid="pdp-save-button-unsaved" type="button" class="_kvaiv9k">
 									<div aria-hidden="true" class="_5kaapu">
 										<span id="like_button">♥</span>
-										<span id="like_num">[[${like_num}]]</span>
+										<span id="like_num" style="margin-left:20px">[[${like_num}]]</span>
 									</div>
 								</button>
 							</div>
@@ -397,43 +478,87 @@
 	</section>
 	
 	<!-- 판매자와 거래 후기 -->
-	<section class="ftco-section testimony-section bg-bottom" style="background-image: url(/bootstrap/images/item/detailreview.jpg);">
-	 <div class="overlay"></div>
-	 <div class="container">
-	  <div class="row justify-content-center pb-4">
-	    <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
-	     <span class="subheading">Review</span>
-	     <h2 class="mb-4">borrower Feedback</h2>
-	   </div>
-	 </div>
-	 <div class="row ftco-animate">
-	  <div class="col-md-12">
-	    <div class="carousel-testimony owl-carousel">   
-	      <div class="item" th:each="review:${item_review}">
-	        <div class="testimony-wrap py-4">
-	          <div class="text">
-	           <p class="star">
-	            <span class="fa fa-star" th:if="${review.rStar}>0" th:each="num: ${#numbers.sequence(1,review.rStar)}"></span>
-	          </p>
-	          <p class="mb-4" th:text="${review.rContent}"></p>
-	          <div class="d-flex align-items-center">
-	           <div class="user-img"><img class="image-thumbnail" th:src="${review.member.mPhoto}"/></div>
-	           <div class="pl-3">
-	            <p class="name"><a href="#" th:text="${review.member.mNickname}"></a></p><!-- 다른 사용자 마이페이지 -->
-	            <span class="position" th:text="${review.member.mId}"></span>
-	          </div>
-	        </div>
-	      </div>
-	    </div>
-	  </div>
-	  
-	</div>
-	</div>
-	</div>
-	</div>
-	</section>
+	<section class="ftco-section testimony-section bg-bottom" style="background-color: #b6d1d4">
+			<div class="overlay"></div>
+			<div class="container">
+				<div class="row justify-content-center pb-4">
+					<div
+						class="col-md-7 text-center heading-section heading-section-white ftco-animate">
+						<span class="subheading">Review</span>
+						<h2 class="mb-4">borrower Feedback</h2>
+					</div>
+				</div>
+				<div class="row ftco-animate">
+					<div class="col-md-12">
+						<div class="carousel-testimony owl-carousel">
+							<div class="item" th:each="review:${item_review}">
+								<div class="testimony-wrap py-4">
+									<div class="text">
+										<p class="star">
+											<span class="fa fa-star" th:if="${review.rStar}>0" th:each="num: ${#numbers.sequence(1,review.rStar)}"></span>
+										</p>
+										<p class="mb-4" th:text="${review.rContent}"></p>
+										<div class="d-flex align-items-center">
+											<div class="user-img">
+												<img class="image-thumbnail" th:src="${review.member.mPhoto}" />
+											</div>
+											<div class="pl-3">
+												<p class="name">
+													<a th:href="@{/memberpage/{mId}(mId=${review.member.mId})}" th:text="${review.member.mNickname}"></a>
+												</p>
+												<!-- 다른 사용자 마이페이지 -->
+												<span class="position" th:text="${review.member.mId}"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="pull-right" style="width: 100%; height: 5%; text-align: center;">
+					<input type="button" style="margin-top:10px;" class="btn btn-secondary py-3 px-4" th:value="모두보기" id="showReview" data-toggle="modal" data-target="#reviewModal"> 
+				</div>
+			</div>
+			<!-- Modal -->
+			<div id="reviewModal" class="modal fade" role="dialog">
+				<div class="modal-dialog modal-lg">
+		    		<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+				        	<h4 class="modal-title">Review</h4>
+				        	<button type="button" class="close" data-dismiss="modal">&times;</button>
+				      	</div>
+				      	<div class="modal-body">
+				      		<div class="container">
+				      			<h3 tabindex="-1" class="_14i3z6h">
+				      				<span class="_1d35qey"><span style="color:red">★</span>[[${review_avg}]]점(후기 [[${item_review.size}]]개)</span>
+				      			</h3>
+								<div class="r1are2x1 dir dir-ltr" th:each="review:${item_review}">
+									<div class="chnzxuf dir dir-ltr">
+										<div class="_e7hn5" style="height: 56px; width: 56px;">
+											<a target="_blank" aria-label="${review.member.mId}" th:href="@{/memberpage/{mId}(mId=${review.member.mId})}" class="_ghgl4l4">
+												<div class="_1c81x67" style="height: 56px; width: 56px; border-radius: 50%;">
+													<div class="_1h6n1zu" role="img" aria-busy="false" style="display: inline-block; vertical-align: bottom; height: 100%; width: 100%; min-height: 1px;">
+														<img class="_9ofhsl" alt="no photo" th:src="${review.member.mPhoto}" style="object-fit: cover; vertical-align: bottom;">
+													</div>
+												</div>
+											</a>
+										</div>
+										<div class="t9gtck5 dir dir-ltr">[[${review.member.mNickname}]]<div class="s11wgnhd dir dir-ltr"><div class="s189e1ab dir dir-ltr"><div>[[${#dates.format(new java.util.Date(item.iRegdate), 'yyyy년 MM월')}]]<span class="a8jt5op dir dir-ltr">, </span><span style="color: red;" class="fa fa-star" th:if="${review.rStar}>0" th:each="num: ${#numbers.sequence(1,review.rStar)}"></span></div></div></div></div>
+									</div>
+									<div><div style="line-height: 24px; color: black;"><span><span>[[${review.rContent}]]</span></span></div></div>
+								</div>
+				        	</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+				    </div>
+				</div>
+			</div>
+		</section>
 	
-	<!-- 판매자와 거래하기 -->
 	<section class="ftco-intro ftco-section ftco-no-pt">
 	 <div class="container">
 	  <div class="row justify-content-center">

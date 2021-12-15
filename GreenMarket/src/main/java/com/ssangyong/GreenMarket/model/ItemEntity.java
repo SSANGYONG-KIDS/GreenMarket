@@ -44,6 +44,7 @@ public class ItemEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "mId")
+	@JsonIgnore
 	private MemberEntity member;
 
 	private String iTitle;
@@ -68,10 +69,11 @@ public class ItemEntity {
 	
 	@OneToMany(mappedBy = "item", //fk이름 "메여있다"
 			cascade = CascadeType.ALL, fetch = FetchType.EAGER) //fetch = FetchType.EAGER
+	@JsonIgnore
 	List<ItemPhotoEntity> photos;
 	
 	@OneToMany(mappedBy = "item",
 			cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnore
 	List<TradeEntity> trades;
-	
 }
