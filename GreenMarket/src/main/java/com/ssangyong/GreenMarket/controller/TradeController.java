@@ -1,6 +1,7 @@
 package com.ssangyong.GreenMarket.controller;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import com.ssangyong.GreenMarket.model.TStateEnumType;
 import com.ssangyong.GreenMarket.model.TradeEntity;
 import com.ssangyong.GreenMarket.service.ItemService;
 import com.ssangyong.GreenMarket.service.LoginService;
+import com.ssangyong.GreenMarket.service.TradeChatService;
 import com.ssangyong.GreenMarket.service.TradeService;
 
 @Controller
@@ -32,6 +34,8 @@ public class TradeController {
 	
 	@Autowired
 	TradeService tradeService;
+	@Autowired
+	TradeChatService tradeChatService;
 	@Autowired
 	ItemService itemService;
 	@Autowired
@@ -164,8 +168,7 @@ public class TradeController {
 	 */
 	@RequestMapping("chatMain")
 	public void chatMain(Model model, @AuthenticationPrincipal SecurityUser principal) {
-		System.out.println("controller: trade/chatMain");
-		
+
 		// 세션 멤버 정보 가져오기
 		MemberEntity MemberOfPrincipal = loginService.selectById(principal.getUsername());
 		Map<Object, Object> mapOfPrincipal = new HashMap<>(); // 필요한 정보만 맵에 담기
@@ -181,6 +184,21 @@ public class TradeController {
 		// 내가 예약한 거래 목록 가져오기
 		List<TradeEntity> tradesForRenter = tradeService.listTradeForRenter(loginService.selectById(principal.getUsername()));
 		model.addAttribute("tradesForRenter", tradesForRenter);
+		
+		// 안읽은 메시지 수 가져오기
+		List<Integer> cntsUnreadForSharer = new ArrayList<>();
+		for (TradeEntity trade : tradesForSharer) {
+			int cntOfUnread = tradeChatService.getCntOfUnreadMsg(trade.getTId(), principal.getUsername());
+			cntsUnreadForSharer.add(cntOfUnread);
+		}
+		model.addAttribute("cntsUnreadForSharer", cntsUnreadForSharer);
+		
+		List<Integer> cntsUnreadForRenter = new ArrayList<>();
+		for (TradeEntity trade : tradesForRenter) {
+			int cntOfUnread = tradeChatService.getCntOfUnreadMsg(trade.getTId(), principal.getUsername());
+			cntsUnreadForRenter.add(cntOfUnread);
+		}		
+		model.addAttribute("cntsUnreadForRenter", cntsUnreadForRenter);
 	}
 	
 	/**

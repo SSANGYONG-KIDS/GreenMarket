@@ -27,4 +27,15 @@ public class TradeChatRestController {
 		List<MessageEntity> list = tradeChatService.getAllMessage(tId);
 		return list;
 	}
+	
+	
+	/**
+	 * 메시지 읽음 처리 테스트
+	 * @param tId: 거래 번호
+	 * @param mId: 읽은 사람 아이디
+	 */
+	@GetMapping("/test/changeToReadState/{tId}/{mId:.+}")
+	public void testChangeToReadState(@PathVariable int tId, @PathVariable String mId) {
+		tradeChatService.changeToReadState(tId, mId);
+	}
 }
