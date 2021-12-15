@@ -43,7 +43,7 @@
          <div class="profile">
             <div class="col">
                <label for="mPhoto"> 프로필 사진 업로드 </label> 
-					
+				 <input type="hidden" id="mPhoto" name="mPhoto"/>	
                <div class="img_wrap">
 				<img id="img" src="/bootstrap/images/user.png"/>
 				</div>
@@ -61,16 +61,19 @@
                   <input type="button" id="checkId" value="중복확인" class="form-control">
             </div>
          </div>    
+<!--          <i id="mId" class="text-info"></i> -->
          <br>
          
          <div class="row">
             <div class="col">
-                  <label for="mPw">비밀번호</label> 
+                  <label for="mPw">비밀번호(영문+숫자+특수번호로 입력해주세요)</label> 
                   <input id="mPw" name="mPw" type="password" placeholder="비밀번호를 입력하세요."class="form-control" />
-                  <div class="col-3">
+            </div>
+            <div class="col-3">
+                  <input type="button" id="checkId" value="비밀번호 확인" class="form-control">
             </div>
             </div>
-         </div>
+<!--         	<i id="mPw" class="text-info"></i> -->
          <br>
          
          <div class="row">
@@ -79,9 +82,7 @@
                <input id="mName" name="mName" type="text" placeholder="이름을 입력하세요." class="form-control" />
             </div>
          </div>
-         <br>
-            
-         <input type="hidden" id="mPhoto" name="mPhoto"/>
+<!--           <i id="mName" class="text-info"></i> -->
          <br>
          
          <div class="row">
@@ -92,7 +93,8 @@
             <div class="col-3">
                <input type="button" id="checkNick" value="중복확인" class="form-control">
             </div>
-         </div>    
+         </div>   
+<!--            <i id="mNickname" class="text-info"></i> -->
          <br>
          
          
@@ -102,9 +104,10 @@
                <input id="mPhone" name="mPhone" type="text" placeholder="'-'을 제외하고 입력하세요." class="" />
             </div>
             <div class="col-3">
-               <input type="button" id="sendPhoneButton" value="인증" class="">
+               <input type="button" id="sendPhoneButton" value="인증" class="form-control">
             </div> 
          </div>
+<!--          <i id="mPhone" class="text-info"></i> -->
          <br>
          
          <div class="row">
@@ -113,7 +116,7 @@
                <input type="text" id="inputCertifiedNumber" readonly="readonly" class=""> 
             </div>
             <div class="col-3">
-               <input type="button" id="CertiUserNum" value="번호 인증" readonly="readonly" class="">
+               <input type="button" id="CertiUserNum" value="번호 인증" readonly="readonly" class="form-control">
                <input type="hidden" id="numStr" name="numStr">
             </div>
          </div>
@@ -125,6 +128,7 @@
                <input id="mEmail" name="mEmail" type="text" placeholder="abcd@email.com" class="" />
             </div>
          </div>
+<!--          <i id="mEmail" class="text-info"></i> -->
          <br>
          
          <div class="row">
@@ -143,7 +147,7 @@
             </div>
          </div>
          <br>
-            <input type="submit" id="btn_upload_file" class="btn btn-primary btn-lg btn-block" value="가입하기" />
+            <input type="button" id="btn_upload_file" class="btn btn-primary btn-lg btn-block" value="가입하기" />
             </div>
          </form>
       </div>   
@@ -156,8 +160,74 @@
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <!--       <script src="https://code.jquery.com/jquery-3.4.1.js"></script> -->
       <script>  
-      
-      $('#checkNick').click(function() {
+  /*    
+      $("#btn").click(function(event){
+		
+		var mId = $("#mId").val();
+		var mPw = $("#mPw").val();
+		var mName = $("#mName").val();
+		var mNickname = $("#mNickname").val();
+		var mEmail = $("#mEmail").val();
+		var mPhone = $("#mPhone").val();
+		
+		var regId = /^[a-zA-Z0-9]{4,12}$/;
+		var regPw = /[a-zA-Z0-9!@#$%^&*]{8,12}$/;
+		var regName = /^[가-힝a-zA-Z]{2,}$/;
+		var regEmail = /[a-z0-9]{2,}@[a-z0-9]{2,}\.[a-z0-9]{3,}/i;
+		// var regPhone = /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}$/;
+		
+		if(mId == ''){
+			$('i[id="mId"]').html("아이디를 입력하세요");
+			$("#mId").focus();
+			event.preventDefault();
+		} else if(!regId.test(mId)) {
+			$('i[id="mId"]').html("아이디를 형식을 확인하세요");
+			$("#mId").focus();
+			event.preventDefault();
+		}if(mPw == '') {
+			$('i[id="mPw"]').html("비밀번호를 입력하세요");
+			$("#mPw").focus();
+			event.preventDefault();
+		} else if(!regPw.test(mPw)) {
+			$('i[id="mPw"]').html("비밀번호를 형식을 확인하세요");
+			$("#mPw").focus();
+			event.preventDefault();
+			
+		} if(mName == '') {
+			$('i[id="mName"]').html("이름을 입력하세요");
+			$("#mName").focus();
+			event.preventDefault();
+		} else if(!regName.test(mName)) {
+			$('i[id="mName"]').html("이름을 확인하세요");
+			$("#mName").focus();
+			event.preventDefault();
+	
+		} if(mNickname == '') {
+			$('i[id="mNickname"]').html("닉네임을 입력하세요");
+			$("#mNickname").focus();
+			event.preventDefault();
+		} else if(!regName.test(mNickname)) {
+			$('i[id="mNickname"]').html("닉네임을 확인하세요");
+			$("#mNickname").focus();
+			event.preventDefault();
+	
+		} if(mEmail == '') {
+			$('i[id="mEmail"]').html("이메일을 입력하세요");
+			$("#mEmail").focus();
+			event.preventDefault();
+		} else if(!regEmail.test(mEmail)) {
+			$('i[id="mEmail"]').html("이메일 형식을 확인하세요");
+			$("#mEmail").focus();
+			event.preventDefault();
+			
+		} if(mPhone == '') {
+			$('i[id="mPhone"]').html("전화번호를 입력하세요");
+			$("#mPhone").focus();
+			event.preventDefault();
+		}  
+	});
+	*/
+      $('#checkId').click(function() {
       		if($("#mId").val() == ""){
 			swal("아이디를 입력하세요");
 			return false;
@@ -199,7 +269,7 @@
                      $('#mId').attr('readonly', 'readonly');
                   } else {
                      Swal.fire('사용 불가능한 아이디입니다.');
-                     return $('#mPw').focus();
+                     return $('#mId').focus();
                   }
                }
             });

@@ -168,14 +168,14 @@
 							<div class="row">
 								<div class="col">
 									<label for="memberAddress">주소</label> 
-									<input type="text" id="sample6_postcode" placeholder="우편번호" name="AddNum"
-										class=""> 
+									<input type="text" id="sample6_postcode" placeholder="우편번호" name="mAddress.AddNum"
+										class="" th:value="${member.mAddress.AddNum}"> 
 										<input type="text" id="sample6_address" placeholder="주소" name="mAddress.memberAddress1"
 										class="" th:value="${member.mAddress.memberAddress1}">
 										<input type="text" id="sample6_detailAddress" placeholder="상세주소"
-										name="memberAddress2" class=""> 
+										name="mAddress.memberAddress2" class="" th:value="${member.mAddress.memberAddress2}"> 
 										<input type="text" id="sample6_extraAddress" placeholder="참고항목"
-										name="memberAddress3" class=""> <br>
+										name="mAddress.memberAddress3" class="" th:value="${member.mAddress.memberAddress3}"> <br>
 								</div>
 								<div class="col-3">
 									<input type="button" onclick="sample6_execDaumPostcode()"
@@ -508,7 +508,10 @@
  	 		
  	 		let data = {
 	 		mEmail : $("#mEmail").val(),
+	 		'mAddress.AddNum' : $("#sample6_postcode").val(),
 	 		'mAddress.memberAddress1' : $("#sample6_address").val(),
+	 		'mAddress.memberAddress2' : $("#sample6_detailAddress").val(),
+	 		'mAddress.memberAddress3' : $("#sample6_extraAddress").val()
 	 		};
 			
 			// 사진

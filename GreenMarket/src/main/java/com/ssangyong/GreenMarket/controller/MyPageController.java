@@ -65,7 +65,7 @@ public class MyPageController {
 		public void modifyPwd(MemberEntity member, @AuthenticationPrincipal SecurityUser principal ) {
 		 System.out.println("비밀번호 수정하기");
 		 member.setMId(principal.getUsername());
-	     memberservice.updateMember(member);
+	     memberservice.updateMemberPassword(member);
 	 }
 	 
 	 @PostMapping("/delete")

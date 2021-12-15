@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" 
 xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
 <meta charset="UTF-8">
-<head>
-
 <style th:fragment="header1">
 
 </style>
+<head>
+
 </head>
 <body>	
 	<header class="page-header" th:fragment="header1">
@@ -52,19 +51,19 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
           		<form id="userForm" action="/" method="post">
           			<div class="form-group">
           	  		<label> 아이디 </label> 
-          	  		<input type="text" name="username"  class="form-control"  placeholder="아이디를 입력하세요"  required="required" autofocus/>
+          	  		<input type="text"  id="mId" name="username"  class="form-control"  placeholder="아이디를 입력하세요"  required="required" autofocus/>
           	  		</div>
           	  <div class="form-group" style="margin-bottom: 30px;">
              	 <label> 비밀번호  </label> 
-              	 <input type="password" name="password" class="form-control" placeholder="비밀번호를 입력하세요" required="required" autofocus/>
+              	 <input type="password" id="mPw" name="password" class="form-control" placeholder="비밀번호를 입력하세요" required="required" autofocus/>
              </div>
           	   <div class="checkbox mb-3">
                <label> 
                <input type="checkbox" name="remember-me">
-                  Remember me
+               로그인 유지하기
                </label>
             </div>
-             <button class="btn btn-primary btn-block" type="submit">로그인</button>
+             <button type="submit" id="login_btn"class="btn btn-primary btn-block">로그인</button>
           	</form>	
           		</div>
           	<div class="signup">
@@ -84,6 +83,7 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     </div>
     </div>
 	</header>
+
 
 </body>
 </html>
