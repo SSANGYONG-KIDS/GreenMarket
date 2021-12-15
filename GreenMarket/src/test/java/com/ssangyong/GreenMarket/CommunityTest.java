@@ -35,12 +35,12 @@ public class CommunityTest {
 	@Transactional
 	@Test
 	public void insertCommunity2() {		
-		IntStream.range(10, 15).forEach(i->{
+		IntStream.range(1, 10).forEach(i->{
 			CommunityEntity community = CommunityEntity.builder()
 					.cTitle("게시글"+i)
 					.cViews(0)
 					.cContent("내용"+i)
-					.member(mrepo.getById("test5"))
+					.member(mrepo.findById("test").orElseThrow())
 					.build();
 		
 			crepo.save(community);
@@ -50,7 +50,7 @@ public class CommunityTest {
 	//@Transactional //commit 실행
 	//@Test
 	public void insertCommunity() {
-		
+		/*
 		CommunityEntity community = CommunityEntity.builder()
 				.cTitle("게시글")
 				.cViews(0)
@@ -59,6 +59,7 @@ public class CommunityTest {
 				.build();
 		
 		crepo.save(community);
+		*/
 		
 		/*
 		IntStream.range(2, 10).forEach(i -> {
@@ -87,20 +88,22 @@ public class CommunityTest {
 		*/
 	}
 	
+	//@Transactional
 	//@Test
 	public void insertUser2() {		
-	IntStream.range(1, 4).forEach(i->{
-		MemberEntity user = MemberEntity.builder()
-		.mId("sample" + i)
-		.mPw("qwer")
-		.mName("name" + i)
-		.mNickname("nickname" + i)
-		.mEmail("email" + i + "@gmail.com")
-		.mPhoto(i+".jpg")
-		.mPhone("010-1111-2222" + i)
-		.mIsdropped(0)
-		.build();
-	
-	});
+		IntStream.range(1, 4).forEach(i->{
+			MemberEntity user = MemberEntity.builder()
+			.mId("sample" + i)
+			.mPw("qwer")
+			.mName("name" + i)
+			.mNickname("nickname" + i)
+			.mEmail("email" + i + "@gmail.com")
+			.mPhoto(i+".jpg")
+			.mPhone("010-1111-2222" + i)
+			.mIsdropped(0)
+			.build();
+			
+			mrepo.save(user);
+		});
 	}
 }

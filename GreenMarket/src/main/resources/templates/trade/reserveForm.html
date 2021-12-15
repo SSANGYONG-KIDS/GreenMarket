@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout1}"
+>
+<head>
+<meta charset="UTF-8">
+<title>reserveForm</title>
+</head>
+<body>
+	<!-- 스타일 부분 -->
+	<th:block layout:fragment="style1">
+		<style>
+		/* 예약 메인 */
+			#data {
+				display: none;
+			}
+			#reserve_main {
+				margin-left: 21%;
+				color: black;
+			    height: 800px;
+			}
+			#reserve_main_left {
+				width: 546px;
+				float: left;
+			}
+			#reserve_header {
+				height: 81px;
+			}
+			#wrapper_reserve_prev {
+				width: 52px;
+				height: 52px;
+				float: left;
+				color: black;
+				cursor: pointer;
+			}
+			#reserve_header_subject {
+				font-size: 30px;
+				color: black;
+			    font-weight: 600;
+			}
+			#reserve_content {
+				height: 159px;
+			}
+			.reserve_content_info_block {
+				float: left;
+			    width: 510px;
+			}
+			.reserve_subject {
+				font-weight: 600;
+				font-size: 22px;
+				height: 56px;
+			}
+			.block_subject {
+				height: 34px;
+				font-weight: 600;
+				font-size: 16px
+			}
+			.block_content {
+				font-weight: 300;
+				font-size: 15px;
+			}
+			.reserve_content_info_edit_wrapper {
+			    text-decoration: underline !important;
+				font-weight: 600;
+				cursor: pointer;
+			}
+			#reserve_button_wrapper {
+				border-top-color: rgb(221, 221, 221);
+				border-top-width: 1px !important;
+			    border-top-style: solid !important;
+    			padding-top: 32px;
+			}
+			
+			/* 예약 메인 오른쪽 부분 */
+			#reserve_right {
+				position: sticky !important;
+			    top: var(--navigation-bar-offset, 80px) !important;
+			    z-index: 1 !important;
+			    width: 24% !important;
+			    display: inline-block !important;
+			    padding-right: 1px !important;
+			    padding: 24px !important;
+			    border: 1px solid rgb(221, 221, 221) !important;
+			    border-radius: 12px !important;
+				margin-left: 6.5%;
+						
+			}
+			#reserve_right_price_info {
+				border-top-color: rgb(221, 221, 221);
+				border-top-width: 1px !important;
+			    border-top-style: solid !important;
+				border-bottom-color: rgb(221, 221, 221);
+				border-bottom-width: 1px !important;
+			    border-bottom-style: solid !important;
+    			padding-top: 32px;
+    			margin-top: 23px;	
+    			padding-bottom: 32px;
+    			margin-bottom: 23px;	
+			}
+			.item_info_text {
+				overflow: overlay;
+				padding-bottom: 35px;
+			}
+			.item_photo {
+				width: 100px;
+			    height: 100px;
+			    border-radius: 30%;
+			    float: left;
+			    margin-right: 31px;
+			}
+			.item_info_text_title {
+				font-weight: 600;
+			}
+			.item_info_text_content {
+				color: #939393;
+			}
+			.price_info_table {
+				display: table;
+			}
+			.price_info_cell {
+				display: table-cell;
+				width: 100%;
+			}
+			.sharer_photo {
+			    width: 75px;
+			    height: 75px;
+			    border-radius: 100%;
+			    float: left;
+			    margin-right: 31px;
+			}			
+			
+			#reserve_right_sharer_info {
+				margin-top: 47px;
+			}
+			.item_info_text_mAddress {
+				font-size: 15px;
+				color: gray;
+			}
+			
+			
+		/* 모달창 */
+			#modal_background {
+				display: none;
+			    position: absolute;
+			    top: 0;
+			    left: 0;
+			    right: 0;
+			    bottom: 0;
+			    content: '';
+			    opacity: .3;
+			    background: #000000;
+				height: 200%;
+				width: 100%;		
+				z-index: 1;		
+			}
+			#modal_date {
+				display: none;
+			    position: absolute;
+			    top: 30%;
+			    left: 40%;
+				background: rgb(255, 255, 255) !important;
+			    border-radius: 16px !important;
+			    padding: 22px 32px 35px !important;		
+				z-index: 10;		
+			}
+			#modal_date_close {
+				cursor: pointer;
+			}
+			#modal_date_save_button_wrapper {
+			    padding-top: 10px;
+			   	text-align: right;
+			}
+			#modal_date_close_wrapper {
+			    padding-left: 5px;
+    			padding-top: 5px;
+			}
+		</style>
+	</th:block>
+	
+	<!-- 메인 부분 -->
+	<div class="panel panel-default" layout:fragment="content1">
+		<!-- 모달창 배경 -->
+		<div id="modal_background"></div>
+		<!-- 예약 상단 부분 -->
+		 <section class="hero-wrap hero-wrap-2 js-myheight" style="background-image: url('/bootstrap/images/trade/reserveForm.png');">
+		  <div class="overlay"></div>
+		  <div class="container">
+		    <div class="row no-gutters slider-text js-myheight align-items-end justify-content-center">
+		      <div class="col-md-9 ftco-animate pb-5 text-center">
+		       <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="fa fa-chevron-right"></i></a></span> <span>예약하기 <i class="fa fa-chevron-right"></i></span></p>
+		       <h1 class="mb-0 bread">예약하기</h1>
+		     </div>
+		   </div>
+		 </div>
+		</section>
+		
+		<!-- 예약 메인 부분 -->
+		<div id="reserve_main" class="ftco-section">
+			<!-- 예약 메인 왼쪽 부분 -->
+			<div id="reserve_main_left">
+				<div id="reserve_header">
+					<div id="wrapper_reserve_prev">
+						<!-- 이전으로 돌아가기 버튼(물품 상세보기로 이동) -->
+						<span id="reserve_prev">
+							<svg viewBox="0 -30 30 30" xmlns="http://www.w3.org/2000/svg" aria-label="뒤로" role="img" focusable="false" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 3; overflow: visible;"><g fill="none"><path d="m20 28-11.29289322-11.2928932c-.39052429-.3905243-.39052429-1.0236893 0-1.4142136l11.29289322-11.2928932"></path></g></svg>
+						</span>
+					</div>
+					<div id="reserve_header_subject">
+						확인 및 예약
+					</div>
+				</div>
+				<div id="reserve_content">
+					<div id="reserve_content_info">
+						<div class="reserve_subject">예약 정보</div>
+						<div class="reserve_content_info_block">
+							<div class="block_subject">날짜</div>
+							<div id="block_content_date" class="block_content">
+								<span id="span_startDate" th:text="${startDateKor}"></span>
+								–
+								<span id="span_endDate" th:text="${endDateKor}"></span>
+							</div>
+						</div>
+						<div id="btn_edit_date" class="reserve_content_info_edit_wrapper">
+							수정
+						</div>
+					</div>
+				</div>
+				<div id="reserve_button_wrapper">
+					<div id="reserve_button" class="btn btn-primary py-2 px-3">
+						예약하기
+					</div>
+				</div>			
+			</div> <!-- 예약 메인 왼쪽 부분 끝 -->
+
+			<!-- 예약 메인 오른쪽 부분 -->
+			<div id="reserve_right">
+				<div class="reserve_right_item_info">
+					<img class="item_photo" th:src="${item.photos[0].ipFilename}"/>
+					<div class="item_info_text">
+						<span class="item_info_text_title">[[${item.iTitle}]]</span><br>
+						<span class="item_info_text_content">[[${item.iContent}]]</span><br>
+						상태: [[${item.iState.title}]] <br>
+					</div>
+				</div>
+				<div id="reserve_right_price_info">
+					<div class="reserve_subject">요금 세부 정보</div>
+					<div>
+						<div class="price_info_table">
+							<div class="price_info_cell">
+								₩<span id="iPrice">[[${item.iPrice}]]</span> x <span id="day_of_term"></span>일
+							</div>
+							<div class="price_info_cell">
+								₩<span id="totalPrice"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="reserve_right_sharer_info">
+					<div class="reserve_subject">물품 대여자 정보</div>
+					<img class="sharer_photo" th:src="${item.member.mPhoto}"/>
+					<div class="item_info_text">
+						<span class="item_info_text_title">[[${item.member.mNickname}]]</span><br>
+						<span class="item_info_text_mAddress">[[${item.member.mAddress.memberAddress1}]]</span><br>
+					</div>					
+				</div>
+			</div> <!-- 예약 메인 오른쪽 부분 끝-->
+				
+		</div> <!-- 예약 메인 부분 끝 -->
+		
+
+		
+		
+		<!-- 날짜 변경 모달창 -->
+		<div id="modal_date" class="drag">
+			<div id="modal_date_close_wrapper">
+				<span id="modal_date_close" class="ic_gnb_x"></span>
+			</div>
+			<div class="col-md d-flex">
+				<div class="form-group p-4">
+					<label for="#">start date</label>
+					<div class="form-field">
+						<div class="icon"><span class="fa fa-calendar"></span></div>
+						<input type="text" class="form-control checkin_date" id="startDate" name="startDate" placeholder="start date">
+					</div>
+				</div>
+			</div>
+			<div class="col-md d-flex">
+				<div class="form-group p-4">
+					<label for="#">end date</label>
+					<div class="form-field">
+						<div class="icon"><span class="fa fa-calendar"></span></div>
+						<input type="text" class="form-control checkout_date"  id="endDate" name="endDate" placeholder="end date">
+					</div>
+				</div>
+			</div>
+			<div id="modal_date_save_button_wrapper">
+				<div id="modal_date_save_button" class="btn btn-primary py-2 px-3">
+					저장하기
+				</div>
+			</div>			
+		</div>
+		
+		
+		<!-- 데이터 -->
+		<div id="data">
+			<input id="iId" th:value="${iId}">
+			<input id="data_startDate" th:value="${startDate}">
+			<input id="data_endDate" th:value="${endDate}">
+		</div>
+	</div>
+
+	<th:block layout:fragment="script1">
+		<script th:inline="javascript">
+			// data 가져오기
+			let iId = $('#iId').val();
+			
+			// 상단 메뉴 쪽 이미지 부분
+			let divisor = 3; 
+			var myHeight = function() {
+				$('.js-myheight').css('height', $(window).height()/divisor);
+				$('.overlay').css('height', $(window).height()/divisor);
+				$(window).resize(function() {
+					$('.js-myheight').css('height', $(window).height()/divisor);
+					$('.overlay').css('height', $(window).height()/divisor);
+				});
+			};
+			myHeight();
+			
+			// 이전으로 돌아가기 버튼
+			$("#wrapper_reserve_prev").click(e => {
+				location.href = '/item/itemdetail?iId=' + iId;
+			});
+		
+			// 예약하기 버튼 눌렀을 때
+			$("#reserve_button").click(e => {
+				let formData = new FormData();
+				formData.append('iId', iId);
+				
+				// 날짜 형식에 맞게 바꾸기
+				let startDate = $('#span_startDate').html();
+				let endDate = $('#span_endDate').html();
+				startDate = startDate.replace(/[^0-9]/g, "");
+				endDate = endDate.replace(/[^0-9]/g, "");
+				startDate = startDate.substr(0, 4) + '-' + startDate.substr(4, 2) + '-' + startDate.substr(6, 2);
+				endDate = endDate.substr(0, 4) + '-' + endDate.substr(4, 2) + '-' + endDate.substr(6, 2);
+				formData.append('startDate', startDate);
+				formData.append('endDate', endDate);
+				
+				// 서버에 예약 요청 
+				$.ajax({
+					type : 'POST',
+					url : '/trade/reserve',
+					data : formData,
+					processData : false,
+					contentType : false
+				}).done(res => {
+					console.log('ajax: /trade/reserve');
+					console.log(res);
+					alert('예약 완료');
+					location.href = '/item/itemdetail?iId=' + iId;
+				}).fail(err => {
+					console.log('ajax: /trade/reserve');
+					console.log(res);
+					alert(res);					
+				})				
+			});
+			
+			// 요금 상세정보에 기간 일 수 표시하기
+			function renderTerm() {
+				let dayOfTerm = (new Date($('#data_endDate').val()) - new Date($('#data_startDate').val())) / (1000 * 60 * 60 * 24);
+				$('#day_of_term').text(dayOfTerm);
+				$('#totalPrice').text($('#iPrice').text() * $('#day_of_term').text());
+			}
+			renderTerm();
+			
+			
+		// 날짜 모달창	
+			// 메인에서 날짜 수정 버튼
+			$('#btn_edit_date').click(e => {
+				$('#modal_date').css('display', 'block');
+				$('#modal_background').css('display', 'block');
+			});
+			
+			// 날짜 수정 닫기 버튼
+			$('#modal_date_close').click(e => {
+				$('#modal_date').css('display', 'none');
+				$('#modal_background').css('display', 'none');				
+			});
+			
+			// 날짜 저장 버튼
+			$('#modal_date_save_button').click(e => {
+				
+				// 예약 메인에 수정한 날짜 반영하기
+				let startDate = $('#startDate').val();
+				let startDateKor = startDate.substr(0, 4) + '년 ' + startDate.substr(5, 2) + '월 ' + startDate.substr(8, 2) + '일';
+				let endDate = $('#endDate').val();
+				let endDateKor = endDate.substr(0, 4) + '년 ' + endDate.substr(5, 2) + '월 ' + endDate.substr(8, 2) + '일';				
+				$('#span_startDate').html(startDateKor);
+				$('#span_endDate').html(endDateKor);
+				
+				// 일자 데이터 바꾸기 (일 수 갱신위해)
+				let DataOfStartDate = startDate.substr(0, 4) + '-' + startDate.substr(5, 2) + '-' + startDate.substr(8, 2);
+				let DataOfEndDate= endDate.substr(0, 4) + '-' + endDate.substr(5, 2) + '-' + endDate.substr(8, 2);
+				$('#data_startDate').val(DataOfStartDate);
+				$('#data_endDate').val(DataOfEndDate);
+				
+				// 요금 세부 정보에 일 수 갱신하기
+				renderTerm();
+				
+				// 모달창 닫기
+				$('#modal_date_close').trigger('click');			
+			});
+		</script>
+	</th:block>
+</body>
+</html>

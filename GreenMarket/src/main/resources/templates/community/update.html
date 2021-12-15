@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout1}">
+<head>
+<meta charset="UTF-8">
+
+<title>update</title>
+
+</head>
+<body >
+	<div class="panel panel-default" layout:fragment="content1">
+		 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/bootstrap/images/bg_1.jpg');">
+		  <div class="overlay"></div>
+		  <div class="container">
+		    <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+		      <div class="col-md-9 ftco-animate pb-5 text-center">
+		       <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Community <i class="fa fa-chevron-right"></i></a></span> <span>About us <i class="fa fa-chevron-right"></i></span></p>
+		       <h1 class="mb-0 bread">글 수정</h1>
+		     </div>
+		   </div>
+		 </div>
+		</section>	
+		<div class="container">
+			<br><br>
+			<form>   
+				<input type="hidden" id="cId" th:value="${board.cId}"/>
+				<div class="form-group">
+					<label for="cTitle">제목</label>
+					<input type="text" class="form-control" placeholder="제목을 입력하세요" name="cTitle" id="cTitle" th:value="${board.cTitle}">
+				</div>
+	
+				<div class="form-group">
+	  				<label for="cComment">내용</label>
+	 				<textarea class="form-control summernote" rows="5" name="cContent" id="cContent" th:value="${board.cContent}" th:text="${board.cContent}"></textarea>
+				</div>
+			</form >
+			<div class="row justify-content-center">
+				<button id="btn-update" class="btn btn-primary">수정하기</button>			
+			</div>
+			<br><br>
+		</div >
+
+
+<th:block layout:fragment="script1">
+<script>
+    $('.summernote').summernote({
+    	placeholder: '내용을 입력하세요',
+        tabsize: 2,
+        height: 300
+    });
+
+	
+	$('#btn-update').on('click',update);
+	function update(){
+		//let id = $("#cId").val();
+		
+		let data = {
+			cId : $("#cId").val(),
+			cTitle: $("#cTitle").val(),
+			cContent: $("#cContent").val()
+		};
+		
+		
+		$.ajax({
+			type : "POST",
+			url: "/community/update",
+			data: data
+			// contentType: "application/json; charset=utf-8",
+			// dataType: "json"
+			
+		}).done(function(resp){
+			alert("글 수정이 완료되었습니다.");
+			//alert(JSON.stringify(data));
+			location.href="/community/boardlist";
+			//location.reload();
+		}).fail(function(error){
+			alert("등록 실패");
+			alert(JSON.stringify(data));
+		});
+		
+	}
+</script>
+	
+
+</th:block>
+</body>
+</html>

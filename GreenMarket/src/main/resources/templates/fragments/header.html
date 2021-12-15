@@ -4,6 +4,7 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 <meta charset="UTF-8">
 <head>
+
 <style th:fragment="header1">
 
 </style>
@@ -19,19 +20,70 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a th:href="@{/index}" class="nav-link">Home</a></li>
+					<li class="nav-item"><a th:href="@{/index}" class="nav-link">Home</a></li>
 					<li class="nav-item"><a th:href="@{/layout/about}" class="nav-link">About</a></li>
 					<li class="nav-item"><a th:href="@{/layout/destination}" class="nav-link">Destination</a></li>
-					<li class="nav-item"><a th:href="@{/layout/hotel}" class="nav-link">Hotel</a></li>
-					<li class="nav-item"><a th:href="@{/layout/blog}" class="nav-link">Blog</a></li>
-					<li class="nav-item"><a th:href="@{/layout/contact}" class="nav-link">Contact</a></li>
-					<li class="nav-item"><a th:href="@{/layout/login}" class="nav-link">login</a></li>
-					<li class="nav-item"><a th:href="@{/layout/signup}" class="nav-link">signup</a></li>
+					<li class="nav-item" id="nav-item-message"><a th:href="@{/trade/chatMain}" class="nav-link">Message</a></li>
+					<li class="nav-item"><a th:href="@{/community/boardlist}" class="nav-link">Community</a></li>
+					<li class="nav-item" sec:authorize-expr="!isAuthenticated()"><a href="#" data-toggle="modal" data-target="#exampleModal" class="nav-link">로그인</a></li>
+					<li class="nav-item" sec:authorize-expr="isAuthenticated()"><a th:href="@{/login/logout}" class="nav-link">로그아웃</a></li>
+					<li class="nav-item" sec:authorize-expr="!isAuthenticated()"><a th:href="@{/layout/signup}" class="nav-link">회원가입</a></li>
+					<li class="nav-item" sec:authorize-expr="isAuthenticated()"><a th:href="@{/layout/myPage}" class="nav-link">마이페이지</a></li>
 				</ul>
+				<div class="info">
+					<span sec:authorize-expr="isAuthenticated()"><a sec:authentication="name" class="nav-link">님 반갑습니다!</a></span>
+					<span sec:authorize-expr="isAuthenticated()">님 반갑습니다!</span>
+				</div>
 			</div>
 		</div>
 	</nav>
 	<!-- END nav -->
+	<div class="modal fade" id="exampleModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+		
+          <h4 class="modal-title"> 로그인 </h4>
+        </div>
+        <div class="modal-body">
+          <div id="userDiv" class="form-group">
+          		<form id="userForm" action="/" method="post">
+          			<div class="form-group">
+          	  		<label> 아이디 </label> 
+          	  		<input type="text" name="username"  class="form-control"  placeholder="아이디를 입력하세요"  required="required" autofocus/>
+          	  		</div>
+          	  		<div class="form-group" style="margin-bottom: 30px;">
+              <label> 비밀번호  </label> 
+              <input type="password" name="password" class="form-control" placeholder="비밀번호를 입력하세요" required="required" autofocus/>
+             	 </div>
+          	   <div class="checkbox mb-3">
+               <label> 
+               <input type="checkbox" name="remember-me">
+                  Remember me
+               </label>
+            </div>
+             <button class="btn btn-primary btn-block" type="submit">로그인</button>
+          	</form>	
+          		</div>
+          	<div class="signup">
+          	 <form th:action="@{/layout/signup}" method="get">
+            	 <input type="submit" value="회원가입" id="loginButton" class="btn btn-default" style="margin-left: 90px;"/>
+             </form>
+             <form th:action="@{/layout/}" method="get">
+            	 <input type="submit" value="비밀번호 찾기" id="searchPwd" class="btn btn-default" style="margin-left: 90px;"/>
+             </form>
+        </div>
+          <div class="modal-footer">
+           <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_modal">닫기</button>
+         </div>
+        
+      </div>
+    </div>
+    </div>
+    </div>
 	</header>
+
 </body>
 </html>

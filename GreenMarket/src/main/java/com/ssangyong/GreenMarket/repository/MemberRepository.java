@@ -1,10 +1,11 @@
 package com.ssangyong.GreenMarket.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 
 import com.ssangyong.GreenMarket.model.MemberEntity;
 
-public interface MemberRepository extends CrudRepository<MemberEntity, String>, JpaRepository<MemberEntity, String>{
-	
+public interface MemberRepository extends CrudRepository<MemberEntity, String>{
+	 List<MemberEntity> findBymNickname(String mNickname);
 }

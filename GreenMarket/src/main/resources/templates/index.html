@@ -5,6 +5,7 @@
 	layout:decorate="~{layout/layout1}">
 <body>
 	<div class="panel panel-default" layout:fragment="content1" >
+		<input type="hidden" id="data-is-index" value="true"> <!-- 상단 크기 조절에 사용 -->
 		<div class="hero-wrap js-fullheight" style="background-image: url('/bootstrap/images/bg_5.jpg');">
 			<div class="overlay"></div>
 			<div class="container">
@@ -30,44 +31,52 @@
 							<div class="row">
 								<div class="col-md-12 nav-link-wrap">
 									<div class="nav nav-pills text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-										<a class="nav-link active mr-md-1" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">Search Tour</a>
-	
-										<!-- 서치투어 / 호텔 필터링 주석  -->
-										<!-- <a class="nav-link" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2" role="tab" aria-controls="v-pills-2" aria-selected="false">Hotel</a>
-	 -->
+										<a class="nav-link active mr-md-1" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">Search Item</a>
 									</div>
 								</div>
-								<div class="col-md-12 tab-wrap">
-									
+								<div class="col-md-12 tab-wrap">	
 									<div class="tab-content" id="v-pills-tabContent">
-	
 										<div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
-											<form action="#" class="search-property-1">
+											<form th:action="@{/item/itemlist}" class="search-property-1">
 												<div class="row no-gutters">
 													<div class="col-md d-flex">
 														<div class="form-group p-4 border-0">
-															<label for="#">Destination</label>
+															<label for="#">item</label>
 															<div class="form-field">
 																<div class="icon"><span class="fa fa-search"></span></div>
-																<input type="text" class="form-control" placeholder="Search place">
+																<input type="text" class="form-control" id="itemName" name="itemName" placeholder="Search item">
 															</div>
 														</div>
 													</div>
 													<div class="col-md d-flex">
 														<div class="form-group p-4">
-															<label for="#">Check-in date</label>
+															<label for="#">Item Sort</label>
 															<div class="form-field">
-																<div class="icon"><span class="fa fa-calendar"></span></div>
-																<input type="text" class="form-control checkin_date" placeholder="Check In Date">
+																<div class="select-wrap">
+																	<div class="icon"><span class="fa fa-chevron-down"></span></div>
+																	<select name="itemSort" class="form-control">
+																	 	<option value="">전체 검색</option>
+																		<option th:selected="${is}=='DIGITAL_DEVICE'" th:each="is:${itemSorts}" th:value="${is}" >[[${is.title}]]</option>
+																	</select>
+																</div>
 															</div>
 														</div>
 													</div>
 													<div class="col-md d-flex">
 														<div class="form-group p-4">
-															<label for="#">날짜</label>
+															<label for="#">start date</label>
 															<div class="form-field">
 																<div class="icon"><span class="fa fa-calendar"></span></div>
-																<input type="text" class="form-control checkout_date" placeholder="Check Out Date">
+																<input type="text" class="form-control checkin_date" id="startDate" name="startDate" placeholder="start date">
+															</div>
+														</div>
+													</div>
+													<div class="col-md d-flex">
+														<div class="form-group p-4">
+															<label for="#">end date</label>
+															<div class="form-field">
+																<div class="icon"><span class="fa fa-calendar"></span></div>
+																<input type="text" class="form-control checkout_date"  id="endDate" name="endDate" placeholder="end date">
 															</div>
 														</div>
 													</div>
@@ -75,99 +84,16 @@
 														<div class="form-group p-4">
 															<label for="#">Price Limit</label>
 															<div class="form-field">
-																<div class="select-wrap">
-																	<div class="icon"><span class="fa fa-chevron-down"></span></div>
-																	<select name="" id="" class="form-control">
-																		<option value="">$100</option>
-																		<option value="">$10,000</option>
-																		<option value="">$50,000</option>
-																		<option value="">$100,000</option>
-																		<option value="">$200,000</option>
-																		<option value="">$300,000</option>
-																		<option value="">$400,000</option>
-																		<option value="">$500,000</option>
-																		<option value="">$600,000</option>
-																		<option value="">$700,000</option>
-																		<option value="">$800,000</option>
-																		<option value="">$900,000</option>
-																		<option value="">$1,000,000</option>
-																		<option value="">$2,000,000</option>
-																	</select>
-																</div>
+																<div class="icon"><span class="fa fa-search"></span></div>
+																<input type="text" class="form-control" id="priceLimit" name="priceLimit" placeholder="Insert Price" value="0">
 															</div>
 														</div>
 													</div>
+													
 													<div class="col-md d-flex">
 														<div class="form-group d-flex w-100 border-0">
 															<div class="form-field w-100 align-items-center d-flex">
 																<input type="submit" value="Search" class="align-self-stretch form-control btn btn-primary">
-															</div>
-														</div>
-													</div>
-												</div>
-											</form>
-										</div>
-	
-										<div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-performance-tab">
-											<form action="#" class="search-property-1">
-												<div class="row no-gutters">
-													<div class="col-lg d-flex">
-														<div class="form-group p-4 border-0">
-															<label for="#">Destination</label>
-															<div class="form-field">
-																<div class="icon"><span class="fa fa-search"></span></div>
-																<input type="text" class="form-control" placeholder="Search place">
-															</div>
-														</div>
-													</div>
-													<div class="col-lg d-flex">
-														<div class="form-group p-4">
-															<label for="#">Check-in date</label>
-															<div class="form-field">
-																<div class="icon"><span class="fa fa-calendar"></span></div>
-																<input type="text" class="form-control checkin_date" placeholder="Check In Date">
-															</div>
-														</div>
-													</div>
-													<div class="col-lg d-flex">
-														<div class="form-group p-4">
-															<label for="#">Check-out date</label>
-															<div class="form-field">
-																<div class="icon"><span class="fa fa-calendar"></span></div>
-																<input type="text" class="form-control checkout_date" placeholder="Check Out Date">
-															</div>
-														</div>
-													</div>
-													<div class="col-lg d-flex">
-														<div class="form-group p-4">
-															<label for="#">Price Limit</label>
-															<div class="form-field">
-																<div class="select-wrap">
-																	<div class="icon"><span class="fa fa-chevron-down"></span></div>
-																	<select name="" id="" class="form-control">
-																		<option value="">$100</option>
-																		<option value="">$10,000</option>
-																		<option value="">$50,000</option>
-																		<option value="">$100,000</option>
-																		<option value="">$200,000</option>
-																		<option value="">$300,000</option>
-																		<option value="">$400,000</option>
-																		<option value="">$500,000</option>
-																		<option value="">$600,000</option>
-																		<option value="">$700,000</option>
-																		<option value="">$800,000</option>
-																		<option value="">$900,000</option>
-																		<option value="">$1,000,000</option>
-																		<option value="">$2,000,000</option>
-																	</select>
-																</div>
-															</div>
-														</div>
-													</div>
-													<div class="col-lg d-flex">
-														<div class="form-group d-flex w-100 border-0">
-															<div class="form-field w-100 align-items-center d-flex">
-																<input type="submit" value="Search" class="align-self-stretch form-control btn btn-primary p-0">
 															</div>
 														</div>
 													</div>
@@ -182,6 +108,8 @@
 				</div>
 			</section>
 	
+	<!--메인페이지 필요 없는 거 1 -->
+	<!--
 			<section class="ftco-section services-section">
 				<div class="container">
 					<div class="row d-flex">
@@ -238,76 +166,45 @@
 					</div>
 				</div>
 			</section>
+	-->
 	
-			<section class="ftco-section img ftco-select-destination" style="background-image: url(/bootstrap/images/bg_3.jpg);">
+	<!-- 최근 게시글 -->
+			<section class="ftco-section">
 				<div class="container">
 					<div class="row justify-content-center pb-4">
 						<div class="col-md-12 heading-section text-center ftco-animate">
-							<span class="subheading">Pacific Provide Places</span>
-							<h2 class="mb-4">Select Your Destination</h2>
+							<span class="subheading">Our Blog</span>
+							<h2 class="mb-4">Recent Post</h2>
 						</div>
 					</div>
-				</div>
-				<div class="container container-2">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="carousel-destination owl-carousel ftco-animate">
-								<div class="item">
-									<div class="project-destination">
-										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-1.jpg);">
-											<div class="text">
-												<h3>Philippines</h3>
-												<span>8 Tours</span>
-											</div>
-										</a>
+					<div class="row d-flex">
+					<!-- d-flex 가변 길이 태그 제거 -->
+						<div class="col-md-4 ftco-animate" th:each="item:${itemResult}" th:onclick="'window.location.href=\'' + @{/item/itemdetail(iId=${item.iId})} +'\' '">
+						<div class="blog-entry justify-content-end">
+							<div class="block-20"><img style="color: white;" width="100%" height="100%" th:src="@{${item.photos[0].ipFilename}}"></div>
+							<div class="text" width="200px;">
+								<div class="d-flex align-items-center mb-4 topp">
+									<div class="one">
+										<span class="day" th:text="${item.iId}"></span>
+									</div>
+									<div class="two">
+										<span class="yr" th:text="${item.iCategory.title}"></span> <span class="mos" th:text="${item.iRegdate}"></span>
 									</div>
 								</div>
-								<div class="item">
-									<div class="project-destination">
-										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-2.jpg);">
-											<div class="text">
-												<h3>Canada</h3>
-												<span>2 Tours</span>
-											</div>
-										</a>
-									</div>
-								</div>
-								<div class="item">
-									<div class="project-destination">
-										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-3.jpg);">
-											<div class="text">
-												<h3>Thailand</h3>
-												<span>5 Tours</span>
-											</div>
-										</a>
-									</div>
-								</div>
-								<div class="item">
-									<div class="project-destination">
-										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-4.jpg);">
-											<div class="text">
-												<h3>Autralia</h3>
-												<span>5 Tours</span>
-											</div>
-										</a>
-									</div>
-								</div>
-								<div class="item">
-									<div class="project-destination">
-										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-5.jpg);">
-											<div class="text">
-												<h3>Greece</h3>
-												<span>7 Tours</span>
-											</div>
-										</a>
-									</div>
-								</div>
+								<h3 class="heading" width="200px;">
+									<a href="#" th:text="${item.iTitle}"></a>
+								</h3>
+								<p th:text="${item.iContent}"></p>
 							</div>
 						</div>
+					</div>
 					</div>
 				</div>
 			</section>
 	
+	
+	
+	<!-- 안쓰는 부분
 			<section class="ftco-section">
 				<div class="container">
 					<div class="row justify-content-center pb-4">
@@ -423,7 +320,9 @@
 					</div>
 				</div>
 			</section>
+			-->
 			
+			<!--
 			<section class="ftco-section ftco-about img"style="background-image: url(/bootstrap/images/bg_4.jpg);">
 				<div class="overlay"></div>
 				<div class="container py-md-5">
@@ -436,6 +335,7 @@
 					</div>
 				</div>
 			</section>
+			
 	
 			<section class="ftco-section ftco-about ftco-no-pt img">
 				<div class="container">
@@ -461,14 +361,17 @@
 					</div>
 				</div>
 			</section>
+			-->
 	
+	
+	<!-- 평점 -->
 			<section class="ftco-section testimony-section bg-bottom" style="background-image: url(/bootstrap/images/bg_1.jpg);">
 				<div class="overlay"></div>
 				<div class="container">
 					<div class="row justify-content-center pb-4">
 						<div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
 							<span class="subheading">Testimonial</span>
-							<h2 class="mb-4">Tourist Feedback</h2>
+							<h2 class="mb-4">Customer Feedback</h2>
 						</div>
 					</div>
 					<div class="row ftco-animate">
@@ -584,80 +487,82 @@
 					</div>
 				</div>
 			</section>
-	
-	
-			<section class="ftco-section">
+			
+			
+			<!-- 한나 커뮤니티 부분 -->
+			<section class="ftco-section img ftco-select-destination" style="background-image: url(/bootstrap/images/bg_3.jpg);">
 				<div class="container">
 					<div class="row justify-content-center pb-4">
 						<div class="col-md-12 heading-section text-center ftco-animate">
-							<span class="subheading">Our Blog</span>
-							<h2 class="mb-4">Recent Post</h2>
+							<span class="subheading">Pacific Provide Places</span>
+							<h2 class="mb-4">Select Your Destination</h2>
 						</div>
 					</div>
-					<div class="row d-flex">
-						<div class="col-md-4 d-flex ftco-animate">
-							<div class="blog-entry justify-content-end">
-								<a href="blog-single.html" class="block-20" style="background-image: url('/bootstrap/images/image_1.jpg');">
-								</a>
-								<div class="text">
-									<div class="d-flex align-items-center mb-4 topp">
-										<div class="one">
-											<span class="day">11</span>
-										</div>
-										<div class="two">
-											<span class="yr">2020</span>
-											<span class="mos">September</span>
-										</div>
+				</div>
+				<div class="container container-2">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="carousel-destination owl-carousel ftco-animate">
+								<div class="item">
+									<div class="project-destination">
+										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-1.jpg);">
+											<div class="text">
+												<h3>Philippines</h3>
+												<span>8 Tours</span>
+											</div>
+										</a>
 									</div>
-									<h3 class="heading"><a href="#">Most Popular Place In This World</a></h3>
-									<!-- <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p> -->
-									<p><a href="#" class="btn btn-primary">Read more</a></p>
 								</div>
-							</div>
-						</div>
-						<div class="col-md-4 d-flex ftco-animate">
-							<div class="blog-entry justify-content-end">
-								<a href="blog-single.html" class="block-20" style="background-image: url('/bootstrap/images/image_2.jpg');">
-								</a>
-								<div class="text">
-									<div class="d-flex align-items-center mb-4 topp">
-										<div class="one">
-											<span class="day">11</span>
-										</div>
-										<div class="two">
-											<span class="yr">2020</span>
-											<span class="mos">September</span>
-										</div>
+								<div class="item">
+									<div class="project-destination">
+										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-2.jpg);">
+											<div class="text">
+												<h3>Canada</h3>
+												<span>2 Tours</span>
+											</div>
+										</a>
 									</div>
-									<h3 class="heading"><a href="#">Most Popular Place In This World</a></h3>
-									<!-- <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p> -->
-									<p><a href="#" class="btn btn-primary">Read more</a></p>
 								</div>
-							</div>
-						</div>
-						<div class="col-md-4 d-flex ftco-animate">
-							<div class="blog-entry">
-								<a href="blog-single.html" class="block-20" style="background-image: url('/bootstrap/images/image_3.jpg');">
-								</a>
-								<div class="text">
-									<div class="d-flex align-items-center mb-4 topp">
-										<div class="one">
-											<span class="day">11</span>
-										</div>
-										<div class="two">
-											<span class="yr">2020</span>
-											<span class="mos">September</span>
-										</div>
+								<div class="item">
+									<div class="project-destination">
+										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-3.jpg);">
+											<div class="text">
+												<h3>Thailand</h3>
+												<span>5 Tours</span>
+											</div>
+										</a>
 									</div>
-									<h3 class="heading"><a href="#">Most Popular Place In This World</a></h3>
-									<!-- <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p> -->
-									<p><a href="#" class="btn btn-primary">Read more</a></p>
+								</div>
+								<div class="item">
+									<div class="project-destination">
+										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-4.jpg);">
+											<div class="text">
+												<h3>Autralia</h3>
+												<span>5 Tours</span>
+											</div>
+										</a>
+									</div>
+								</div>
+								<div class="item">
+									<div class="project-destination">
+										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-5.jpg);">
+											<div class="text">
+												<h3>Greece</h3>
+												<span>7 Tours</span>
+											</div>
+										</a>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</section>
+	
+
+			
+			<!-- 마이페이지 -->
+			<div style="margin-top: 70px"></div >
 	
 			<section class="ftco-intro ftco-section ftco-no-pt">
 				<div class="container">
@@ -674,7 +579,6 @@
 				</div>
 			</section>
 	</div>
-
 	<!-- loader -->
 	<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>		
 </body>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout1}">
+<body>
+<th:block layout:fragment="style1">
+<style>
+	/* star rating */
+	.star_rating, .re_star {font-size:0; letter-spacing:-4px;}
+	.star_rating a, .re_star a{
+	    font-size:22px;
+	    letter-spacing:0;
+	    display:inline-block;
+	    margin-left:5px;
+	    color:#ccc;
+	    text-decoration:none;
+	}
+	.star_rating a:first-child, .re_star a:first-child { margin-left:0; }
+	.star_rating a.on, .re_star a.on2{color:green;}
+</style>
+</th:block>
+<div class="panel panel-default" layout:fragment="content1">
+	<section class="hero-wrap hero-wrap-2 js-fullheight"
+		style="background-image: url('/bootstrap/images/review/myreview.png');">
+		<div class="overlay"></div>
+		<div class="container">
+			<div
+				class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+				<div class="col-md-9 ftco-animate pb-5 text-center">
+					<p class="breadcrumbs">
+						<span class="mr-2"><a th:href="@{/index}">Home <i class="fa fa-chevron-right"></i></a></span> 
+						<span>My Reviews<i class="fa fa-chevron-right"></i></span>
+					</p>
+					<h1 class="mb-0 bread">My Reviews</h1>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row d-flex">
+				<div id="products" class="col-md-4 ftco-animate" th:each="review:${myreviewlist}">
+					<form th:action="@{/review/myreview}" method="get">
+						<input type="hidden" name="rId" id="rId"/>
+						<div class="item">
+					        <div class="testimony-wrap py-4">
+					          	<div class="text">
+						        	<p class="re_star">
+							            <span class="fa fa-star"></span>
+							            <span class="fa fa-star"></span>
+							            <span class="fa fa-star"></span>
+							            <span class="fa fa-star"></span>
+							            <span class="fa fa-star"></span>
+						          	</p>
+						         	<p class="mb-4">[[${review.rContent}]]</p>
+						         	<p class="mb-4"><a th:href="@{/item/itemdetail(iId=${review.item.iId})}">[[${review.item.iTitle}]]</a></p>
+						         	<p class="mb-4"><span th:text="${#dates.format(new java.util.Date(review.rRegdate), 'yyyy-MM-dd hh:mm')}"></span></p>     
+									<p class="name">[[${review.member.mId}]]</p>
+					      		</div>
+					    	</div>
+					  	</div>
+					</form>
+				</div>
+			</div>
+			<div>
+		  		<button class="btn btn-primary py-3 px-4" id="addReview" data-toggle="modal" data-target="#reviewModal">리뷰 작성</button>
+		  	</div>
+		  	<!-- Modal -->
+			<div id="reviewModal" class="modal fade" role="dialog">
+			  <div class="modal-dialog">
+	    		<!-- Modal content-->
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h4 class="modal-title">리뷰 작성</h4>
+			        <button type="button" class="close" data-dismiss="modal">&times;</button>
+			      </div>
+			      <div class="modal-body">
+			     	<label>리뷰내용</label>
+			        <input type="text" name="rContent" class="form-control"><br>
+			        <label>평점</label>
+			        <p class="star_rating">
+					    <a href="#" class="on">★</a>
+					    <a href="#" class="on">★</a>
+					    <a href="#" class="on">★</a>
+					    <a href="#" class="on">★</a>
+					    <a href="#" class="on">★</a>
+					</p>
+			        <input type="hidden" name="rStar" class="form-control" value=5 readonly="readonly"><br>
+			        <label>거래 목록</label><br>
+			        <select id="userTradelist">
+				        <option selected="selected" th:value=0>선택없음</option>
+					    <option  th:each="userTrade:${myTradelist}" th:value="${userTrade.tId}">[[${userTrade.item.iTitle}]]</option>
+					</select>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" id="revInsertBtn" class="btn btn-default" data-dismiss="modal">등록</button>
+			        <button type="button" id="revDeleteBtn" class="btn btn-default" data-dismiss="modal">삭제</button>
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</div>
+	</section>
+</div>
+<th:block layout:fragment="script1">
+<script th:src="@{/bootstrap/js/review.js}"></script>
+<script>
+	/* review modal */
+	var mode="";
+	    
+		$("#addReview").click(function(){
+			var rContent = $("input[name='rContent']");
+	   		var rStar = $("input[name='rStar']");
+	   		rContent.val("");
+			document.getElementById("revInsertBtn").style.display = "";
+    	 	document.getElementById("revDeleteBtn").style.display = "";
+			$("#reviewModal").show();
+			$(".modal-title").text("리뷰 작성");
+			mode="ADD";
+			
+		});
+		
+		$("#revInsertBtn").click(function(){
+			var rContent= $("input[name='rContent']");
+			var rStar= $("input[name='rStar']");
+			var tnum= $("#userTradelist option:selected").val();
+			var obj={"rContent":rContent.val(),"rStar":rStar.val(),"tnum":tnum};
+			
+			if(mode=="ADD"){
+				if(rStar.val()==null){
+					alert("평점을 입력하세요.")
+				}else{
+					if(tnum!=0){
+						reviewManager.add(obj,printReview);
+						alert("입력완료");	
+					}else {
+						alert("후기를 작성할 거래를 선택하세요.");
+					} 		
+				}
+			}
+			
+			$("#reviewModal").hide();
+			rContent.val("");
+			rStar.val("");
+		})
+		
+		$("#revDeleteBtn").click(function(){
+    	
+   		 var rContent = $("input[name='rContent']");
+   		 var rStar = $("input[name='rStar']");
+   		 var obj = { "rId": rId };
+   		reviewManager.remove(obj, printReviewList);
+   		 alert("삭제완료");
+   		$("#reviewModal").hide();
+	   		rContent.val("");
+	   		rStar.val("");
+     	});
+		
+		function printReviewList(rlist){
+			console.log(rlist);
+			var str=""
+			$.each(rlist, function(idx, item){
+				var str=""
+				str+="<form th:action='@{/review/myreview}' method='get'>"
+				str+="<input type='hidden' name='rId' id='rId' value="+item["rId"]+"/>"
+				str+="<div class='item'>"
+				str+="<div class='testimony-wrap py-4'>"
+				str+="<div class='text'>"
+				str+="<p class='re_star'>"
+				for(let i = 0; i < parseInt(item["rStar"]); i++){
+					str+="<span class='fa fa-star'></span>"
+				}
+				str+="</p>"
+				str+="<p class='mb-4'>"+item["rContent"]+"</p>"
+				str+="<p class='mb-4'><a th:href='/item/itemdetail?iId="+item["item"].iId+"'>"+item["item"].iTitle+"</a></p>"
+				str+="<p class='mb-4'><span th:text='"+Date.format(new java.util.Date(item["rRegdate"]), 'yyyy-MM-dd hh:mm')+"'></span></p>"
+				str+="</div></div></div></form>"
+			});
+			$("#products").html(str);
+		}
+		
+		
+		function printReview(review){
+			console.log(review);
+			var str=""
+			str+="<form th:action='@{/review/myreview}' method='get'>"
+			str+="<input type='hidden' name='rId' id='rId' value="+review.rId+"/>"
+			str+="<div class='item'>"
+			str+="<div class='testimony-wrap py-4'>"
+			str+="<div class='text'>"
+			str+="<p class='re_star'>"
+			for(let i = 0; i < review.rStar; i++){
+				str+="<span class='fa fa-star'></span>"
+			}
+			str+="</p>"
+			str+="<p class='mb-4'>"+review.rContent+"</p>"
+			str+="<p class='mb-4'><a th:href='/item/itemdetail?iId="+review.item.iId+"'>"+review.item.iTitle+"</a></p>"
+			str+="<p class='mb-4'><span th:text='"+Date.format(new java.util.Date(review.rRegdate), 'yyyy-MM-dd hh:mm')+"'></span></p>"
+			str+="</div></div></div></form>"
+		
+			$("#products").append(str);
+		}
+		
+		
+		/* star rating */
+		$( ".star_rating a" ).click(function() {
+		     $(this).parent().children("a").removeClass("on");
+		     $(this).addClass("on").prevAll("a").addClass("on");
+		     
+		     $("input[name='rStar']").val($('.on').length);
+		     return false;
+		});
+</script>
+</th:block>
+</body>
+</html>

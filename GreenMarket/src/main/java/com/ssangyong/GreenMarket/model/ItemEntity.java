@@ -1,19 +1,25 @@
 package com.ssangyong.GreenMarket.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +30,7 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude={"photos", "trades"})
 @Entity
 @Builder
 @NoArgsConstructor
@@ -56,12 +62,16 @@ public class ItemEntity {
 	@Column(nullable = true)
 	private ItStateEnumType iTstate;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "icId")
-//	private ItemCategoryEntity itemCategory; //icId 가져오는곳
-
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = true)
 	private ICategoryEnumType iCategory;
-
+	
+	@OneToMany(mappedBy = "item", //fk이름 "메여있다"
+			cascade = CascadeType.ALL, fetch = FetchType.EAGER) //fetch = FetchType.EAGER
+	List<ItemPhotoEntity> photos;
+	
+	@OneToMany(mappedBy = "item",
+			cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	List<TradeEntity> trades;
+	
 }

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout1}">
+<head>
+<meta charset="UTF-8">
+<title>My Account 수정</title>
+</head>
+<body>
+	<div class="panel panel-default" layout:fragment="content1">
+		<section class="hero-wrap hero-wrap-2 js-fullheight"
+			style="background-image: url('/bootstrap/images/bg_1.jpg');">
+			<div class="overlay"></div>
+			<div class="container">
+				<div
+					class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+					<div class="col-md-9 ftco-animate pb-5 text-center">
+						<p class="breadcrumbs">
+							<span class="mr-2"><a href="index.html">Home <i
+									class="fa fa-chevron-right"></i></a></span> <span>my page <i
+								class="fa fa-chevron-right"></i></span>
+						</p>
+						<h1 class="mb-0 bread">내 계정 수정</h1>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div class="container">
+			<div class="input-form-backgroud">
+				<div class="input-form col-md-12 mz-auto" style="margin-left: 19%">
+					<h4 class="mb-3">회원 정보 수정</h4>
+					<form class="modify-form" method="POST" >
+						<div class="validation-form" novalidate>
+
+							<!-- 아이디 폼 -->
+							<div class="row">
+								<div class="col">
+									<label for="mId">아이디</label> <input id="mId" name="mId"
+										type="text" placeholder="아이디을 입력하세요" class="form-control"
+										th:value="${member.mId}" readonly="readonly" />
+								</div>
+
+							</div>
+							<br>
+
+							<!-- 비밀번호 -->
+							<div class="row">
+								<div class="col">
+									<label for="mPw">비밀번호</label> <input id="mPw" name="mPw"
+										type="password" placeholder="비밀번호를 입력하세요."
+										class="form-control" />
+								</div>
+								<div class="col-3">
+									<input type="button" id="checkPwd" value="비밀번호 확인"
+										class="form-control" readonly>
+								</div>
+							</div>
+							<br>
+
+							<!-- 이름 -->
+							<div class="row">
+								<div class="col">
+									<label for="mName">이름</label> <input id="mName" name="mName"
+										type="text" placeholder="이름을 입력하세요." class="form-control"
+										th:value="${member.mName}" readonly="readonly" />
+								</div>
+							</div>
+							<br>
+
+							<!-- 휴대폰 번호 -->
+							<div class="row">
+								<div class="col">
+									<label for="mPhone">휴대폰 번호</label> <input id="mPhone"
+										name="mPhone" type="text" placeholder="'-'을 제외하고 입력하세요."
+										class="form-control" th:value="${member.mPhone}" />
+								</div>
+								<div class="col-3">
+									<input type="button" id="sendPhoneButton" value="인증"
+										class="form-control">
+								</div>
+							</div>
+							<br>
+
+							<!-- 휴대폰 인증 -->
+							<div class="row">
+								<div class="col">
+									<label for="mPhone2">인증번호</label> <input type="text"
+										id="inputCertifiedNumber" readonly="readonly"
+										class="form-control">
+								</div>
+								<div class="col-3">
+									<input type="button" id="CertiUserNum" value="번호 인증"
+										readonly="readonly" class="form-control"> 
+										<input type="hidden" id="numStr" name="numStr">
+								</div>
+							</div>
+							<br>
+
+							<!--프로필 -->
+							<div class="row">
+								<div class="col">
+									<label for="mPhoto"> 프로필 사진</label>
+									
+									<div th:if="${member.mPhoto == null}"> 
+									<img src="/bootstrap/images/user.png" id="current_img">
+									<input id="file_img" name="file_img" type="file" />
+									 </div>
+									 
+									<div th:unless="${member.mPhoto == null}">
+									<img th:src="${member.mPhoto}" id="current_img"> 
+									<input id="file_img" name="file_img" type="file" />
+									 </div>
+									
+								</div>
+							</div>
+							<input type="hidden" id="mPhoto" name="mPhoto" /> <br>
+
+
+							<!-- 닉네임 -->
+							<div class="row">
+								<div class="col">
+									<label for="mNickname"> 닉네임 </label> <input id="mNickname"
+										name="mNickname" type="text" placeholder="닉네임을 입력하세요"
+										class="form-control" th:value="${member.mNickname}" readonly="readonly"/>
+								</div>
+								<div class="col-3">
+									<input type="button" id="checkNick" value="중복확인"
+										class="form-control">
+								</div>
+							</div>
+							<br>
+
+							<!-- 이메일 -->
+							<div class="row">
+								<div class="col">
+									<label for="mEmail"> 이메일 </label> <input id="mEmail"
+										name="mEmail" type="text" placeholder="abcd@email.com"
+										class="form-control" th:value="${member.mEmail}" />
+								</div>
+							</div>
+							<br>
+
+							<!-- 주소 -->
+							<div class="row">
+								<div class="col">
+									<label for="memberAddress">주소</label> <input type="text"
+										id="sample6_postcode" placeholder="우편번호" name="AddNum"
+										class="form-control"> <input type="text"
+										id="sample6_address" placeholder="주소" name="memberAddress1"
+										class="form-control"> <input type="text"
+										id="sample6_detailAddress" placeholder="상세주소"
+										name="memberAddress2" class="form-control"> <input
+										type="text" id="sample6_extraAddress" placeholder="참고항목"
+										name="memberAddress3" class="form-control"> <br>
+								</div>
+								<div class="col-3">
+									<input type="button" onclick="sample6_execDaumPostcode()"
+										value="우편번호 찾기" class="form-control"><br>
+								</div>
+								<div class="col-8"></div>
+							</div>
+							<br> 
+							<input type="button"
+								class="btn btn-primary btn-lg btn-block" id="modify"value="수정하기" /> 
+								<input type="button" class="btn btn-danger btn-lg btn-block" id="delete_account"
+								 value="회원 탈퇴하기" />
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<th:block layout:fragment="script1">
+		<script
+			src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+		<!--       <script src="https://code.jquery.com/jquery-3.4.1.js"></script> -->
+		<script>  
+      $('#checkNick').click(function() {
+      		if($("#mId").val() == ""){
+			swal("아이디를 입력하세요");
+			return false;
+		} else if($("#mpwd").val() == ""){
+			swal("비밀번호를 입력하세요");
+			return false;
+		}
+		
+         $.ajax({
+            type : "GET",
+            url : "/login/nickCheck",
+            data : {
+               "mNickname" : $('#mNickname').val()
+            },
+            success : function(aa) {
+               console.log(aa);
+               if (aa == "1") {
+                  Swal.fire('사용가능한 닉네임입니다.');
+                  $('#mNickname').attr('readonly', 'readonly');
+               } else {
+                  Swal.fire('사용 불가능한 닉네임입니다.');
+                  return $('#mNickname').focus();
+               }
+            }
+         });
+      });
+      
+     
+         
+         var numStr;
+         $('#CertiUserNum').click(function() {
+            if ($('#inputCertifiedNumber').val() == "") {
+               Swal.fire('인증번호가 입력되지않았습니다.');
+               $('#inputCertifiedNumber').focus();
+               return;
+            }
+            console.log($.trim(numStr));
+            console.log($('#inputCertifiedNumber').val());
+            if ($.trim(numStr) == $('#inputCertifiedNumber').val()) {
+               Swal.fire('인증성공!', '휴대폰 인증이 정상적으로 완료되었습니다.', 'success')
+            } else {
+               Swal.fire({
+                  icon : 'error',
+                  title : '인증오류',
+                  text : '인증번호가 올바르지 않습니다!',
+                  footer : '<a href="/home">다음에 인증하기</a>'
+               });
+            }
+         });
+   
+         $('#sendPhoneButton').click(function() {
+            let phoneNumber = $('#mPhone').val();
+            if (phoneNumber == "") {
+               Swal.fire('휴대폰번호 오류입니다');
+               $('#mPhone').focus();
+               return;
+            }
+            Swal.fire('인증번호가 발송되었습니다')
+            $('#CertiUserNum').removeAttr('readonly');
+            $('#inputCertifiedNumber').removeAttr('readonly');
+   
+            $.ajax({
+               type : "GET",
+               url : "/login/testtest",
+               data : {
+                  "mPhone" : phoneNumber
+               }
+            }).done(function(responsedata) {
+               numStr = responsedata;
+               console.log("===numStr===" + numStr);
+            });
+         });
+   
+   
+         function sample6_execDaumPostcode() {
+            new daum.Postcode(
+                  {
+                     oncomplete : function(data) {
+                        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+   
+                        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                        var addr = ''; // 주소 변수
+                        var extraAddr = ''; // 참고항목 변수
+   
+                        //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                        if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                           addr = data.roadAddress;
+                        } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                           addr = data.jibunAddress;
+                        }
+   
+                        // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                        if (data.userSelectedType === 'R') {
+                           // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                           // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                           if (data.bname !== ''
+                                 && /[동|로|가]$/g.test(data.bname)) {
+                              extraAddr += data.bname;
+                           }
+                           // 건물명이 있고, 공동주택일 경우 추가한다.
+                           if (data.buildingName !== ''
+                                 && data.apartment === 'Y') {
+                              extraAddr += (extraAddr !== '' ? ', '
+                                    + data.buildingName
+                                    : data.buildingName);
+                           }
+                           // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                           if (extraAddr !== '') {
+                              extraAddr = ' (' + extraAddr + ')';
+                           }
+                           // 조합된 참고항목을 해당 필드에 넣는다.
+                           document.getElementById("sample6_extraAddress").value = extraAddr;
+   
+                        } else {
+                           document.getElementById("sample6_extraAddress").value = '';
+                        }
+   
+                        // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                        document.getElementById('sample6_postcode').value = data.zonecode;
+                        document.getElementById("sample6_address").value = addr;
+                        // 커서를 상세주소 필드로 이동한다.
+                        document.getElementById("sample6_detailAddress")
+                              .focus();
+                     }
+                  }).open();
+         }
+         
+    var file_img;
+         
+    $(document).ready(function() {
+    	$('#file_img').on("change", handleImgFileSelect);
+    });
+    
+    	function handleImgFileSelect(e) {
+		var files = e.target.files;
+		var filesArr = Array.prototype.slice.call(files);
+
+		filesArr.forEach(function(f) {
+			if (!f.type.match("image.*")) {
+				alert("확장자는 이미지 확장자만 가능합니다.");
+				return;
+			}
+
+			file_img = f;
+
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('#current_img').attr('src', e.target.result);
+			}
+			reader.readAsDataURL(f);
+		});
+    }
+         
+         
+   	$("#modify").on('click',update);
+   	
+   	function update() {
+   		    alert("회원정보를 수정하겠습니까?");
+ 	 		
+ 	 		let data = {
+ 	 		
+ 	 		mPw : $("#mPw").val(),
+	 		mEmail : $("#mEmail").val(),
+	 		mPhone : $("#mPhone").val(),
+	 		mAddress : $("#mAddress").val(),
+	 		};
+			
+			// 사진
+			var file = $('#file_img')[0].files[0];
+			var formData = new FormData();
+			formData.append('data', file); // data 안에 파일 넣기
+			formData.append('path', "signup"); // web 서버에 만들 폴더 이름
+			
+			// 사진 S3서버에 등록
+			$.ajax({
+				type : 'POST',
+				url : '/profile_upload',
+				data : formData,
+				processData : false,
+				contentType : false
+			}).done(function(responseBody) { // 사진을 S3서버에 등록한 후
+				data.mPhoto = responseBody; // 사진 주소 data에 넣기
+	 			
+	 			// 회원정보수정
+	 			$.ajax({
+					type: "POST",
+					url: "/modify",
+					data: data
+				}).done(function(resp){
+	         		alert("수정이 완료되었습니다.");
+	         		location.href="/layout/account_setting";
+	         	}).fail(function(error) {
+	         		alert("수정실패");
+	         	});						
+			}).fail(function(error) {
+			})
+
+	 		
+	
+	}
+
+	
+	
+	$("#delete_account").on('click', delete_account);
+   	function delete_account() {
+   		    alert("회원을 탈퇴하시겠습니까?");
+ 	 		let data = {
+ 	 		mId : $("#mId").val(),
+	 		};
+	 		
+ 			$.ajax({
+				type: "POST",
+				url: "/delete",
+				data: data
+			}).done(function(resp){
+         		alert("회원이 탈퇴되었습니다.");
+         		location.href="/login/logout";
+         	}).fail(function(error) {
+         		alert("회원 탈퇴 실패");
+         	});		
+	}
+	
+	
+	
+      </script>
+		<!-- Bootstrap CSS -->
+		<!--       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" -->
+		<!--           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+	</th:block>
+</body>
+</html>

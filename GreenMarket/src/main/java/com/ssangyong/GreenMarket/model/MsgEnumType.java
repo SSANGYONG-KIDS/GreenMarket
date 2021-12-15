@@ -6,9 +6,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum MsgEnumType {
-	POSSIBLE("STATE_POSSIBLE", "대여가능"),
-    ING("STATE_ING", "대여중"),
-    IMPOSSIBLE("STATE_IMPOSSIBLE", "대여종료");
+	TEXT("MSG_TEXT", "텍스트"),
+    IMAGE("MSG_IMAGE", "이미지");
 
 	private final String key;
 	private final String title;

@@ -41,5 +41,16 @@ public class ItemTest {
 				.build();
 		
 		iRepo.save(item);
+		
+		ItemEntity item2 = ItemEntity.builder()
+				.iTitle("~~가방")
+				.iContent("사고나서 거의 사용안해서 깨끗합니다")
+				.iPrice(50000)
+				.iState(IStateEnumType.GOOD)
+				.iTstate(ItStateEnumType.POSSIBLE)
+				.iCategory(ICategoryEnumType.WOMEN_MERCHANDISE)
+				.build();
+		
+		iRepo.save(item2);
 	}
 }

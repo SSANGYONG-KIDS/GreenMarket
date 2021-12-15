@@ -13,6 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -33,13 +38,14 @@ import lombok.ToString;
 public class MemberEntity {
 	@Id
 	private String mId;
-	
+	@JsonIgnore
 	private String mPw;
 	private String mName;
 	private String mNickname;
 	private String mEmail;
 	private String mPhoto;
 	private String mPhone;
+	private String mInfo;
 	
 	private int mIsdropped;
 
@@ -53,6 +59,7 @@ public class MemberEntity {
 	// ManyToOne엔 Column 속성 사용 불가
 	@ManyToOne
 	@JoinColumn(name = "locId")
+	@JsonManagedReference
 	LocationEntity loc;
 
 	public String getUserRoleEnumTypeKey() {

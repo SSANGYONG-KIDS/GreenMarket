@@ -11,12 +11,14 @@
     scrollProperty: 'scroll'
   });
 
-
+	let divisor = $('#data-is-index').val() == 'true' ? 1 : 3; 
 	var fullHeight = function() {
 
-		$('.js-fullheight').css('height', $(window).height());
+		$('.js-fullheight').css('height', $(window).height()/divisor);
+		$('.overlay').css('height', $(window).height()/divisor);
 		$(window).resize(function(){
-			$('.js-fullheight').css('height', $(window).height());
+			$('.js-fullheight').css('height', $(window).height()/divisor);
+			$('.overlay').css('height', $(window).height()/divisor);
 		});
 
 	};
@@ -262,12 +264,14 @@
 
 
   $('.checkin_date, .checkout_date').datepicker({
-	  'format': 'm/d/yyyy',
+	  'format': 'yyyy-mm-dd',
 	  'autoclose': true
 	});
 
 
-
+	// jquery-ui draggable
+	$('.drag').draggable({ 
+	});
 
 })(jQuery);
 

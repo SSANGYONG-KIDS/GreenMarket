@@ -4,252 +4,203 @@
 	layout:decorate="~{layout/layout1}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<style>
-.hideDelete {
-	display: none;
-}
-</style>
+<script src="/bootstrap/js/jquery.min.js"></script>
+
+
+<title>register</title>
+
 </head>
-<body style="background-color: #D9E5FF">
-	<!-- 게시판 제목  -->
-	<div class="panel panel-default" layout:fragment="content1" style="background-color: #D9E5FF">
-
+<body >
+	<div class="panel panel-default" layout:fragment="content1">
+		 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/bootstrap/images/bg_1.jpg');">
+		  <div class="overlay"></div>
+		  <div class="container">
+		    <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+		      <div class="col-md-9 ftco-animate pb-5 text-center">
+		       <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Community <i class="fa fa-chevron-right"></i></a></span> <span>About us <i class="fa fa-chevron-right"></i></span></p>
+		       <h1 class="mb-0 bread">게시글 상세보기</h1>
+		     </div>
+		   </div>
+		 </div>
+		</section>	
+		<div class="container">
+			<br>
+			<button class="btn btn-primary" onclick="history.back()">돌아가기</button>		
+			<br><br>
+			<div class="form-group">
+				<h1 th:text="${board.cTitle}">제목</h1>
+			</div>
+			<div class="form-group">
+				작성자: <span th:text="${board.member.mNickname}">작성자</span><br>
+				조회수: <span th:text="${board.cViews}">조회수</span>
+			</div>
+			<hr/>
+			<div class="form-group">
+	 			<div th:utext="${board.cContent}">내용</div> 
+			</div>
+			<hr/>
+			<div class="form-group">
+	 			작성일: <span th:text="${board.cRegdate}">작성일</span>&nbsp;&nbsp;&nbsp;&nbsp;
+	 			수정일: <span th:text="${board.cUpdate}">수정일</span>
+			</div>
 		
-		<!-- 게시판 번호  -->
-		<div class="form-group">
-			<form id="myfrm" th:action="@{/dietdiaryboard/update}" method="post" style="background-color: #D9E5FF">
-				<input type="hidden" id="diaryNum" name="diaryNum"
-					th:value="${dboard.diaryNum}"> <br>
-				
-					
-					
-			<div class="form-group"
-			style="padding: 0px 200px 0px 200px; width: 100%;">
-			<label for="title"></label> <input type="text" class="form-control"
-				id="title" name="title" th:value="${dboard.title}"
-				style="text-align: center; font-size: x-large; padding-top: 25px; padding-bottom: 25px;">
-			</div>
-					
-					
+			<table style="margin: auto; text-align: center;">
+				<tr>
+					<td th:if="${board.member.mId == user.mId}"><a th:href="@{/community/update(cId=${board.cId})}" class="btn btn-warning">수정</td  >
+					<td>&nbsp;&nbsp;&nbsp;</td>
+					<td th:if="${board.member.mId == user.mId}"><button id="btn-delete" class="btn btn-primary">삭제</button></td >
+				</tr >
+			</table  >
+			<hr/>	
+			<!--댓글쓰기-->
+			<div class="card">
+				<div class="card-body">
+					<textarea id="reply-content" class="form-control" rows="1" placeholder="댓글을 입력하세요."></textarea >
+				</div >
+				<div class="card-footer">
+					<button id="btn-reply-save" class="btn btn-primary">등록</button >
+				</div >
+			</div >
+			<br>
 			
+			<!--댓글 리스트-->
+			<div class="card">
+				<div class="card-header">댓글 리스트</div>
+				<ul id="reply-box" class="list-group">
+					<div th:each="reply, i : ${board.creplies}">
+						<div th:if="${reply.crOrder == 0}">
+							<li id="'reply-'+${i.index}" class="list-group-item d-flex justify-content-between"> <!--justify-content-between-->
+								<div th:text="${reply.crContent}"> </div>
+								<div class="d-flex">
+									<div class="font-italic" th:text="'작성자: '+${reply.member.mNickname}"></div> &nbsp;&nbsp;&nbsp;
+									<div th:if="${reply.member.mId == user.mId}">
+										<a th:href="@{/community/boarddetail/{cId}/{crId}(cId=${board.cId}, crId=${reply.crId})}"><button class="btn btn-primary">삭제</button ></a>
+									</div>
+								</div>
+							</li >
+							
+							<!--대댓글 (버튼 클릭시 조회)
+							<div id="re-reply" style="display:none">
+								<input th:text="'rereply_btn'+${i.index}"></input>
 					
-					<div class="form-inline"
-					style="padding: 0px 200px 0px 815px; width: 100%">
+							</div>
+							-->
 					
-					<!-- 게시판 작성자  -->
-					<div class="form-group">
-						<label for="writer">writer:</label> <input type="text"
-							class="form-control" id="writer" name="writer"
-							th:value="${dboard.user.nickName}" readonly="readonly">
-					</div>
-
-					<!-- 게시판 작성일  -->
-					<div class="form-group">
-						<label for="creationDate">작성일:</label> <input type="text"
-							class="form-control" id="creationDate" name="creationDate"
-							th:value="${dboard.creationDate}" readonly="readonly">
-					</div>
-
-					<input type="hidden" id="userid" name="userId"
-						th:value="${dboard.user.userId}">
-										<input type="hidden" id="photo" name="photo"
-						th:value="${dboard.photo}">
-					
-				</div>
-				
-				<!-- 게시판 사진  -->
-				<div class="form-group" style="text-align: center;">
-					<img
-						th:src="@{${'https://kosta-server.s3.ap-northeast-2.amazonaws.com/dietdiaryboard/' + dboard.photo}}"
-						width="50%" height="5%" style="padding: 30px 200px 10px 200px">
-				</div>
-
-				<!-- 게시판 내용  -->
-				<div class="form-group"
-					style="width: 100%; height: 5%; padding: 20px 200px 10px 200px;">
-					<label for="content">content:</label>
-					<textarea class="form-control" rows="3" cols="" id="content"
-						name="content" style="width: 100%; height: 5%;">[[${dboard.content}]]</textarea>
-				</div>
-
-				<input type="hidden" name='page' th:value=${pagevo.page}> <input
-					type='hidden' name='size' th:value=${pagevo.size}> <input
-					type="hidden" name="type" th:value="${pagevo.type}"> <input
-					type="hidden" name="keyword" th:value="${pagevo.keyword}">
-				<!-- 버튼구현 -->
-
-				<div class="pull-right"
-					style="width: 100%; height: 5%; padding: 0px 200px 0px 200px;">
-					<a href="javascript:call()" class="btn btn-info"
-						th:classappend="${(dboard.user.userId != user.userId) ? 'hideDelete' : ''}">수정하기</a>
-
-					<a th:href="@{/dietdiaryboard/delete(diaryNum=${dboard.diaryNum})}"
-						class="btn btn-info"
-						th:classappend="${(dboard.user.userId != user.userId) ? 'hideDelete' : ''}">삭제하기</a>
-					<a th:href="@{/dietdiaryboard/boardlist}" class="btn btn-info">목록보기</a>
-				</div>
-			</form>
-
-
-			<!-- 모달 사용 -->
-
-			<div id="mymyModal" class="modal fade" role="dialog">
-				<div class="modal-dialog">
-
-					<!-- 모달 내용 -->
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-title">Modal Header</h4>
-							<!-- <div th:text="${user}"></div> -->
-						</div>
-						<div class="modal-body">
-							<label>댓글번호</label> <input type="text" name="modalNum"
-								class="form-control" readonly="readonly"> <label>댓글내용</label>
-							<input type="text" name="modalcontent" class="form-control"
-								placeholder="적어봐"> <label>작성자</label> <input type="text"
-								name="modalwriter" class="form-control" readonly="readonly"
-								th:value="${user.nickName}"> <input type="hidden"
-								id="modaluserId" name="modaluserId" th:value="${user.userId}">
-							<!-- <label>댓글작성일자</label>  -->
-							<input type="hidden" name="modalcreationDate"
-								class="form-control" readonly="readonly">
-						</div>
-						<div class="modal-footer">
-							<button type="button" id="modalButton" class="btn btn-default"
-								data-dismiss="modal">작성</button>
-							<button type="button" class="btn btn-danger" id="delButton"
-								data-dismiss="modal">삭제</button>
-							<button type="button" class="btn btn-default"
-								data-dismiss="modal">Close</button>
 						</div>
 					</div>
-				</div>
-
+			
+				</ul>
 			</div>
-			<br> <br> <br>
+			
+		</div >
 
-			<!-- 댓글넣기 -->
-			<div style="width: 100%; height: 5%; padding: 0px 200px 0px 200px;">
-				<div style="padding-left: 92.6%">
-					<button data-toggle="modal" data-target="#mymyModal"
-						class="btn btn-warning" id="addReply">댓글추가</button>
-				</div>
-				<table class="table table-condensed table-bordered table-hover" style="background-color: white;">
-					<thead>
-						<tr>
-							<th>댓글번호</th>
-							<th>내용</th>
-							<th>작성자</th>
-							<th>작성날짜</th>
-						</tr>
-					</thead>
-					<tbody id="replyTable" data-toggle="modal" data-target="#mymyModal">
 
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
-	<th:block layout:fragment="script1">
-		<script th:src="@{/js/dietboard.js}"></script>
-		<script>
-			var mode = "";
-			$("#addReply").click(function() {
-				//alert("ADD클릭");
-				$("input[name='modalcontent']").val("");
-				$("input[name='modalNum']").val("");
-				$("#mymyModal").show();
-				$(".modal-title").text("댓글 적어");
-				document.getElementById("modalButton").style.display = "";
-				mode = "ADD"
-			});
+<th:block layout:fragment="script1">
+<script th:inline="javascript">
+	
+	//댓글 삭제
+	function replyDelete(cId, crId){
+		
+	//	alert(cId);
+	//	alert(crId);
+		
+		
+	//	let data = { 
+	//		
+	//	};
+		
+		$.ajax({
+			type: "DELETE",
+			url: `/community/boarddetail/${crId}`,
+		//	data: data
+		}).done(function(resp){
+			alert("댓글을 삭제하였습니다.");
+			location.href = window.location.href;
+		}).fail(function(error){
+			alert("댓글 삭제 실패!");
+			console.log(error);
+		});
+		
+		
+	}
+	
+	/*
+	//대댓글 버튼
+	$('#rereply_btn0').on('click',re_reply);
+	function re_reply(){
+		document.getElementById("re--reply").style.display="block";
+		
+	}
+	*/
+	
+	//댓글 작성
+	$('#btn-reply-save').on('click',reply_save);
+	function reply_save(){
+		let data = { 
+			cId: "[[${cId}]]",
+			crContent: $("#reply-content").val()
+		};
+		
+		$.ajax({
+			type: "POST",
+			url: "/community/boarddetail/",
+			data: data
+		}).done(function(resp){
+			alert("댓글을 등록하였습니다.");
+			location.href = window.location.href;
+		}).fail(function(error){
+			alert("cId값 넘겨주기 실패");
+			alert(data.cId);
+			alert(data.crContent);
+			console.log(error);
+		});	
+		
+	}
+	
+	//댓글 삭제
+	
+	
+	
+	//삭제버튼
+    $('#btn-delete').on('click',delete_board);
+    function delete_board(){
+		
+		$.ajax({
+			type: "DELETE",
+			url: "/community/boarddetail",
+			data: {"cId" : "[[${cId}]]" }
+		}).done(function(resp){
+			alert("삭제가 완료되었습니다.");
+			location.href="/community/boardlist";
+		}).fail(function(error){
+			alert("삭제 실패함.");
+			alert(data);
+			alert(JSON.stringfy(data));
+			console.log(error);
+		});	
+	}
+	
+	//수정버튼
+	$('#btn-update').on('click',update_board);
+	function update_board(){
+		$.ajax({
+			type: "POST",
+			url: "/community/update",
+			data: {"cId" : "[[${cId}]]" }
+		}).done(function(resp){
+			alert("cId값을 넘겨주기 성공");
+			location.href="/community/update";
+		}).fail(function(error){
+			alert("cId값 넘겨주기 실패");
+			alert(data);
+			alert(JSON.stringfy(data));
+			console.log(error);
+		});	
+	}
 
-			$("#modalButton").click(function() {
-				var content = $("input[name='modalcontent']");
-				var writer = $("input[name='modaluserId']");
-				var obj = {
-					"diaryNum" : "[[${dboard.diaryNum}]]",
-					"content" : content.val(),
-					"writer" : writer.val()
-				};
-				replyManager.add(obj, printList);
-				alert("입력완료");
+</script >
+	
 
-				$("#mymyModal").hide();
-				content.val("");
-				writer.val("");
-			});
-
-			$("#replyTable")
-					.on(
-							"click",
-							"tr",
-							function() {
-								var tds = $(this).find("td");
-								diaryRplNum = tds[0].innerHTML;
-								var content = tds[1].innerHTML;
-								var writer = tds[2].innerHTML;
-								var creationDate = tds[3].innerHTML;
-
-								$("input[name='modalcontent']").val(content);
-								$("input[name='modalwriter']").val(writer);
-								$("input[name='modalcreationDate']").val(
-										creationDate);
-								$("input[name='modalNum']").val(diaryRplNum);
-
-								$(".modal-title").text("리뷰 삭제")
-								document.getElementById("modalButton").style.display = "none";
-								if (writer != "[[${user.nickName}]]") {
-
-									document.getElementById("delButton").style.display = "none";
-								} else {
-
-									document.getElementById("delButton").style.display = "";
-								}
-								$("#mymyModal").show();
-
-							});
-
-			$("#delButton").click(function() {
-				// var content = $("input[name='modalcontent']");
-				// var userId = $("input[name='modaluserId']");
-				var obj = {
-					"diaryNum" : "[[${dboard.diaryNum}]]",
-					"diaryRplNum" : diaryRplNum
-				};
-				replyManager.remove(obj, printList);
-
-				alert("삭제완료");
-				$("#mymyModal").hide();
-				//content.val("");
-				//userId.val("");
-
-			});
-
-			//console.log(replyManager); //{"getAll":function(){},....}
-			replyManager.getAll("[[${dboard.diaryNum}]]", printList);
-
-			function printList(rList) {
-				console.log(rList);
-				var str = "";
-				$.each(rList, function(idx, item) {
-					str += "<tr>";
-					str += "<td>" + item["diaryRplNum"] + "</td>";
-					str += "<td>" + item["content"] + "</td>";
-					str += "<td>" + item["user"]["nickName"] + "</td>";
-					str += "<td>" + item["creationDate"] + "</td>";
-					str += "</tr>";
-				});
-				$("#replyTable").html(str);
-			}
-
-			function call() {
-				var myfrm = $("#myfrm")
-				myfrm.submit();
-			}
-		</script>
-	</th:block>
+</th:block>
 </body>
 </html>

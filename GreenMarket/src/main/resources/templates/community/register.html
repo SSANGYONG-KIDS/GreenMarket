@@ -4,91 +4,83 @@
 	layout:decorate="~{layout/layout1}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+
+<title>register</title>
+
 </head>
 <body >
-
-	<div class="panel panel-default" layout:fragment="content1" style="padding: 0px 200px 0px 200px; width: 100%">
-		<h1 class="panel-heading" style="text-align: center;">새글 등록</h1>
-		<div class="panel-body" style="background-color: #D9E5FF">
-			<form th:action="@{/dietdiaryboard/register}" method="post" id="dietform" > <!--dietboard? -->
-			<input type="hidden" name="photo" id="dietphoto">
-
-
-				<!-- 제목 -->
+	<div class="panel panel-default" layout:fragment="content1">
+		 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/bootstrap/images/bg_1.jpg');">
+		  <div class="overlay"></div>
+		  <div class="container">
+		    <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+		      <div class="col-md-9 ftco-animate pb-5 text-center">
+		       <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Community <i class="fa fa-chevron-right"></i></a></span> <span>About us <i class="fa fa-chevron-right"></i></span></p>
+		       <h1 class="mb-0 bread">새 글 등록</h1>
+		     </div>
+		   </div>
+		 </div>
+		</section>	
+		<div class="container">
+			<br><br>
+			<form>   
 				<div class="form-group">
-					<label for="title">title:</label> <input type="text"
-						class="form-control" id="title" placeholder="제목을 적어다오" name="title"> //여기다가 cTitle 해서 엔티티 변수명 다 맞춰주기
+					<label for="cTitle">제목</label>
+					<input type="text" class="form-control" placeholder="제목을 입력하세요" name="cTitle" id="cTitle">
 				</div>
-
-				<!-- 내용 -->
+	
 				<div class="form-group">
-					<label for="content">content:</label>
-					<textarea class="form-control" rows="3" cols="" id="content"
-						name="content" placeholder="내용을 적어다오"></textarea>
+	  				<label for="cComment">내용</label>
+	 				<textarea class="form-control summernote" rows="5" name="cContent" id="cContent"></textarea>
 				</div>
+			</form >
+			<div class="row justify-content-center">
+				<button id="btn-save" class="btn btn-primary">등록하기</button>			
+			</div>
+			<br><br>
+		</div >
 
-				<!-- 작성자 -->
-
-				<div class="form-group" th:each="dboard:${dboardlist}">
-					<label for="writer">writer:</label> <input type="text"
-						class="form-control" id="writer" name="writer" readonly="readonly">
-				</div>
-
-				
-
-			</form>
-			
-			<form onsubmit="return false;">
-				<div class="form-group">
-					<label for="photo">사진 등록</label> <input type="file"
-						id="photo" name="photo">
-				</div>
-				<button class="btn btn-primary btn-lg btn-block" id="btn-save">등록</button>
-			</form>
-
-
-		</div>
-
-
-	</div>
 
 <th:block layout:fragment="script1">
 <script>
-      $('#btn-save').on('click', uploadImage);
-      
-      function uploadImage() {
-         var file = $('#photo')[0].files[0];
-        
-         console.log(file);
-         if(typeof file != "undefined") {
-         var formData = new FormData();
-         formData.append('data', file);
-         formData.append('path', "dietdiaryboard");
-         console.log(formData);
-         $.ajax({
-            type : 'POST',
-            url : '/upload',
-            data : formData,
-            processData : false,
-            contentType : false
-         }).done(function(responseBody) {
-      
-        
-               var fileInput = $('#photo');
-               var diet_image = fileInput[0].files[0].name; // 파일명 출력
-               $("#dietphoto").val(diet_image);
-              
-               $('#dietform').submit();
-         }).fail(function(error) {
-            alert('다시 등록해주세요');
-         })
-      }else {
-    	$('#dietform').submit();
-      }
-   }
+    $('.summernote').summernote({
+    	placeholder: '내용을 입력하세요',
+        tabsize: 2,
+        height: 300
+    });
 
+	
+	$('#btn-save').on('click',register);
+	function register(){
+		
+		let data = {
+			cTitle: $("#cTitle").val(),
+			cContent: $("#cContent").val()
+		};
+		
+		var c = $('#cTitle').val();
+		console.log(c);
+		
+		$.ajax({
+			type : "POST",
+			url: "/community/register",
+			data: data
+			// contentType: "application/json; charset=utf-8",
+			// dataType: "json"
+			
+		}).done(function(resp){
+			alert("등록이 완료되었습니다.");
+			location.href="/community/boardlist";
+			
+		}).fail(function(error){
+			alert("등록 실패");
+			console.log(error);
+		});
+		
+	}
 </script>
+	
+
 </th:block>
 </body>
 </html>

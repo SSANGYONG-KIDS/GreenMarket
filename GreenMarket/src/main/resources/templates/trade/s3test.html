@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout1}"
+>
+<head>
+<meta charset="UTF-8">
+<title>s3test</title>
+</head>
+<body>
+	<div class="panel panel-default" layout:fragment="content1">
+		 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/bootstrap/images/bg_1.jpg');">
+		  <div class="overlay"></div>
+		  <div class="container">
+		    <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+		      <div class="col-md-9 ftco-animate pb-5 text-center">
+		       <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="fa fa-chevron-right"></i></a></span> <span>About us <i class="fa fa-chevron-right"></i></span></p>
+		       <h1 class="mb-0 bread">s3test</h1>
+		     </div>
+		   </div>
+		 </div>
+		</section>
+		<div class="ftco-section">
+			<form onsubmit="return false;">
+				<div class="form-group">
+					<label for="file_image">사진 등록</label>
+					<input type="file" id="file_image" name="file_image">
+				</div>
+			</form>
+			<button type="button" id="btn_upload_file" class="btn btn-default">입력</button>		
+		</div>
+
+	</div>
+
+	<th:block layout:fragment="script1">
+		<script>
+			$("#btn_upload_file").click(function() {
+				/*
+				a = commonUploadFile('file_image', 'trade')
+				.then(response=>console.log(response))
+				.catch(()=>console.log('error'));
+				*/
+				uploadImage();
+			});
+			function uploadImage() {
+				var file = $('#file_image')[0].files[0]; // 이미지 파일 얻기
+				if (typeof file != "undefined") {
+						var formData = new FormData();
+						formData.append('data', file); // data 안에 파일 넣기
+						formData.append('path', "trade"); // web 서버에 만들 폴더 이름
+						$.ajax({
+							type : 'POST',
+							url : '/upload',
+							data : formData,
+							processData : false,
+							contentType : false
+						}).done(function(responseBody) {
+							console.log(responseBody);
+						}).fail(function(error) {
+						})
+					} else {
+						alert("파일첨부를 해주세요.");
+						$("#file_image").focus();
+					}
+			}
+			function commonUploadFile(id, path) {
+				return new Promise((resolve, reject) => {
+					var file = $("#" + id)[0].files[0]; // 이미지 파일 얻기
+					if (typeof file != "undefined") {
+							var formData = new FormData();
+							formData.append('data', file); // data 안에 파일 넣기
+							formData.append('path', path); // web 서버에 만들 폴더 이름
+							$.ajax({
+								type : 'POST',
+								url : '/upload',
+								data : formData,
+								processData : false,
+								contentType : false
+							})
+							.done(resolve)
+							.fail(reject);
+						} else {
+							alert("파일첨부를 해주세요.");
+							$("#" + id).focus();
+							reject();
+						}					
+				});
+			}							
+		</script>
+	</th:block>
+</body>
+</html>

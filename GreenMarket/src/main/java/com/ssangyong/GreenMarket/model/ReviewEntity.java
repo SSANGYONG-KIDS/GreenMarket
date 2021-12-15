@@ -7,11 +7,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,11 +35,17 @@ public class ReviewEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int rId;
 
+	@JsonProperty("rContent")
 	private String rContent;
+	@JsonProperty("rStar")
 	private double rStar;
 	
 	@CreationTimestamp
 	private Timestamp rRegdate;
+	
+	@ManyToOne
+	@JoinColumn(name = "mId")
+	private MemberEntity member;
 	
 	@ManyToOne
 	@JoinColumn(name = "iId")
