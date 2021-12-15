@@ -1,5 +1,10 @@
 package com.ssangyong.GreenMarket.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -8,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ssangyong.GreenMarket.model.ICategoryEnumType;
+import com.ssangyong.GreenMarket.model.ItemEntity;
 import com.ssangyong.GreenMarket.model.SecurityUser;
 import com.ssangyong.GreenMarket.service.ItemPhotoService;
 import com.ssangyong.GreenMarket.service.ItemService;
@@ -28,7 +34,7 @@ public class MainController {
 	   
 	   @RequestMapping(value = {"/", "/index"})
 	   public String main(Model model, @AuthenticationPrincipal SecurityUser principal) {
-	      System.out.println("main");
+	      System.out.println("main 실행");
 	      
 	      // 탈퇴한 회원인 경우
 	      if (principal != null && memberService.selectById(principal.getUsername()).getMIsdropped() == 1) {
@@ -36,7 +42,21 @@ public class MainController {
 	      } else {
 	    	  model.addAttribute("isDropped", 0);
 	      }
+
+		  
+		  // main에 게시물 6개까지 보여주기
+	      int numOfItem = 0;
+	      List<ItemEntity> resultAll = itemService.selectAll();
+	      List<ItemEntity> result = new ArrayList<>();
+	      for (ItemEntity item: resultAll) {
+	    	  if(numOfItem >= 6) break;
+	    		  numOfItem ++;
+	    		  result.add(item);
+	      }
 	      
+//	      model.addAttribute("pagevo", pagevo);
+//	      model.addAttribute("result", new PageMaker<>(result));
+	      model.addAttribute("itemResult", result);
 	      model.addAttribute("itemSorts", ICategoryEnumType.values());
 	      return "index";
 	   }
@@ -63,7 +83,7 @@ public class MainController {
 	   
 	   @RequestMapping("/layout/myPage")
 	   public void mypage() {}
-	   
+
 	   @RequestMapping("/community/boardlist") // /layout/blog 에서 변경
 	   public void community() {}  // blog()->community()
 	   

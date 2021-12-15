@@ -15,16 +15,18 @@
 		<style>
 		/* 메인 공통 */
 			#main_wrapper {
-				height:1000px;
-				margin-left: 5%;
-				margin-top: 30px;
-				margin-bottom: 50px;
+			    height: 794px;
+			    margin-left: 14%;
+			    margin-top: 30px;
+			    margin-bottom: 166px;
 			}
 			#main_tab, #main_left, #main_right {
 				height:100%;
+				/*
 				border-bottom-color: rgb(221, 221, 221);
 			    border-bottom-width: 1px !important;
 			    border-bottom-style: solid !important;		
+				*/
 				border-top-color: rgb(221, 221, 221);
 			    border-top-width: 1px !important;
 			    border-top-style: solid !important;					
@@ -35,12 +37,21 @@
 			    height: 60px;
 			    border-radius: 100%;
 			}
+			.other_m_photo {
+			    width: 60px;
+			    height: 60px;
+			    border-radius: 100%;
+				float: left;
+			    margin-right: 22px;
+				display: none;
+			}			
 		
 		/* 메인 탭 */
 			#main_tab {
 				background-color: skyblue;
 				float: left;
-				width: 10%
+				width: 10%;
+				display: none;
 			}
 			
 		
@@ -51,9 +62,18 @@
 				background-color: white;
 				float: left;
 				width: 25%;
+				border-left-color: rgb(221, 221, 221);
+			    border-left-width: 1px !important;
+			    border-left-style: solid !important;	
+				border-right-color: rgb(221, 221, 221);
+			    border-right-width: 1px !important;
+			    border-right-style: solid !important;		
 			}
 			#chat_list_wraaper {
 			    padding-top: 20px;
+			    overflow: scroll;
+			    overflow-x: hidden;
+			    height: 91%;
 			}
 			.chat_list_title {
 			    color: black;
@@ -85,12 +105,15 @@
 				color: black;
 			}
 			#div_my_id {
-			    border-bottom-color: rgb(221, 221, 221);
+				/*
+				border-bottom-color: rgb(221, 221, 221);
 			    border-bottom-width: 1px !important;
 			    border-bottom-style: solid !important;
+				*/
 			    padding-bottom: 16px;
-			    padding-top: 14px;
-			    padding-left: 12px;
+			    padding-top: 25px;
+			    padding-left: 20px;
+			    height: 9%;
 			}
 			#left_top_span_my_id {
 				color: black;
@@ -103,33 +126,161 @@
 			.tr_trade:hover {
 				background-color: rgb(199 199 199 / 30%);
 			}
+			.cnt_unread {
+			    background-color: red;
+			    color: white;
+			    border-radius: 100%;
+			    padding: 0px 0px;
+			    font-size: 14px;
+			    width: 21px;
+			    text-align: center;
+			    line-height: 21px;
+			}
 		/* --- 메인 왼쪽 창 끝 --- */
 		
 		/* 메인 오른쪽 창 */
 			#main_right {
-				background-color: skyblue;
+				background-color: white;
 				float: left;
-				width: 55%
+				width: 55%;
+				
 			}
 			#main_right_top {
 				height: 105px;
-				background-color: darkseagreen;
+				background-color:white;
+				padding-top: 20px;
+    			padding-left: 23px;
 			}
 			#main_right_middle {
 				height: 495px;
-				background-color: azure;
+				background-color: white;
 			}
 			#main_right_bottom {
-				height: 167px;
-				background-color: sandybrown;			
+			    height: 180px;
+			    background-color: white;
 			    padding-top: 18px;
-    			padding-left: 11px;
+			    padding-left: 12px;
+			    padding-right: 12px;
+			    /* padding-bottom: 14px; */
+			    border: 3px solid rgb(221, 221, 221);
+			    margin-left: 12px;
+			    border-radius: 23px;
+			    text-align: right;
+			}
+			#chat_view {
+				overflow: scroll;
+    			height: 470px;
+    			overflow-x: hidden;
+				padding-left: 34px;
+				padding-right: 18px;
+			}
+			.other_m_nickname {
+			    font-weight: 600;
+			    color: black;				
+			}
+			.div_other_m_id {
+				display: none;
+			}
+			
+			.myMsg, .otherMsg {
+			    margin: 39px 0px;
+			    margin-right: 10px;	
+				position: relative;
+				height: 40px;
 			}
 			.myMsg {
 				text-align: right;
 			}
-			.otherMsg {
+			.myMsg_span, .otherMsg_span {			    
+			    border-radius: 21px;
+			    padding: 9px 18px;		
+			}
+			.myMsg_span {
+				background-color: #499f74;
+				color: white;
+			}
+			.otherMsg_span {
+				background-color: rgb(221, 221, 221);
+				color: black;
+			}
+			.myMsg_m_photo {
+				display: none;
+			}
+			.otherMsg_m_photo {
+			    width: 43px;
+			    height: 43px;
+			    border-radius: 100%;
+			    float: left;
+			    margin-right: 19px;
+    			margin-top: -8.1px;		
+			}
+			.myMsg_msg_time {
+				margin-right: 13px;
+			    font-weight: 300;
+			    font-size: 14px;				
+			}
+			.otherMsg_msg_time {
+				margin-left: 13px;
+			    font-weight: 300;
+			    font-size: 14px;
+			}
+			.msg_unread {
+			    color: #aab13b;
+			    font-weight: 500;
+			    font-size: 14px;
+			}
+			.msg_unread_0 {
+				color: white;
+			}
+						
+			.my_m_photo {
+			    width: 43px;
+			    height: 43px;
+			    border-radius: 100%;
+			    float: left;
+			    margin-right: 17px;
+    			margin-top: -5.1px;						
+			}
+
+			#input_msg {
+				border: none;
+			    width: 100%;
+				height: 56%;
+				resize: none;
+				padding: 8px;
+			}
+			#btn_input_msg {
+			    text-align: right;
+			    margin-top: 12px;
+			    margin-right: 15px;				
+			}
+			
+			.div_msg_unread {
+			    margin-bottom: -12px;
+			    margin-right: 13px;				
+			}
+			
+			.div_myMsg_msg_time {
 				
+			}
+			
+			.wrapper_msg_info_myMsg {
+				float: right;
+    			margin-top: -7.6px;
+				margin-right: 0px;
+			}
+			
+			.wrapper_msg_info_otherMsg {
+				float: left;
+    			margin-top: -7.6px;
+				margin-left: 0px;				
+			}
+			
+			.div_myMsg_span {
+				float: right;
+			}
+			.div_otherMsg_span {
+				float: left;
 			}
 		/* --- 메인 오른쪽 창 끝 */
 		
@@ -185,6 +336,7 @@
 			<!-- 메인 왼쪽 -->
 			<div id="main_left">
 				<div id="div_my_id">
+					<img class="my_m_photo" th:src="${mapOfPrincipal.mPhoto}">
 					<span id="left_top_span_my_id" th:text="${mapOfPrincipal.mNickname}"></span>
 				</div>
 				<div id="chat_list_wraaper">
@@ -192,10 +344,12 @@
 						나의 물품 거래
 					</div>
 					<table class="chat_list_table">
-						<th:block th:each="trade : ${tradesForSharer}">
+						<th:block th:each="trade, i : ${tradesForSharer}">
 							<tr th:id="${'trade_' + trade.tId}" 
 								th:data-ititle="${trade.item.iTitle}"
-								th:data-mid="${trade.buyMember.mNickname}"
+								th:data-mid="${trade.buyMember.mId}"
+								th:data-mnickname="${trade.buyMember.mNickname}"
+								th:data-mphoto="${trade.buyMember.mPhoto}"
 								th:classappend="${('tr_trade') + (' tt')}">
 								<td th:id="${trade.tId + '_mPhoto'}" class="td_chat_list_mphoto">
 									<img th:id="${trade.tId + '_mPhoto_img'}" class="m_photo" th:src="${trade.buyMember.mPhoto}">
@@ -207,7 +361,11 @@
 									<div th:id="${trade.tId + '_iTitle'}">
 										[[${trade.item.iTitle}]]
 									</div>
-
+								</td>
+								<td th:id="${'td_' + trade.tId + '_cntUnread'}">
+									<div th:id="${'div_' + trade.tId + '_cntUnread'}" class="cnt_unread"
+										 th:if="${cntsUnreadForSharer[i.index] > 0}" ${cntsUnreadForSharer[i.index]}>
+									</div>
 								</td>
 							</tr>
 						</th:block>
@@ -216,10 +374,12 @@
 						내가 신청한 거래
 					</div>
 					<table class="chat_list_table">
-						<th:block th:each="trade : ${tradesForRenter}">
+						<th:block th:each="trade, i : ${tradesForRenter}">
 							<tr th:id="${'trade_' + trade.tId}" 
 								th:data-ititle="${trade.item.iTitle}"
-								th:data-mid="${trade.buyMember.mNickname}"
+								th:data-mid="${trade.item.member.mId}"
+								th:data-mnickname="${trade.item.member.mNickname}"
+								th:data-mphoto="${trade.item.member.mPhoto}"
 								th:classappend="${('tr_trade') + (' tt')}">
 								<td th:id="${trade.tId + '_mPhoto'}" class="td_chat_list_mphoto">
 									<img th:id="${trade.tId + '_mPhoto_img'}" class="m_photo" th:src="${trade.item.member.mPhoto}">
@@ -231,8 +391,12 @@
 									<div th:id="${trade.tId + '_iTitle'}">
 										[[${trade.item.iTitle}]]
 									</div>
-
 								</td>
+								<td th:id="${'td_' + trade.tId + '_cntUnread'}">
+									<div th:id="${'div_' + trade.tId + '_cntUnread'}" class="cnt_unread"
+										 th:if="${cntsUnreadForRenter[i.index] > 0}" th:text="${cntsUnreadForRenter[i.index]}">
+									</div>
+								</td>							
 							</tr>
 						</th:block>
 					</table>					
@@ -242,22 +406,24 @@
 			<!-- 메인 오른쪽 -->
 			<div id="main_right">
 				<div id="main_right_top"> <!-- 채팅 메시지 상단 -->
-					<div id="div_other_m_id">
-						상대방 id:
-						<span class="other_m_id"></span> 
+					<img class="other_m_photo" src="">
+					<div id="div_other_m_nickname">
+						<span class="other_m_nickname"></span> 
 					</div>
 					<div id="div_other_i_title">
-						물품 이름:
 						<span class="other_i_title"></span> 
 					</div>
+					<div id="div_other_m_id">
+						<span class="other_m_id"></span> 
+					</div>					
 				</div>
 				<div id="main_right_middle"> <!-- 채팅 메시지 기록 -->
 					<div id="chat_view">
 					</div>
 				</div>
 				<div id="main_right_bottom"> <!-- 채팅 입력창 -->
-					<input type="text" id="input_msg" 
-						onKeypress="javascript:if(event.keyCode==13) {sendMsg();}">
+					<textarea type="text" id="input_msg" placeholder="메세지를 입력해주세요."
+						onKeypress="javascript:if(event.keyCode==13) {preventMoving(event); sendMsg();}"></textarea>
 					<button id="btn_input_msg" class="btn btn-primary py-1.5 px-2.5">전송</button>		
 				</div>
 			</div> <!-- 메인 오른쪽 끝-->
@@ -265,6 +431,7 @@
 		<!-- 데이터 -->
 		<div id="data">
 			<input id="iId" th:value="${iId}">
+			<input id="principalMId" th:value="${mapOfPrincipal.mId}">
 		</div> <!-- 데이터 끝 -->
 	</div>
 
@@ -274,41 +441,58 @@
 			// 웹소켓 전역 변수 선언
 			let wsOfChat; // 내 채팅 웹소켓 객체
 			let myChatSessionId; // 내 채팅 세션 아이디
+			let other // 상대방 m_id
 			const MSG_TYPE_ME = 'myMsg';
 			const MSG_TYPE_OTHER = 'otherMsg';
 			
+			// 메시지 보낼 때 밸류
+			const OBJ_TYPE_MESSAGE = "msg";
+			const OBJ_TYPE_ALERT_OTHER_READ = "alertOtherRead";
+			const OBJ_TYPE_AFTER_CHAT_CONNECTION = "afterChatConnection";
+			const OBJ_TYPE_ALERT_ANOTHER_ROOM_MSG = "alertAnotherRoomMsg";
+			
 			// 웹 소켓 열기 함수
 			function openWsOfChat(tId) {
-				console.log('openWsOfChat - location.host:' + location.host + ' tId:' + tId);
 				
 				// 이미 열린 채팅 있다면 닫기
 				if (wsOfChat != null && wsOfChat.readyState == 1) {
-					console.log('previous connection is closed - ' + 'url: ' + wsOfChat.url);
 					wsOfChat.close();
 				}
 				
 				// 웹 소켓 열기
 				let wsUriOfChat = 'ws://' + location.host + '/chat/' + tId;
-				console.log('wsUriOfChat: ' + wsUriOfChat);
 				wsOfChat = new WebSocket(wsUriOfChat);
 				configWsOfChat(wsOfChat); // 웹 소켓 세팅
 			}
 			
 			// 소켓 세팅 설정 함수 (소켓 열 때 사용)
 			function configWsOfChat(ws) {
+				
 				// 서버에서 메시지 받았을 때
 				wsOfChat.onmessage = res => {
 					resObj = JSON.parse(res.data);
 					
+					// 일반 메시지라면
+					if (resObj.type == OBJ_TYPE_MESSAGE) {
+						insertMsg(MSG_TYPE_OTHER, resObj.content, new Date().toLocaleString()); // 채팅창에 메시지 띄우기
+					}
+					
+					// 상대방 읽음 알림 메시지라면
+					else if (resObj.type == OBJ_TYPE_ALERT_OTHER_READ) {
+						changeViewToReadState(); // 읽음 표시 제거하기
+					}
+					
 					// 채팅 소켓 연결 직후 메시지라면
-					if (resObj.type == 'afterChatConnection') {
+					else if (resObj.type == OBJ_TYPE_AFTER_CHAT_CONNECTION) {
 						myChatSessionId = resObj.chatSessionId; // 전역 변수에 내 채팅 세션 아이디 넣기
 					}
 					
-					// 일반 메시지라면
-					if (resObj.type == 'msg') {
-						console.log('received msg: resOBj');
-						insertMsg(MSG_TYPE_OTHER, resObj.content); // 채팅창에 메시지 띄우기
+					// 다른 방에 메시지 왔음을 알리는 메시지라면
+					else if (resObj.type == OBJ_TYPE_ALERT_ANOTHER_ROOM_MSG) {
+						let anotherTId = resObj.content; // 메시지 온 방(tId) 번호
+						
+						// UI 안읽은 메시지 1 추가
+						addUnreadCnt(anotherTId);
 					}
 				};
 			}
@@ -318,33 +502,144 @@
 				let content = $('#input_msg').val(); // 채팅 입력창에 적은 내용
 				
 				let payload = { // 웹소켓으로 보낼 내용
-					type: 'msg',
-					content: content // 채팅 입력창에 적은 내용
+					type: 'msg', // 일반 메시지
+					content: content, // 채팅 입력창에 적은 내용
+					otherMId: otherMId // 받는 상대방 아이디
 				}
 				wsOfChat.send(JSON.stringify(payload));
 				
-				// UI 처리
+				/* UI 처리 */
 				$('#input_msg').val(''); // 채팅 입력창 빈 값으로 만들기
-				insertMsg(MSG_TYPE_ME, content);
 				
+				// 메시지보내기: 내 메시지, 읽지 않음 상태
+				insertMsg(MSG_TYPE_ME, content, new Date().toLocaleString(), 1);		
+			}
+			
+			/*
+				DB에서 채팅 내용 가져와서 화면에 뿌려주기
+			*/
+			function showChatInDb(tId, openWsOfChat) {
+				$.ajax({
+					type: 'GET',
+					url: '/tradeChat/getMessagesOfTrade/' + tId
+				}).done(res => {
+					let principalMId = $('#principalMId').val();
+					openWsOfChat(tId);
+					for (let i in res) {
+						let msg = res[i];
+						if (msg.member.mid == principalMId) { // 나의 메시지일 때
+							insertMsg(MSG_TYPE_ME, msg.msgContent, new Date(msg.msgRegdate).toLocaleString(), (msg.msgIsread + 1) % 2);
+						} else { // 다른 사람의 메시지일 때
+							insertMsg(MSG_TYPE_OTHER, msg.msgContent, new Date(msg.msgRegdate).toLocaleString());
+						}
+					}
+				})
+				  .fail(err => {
+					alert('fail: showChatInDb');
+				})
 			}
 			
 		</script> <!-- 채팅 웹소켓 관련 스크립트 끝 -->
 		
+		<!-- 문서 로딩 끝났을 때 -->
+		<script th:inline="javascript">
+			$().ready(() => {
+				openWsOfChat(0);
+			});
+		</script>
+		
 		<!-- UI 변경 관련 -->
 		<script th:inline="javascript">
+			// 메인 상단 메뉴 active
+			$('#nav-item-message').addClass('active');
+			
 			/*
 			 	메시지 채팅창에 뿌리기
 				@Param type: MSG_TYPE_ME('myMsg'), MSG_TYPE_OTHER('otherMsg')
 			*/
-			function insertMsg(type, content) {
-				console.log('-- function: insertMsg');
+			function insertMsg(type, content, time, isUnread) {
+				if (isUnread == null) isUnread = 0;
 				let htmlAdded;
-				htmlAdded = '' 
-					+ '<div' + ' class='+ type + '>'
-					+ content
-					+ '</div>';
+	
+				htmlAdded = '' // 하나의 메시지
+					+ '<div class="'+ type + '">';
+					
+				if (type == MSG_TYPE_OTHER) { // 상대방 프로필 이미지
+					htmlAdded += ''	
+					+ 	'<img class="' + type + '_m_photo" src="' + otherMPhoto + '">';					
+				}
+				
+				htmlAdded += ''	// 메시지
+					+ 	'<div class="div_' + type + '_span">'
+					+		'<span class="' + type + '_span">'
+					+ 			content
+					+		'</span>'
+					+	'</div>';
+
+				htmlAdded += '' // 읽은 여부, 시간 wrapper
+				+		'<div class="wrapper_msg_info_'+ type + '">';
+				
+				htmlAdded += '' // 내 메시지 읽은 여부
+				+			'<div class="div_msg_unread">'
+				+				'<span class= "msg_unread msg_unread_' + isUnread + '">'
+				+ 					isUnread
+				+				'</span>'
+				+ 			'</div>';
+				
+				htmlAdded += ''	// 메시지 시간
+				+			'<div class="div_'+ type + '_msg_time">'
+				+				'<span class="' + type + '_msg_time">'
+				+					time
+				+				'</span>'
+				+			'</div>';					
+						
+				htmlAdded += '' // 읽은 여부, 시간 wrapper 끝
+				+		'</div>'; 
+				
+				htmlAdded += '' // 하나의 메시지 끝
+				+ 	'</div>'; 
+				
+				// DOM 변경
 				$('#chat_view').append(htmlAdded);
+				$('#chat_view').scrollTop($('#chat_view').prop('scrollHeight')); // 스크롤바 최하단으로 내리기
+			}
+			
+			
+			/*
+				모든 메시지 읽음 처리하기 (모든 메시지에 1 제거)
+			*/
+			function changeViewToReadState() {
+				// msg_unread_1 -> msg_unread_0 으로 변경
+				$('.msg_unread_1').addClass('msg_unread_0');
+				$('.msg_unread_0').removeClass('msg_unread_1');
+			}
+			
+			/*
+				안읽은 메시지 1증가하기
+			*/
+			function addUnreadCnt(anotherTId) {
+				let anotherCntUnreadTd = $('#td_'+ anotherTId + '_cntUnread'); // 메시지 온 방 안읽은 메시지 td
+				let anotherCntUnreadDiv = $('#div_'+ anotherTId + '_cntUnread'); // 메시지 온 방 안읽은 메시지 div
+				
+				// 해당 방에 이미 안읽은 메시지 div 있는 경우 1 추가
+				if (anotherCntUnreadDiv.length > 0) {
+					anotherCntUnreadDiv.text(Number(anotherCntUnreadDiv.text()) + 1);
+					
+					// display none인 경우 block으로 보이게 하기
+					if (anotherCntUnreadDiv.css('display') == 'none') {
+						anotherCntUnreadDiv.css('display', 'block');
+					};
+				}
+				
+				// 해당 방에 안읽은 메시지 div 없는 경우 div 추가
+				else if (anotherCntUnreadDiv.length == 0) {
+					let htmlAdded;
+					htmlAdded = ''
+					+ '<div id="div_' + anotherTId + '_cntUnread" class="cnt_unread">'
+					+ 	1
+					+ '</div>';
+					anotherCntUnreadTd.append(htmlAdded);
+				}				
 			}
 		</script>
 		
@@ -363,27 +658,68 @@
 			myHeight();
 			
 			// 채팅방 목록에서 거래 클릭 이벤트
+			let	otherMId;
+			let otherMNickname;
+			let otherITitle;
+			let otherMPhoto;
 			$(document).on('click', ".tr_trade", e => {
 				let tId = e.target.id.replace(/[^0-9]/g, ""); // 거래 아이디
-				console.log('click event of tr_trade - tId: ' + tId);
+				
+				// 이전 채팅방 채팅 기록 내용 지우기
+				$('#chat_view').html('');
 				
 				// 채팅창 상단에 정보 뿌려주기
-				let otherMId = $('#trade_' + tId).attr('data-mid');
-				let otherITitle = $('#trade_' + tId).attr('data-ititle');
-				$('.other_m_id').text(otherMId);
+				otherMId = $('#trade_' + tId).attr('data-mid');
+				otherMNickname = $('#trade_' + tId).attr('data-mnickname');
+				otherITitle = $('#trade_' + tId).attr('data-ititle');
+				otherMPhoto = $('#trade_' + tId).attr('data-mphoto');
+				$('.other_m_nickname').text(otherMNickname);
 				$('.other_i_title').text(otherITitle);
+				$('.other_m_photo').attr('src', otherMPhoto);
+				$('.other_m_photo').css('display', 'block');
 				
-				// DB에서 채팅 내용 가져와서 뿌려주기 (TODO) (콜백함수로 소켓 연결하기 넣기)
+				// DB에서 채팅 내용 가져와서 뿌려주기
+				showChatInDb(tId, openWsOfChat); // openWsOfChat은 콜백함수
 				
-				// 소켓 연결하기 (TODO)
-				openWsOfChat(tId);
+				// 안읽은 메시지 UI 지우기
+				let divCntUnread = $('#div_' + tId + '_cntUnread');
+				if (divCntUnread.length > 0 && Number(divCntUnread.text()) > 0) {
+					divCntUnread.text(0);
+					divCntUnread.css('display', 'none');
+				}
 			});
 			
 			// 채팅 메시지 전송 버튼 클릭 이벤트
 			$(document).on('click', "#btn_input_msg", e=> {
 				sendMsg();
 			});
-
+		</script>
+		
+		<!-- 기타 함수 추가 -->
+		<script>
+			// 엔터 줄바꿈 막기
+			function preventMoving(event){
+				if(event.keyCode == 13) {
+			    	event.preventDefault(); 
+			    }
+			}
+ 
+		
+			// 커서 이동
+			$.fn.selectRange = function(start, end) {			
+			    return this.each(function() {
+			         if(this.setSelectionRange) {
+			             this.focus();
+			             this.setSelectionRange(start, end);
+			         } else if(this.createTextRange) {
+			             var range = this.createTextRange();
+			             range.collapse(true);
+			             range.moveEnd('character', end);
+			             range.moveStart('character', start);
+			             range.select();
+			         }
+			     });			
+			 };		
 		</script>
 	</th:block>
 </body>

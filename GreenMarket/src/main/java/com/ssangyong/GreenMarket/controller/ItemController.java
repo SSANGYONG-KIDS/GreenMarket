@@ -26,25 +26,32 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ssangyong.GreenMarket.model.ICategoryEnumType;
 import com.ssangyong.GreenMarket.model.IStateEnumType;
 import com.ssangyong.GreenMarket.model.ItStateEnumType;
+import com.ssangyong.GreenMarket.model.ItemCartEntityId;
 import com.ssangyong.GreenMarket.model.ItemEntity;
 import com.ssangyong.GreenMarket.model.ItemPageVO;
 import com.ssangyong.GreenMarket.model.ItemPhotoEntity;
 import com.ssangyong.GreenMarket.model.MemberEntity;
 import com.ssangyong.GreenMarket.model.PageMaker;
+import com.ssangyong.GreenMarket.model.ReviewEntity;
+import com.ssangyong.GreenMarket.service.ItemCartService;
 import com.ssangyong.GreenMarket.service.ItemPhotoService;
 import com.ssangyong.GreenMarket.service.ItemService;
 import com.ssangyong.GreenMarket.service.LoginService;
+import com.ssangyong.GreenMarket.service.ReviewService;
 
 @Controller
 @RequestMapping("/item/*")
 public class ItemController {
-	
 	@Autowired
 	ItemService itemService;
 	@Autowired
 	ItemPhotoService itemPhotoService;
 	@Autowired
 	LoginService loginService;
+	@Autowired
+	ReviewService reviewService;
+	@Autowired
+	ItemCartService icService;
 	
 	
 	@GetMapping("/itemlist")
@@ -52,25 +59,53 @@ public class ItemController {
 
 		Page<ItemEntity> result = itemService.selectAll(pagevo);
 
+
+	    model.addAttribute("itemSorts", ICategoryEnumType.values());
 		model.addAttribute("itemResult", result);
 		model.addAttribute("pagevo", pagevo);
 		model.addAttribute("result", new PageMaker<>(result));
 	}
+	
+	//관심물품 목록 조회
+	@GetMapping("/itemcart")
+	public void selectMyItemCart(Model model, HttpServletRequest request, Authentication authentication) {
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		MemberEntity member =  loginService.selectById(userDetails.getUsername());
+		
+		model.addAttribute("myitemcart", icService.selectItemList(member.getMId()));
+		model.addAttribute("member", member);
+	}		
+
 	
 	@GetMapping("/itemdetail")
 	public void selectById(Model model, Integer iId, Principal principal, Authentication authentication, ItemPageVO pagevo ) {
 		ItemEntity item = itemService.selectById(iId);
 		model.addAttribute("item", item);
 		model.addAttribute("item_owner",item.getMember());
-		model.addAttribute("item_photos",itemPhotoService.selectById(item.getIId()));
+	
+		List<ReviewEntity> item_review = reviewService.selectItemReviewList(item);
+		model.addAttribute("item_review",item_review);
+		//평점
+		double total = 0;
+		double avg = 0;
+		for(ReviewEntity review: item_review) {
+			total+=review.getRStar();
+		}
+		avg = total /  item_review.size();
+		
+		model.addAttribute("review_avg", Math.round(avg*100)/100.0); //소수점 둘째자리까지
 		model.addAttribute("pagevo", pagevo);
-		model.addAttribute("istates",IStateEnumType.values());
-		model.addAttribute("tstates",ItStateEnumType.values());
 		
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		MemberEntity member =  loginService.selectById(userDetails.getUsername());
 		model.addAttribute("member",member);
 		
+		//관심 물품
+		model.addAttribute("like_num",icService.selectList(iId).size());
+		ItemCartEntityId icId= new ItemCartEntityId();
+		icId.setItem(item);
+		icId.setMember(member);
+		model.addAttribute("like_me",icService.selectByItemCartEntityId(icId)==null?0:1);
 	}
 	
 	@GetMapping("/myitemlist")
@@ -126,14 +161,15 @@ public class ItemController {
 		
 		//사용자가 지운 사진들 객체 테이블에서 제거하기!
 		List<Integer> deletelist = new ArrayList();
-		String[] delete_pid_str = delete_pids.split(",");
-		for(int i=0; i<delete_pid_str.length; i++){
-			deletelist.add(Integer.parseInt(delete_pid_str[i]));
+		if(!delete_pids.equals("")) {
+			String[] delete_pid_str = delete_pids.split(",");
+			for(int i=0; i<delete_pid_str.length; i++){
+				deletelist.add(Integer.parseInt(delete_pid_str[i]));
+			}
+			for(Integer j: deletelist) {
+				itemPhotoService.deleteItemPhoto(j);
+			}
 		}
-		for(Integer j: deletelist) {
-			itemPhotoService.deleteItemPhoto(j);
-		}
-		
 		rttr.addFlashAttribute("resultMessage", ins_item==null?"입력실패":"입력성공");
 		return "redirect:/item/myitemlist";
 	}

@@ -2,7 +2,7 @@
  <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
         xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/layout1}">
+   layout:decorate="~{layout/layout1}">
 <body>
 <th:block layout:fragment="style1">
 	<style>
@@ -188,7 +188,7 @@
 		}
 		.image-box {
 		    width:380px;
-		    height:220px;
+		    text-align: center;
 		    overflow:hidden;
 		    margin:0 auto;
 		    padding-right: 50px;
@@ -199,21 +199,135 @@
 		    height:100%;
 		    object-fit:cover;
 		}
+		
+		#like_button {
+			display: inline-block;
+			color: #cca2a3;
+			cursor: pointer;
+			font-size: 20px;
+			-webkit-transition: all 0.1s ease-in-out;
+			        transition: all 0.1s ease-in-out;
+			position: absolute;
+   			left: 0em;
+		}
+		
+		#like_button:hover {
+			display: inline-block;
+			color: #cca2a3;
+			cursor: pointer;
+			font-weight:bold;
+			font-size: 22px;
+			position: absolute;
+   			left: 0em;
+		}
+		
+		#like_button.liked {
+			font-size: 0px;
+		}
+		
+		#like_button:after {
+			content: "♥";
+			color: #D61F12;
+			opacity: 0;
+			-webkit-transition: all 0.2s ease-in-out;
+			        transition: all 0.2s ease-in-out;
+			position: absolute;
+    		left: 0em;
+		}
+		
+		#like_button.liked:after {
+			font-size: 20px;
+			opacity: 1;
+		}
+		
+		#like {
+			padding: 20px;
+		}
+		
+		._9ofhsl {
+		    height: 100% !important;
+		    width: 100% !important;
+		    position: static !important;
+		}
+		._1c81x67 {
+		    background: rgb(221, 221, 221) !important;
+		    overflow: hidden !important;
+		    position: relative !important;
+		}
+		.dir.r1are2x1 {
+		    margin-bottom: 32px;
+		}
+		.dir.chnzxuf {
+		    margin-bottom: 12px;
+		}
+		.s189e1ab {
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: -ms-flexbox;
+		    display: flex;
+		    -webkit-align-items: baseline;
+		    -webkit-box-align: baseline;
+		    -ms-flex-align: baseline;
+		    align-items: baseline;
+		}
+		.s11wgnhd {
+		    color: "#717171";
+		    font-weight: normal;
+		}
+		.dir-ltr.t9gtck5 {
+		    margin-left: 12px;
+		}
+		.t9gtck5 {
+		    color: black;
+		    font-weight: bold;
+		}
+		.chnzxuf {
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: -ms-flexbox;
+		    display: flex;
+		    -webkit-align-items: center;
+		    -webkit-box-align: center;
+		    -ms-flex-align: center;
+		    align-items: center;
+		}
+		.modal-content{
+			overflow-y: initial !important
+		}
+		.modal-body{
+			height: 500px;
+			overflow-y: auto;
+		}
+		._14i3z6h {
+		    color: inherit !important;
+		    font-weight: bold;
+		    line-height: inherit !important;
+		    padding: 0px !important;
+		    margin-bottom: 20px;
+		}
+		._1d35qey {
+		    color: black;
+		    display: inline-flex !important;
+		    margin-right: 8px !important;
+		}
 	</style>
 </th:block>
 <div class="panel panel-default" layout:fragment="content1">
-	<section class="hero-wrap hero-wrap-2 js-myheight" style="background-image: url('/bootstrap/images/item/itemdetail.jpg');">
-		<div class="overlay"></div>
-		<div class="container">
-		    <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
-		    	<div class="col-md-9 ftco-animate pb-5 text-center">
-		    	<p class="breadcrumbs"><span class="mr-2"><a th:href="@{/index}">Home <i class="fa fa-chevron-right"></i></a></span> <span>item detail<i class="fa fa-chevron-right"></i></span></p>
-				<h1 class="mb-0 bread">item detail</h1>
-		     	</div>
-		   	</div>
-		 </div>
-	</section>
-	
+	<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/bootstrap/images/item/itemdetail.jpg');">
+			<div class="overlay"></div>
+			<div class="container">
+				<div
+					class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+					<div class="col-md-9 ftco-animate pb-5 text-center">
+						<p class="breadcrumbs">
+							<span class="mr-2"><a th:href="@{/index}">Home <i class="fa fa-chevron-right"></i></a></span> <span>Item Detail<i class="fa fa-chevron-right"></i></span>
+						</p>
+						<h1 class="mb-0 bread">Item Detail</h1>
+					</div>
+				</div>
+			</div>
+		</section>
+
 	<!-- 물건 정보조회 -->
 	<section class="ftco-section services-section">
 		<div class="container">
@@ -221,16 +335,20 @@
 				<span class="_1n81at5">
 					<h1 tabindex="-1" class="_fecoyn4" th:text="${item.iTitle}"></h1>
 				</span>
+				<span style="margin-left:30px">
+					<img width="100px" height="90px" th:if="${item.iTstate.title}=='대여가능'" th:src="@{/bootstrap/images/item/available.png}">
+					<img width="100px" height="90px" th:if="${item.iTstate.title}!='대여가능'" th:src="@{/bootstrap/images/item/na.png}">
+				</span>
 			</div>
 			<div class="_1qdp1ym">
 				<div class="_544wcx">
 					<span class="_fardlj">
 						<span class="_hyestb">
 							<span style="color:red">★</span>
-							<span class="_1ne5r4rt" aria-hidden="true">[평점출력]</span>
+							<span class="_1ne5r4rt" aria-hidden="true">[[${review_avg}]]</span>
 						</span>
 						<span class="_142pbzop">
-							<button aria-label="후기 131개로부터 5점 만점에 4.62점을 받은 숙소입니다." type="button" class="_17wfx63m">(후기 [후기갯수출력]개)</button>
+							<button type="button" class="_17wfx63m">(후기 [[${item_review.size}]]개)</button>
 						</span>
 					</span>
 					<span class="_5oadh0" aria-hidden="true">·</span>
@@ -251,13 +369,16 @@
 					<div class="_y4w03w">
 						<div class="_1jdtwz4">
 							<div class="_c2acbp">
-								<button type="button" class="_kvaiv9k">
+								<button type="button" class="_kvaiv9k" title="새창" onclick="clip(); return false;">
 									<div class="_5kaapu"><span class="_14tkmhr"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 2; overflow: visible;"><g fill="none"><path d="M27 18v9a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-9"></path><path d="M16 3v23V3z"></path><path d="M6 13l9.293-9.293a1 1 0 0 1 1.414 0L26 13"></path></g></svg></span>공유하기</div>
 								</button>
 							</div>
 							<div>
 								<button aria-label="목록에 숙소 추가하기" data-testid="pdp-save-button-unsaved" type="button" class="_kvaiv9k">
-									<div aria-hidden="true" class="_5kaapu"><span class="_14tkmhr"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 2; overflow: visible;"><path d="m16 28c7-4.733 14-10 14-17 0-1.792-.683-3.583-2.05-4.95-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05l-2.051 2.051-2.05-2.051c-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05-1.367 1.367-2.051 3.158-2.051 4.95 0 7 7 12.267 14 17z"></path></svg></span>저장</div>
+									<div aria-hidden="true" class="_5kaapu">
+										<span id="like_button">♥</span>
+										<span id="like_num" style="margin-left:20px">[[${like_num}]]</span>
+									</div>
 								</button>
 							</div>
 						</div>
@@ -268,17 +389,16 @@
 				<div class="col-md-6 order-md-last heading-section pl-md-5 ftco-animate d-flex align-items-center">
 					<div class="image-box">
 						<img class="image-thumbnail" th:src="${item.photos[0].ipFilename}"/>
+						<input type="button" style="margin-top:10px;" class="btn btn-secondary py-3 px-4" th:value="모두보기" id="showPhotos" data-toggle="modal" data-target="#photoModal"> 
 					</div>
 					<div class="w-100">
 						<p style="color: black" th:text="${item.iContent}"></p>
-						<p>
-							<select id="iState" name="iState">
-								<option th:selected="${state}=='${item.iState}'" th:each="state:${istates}" th:value="${state}">[[${state.title}]]</option>
-							</select>
+						<p style="color: black">
+							<span style="padding-right: 15px">물건 상태:</span>
+							<span th:text="${item.iState.title}" style="color:green"></span>
 						</p>
 						<p style="color: black">
-							<span style="font-size: 30px; font-style: bold; color: black;" th:text="${item.iPrice}"></span><span style="padding-right: 30px">원/1day</span>
-							<a href="#"  th:text="${item.iTstate.title}"></a>
+							<span style="padding-right: 15px">가격:</span><span style="font-size: 30px; font-style: bold; color: black;" th:text="${item.iPrice}"></span><span style="padding-right: 30px">원/1day</span>
 						</p>	
 					</div>
 				</div>
@@ -297,21 +417,38 @@
 				</form>
 			</div>
 		</div>
+		
+		<!-- Modal -->
+		<div id="photoModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+	    		<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+			        	<h4 class="modal-title">item photos</h4>
+			        	<button type="button" class="close" data-dismiss="modal">&times;</button>
+			      	</div>
+			      	<div class="modal-body">
+			      		<div class="container">
+							<div class="row d-flex">
+								<div class="col-md-12 ftco-animate" th:each="photo:${item.photos}">
+									<div class="blog-entry justify-content-end">
+										<img width="100%" height="100%" th:src="@{${photo.ipFilename}}">
+									</div>
+			        			</div>
+			        		</div>
+			        	</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+			    </div>
+			</div>
+		</div>
 	</section>
 
-	<!-- 유튜브 연결 => ?? -->
-	<section class="ftco-section ftco-about img"style="background-image: url(/bootstrap/images/bg_4.jpg);">
-	 <div class="overlay"></div>
-	 <div class="container py-md-5">
-	  <div class="row py-md-5">
-	   <div class="col-md d-flex align-items-center justify-content-center">
-	    <a href="https://vimeo.com/45830194" class="icon-video popup-vimeo d-flex align-items-center justify-content-center mb-4">
-	     <span class="fa fa-play"></span>
-	   </a>
-	 </div>
-	</div>
-	</div>
-	</section>
+	<br><br><br><br><br>
+	<hr>
+	<br><br><br><br><br>
 	
 	<!-- 판매자 정보 조회 -->
 	<section class="ftco-section ftco-about ftco-no-pt img">
@@ -320,7 +457,8 @@
 	   <div class="col-md-12 about-intro">
 	    <div class="row">
 	     <div class="col-md-6 d-flex align-items-stretch">
-	      <div class="img d-flex w-100 align-items-center justify-content-center" style="background-image:url(/bootstrap/images/about-1.jpg);"><!-- 판매자 프사(mPhoto) -->
+	      <div class="img d-flex w-100 align-items-center justify-content-center"><!-- 판매자 프사(mPhoto) -->
+	      	<img class="image-thumbnail" th:src="${item_owner.mPhoto}"/>
 	      </div>
 	    </div>
 	    <div class="col-md-6 pl-md-5 py-5">
@@ -340,137 +478,94 @@
 	</section>
 	
 	<!-- 판매자와 거래 후기 -->
-	<section class="ftco-section testimony-section bg-bottom" style="background-image: url(/bootstrap/images/bg_1.jpg);">
-	 <div class="overlay"></div>
-	 <div class="container">
-	  <div class="row justify-content-center pb-4">
-	    <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
-	     <span class="subheading">Testimonial</span>
-	     <h2 class="mb-4">Tourist Feedback</h2>
-	   </div>
-	 </div>
-	 <div class="row ftco-animate">
-	  <div class="col-md-12">
-	    <div class="carousel-testimony owl-carousel">
-	      <div class="item">
-	        <div class="testimony-wrap py-4">
-	          <div class="text">
-	           <p class="star">
-	            <span class="fa fa-star"></span>
-	            <span class="fa fa-star"></span>
-	            <span class="fa fa-star"></span>
-	            <span class="fa fa-star"></span>
-	            <span class="fa fa-star"></span>
-	          </p>
-	          <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-	          <div class="d-flex align-items-center">
-	           <div class="user-img" style="background-image: url(/bootstrap/images/person_1.jpg)"></div>
-	           <div class="pl-3">
-	            <p class="name">Roger Scott</p>
-	            <span class="position">Marketing Manager</span>
-	          </div>
-	        </div>
-	      </div>
-	    </div>
-	  </div>
-	  <div class="item">
-	    <div class="testimony-wrap py-4">
-	      <div class="text">
-	       <p class="star">
-	        <span class="fa fa-star"></span>
-	        <span class="fa fa-star"></span>
-	        <span class="fa fa-star"></span>
-	        <span class="fa fa-star"></span>
-	        <span class="fa fa-star"></span>
-	      </p>
-	      <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-	      <div class="d-flex align-items-center">
-	       <div class="user-img" style="background-image: url(/bootstrap/images/person_2.jpg)"></div>
-	       <div class="pl-3">
-	        <p class="name">Roger Scott</p>
-	        <span class="position">Marketing Manager</span>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	</div>
-	<div class="item">
-	  <div class="testimony-wrap py-4">
-	    <div class="text">
-	     <p class="star">
-	      <span class="fa fa-star"></span>
-	      <span class="fa fa-star"></span>
-	      <span class="fa fa-star"></span>
-	      <span class="fa fa-star"></span>
-	      <span class="fa fa-star"></span>
-	    </p>
-	    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-	    <div class="d-flex align-items-center">
-	     <div class="user-img" style="background-image: url(/bootstrap/images/person_3.jpg)"></div>
-	     <div class="pl-3">
-	      <p class="name">Roger Scott</p>
-	      <span class="position">Marketing Manager</span>
-	    </div>
-	  </div>
-	</div>
-	</div>
-	</div>
-	<div class="item">
-	  <div class="testimony-wrap py-4">
-	    <div class="text">
-	     <p class="star">
-	      <span class="fa fa-star"></span>
-	      <span class="fa fa-star"></span>
-	      <span class="fa fa-star"></span>
-	      <span class="fa fa-star"></span>
-	      <span class="fa fa-star"></span>
-	    </p>
-	    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-	    <div class="d-flex align-items-center">
-	     <div class="user-img" style="background-image: url(/bootstrap/images/person_1.jpg)"></div>
-	     <div class="pl-3">
-	      <p class="name">Roger Scott</p>
-	      <span class="position">Marketing Manager</span>
-	    </div>
-	  </div>
-	</div>
-	</div>
-	</div>
-	<div class="item">
-	  <div class="testimony-wrap py-4">
-	    <div class="text">
-	     <p class="star">
-	      <span class="fa fa-star"></span>
-	      <span class="fa fa-star"></span>
-	      <span class="fa fa-star"></span>
-	      <span class="fa fa-star"></span>
-	      <span class="fa fa-star"></span>
-	    </p>
-	    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-	    <div class="d-flex align-items-center">
-	     <div class="user-img" style="background-image: url(/bootstrap/images/person_2.jpg)"></div>
-	     <div class="pl-3">
-	      <p class="name">Roger Scott</p>
-	      <span class="position">Marketing Manager</span>
-	    </div>
-	  </div>
-	</div>
-	</div>
-	</div>
-	</div>
-	</div>
-	</div>
-	</div>
-	</section>
+	<section class="ftco-section testimony-section bg-bottom" style="background-color: #b6d1d4">
+			<div class="overlay"></div>
+			<div class="container">
+				<div class="row justify-content-center pb-4">
+					<div
+						class="col-md-7 text-center heading-section heading-section-white ftco-animate">
+						<span class="subheading">Review</span>
+						<h2 class="mb-4">borrower Feedback</h2>
+					</div>
+				</div>
+				<div class="row ftco-animate">
+					<div class="col-md-12">
+						<div class="carousel-testimony owl-carousel">
+							<div class="item" th:each="review:${item_review}">
+								<div class="testimony-wrap py-4">
+									<div class="text">
+										<p class="star">
+											<span class="fa fa-star" th:if="${review.rStar}>0" th:each="num: ${#numbers.sequence(1,review.rStar)}"></span>
+										</p>
+										<p class="mb-4" th:text="${review.rContent}"></p>
+										<div class="d-flex align-items-center">
+											<div class="user-img">
+												<img class="image-thumbnail" th:src="${review.member.mPhoto}" />
+											</div>
+											<div class="pl-3">
+												<p class="name">
+													<a th:href="@{/memberpage/{mId}(mId=${review.member.mId})}" th:text="${review.member.mNickname}"></a>
+												</p>
+												<!-- 다른 사용자 마이페이지 -->
+												<span class="position" th:text="${review.member.mId}"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="pull-right" style="width: 100%; height: 5%; text-align: center;">
+					<input type="button" style="margin-top:10px;" class="btn btn-secondary py-3 px-4" th:value="모두보기" id="showReview" data-toggle="modal" data-target="#reviewModal"> 
+				</div>
+			</div>
+			<!-- Modal -->
+			<div id="reviewModal" class="modal fade" role="dialog">
+				<div class="modal-dialog modal-lg">
+		    		<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+				        	<h4 class="modal-title">Review</h4>
+				        	<button type="button" class="close" data-dismiss="modal">&times;</button>
+				      	</div>
+				      	<div class="modal-body">
+				      		<div class="container">
+				      			<h3 tabindex="-1" class="_14i3z6h">
+				      				<span class="_1d35qey"><span style="color:red">★</span>[[${review_avg}]]점(후기 [[${item_review.size}]]개)</span>
+				      			</h3>
+								<div class="r1are2x1 dir dir-ltr" th:each="review:${item_review}">
+									<div class="chnzxuf dir dir-ltr">
+										<div class="_e7hn5" style="height: 56px; width: 56px;">
+											<a target="_blank" aria-label="${review.member.mId}" th:href="@{/memberpage/{mId}(mId=${review.member.mId})}" class="_ghgl4l4">
+												<div class="_1c81x67" style="height: 56px; width: 56px; border-radius: 50%;">
+													<div class="_1h6n1zu" role="img" aria-busy="false" style="display: inline-block; vertical-align: bottom; height: 100%; width: 100%; min-height: 1px;">
+														<img class="_9ofhsl" alt="no photo" th:src="${review.member.mPhoto}" style="object-fit: cover; vertical-align: bottom;">
+													</div>
+												</div>
+											</a>
+										</div>
+										<div class="t9gtck5 dir dir-ltr">[[${review.member.mNickname}]]<div class="s11wgnhd dir dir-ltr"><div class="s189e1ab dir dir-ltr"><div>[[${#dates.format(new java.util.Date(item.iRegdate), 'yyyy년 MM월')}]]<span class="a8jt5op dir dir-ltr">, </span><span style="color: red;" class="fa fa-star" th:if="${review.rStar}>0" th:each="num: ${#numbers.sequence(1,review.rStar)}"></span></div></div></div></div>
+									</div>
+									<div><div style="line-height: 24px; color: black;"><span><span>[[${review.rContent}]]</span></span></div></div>
+								</div>
+				        	</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+				    </div>
+				</div>
+			</div>
+		</section>
 	
-	<!-- 판매자와 거래하기 -->
 	<section class="ftco-intro ftco-section ftco-no-pt">
 	 <div class="container">
 	  <div class="row justify-content-center">
 	   <div class="col-md-12 text-center">
-	    <div class="img"  style="background-image: url(/bootstrap/images/bg_2.jpg);">
+	    <div class="img">
 			<div class="pull-right" style="width: 100%; height: 5%; padding: 0px 200px 0px 200px;">
-				<a th:href="@{/item/itemlist}" class="btn btn-info">목록보기</a>
+				<a th:href="@{/item/itemlist}" class="btn btn-primary py-3 px-4">목록보기</a>
 			</div>
 	   </div>
 	 </div>
@@ -491,6 +586,40 @@
 		});
 	};
 	myHeight();
+	
+	$(function(){
+		var like_me = "[[${like_me}]]";
+		
+		$("#like_button").on("click", function(){
+			$(this).toggleClass("liked");
+			$.ajax({
+				url:`updateGood/[[${member.mId}]]/[[${item.iId}]]`,
+				type: "post",
+				success: function(data){	
+					$("#like_num").text(data);
+				},
+				error: function(){}
+			});
+		});
+		
+		if(like_me==1) {$("#like_button").toggleClass("liked"); like_me=0;}
+	});
+
+  function clip(){
+
+    var url = '';    // <a>태그에서 호출한 함수인 clip 생성
+    var textarea = document.createElement("textarea");  
+    //url 변수 생성 후, textarea라는 변수에 textarea의 요소를 생성
+
+    document.body.appendChild(textarea); //</body> 바로 위에 textarea를 추가(임시 공간이라 위치는 상관 없음)
+    url = window.document.location.href;  //url에는 현재 주소값을 넣어줌
+    textarea.value = url;  // textarea 값에 url를 넣어줌
+    textarea.select();  //textarea를 설정
+    document.execCommand("copy");   // 복사
+    document.body.removeChild(textarea); //extarea 요소를 없애줌
+
+    alert("URL이 복사되었습니다.")  // 알림창
+    }
 	</script>
 </th:block>
 </body>

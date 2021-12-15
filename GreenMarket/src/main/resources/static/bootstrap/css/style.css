@@ -9422,13 +9422,6 @@ textarea.form-control {
     right: 0;
     bottom: 0;
     content: '';
-    background: #207ce5;
-    background: -moz-linear-gradient(45deg, #207ce5 0%, #13d42a 100%);
-    background: -webkit-gradient(left bottom, right top, color-stop(0%, #207ce5), color-stop(100%, #13d42a));
-    background: -webkit-linear-gradient(45deg, #207ce5 0%, #13d42a 100%);
-    background: -o-linear-gradient(45deg, #207ce5 0%, #13d42a 100%);
-    background: -ms-linear-gradient(45deg, #207ce5 0%, #13d42a 100%);
-    background: linear-gradient(45deg, #207ce5 0%, #13d42a 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#207ce5', endColorstr='#13d42a', GradientType=1 );
     opacity: .6; }
   .testimony-section .owl-carousel, .ftco-select-destination .owl-carousel {

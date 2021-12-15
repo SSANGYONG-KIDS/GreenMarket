@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout1}">
+<body>
+<th:block layout:fragment="style1">
+<style>
+	.like_button {
+		display: inline-block;
+		color: #cca2a3;
+		cursor: pointer;
+		font-size: 30px;
+		-webkit-transition: all 0.1s ease-in-out;
+		transition: all 0.1s ease-in-out;
+		position: absolute;
+    	left: 8em;
+	}
+	
+	.like_button:hover {
+			display: inline-block;
+			color: #cca2a3;
+			cursor: pointer;
+			font-weight:bold;
+			font-size: 22px;
+			position: absolute;
+   			left: 8em;
+		}
+	
+	.like_button.liked {
+		font-size: 0px;	
+	}
+	
+	.like_button:after {
+		content: "♥";
+		color: #D61F12;
+		opacity: 0;
+		-webkit-transition: all 0.2s ease-in-out;
+		transition: all 0.2s ease-in-out;
+		position: absolute;
+    	left: 0em;
+	}
+	
+	.like_button.liked:after {
+		font-size: 30px;
+		opacity: 1;
+	}
+	
+	
+</style>
+</th:block>
+<div class="panel panel-default" layout:fragment="content1">
+	<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/bootstrap/images/item/myitem.jpg');">
+		<div class="overlay"></div>
+		<div class="container">
+			<div
+				class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+				<div class="col-md-9 ftco-animate pb-5 text-center">
+					<p class="breadcrumbs">
+						<span class="mr-2"><a th:href="@{/index}">Home <i class="fa fa-chevron-right"></i></a></span> 
+						<span>Item Cart<i class="fa fa-chevron-right"></i></span>
+					</p>
+					<h1 class="mb-0 bread">Item Cart</h1>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row d-flex">
+				<div class="col-md-4 ftco-animate" th:each="item:${myitemcart}">
+					<form th:action="@{/item/itemdetail}" method="get">
+						<div class="blog-entry justify-content-end">
+							<div class="text">
+								<div class="d-flex align-items-center mb-4 topp">
+									<div class="one">
+										<span class="day" style="font-size: 30px;" th:text="${item.iId}"></span>
+									</div>
+									<div class="two">
+										<span class="yr" th:text="${item.iCategory.title}"></span> 
+										<span class="mos" th:text="${#dates.format(new java.util.Date(item.iRegdate), 'yyyy-MM-dd hh:mm')}"></span> 
+									</div>
+								</div>
+								<div class="like" aria-hidden="true" style="text-align:right">
+									<span th:id="${item.iId}" class="like_button" style="font-size:30px">♥</span>
+								</div>
+								<h3 class="heading" style="margin-top:30px">
+									<a href="#" th:text="${item.iTitle}"></a>
+								</h3>
+								<p th:text="${item.iContent}"></p>
+								<input type="hidden" name='iId' th:value=${item.iId}> 
+								<input type="submit" value="상세보기">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+<th:block layout:fragment="script1">
+	<script>
+	$(function(){
+		
+		$(".like_button").on("click", function(){
+			$(this).toggleClass("liked");
+			var id = $(this).attr('id');
+			$.ajax({
+				url:`updateGood/[[${member.mId}]]/`+id,
+				type: "post",
+				success: function(data){	
+					alert('좋아요 상태가 업데이트 되었습니다.');
+				},
+				error: function(){}
+			});
+		});
+		
+		$(".like_button").toggleClass("liked");
+	});
+	</script>
+</th:block>
+</body>
+</html>

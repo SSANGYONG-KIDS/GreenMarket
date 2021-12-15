@@ -5,6 +5,7 @@
 	layout:decorate="~{layout/layout1}">
 <body>
 	<div class="panel panel-default" layout:fragment="content1" >
+		<input type="hidden" id="data-is-index" value="true"> <!-- 상단 크기 조절에 사용 -->
 		<div class="hero-wrap js-fullheight" style="background-image: url('/bootstrap/images/bg_5.jpg');">
 			<div class="overlay"></div>
 			<div class="container">
@@ -33,10 +34,8 @@
 										<a class="nav-link active mr-md-1" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">Search Item</a>
 									</div>
 								</div>
-								<div class="col-md-12 tab-wrap">
-									
+								<div class="col-md-12 tab-wrap">	
 									<div class="tab-content" id="v-pills-tabContent">
-	
 										<div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
 											<form th:action="@{/item/itemlist}" class="search-property-1">
 												<div class="row no-gutters">
@@ -56,7 +55,7 @@
 																<div class="select-wrap">
 																	<div class="icon"><span class="fa fa-chevron-down"></span></div>
 																	<select name="itemSort" class="form-control">
-																	 	<option value="">Select item</option>
+																	 	<option value="">전체 검색</option>
 																		<option th:selected="${is}=='DIGITAL_DEVICE'" th:each="is:${itemSorts}" th:value="${is}" >[[${is.title}]]</option>
 																	</select>
 																</div>
@@ -180,10 +179,9 @@
 					</div>
 					<div class="row d-flex">
 					<!-- d-flex 가변 길이 태그 제거 -->
-						
 						<div class="col-md-4 ftco-animate" th:each="item:${itemResult}" th:onclick="'window.location.href=\'' + @{/item/itemdetail(iId=${item.iId})} +'\' '">
 						<div class="blog-entry justify-content-end">
-							<a th:href="@{/item/itemdetail(iId=${item.iId})}" class="block-20" style="background-image: url('/bootstrap/images/image_1.jpg');"></a>
+							<div class="block-20"><img style="color: white;" width="100%" height="100%" th:src="@{${item.photos[0].ipFilename}}"></div>
 							<div class="text" width="200px;">
 								<div class="d-flex align-items-center mb-4 topp">
 									<div class="one">
