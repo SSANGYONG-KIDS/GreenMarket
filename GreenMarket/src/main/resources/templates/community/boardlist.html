@@ -7,12 +7,22 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<style>
+/*
+	ul{
+		text-align:center;
+		background-color:aqua;
+	}
+	li{
+		display:inline-block;
+		background-color:blueviolet;
+	}
+*/
+</style>
 </head>
 
 <body>
-
-	<class="panel panel-default" layout:fragment="content1">
+	<div class="panel panel-default" layout:fragment="content1">
 		 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/bootstrap/images/bg_1.jpg');">
 		  <div class="overlay"></div>
 		  <div class="container">
@@ -27,35 +37,30 @@
 		<div class="container">
 			
 			<!--게시판 위 상단바. 카테고리, 내 동네 표시 등 구현할 곳-->
-			<div>
-				<h1 class="panel-heading" style="text-align: center; background-color: #D9E5FF">Community</h1>
-			</div>
 	
 	
 			<p>[[${resultMessage}]]</p>
 		
 	
 			<div align="right"> <!--등록하기 버튼-->
-				<a class="btn btn-warning" th:href="@{/community/register}">내가 쓴 글</a>
+				<a class="btn btn-warning" th:href="@{/community/myBoardlist}">내가 쓴 글</a>
 				<a class="btn btn-primary" th:href="@{/community/register}">등록하기</a>
 			</div >	
 			<br>
 			<table class="table table-bordered table-hover " id="xxx">
 				<tr>
-					<th>게시글 번호</th>
-					<th>게시글 제목</th>
-					<th>게시글 작성자</th>
-					<th>게시글 조회수</th>
-					<th>게시글 작성일</th>
-					<th>게시글 수정일</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>조회수</th>
+					<th>작성일</th>
+					<th>수정일</th>
 				</tr>
 				<tr th:each="board:${boardResult}" th:onclick="'window.location.href=\'' + @{/community/boarddetail(cId=${board.cId})} +'\' '">
-					<td th:text="${board.cId}"></td>
-					<td th:text="${board.cTitle}"></td>
-					<td th:text="${board.member.mNickname}"></td>
-					<td th:text="${board.cViews}"></td>
-					<td th:text="${board.cRegdate}"></td>
-					<td th:text="${board.cUpdate}"></td>
+					<td width="300" style="word-break:break-all" th:text="${board.cTitle}"></td >
+					<td width="100" style="word-break:break-all" th:text="${board.member.mNickname}"></td>
+					<td width="100" th:text="${board.cViews}"></td>
+					<td width="200" th:text="${#dates.format(new java.util.Date(board.cRegdate), 'yyyy-MM-dd hh:mm')}"></td> 
+					<td width="200" th:text="${#dates.format(new java.util.Date(board.cUpdate), 'yyyy-MM-dd hh:mm')}"></td>
 				</tr>
 			</table>
 			
@@ -73,32 +78,30 @@
 			
 			<!-- 페이징처리 -->
 	
-			<nav>
-				<div aria-label="Page navigation example" style="text-align: center;">
-					<ul class="pagination">
-						<li class="page-item" th:if="${result.prevPage}"><a th:href="${result.prevPage.pageNumber}+1">PREV
-								[[${result.prevPage.pageNumber} + 1]]</a></li>
-						<li class="page-item" th:each="pg:${result.pageList}" th:classappend="${pg.pageNumber==result.currentPageNum-1}?active:''"><a th:href="${pg.pageNumber}+1">[[${pg.pageNumber}+1]]</a></li>
-						<li class="page-item" th:if="${result.nextPage}"><a th:href="${result.nextPage.pageNumber}+1"> 다음</a></li>
-					</ul>
-				</div>
-			</nav>
-	
-	
 			<form id='f1' th:action="@{/community/boardlist}" method="get">
 				<input type="hidden" name='page' th:value=${result.currentPageNum}>
 				<input type='hidden' name='size' th:value=${result.currentPage.pageSize}>
 				<input type="hidden" name="type" th:value="${pagevo.type}">	
 				<input type="hidden" name="keyword" th:value="${pagevo.keyword}">	
 			</form>		
-		</div >
-
-
-
-		
 			
-	
-</div>
+			<nav>
+				<div aria-label="Page navigation example" class="row mt-5" style="text-align: center;">
+					<div class="col text-center">
+						<div class="block-27">
+							<ul class="pagination">
+								<li class="page-item" th:if="${result.prevPage}"><a th:href="${result.prevPage.pageNumber}+1">이전</a></li>
+								<li class="page-item" th:each="pg:${result.pageList}" th:classappend="${pg.pageNumber==result.currentPageNum-1}?active:''"><a th:href="${pg.pageNumber}+1">[[${pg.pageNumber}+1]]</a></li>
+								<li class="page-item" th:if="${result.nextPage}"><a th:href="${result.nextPage.pageNumber}+1"> 다음</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</nav>
+			<br><br>
+			
+		</div >
+	</div>
 
 <th:block layout:fragment="script1">
 	<!-- <script src="/bootstrap/js/jquery.min.js"></script> -->

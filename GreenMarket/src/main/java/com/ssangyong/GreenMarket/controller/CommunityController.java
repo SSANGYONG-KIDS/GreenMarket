@@ -33,6 +33,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.ssangyong.GreenMarket.model.CommunityEntity;
 import com.ssangyong.GreenMarket.model.CommunityReplyEntity;
+import com.ssangyong.GreenMarket.model.CommunityTagEntity;
 import com.ssangyong.GreenMarket.model.MemberEntity;
 import com.ssangyong.GreenMarket.model.PageMaker;
 import com.ssangyong.GreenMarket.model.PageVO;
@@ -63,6 +64,46 @@ public class CommunityController {
 		model.addAttribute("result", new PageMaker<>(result));
 	}
 	
+	//태그 포함된 게시글 보기
+	@GetMapping("community/tagBoardlist/{ctId}")
+	public String sameTagBoardlist(@PathVariable Integer ctId, Model model) {
+		System.out.println("controller-같은 태그 게시물보기() 실행");
+		System.out.println("ctId: "+ctId);
+			
+		//같은 ctname을 가진 게시글을 받아오기
+		List<CommunityTagEntity> tagList = service.selectByTagName(ctId);
+		for(CommunityTagEntity t : tagList) {
+			System.out.println("?????????????????????????????????????????????");
+			System.out.println(t.getCtId());
+			System.out.println(t.getCtName());
+			System.out.println("??????????????????????????????????????????????");
+		}
+		//model attribute 등록하기
+		model.addAttribute("tagList",tagList);
+		
+		return "/community/hashTagBoardlist";
+	}
+		
+	
+	//내가 쓴 글 보기
+	@GetMapping("/community/myBoardlist")
+	public String myBoardlist(Model model, Principal principal, Authentication authentication, PageVO pagevo) {
+		System.out.println("내가 쓴 글 보기 controller");
+		
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		MemberEntity user =  log_service.selectById(userDetails.getUsername());
+		
+		Page<CommunityEntity> result = service.selectMyBoard(pagevo, user.getMId());
+		System.out.println("내가 쓴 글 보기 controller - 1");
+		
+		model.addAttribute("boardResult",result);
+		model.addAttribute("pagevo", pagevo);
+		model.addAttribute("result", new PageMaker<>(result));
+		System.out.println("내가 쓴 글 보기 controller - 2");
+		return "community/myBoardlist";	
+	}
+	
+	
 	//글 상세보기
 	@GetMapping("/community/boarddetail")
 	public String selectById(Model model, Integer cId, Principal principal, Authentication authentication, PageVO pagevo ) {
@@ -70,11 +111,16 @@ public class CommunityController {
 		model.addAttribute("board", service.selectById(cId));
 		model.addAttribute("pagevo", pagevo);
 		model.addAttribute("cId",cId);
-	
+		model.addAttribute("tags", service.selectTags(cId));
+		
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		MemberEntity user =  log_service.selectById(userDetails.getUsername());
 		model.addAttribute("user",user);
 		System.out.println("user.mId: "+user.getMId());
+		
+		//조회수 +1
+		service.updateViews(cId);
+	
 		return "community/boarddetail";
 	}
 	
@@ -113,7 +159,7 @@ public class CommunityController {
 	//글 등록완료
 	@RequestMapping(value="community/register", method= {RequestMethod.POST})
 	@ResponseBody
-	public void boardRegisterPost(CommunityEntity board, RedirectAttributes rttr, Authentication authentication) {
+	public void boardRegisterPost(CommunityEntity board, @RequestParam(value="tagArr[]") List<String> tagArr, RedirectAttributes rttr, Authentication authentication) {
 		System.out.println("controller-글 등록하기");
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		MemberEntity user = log_service.selectById(userDetails.getUsername());
@@ -123,17 +169,7 @@ public class CommunityController {
 		//System.out.println("board.getCContent(): "+board.getCContent());
 		
 		service.insertBoard(board, user);
-		
-		//MemberEntity user = service.selectById(userDetails.getUsername());
-		/*
-		board.setMember(user);
-		//board.setUser(user); 
-		CommunityEntity ins_board = service.insertBoard(board);
-		//DietDiaryBoardVO ins_board = service.insertBoard(board);
-		
-		rttr.addFlashAttribute("resultMessage", ins_board==null?"입력실패":"입력성공");
-		return "redirect:/community/boardlist";
-		*/
+		service.insertTag(tagArr, board);
 	}
 	
 	
@@ -146,6 +182,7 @@ public class CommunityController {
 		model.addAttribute("board", service.selectById(cId));
 		return "community/update";
 	}
+	
 	
 	//댓글 삭제하기
 	@GetMapping("community/boarddetail/{cId}/{crId}")
