@@ -11,16 +11,21 @@ import org.springframework.stereotype.Service;
 
 import com.querydsl.core.types.Predicate;
 import com.ssangyong.GreenMarket.model.CommunityEntity;
+import com.ssangyong.GreenMarket.model.CommunityTagEntity;
 import com.ssangyong.GreenMarket.model.MemberEntity;
 import com.ssangyong.GreenMarket.model.PageVO;
 import com.ssangyong.GreenMarket.repository.CommunityRepository;
+import com.ssangyong.GreenMarket.repository.CommunityTagRepository;
 
 @Service
 public class CommunityService {
 
 	@Autowired
 	private CommunityRepository repo;
-
+	@Autowired
+	private CommunityTagRepository tag_repo;
+	
+	
 // 원래 코드!! (PageVO 기법)
 	public Page<CommunityEntity> selectAll(PageVO pvo) {
 		Predicate p = repo.makePredicate(pvo.getType(), pvo.getKeyword());
@@ -30,19 +35,48 @@ public class CommunityService {
 		Page<CommunityEntity> result = repo.findAll(p, pageable);
 		return result;
 	}
-	
+		
 	
 	// 원래 코드!!list조회
 	public List<CommunityEntity> selectAll() {
 		return (List<CommunityEntity>) repo.findAll();
 	}
 
+	// 내가쓴 글 보기
+	public Page<CommunityEntity> selectMyBoard(PageVO pvo, String mId){
+		System.out.println("service-selectMyBoard()");
+	//	Predicate p = repo.makePredicate(pvo.getType(), pvo.getKeyword());
+	//	Predicate p = repo.makePredicate(null, null);
+		String id = mId;
+		
+		// makePaging(방향, sort할 field)
+		Pageable pageable = pvo.makePaging(0, "cId");
+		Page<CommunityEntity> result = repo.findByMember_mId(id, pageable);
+		return result;
+	}
+	
 	
 	// 아이디로 찾기 (글 상세보기)
 	public CommunityEntity selectById(Integer cId) {
 		return repo.findById(cId).get();
 	}
 
+	// 태그 아이디로 찾기
+	public List<CommunityTagEntity> selectTags(Integer cId) {
+		return tag_repo.findByCommunity_cId(cId);
+	}
+	
+	//같은 태그 게시글 띄우기
+	public List<CommunityTagEntity> selectByTagName(Integer ctId) {
+		System.out.println("service-select by tagName() 호출");
+		CommunityTagEntity tagEntity = tag_repo.findById(ctId).get();
+	
+		String thisName = tagEntity.getCtName();
+		
+		return tag_repo.findByCtName(thisName);
+		
+	}
+	
 	// 삽입 (변경)
 	@Transactional
 	public void insertBoard(CommunityEntity board, MemberEntity user) {
@@ -51,7 +85,21 @@ public class CommunityService {
 		board.setMember(user);
 		repo.save(board);
 	}
-
+	
+	// 태그 엔티티 삽입
+	@Transactional
+	public void insertTag(List<String> tagArr, CommunityEntity board) {
+		System.out.println("service - insert tag()");
+		for(String tagName : tagArr) {
+			System.out.println(tagName+" for문 진입 !!");
+			CommunityTagEntity tag = new CommunityTagEntity();
+			tag.setCommunity(board);
+			tag.setCtName(tagName);
+			tag_repo.save(tag);
+		}
+		
+	}
+	
 	// 글 수정
 	@Transactional
 	public void updateBoard(CommunityEntity requestBoard) {
@@ -73,4 +121,12 @@ public class CommunityService {
 		}
 		return ret;
 	}
+	
+	// 게시글 조회수 +1
+	@Transactional
+	public void updateViews(Integer cId) {
+		this.selectById(cId).setCViews(this.selectById(cId).getCViews()+1);
+	}
+
+	
 }

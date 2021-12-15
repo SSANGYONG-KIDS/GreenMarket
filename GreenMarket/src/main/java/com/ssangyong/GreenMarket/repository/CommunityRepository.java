@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
@@ -40,5 +41,8 @@ public interface CommunityRepository extends CrudRepository<CommunityEntity, Int
 	public Page<CommunityEntity> findByCContent(String content, Pageable page);
 
 	public Page<CommunityEntity> findAll(Predicate p, Pageable pageable);
+	
+	//멤버 id로 게시글 목록 가져오기
+	public Page<CommunityEntity> findByMember_mId(@Param(value="mId") String mId, Pageable page);
 	
 }
