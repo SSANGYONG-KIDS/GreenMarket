@@ -91,7 +91,9 @@ public class CommunityService {
 	public void insertTag(List<String> tagArr, CommunityEntity board) {
 		System.out.println("service - insert tag()");
 		for(String tagName : tagArr) {
-			System.out.println(tagName+" for문 진입 !!");
+			if(tagName.equals("default__")) {
+				return;
+			}
 			CommunityTagEntity tag = new CommunityTagEntity();
 			tag.setCommunity(board);
 			tag.setCtName(tagName);
