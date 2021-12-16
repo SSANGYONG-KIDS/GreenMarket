@@ -33,7 +33,7 @@ public class MyPageController {
 	      System.out.println("회원정보 보기 controller");
 	      System.out.println(principal);
 	      model.addAttribute("member", memberservice.selectById(principal.getUsername()));
-	      return "/layout/account_setting";
+	      return "layout/account_setting";
  }
 	 
 	 @PostMapping("/modify")
