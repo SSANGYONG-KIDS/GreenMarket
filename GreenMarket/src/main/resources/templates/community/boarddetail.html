@@ -147,12 +147,9 @@
 			url: "/community/boarddetail/",
 			data: data
 		}).done(function(resp){
-			alert("댓글을 등록하였습니다.");
 			location.href = window.location.href;
 		}).fail(function(error){
 			alert("cId값 넘겨주기 실패");
-			alert(data.cId);
-			alert(data.crContent);
 			console.log(error);
 		});	
 		
@@ -174,8 +171,7 @@
 			alert("삭제가 완료되었습니다.");
 			location.href="/community/boardlist";
 		}).fail(function(error){
-			alert("삭제 실패함.");
-			alert(data);
+			alert("삭제 실패");
 			alert(JSON.stringfy(data));
 			console.log(error);
 		});	
@@ -189,11 +185,9 @@
 			url: "/community/update",
 			data: {"cId" : "[[${cId}]]" }
 		}).done(function(resp){
-			alert("cId값을 넘겨주기 성공");
 			location.href="/community/update";
 		}).fail(function(error){
-			alert("cId값 넘겨주기 실패");
-			alert(data);
+			alert("수정 실패");
 			alert(JSON.stringfy(data));
 			console.log(error);
 		});	

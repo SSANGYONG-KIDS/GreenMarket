@@ -72,11 +72,7 @@ public class CommunityController {
 			
 		//같은 ctname을 가진 게시글을 받아오기
 		List<CommunityTagEntity> tagList = service.selectByTagName(ctId);
-		for(CommunityTagEntity t : tagList) {
-			System.out.println(t.getCtId());
-			System.out.println(t.getCtName());
-			System.out.println(t.getCommunity().getCId());
-		}
+		
 		//model attribute 등록하기
 		model.addAttribute("tagList",tagList);
 		
@@ -93,12 +89,10 @@ public class CommunityController {
 		MemberEntity user =  log_service.selectById(userDetails.getUsername());
 		
 		Page<CommunityEntity> result = service.selectMyBoard(pagevo, user.getMId());
-		System.out.println("내가 쓴 글 보기 controller - 1");
 		
 		model.addAttribute("boardResult",result);
 		model.addAttribute("pagevo", pagevo);
 		model.addAttribute("result", new PageMaker<>(result));
-		System.out.println("내가 쓴 글 보기 controller - 2");
 		return "community/myBoardlist";	
 	}
 	
@@ -142,16 +136,13 @@ public class CommunityController {
 		reply.setCrOrder(0);
 		reply.setCrTopno(0);
 		
-		System.out.println("여기까지 되는지 확인");
 		reply_service.updateOrInsert(reply);
-		System.out.println("댓글등록 contoller 끝\n");
 	}
 	
 	
 	//글 등록 페이지로 이동
 	@GetMapping("community/register")
 	public String register() {
-		System.out.println("controller-getmapping-register()");
 		return "community/register";
 	}
 	
@@ -187,11 +178,8 @@ public class CommunityController {
 	@GetMapping("community/boarddetail/{cId}/{crId}")
 	public String replyDelete(@PathVariable Integer cId, @PathVariable Integer crId) {
 		System.out.println("controller-댓글 삭제() 실행");
-		System.out.println("cId: "+cId);
-		System.out.println("crId: "+crId);
 		
 		int ret = reply_service.deleteReply(crId);
-		System.out.println("ret: "+ret);
 		
 		return "redirect:/community/boarddetail?cId="+cId;
 	}
@@ -201,9 +189,7 @@ public class CommunityController {
 	@ResponseBody
 	public void boardDelete(Integer cId, RedirectAttributes rttr ) {
 		System.out.println("controller-boardDelete() 실행");
-		System.out.println("cId(data): "+cId);
 		int ret = service.deleteBoard(cId);
-		System.out.println("ret: "+ret);
 		rttr.addFlashAttribute("resultMessage", ret==0?"삭제실패":"삭제성공");
 	}
 	
