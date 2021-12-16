@@ -81,7 +81,7 @@ public class CommunityController {
 		//model attribute 등록하기
 		model.addAttribute("tagList",tagList);
 		
-		return "/community/hashTagBoardlist";
+		return "community/hashTagBoardlist";
 	}
 		
 	
