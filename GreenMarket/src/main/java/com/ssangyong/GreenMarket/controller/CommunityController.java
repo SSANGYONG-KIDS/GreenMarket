@@ -73,10 +73,9 @@ public class CommunityController {
 		//같은 ctname을 가진 게시글을 받아오기
 		List<CommunityTagEntity> tagList = service.selectByTagName(ctId);
 		for(CommunityTagEntity t : tagList) {
-			System.out.println("?????????????????????????????????????????????");
 			System.out.println(t.getCtId());
 			System.out.println(t.getCtName());
-			System.out.println("??????????????????????????????????????????????");
+			System.out.println(t.getCommunity().getCId());
 		}
 		//model attribute 등록하기
 		model.addAttribute("tagList",tagList);
@@ -216,23 +215,6 @@ public class CommunityController {
 		System.out.println("controller-putmapping-update()");
 		service.updateBoard(board);
 	}
-/*	
-	@PostMapping("/community/update")
-	public String boardUpdate(DietDiaryBoardVO board, String userId, RedirectAttributes rttr, Authentication authentication, Integer page, Integer size, String type, String keyword) {
-		board.setUser(uservice.selectById(userId));
-		DietDiaryBoardVO update_board = service.updateBoard(board);	
-		rttr.addFlashAttribute("resultMessage", update_board==null?"수정실패":"수정성공");
-		
-		//방법1...주소창에 안보이기 
-		PageVO pagevo = PageVO.builder()
-						.page(page).size(size).type(type).keyword(keyword)
-						.build();
-		rttr.addFlashAttribute("pagevo", pagevo);
-		//방법2...주소창에 보이기 
-		String param = "page=" + page + "&size=" + size + "&type="+type + "&keyword=" + keyword;
-		return "redirect:/dietdiaryboard/boardlist?" + param;
-			
-	}
-	*/
+
 
 }
