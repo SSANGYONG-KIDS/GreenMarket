@@ -33,7 +33,7 @@ public class MyPageController {
 	      System.out.println("회원정보 보기 controller");
 	      System.out.println(principal);
 	      model.addAttribute("member", memberservice.selectById(principal.getUsername()));
-	      return "/layout/account_setting";
+	      return "layout/account_setting";
  }
 	 
 	 @PostMapping("/modify")
@@ -47,9 +47,10 @@ public class MyPageController {
 	 
 	 @PostMapping("/checkCurrentPassword")
 	 @ResponseBody
-		public int checkCurrentPassword(String password, @AuthenticationPrincipal SecurityUser principal) {
+		public int checkCurrentPassword(String password, @AuthenticationPrincipal SecurityUser principal, String id) {
 		 System.out.println("비밀번호 확인하기");
-	     return memberservice.checkCurrentPassword(principal.getUsername(), password) ? 1 : 0;
+		 String mId = principal != null ? principal.getUsername() : id; 
+	     return memberservice.checkCurrentPassword(mId, password);
 	 }
 	 
 	 @PostMapping("/modifyPhone")

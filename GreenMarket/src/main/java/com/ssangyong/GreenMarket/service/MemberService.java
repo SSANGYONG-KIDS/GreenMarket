@@ -63,12 +63,14 @@ public class MemberService implements UserDetailsService{
     
     // 비밀번호 확인
     @Transactional
-    public boolean checkCurrentPassword(String mId, String password) {   	
+    public int checkCurrentPassword(String mId, String password) {   	
     	// 멤버 정보 가져오기
-    	MemberEntity memberEntity = memberrepository.findById(mId).get();
+    	MemberEntity memberEntity = memberrepository.findById(mId).orElse(null);
+    	
+    	if (memberEntity == null) return 2; // 일치하는 아이디 없음
     	
     	// 비교하기
-    	return new BCryptPasswordEncoder().matches(password, memberEntity.getMPw());
+    	return new BCryptPasswordEncoder().matches(password, memberEntity.getMPw()) ? 1 : 0;
     	
     }
     

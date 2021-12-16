@@ -63,15 +63,15 @@ public class LoginController {
    }
    
    @ResponseBody
-   @GetMapping("/login/nickCheck")
-   public int CheckNickName(String mNickname) {
-      return loginservice.checkNickName(mNickname)? 0: 1;
+   @GetMapping("/login/duCheck")
+   public int checkmId(String mId){
+	   return loginservice.checkmId(mId) ? 0 : 1 ;
    }
    
    @ResponseBody
-   @GetMapping("/login/duCheck")
-   public int checkId(String mId){
-      return loginservice.checkName(mId)? 0 : 1;
+   @GetMapping("/login/nickCheck")
+   public int CheckNickName(String mNickname) {
+      return loginservice.checkNickName(mNickname)? 0: 1;
    }
    
    @PostMapping("/profile_upload")

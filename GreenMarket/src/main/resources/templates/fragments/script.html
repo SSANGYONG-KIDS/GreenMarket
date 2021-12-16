@@ -27,7 +27,31 @@
 	<link id="contextPathHolder" th:data-contextPath="${#httpServletRequest.getContextPath()}"/>
 	<script>
 		let contextPath = $('#contextPathHolder').attr('data-contextPath') ? $('#contextPathHolder').attr('data-contextPath') : '';
+	$().ready(() => {
+		$("#login_btn").click(function() {
+		 $.ajax({
+            type : "POST",
+            url : "/checkCurrentPassword",
+            data : {
+               "id" : $("#mId").val(),
+               "password" : $("#mPw").val()
+            },
+            success : function(aa) {
+               console.log(aa);
+               if (aa == "1") {
+                  alert('반갑습니다.');
+                  $("#userForm").submit();
+               } else if(aa=="2"){
+                  alert('존재하지 않는 아이디입니다.');
+               } else {
+               	 alert('비밀번호 불일치합니다.');
+               }
+              }
+         });
+        });
+	})		
 	</script>
+
 
 </th:block>
 </html>

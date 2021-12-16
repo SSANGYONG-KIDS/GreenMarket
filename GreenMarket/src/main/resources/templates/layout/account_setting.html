@@ -172,10 +172,10 @@
 										class="" th:value="${member.mAddress.AddNum}"> 
 										<input type="text" id="sample6_address" placeholder="주소" name="mAddress.memberAddress1"
 										class="" th:value="${member.mAddress.memberAddress1}">
-										<input type="text" id="sample6_detailAddress" placeholder="상세주소"
-										name="mAddress.memberAddress2" class="" th:value="${member.mAddress.memberAddress2}"> 
-										<input type="text" id="sample6_extraAddress" placeholder="참고항목"
-										name="mAddress.memberAddress3" class="" th:value="${member.mAddress.memberAddress3}"> <br>
+										<input type="text" id="sample6_extraAddress" placeholder="상세주소"
+										name="mAddress.memberAddress2" class="" th:value="${member.mAddress.memberAddress2}"> <br>
+										<input type="text" id="sample6_detailAddress" placeholder="상세주소 직접 입력"
+										name="mAddress.memberAddress3" class="" th:value="${member.mAddress.memberAddress3}"> 
 								</div>
 								<div class="col-3">
 									<input type="button" onclick="sample6_execDaumPostcode()"
@@ -213,6 +213,7 @@
           	  <div class="form-group" id = "modify_pw"style="margin-bottom: 30px;">
              	 <label> 수정할 비밀번호</label> 
               	 <input type="password" id="new_pwd" name="password" class="form-control" placeholder="수정할 비밀번호를 입력하세요" required="required" autofocus/>
+              	 <i id="mPwInfo2" class="text-info"></i>
              </div>
              <button class="btn btn-primary btn-block" type="button" id="submit_pwd">확인</button>
 <!--           	</form>	 -->
@@ -288,44 +289,67 @@
          $('#helloModal').modal('show');
     });
 
-		$('#checkcurrent').click(function() {
 
-		var pw = $('#current_pwd').val();	//입력한 비밀번호
-	
-	  $.ajax({
-            type : "POST",
-            url : "/checkCurrentPassword",
-            data : {
-               "password" : pw
-            },
-            success : function(aa) {
-               console.log(aa);
-               if (aa == "1") {
-                  Swal.fire('비밀번호가 일치합니다.');
-                   	if($("#modify_pw").css("display") == "none"){   
-       				 	$('#modify_pw').show();  
-     					 $('#submit_pwd').click(function() {
-							$.ajax({
-           		 				type : "POST",
-            	 				url : "/modifyPwd",
-           		 				data : {
-              			 			"mPw" : $('#new_pwd').val()
-            						}
-            						}).done(function(responseBody){
-		         						Swal.fire("수정이 완료되었습니다.");
-		         					}).fail(function(error) {
-		         						Swal.fire('수정이 불가 합니다.');
-		         					});	
-            					});
-  					} else {  
-     					   $('#modify_pw').hide();  
-   						}  
-               } else {
-                  Swal.fire('비밀번호가 불일치 합니다.');
-               }
+// (현재) '비밀번호 확인' 버튼 클릭했을 때
+$('#checkcurrent').click(function () {
+    var pw = $('#current_pwd').val();	//입력한 비밀번호
+
+    // 입력한 비밀번호가 DB와 일치하는지 확인
+    $.ajax({
+        type: "POST",
+        url: "/checkCurrentPassword",
+        data: {
+            "password": pw
+        },
+        success: function (aa) {
+            console.log(aa);
+
+            if (aa == "1") { // DB와 입력한 비밀번호와 일치할 때
+                Swal.fire('비밀번호가 일치합니다.');
+                if ($("#modify_pw").css("display") == "none") {
+                    $('#modify_pw').show();
+
+                    // 수정한 비밀번호에 대한 '확인' 버튼 클릭 이벤트 추가
+                    $('#submit_pwd').click(function () {
+
+                        //비번 유효성 검사 (수정하려는 비밀번호)
+                        var regPw = /[a-zA-Z0-9!@#$%^&*]{8,12}$/;
+                        debugger;
+                        if (!regPw.test(mPw)) { // 유효성 불일치
+                            debugger;
+                            $('i[id="mPwInfo2"]').html("비밀번호를 형식을 확인하세요");
+                            $("#new_pwd").focus();
+                            debugger;
+                            return false;
+                            // event.preventDefault();
+                        } else { // 유효성 일치
+                            debugger;
+                            $.ajax({
+                                type: "POST",
+                                url: "/modifyPwd",
+                                data: {
+                                    "mPw": $('#new_pwd').val()
+                                }
+                            }).done(function (responseBody) {
+                                Swal.fire("수정이 완료되었습니다.");
+                                $('#current_pwd').val('');
+                                $('#new_pwd').val('');
+                                $("#modify_pw").css("display", "none");
+                                $('#helloModal').modal('hide');
+                            }).fail(function (error) {
+                                Swal.fire('수정이 불가 합니다.');
+                            });
+                        }
+                    });
+                } else {
+                    $('#modify_pw').hide();
+                }
+            } else if (aa == "0") { // 비밀번호 일치하지 않을 때
+                Swal.fire('비밀번호가 불일치 합니다.');
             }
-         });
-      });
+        }
+    });
+});
       
 		
 		$('#modifyPhone').click(function() {
@@ -486,7 +510,7 @@
 
 		filesArr.forEach(function(f) {
 			if (!f.type.match("image.*")) {
-				alert("확장자는 이미지 확장자만 가능합니다.");
+				Swal.fire("확장자는 이미지 확장자만 가능합니다.");
 				return;
 			}
 
