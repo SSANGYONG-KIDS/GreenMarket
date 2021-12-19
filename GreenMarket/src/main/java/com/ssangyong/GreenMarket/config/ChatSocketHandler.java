@@ -142,7 +142,8 @@ public class ChatSocketHandler extends TextWebSocketHandler{
 					// 보낼 메시지 객체
 					JSONObject objForTarget = new JSONObject();
 					objForTarget.put(OBJ_KEY_TYPE, OBJ_TYPE_ALERT_ANOTHER_ROOM_MSG); // 메시지 종류
-					objForTarget.put(OBJ_KEY_CONTENT, tId);
+					objForTarget.put(OBJ_KEY_M_ID, tId);
+					objForTarget.put(OBJ_KEY_CONTENT, content);
 					
 					// 메시지 보내기 (다른방에서 메시지 왔음 알리기)
 					sessionOfTarget.sendMessage(new TextMessage(objForTarget.toJSONString()));

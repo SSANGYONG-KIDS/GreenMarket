@@ -36,6 +36,9 @@
 	<footer id="footer_css" th:replace="~{fragments/footer::footer1}">
 	</footer>
 	
+	<!-- 채팅 실시간 알림 관련 script -->
+	<th:block th:replace="~{fragments/scriptChatCommon :: scriptFragment}"></th:block>
+	
 	<!-- 개별 페이지 script 지정공간 -->
 	<th:block layout:fragment="script1">
 	</th:block> 

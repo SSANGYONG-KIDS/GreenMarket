@@ -12,12 +12,39 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 		    max-width: 1188px;
 		}		
 	}
+	
+	#cnt_unread_on_menu { /* 상단 Message 메뉴 옆에 표시하는 채팅 안읽은 메시지 수 */
+		background-color: red;
+	    color: white;
+	    border-radius: 100%;
+	    padding: 0px 0px;
+	    font-size: 11px;
+	    width: 17px;
+	    text-align: center;
+	    line-height: 17px;
+	    position: absolute;
+	    right: 6px;
+	    top: 17px;
+		display: none;
+	}
+	
+	.awake #cnt_unread_on_menu { /* 스크롤 내려서 메뉴 바뀌었을 때 채팅 안읽은 메시지 수 위치 */
+		top: 10px;
+	}
+	
+	#nav-item-message { /* 상단 메뉴 Message */
+		position: relative;
+	}
 </style>
 <head>
 
 </head>
 <body>	
 	<header class="page-header" th:fragment="header1">
+	<!-- 세션 연결되어있는지 확인하기 위한 데이터 (data_is_authenticated) -->
+	<input type="hidden" id="data_is_authenticated" sec:authorize-expr="!isAuthenticated()" value="false">
+	<input type="hidden" id="data_is_authenticated" sec:authorize-expr="isAuthenticated()" value="true">
+	
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
 			<a th:href="@{/index}" class="navbar-brand">GreenMarket<span>Secondhand rental</span></a>
@@ -30,7 +57,7 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 					<li class="nav-item" id="nav-item-home"><a th:href="@{/index}" class="nav-link">Home</a></li>
 					<li class="nav-item"><a th:href="@{/layout/about}" class="nav-link">About</a></li>
 					<li class="nav-item"><a th:href="@{/layout/destination}" class="nav-link">Destination</a></li>
-					<li class="nav-item" id="nav-item-message"><a th:href="@{/trade/chatMain}" class="nav-link">Message</a></li>
+					<li class="nav-item" id="nav-item-message"><a th:href="@{/trade/chatMain}" class="nav-link">Message</a><div id="cnt_unread_on_menu"></div></li>
 					<li class="nav-item" id="nav-item-community"><a th:href="@{/community/boardlist}" class="nav-link">Community</a></li>
 					<li class="nav-item" sec:authorize-expr="!isAuthenticated()"><a href="#" data-toggle="modal" data-target="#exampleModal" class="nav-link">로그인</a></li>
 					<li class="nav-item" sec:authorize-expr="isAuthenticated()"><a th:href="@{/login/logout}" class="nav-link">로그아웃</a></li>
