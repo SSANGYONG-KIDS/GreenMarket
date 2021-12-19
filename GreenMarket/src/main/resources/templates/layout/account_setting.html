@@ -313,22 +313,26 @@ $('#checkcurrent').click(function () {
                     $('#submit_pwd').click(function () {
 
                         //비번 유효성 검사 (수정하려는 비밀번호)
+                        var mPw = $('#new_pwd').val();
                         var regPw = /[a-zA-Z0-9!@#$%^&*]{8,12}$/;
-                        debugger;
+                        
                         if (!regPw.test(mPw)) { // 유효성 불일치
-                            debugger;
                             $('i[id="mPwInfo2"]').html("비밀번호를 형식을 확인하세요");
                             $("#new_pwd").focus();
-                            debugger;
                             return false;
-                            // event.preventDefault();
-                        } else { // 유효성 일치
-                            debugger;
+                        
+                        }
+                        else if(mPw == pw) {
+                       		$('i[id="mPwInfo2"]').html("비밀번호가 이전 비밀번호와 같습니다.");
+                            $("#new_pwd").focus();
+                            return false;
+                        }
+                         else {  // 유효성 일치
                             $.ajax({
                                 type: "POST",
                                 url: "/modifyPwd",
                                 data: {
-                                    "mPw": $('#new_pwd').val()
+                                    "mPw": mPw
                                 }
                             }).done(function (responseBody) {
                                 Swal.fire("수정이 완료되었습니다.");
@@ -339,7 +343,7 @@ $('#checkcurrent').click(function () {
                             }).fail(function (error) {
                                 Swal.fire('수정이 불가 합니다.');
                             });
-                        }
+                         }
                     });
                 } else {
                     $('#modify_pw').hide();
@@ -529,7 +533,7 @@ $('#checkcurrent').click(function () {
    	
    	function update() {
    		    alert("회원정보를 수정하겠습니까?");
- 	 		
+
  	 		let data = {
 	 		mEmail : $("#mEmail").val(),
 	 		'mAddress.AddNum' : $("#sample6_postcode").val(),
@@ -560,10 +564,10 @@ $('#checkcurrent').click(function () {
 						url: "/modify",
 						data: data
 					}).done(function(resp){
-		         		alert("수정이 완료되었습니다.");
+		         		 Swal.fire('수정성공!', '휴대폰 인증이 정상적으로 완료되었습니다.', 'success')
 		         		location.href="/layout/account_setting";
 		         	}).fail(function(error) {
-		         		alert("수정실패");
+		         		 Swal.fire("수정실패");
 		         	});						
 				}).fail(function(error) {
 				})
@@ -575,10 +579,10 @@ $('#checkcurrent').click(function () {
 					url: "/modify",
 					data: data
 				}).done(function(resp){
-	         		alert("수정이 완료되었습니다.");
+	         		 Swal.fire('수정성공!', '휴대폰 인증이 정상적으로 완료되었습니다.', 'success')
 	         		location.href="/layout/account_setting";
 	         	}).fail(function(error) {
-	         		alert("수정실패");
+	         		 Swal.fire("수정실패");
 	         	});						
 			}
 
@@ -586,7 +590,6 @@ $('#checkcurrent').click(function () {
 	 		
 	
 	}
-
 	
 	
 	$("#delete_account").on('click', delete_account);

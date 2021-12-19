@@ -22,6 +22,7 @@
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script> 
 	<script src="/bootstrap/js/google-map.js"></script> 
 	<script defer src="/bootstrap/js/main.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 	<!-- contextPath 관련 -->	
 	<link id="contextPathHolder" th:data-contextPath="${#httpServletRequest.getContextPath()}"/>
@@ -39,12 +40,17 @@
             success : function(aa) {
                console.log(aa);
                if (aa == "1") {
-                  alert('반갑습니다.');
-                  $("#userForm").submit();
+              	 Swal.fire({
+  				 position: 'top',
+  				 icon: 'success',
+  				 title: '반갑습니다!',
+  				 showConfirmButton: false,
+				})
+                $("#userForm").submit();
                } else if(aa=="2"){
-                  alert('존재하지 않는 아이디입니다.');
+                  Swal.fire('존재하지 않는 아이디입니다.');
                } else {
-               	 alert('비밀번호 불일치합니다.');
+               	 Swal.fire('비밀번호 불일치합니다.');
                }
               }
          });
