@@ -34,6 +34,13 @@ public class ItemService {
 		return (List<ItemEntity>) itemRepo.findAll();
 	}
 	
+	// 최근 순 조회
+	/*
+	public List<ItemEntity> selectRecently() {
+		return (List<ItemEntity>) itemRepo.findAllOrderByiIdDesc();
+	}
+	*/
+	
 	// mylist 조회
 	public List<ItemEntity> selectMyList(MemberEntity member) {
 		return (List<ItemEntity>)itemRepo.findByMember(member);

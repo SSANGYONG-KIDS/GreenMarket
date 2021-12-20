@@ -9,7 +9,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-import com.ssangyong.GreenMarket.model.ItStateEnumType;
 import com.ssangyong.GreenMarket.model.ItemEntity;
 import com.ssangyong.GreenMarket.model.ItemPageVO;
 import com.ssangyong.GreenMarket.model.MemberEntity;
@@ -34,9 +33,11 @@ public interface ItemRepository extends CrudRepository<ItemEntity, Integer>, Que
 		return builder;
 	}
 	
+	
 	public Page<ItemEntity> findByIContent(String content, Pageable page);
 	
 	public List<ItemEntity> findByMember(MemberEntity member);
+	//public List<ItemEntity> findAllOrderByiIdDesc();
 
 	public Page<ItemEntity> findAll(Predicate p, Pageable pageable);
 }

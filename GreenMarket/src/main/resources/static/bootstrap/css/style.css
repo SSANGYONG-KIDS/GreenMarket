@@ -9681,14 +9681,14 @@ textarea.form-control {
       height: 0;
       border-style: solid;
       border-width: 0 0 7px 7px;
-      border-color: transparent transparent #c7390d transparent; }
+      border-color: transparent transparent black transparent; }
     .blog-entry .topp:before {
       width: 0;
       right: -7px;
       height: 0;
       border-style: solid;
       border-width: 7px 0 0 7px;
-      border-color: transparent transparent transparent #c7390d; }
+      border-color: transparent transparent transparent black; }
   .blog-entry .one {
     width: 55px; }
   .blog-entry .two {
