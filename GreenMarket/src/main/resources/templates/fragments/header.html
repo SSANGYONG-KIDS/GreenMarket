@@ -2,9 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" 
 xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <meta charset="UTF-8">
-<style th:fragment="header1">
 
-</style>
 <head>
 
 </head>
@@ -43,7 +41,6 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-		
           <h4 class="modal-title"> 로그인 </h4>
         </div>
         <div class="modal-body">
@@ -68,7 +65,7 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
           		</div>
           	<div class="signup">
           	 <form th:action="@{/layout/signup}" method="get">
-            	 <input type="submit" value="회원가입" id="loginButton" class="btn btn-default" style="margin-left: 90px;"/>
+            	 <input type="submit" value="회원가입" id="loginButton" class="btn btn-default" style="margin-left: 110px;"/>
              </form>
              <form th:action="@{/layout/}" method="get">
             	 <input type="submit" value="비밀번호 찾기" id="searchPwd" class="btn btn-default" style="margin-left: 90px;"/>

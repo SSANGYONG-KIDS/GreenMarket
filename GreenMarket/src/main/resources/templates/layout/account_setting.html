@@ -157,14 +157,24 @@
 							<!-- 이메일 -->
 							<div class="row">
 								<div class="col">
-									<label for="mEmail"> 이메일 수정 (수정할 이메일을 입력해주세요)</label> <input id="mEmail"
-										name="mEmail" type="text" placeholder="abcd@email.com"
+									<label for="mEmail"> 이메일 수정 (수정할 이메일을 입력해주세요)</label> 
+									<input id="mEmail" name="mEmail" type="text" placeholder="abcd@email.com"
 										class="form-control" th:value="${member.mEmail}" />
 								</div>
 							</div>
 							<br>
+							
+							<!-- 자기소개 -->
+								<div class="row">
+									<div class="col">
+										<label for="mInfo"> 자기소개</label>
+										<textarea id="mInfo" name="mInfo" placeholder="자기소개를 적어주세요!"
+											class="" th:text="${member.mInfo}"></textarea>
+									</div>
+								</div>
+								<i id="mInfoInfo" class="text-info"></i> <br>
 
-							<!-- 주소 -->
+								<!-- 주소 -->
 							<div class="row">
 								<div class="col">
 									<label for="memberAddress">주소</label> 
@@ -536,6 +546,7 @@ $('#checkcurrent').click(function () {
 
  	 		let data = {
 	 		mEmail : $("#mEmail").val(),
+	 		mInfo : $("#mInfo").val(),
 	 		'mAddress.AddNum' : $("#sample6_postcode").val(),
 	 		'mAddress.memberAddress1' : $("#sample6_address").val(),
 	 		'mAddress.memberAddress2' : $("#sample6_detailAddress").val(),

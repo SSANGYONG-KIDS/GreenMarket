@@ -42,6 +42,7 @@ public class MemberService implements UserDetailsService{
     	memberEntity.setMEmail(member.getMEmail());
 //    	memberEntity.setMPhone(member.getMPhone());
     	memberEntity.setMPhoto(member.getMPhoto());
+    	memberEntity.setMInfo(member.getMInfo());
     	memberEntity.setMAddress(member.getMAddress());
        //함수 종료시(service종료) 트랜잭션 종료 후 더티체킹=> 자동 업데이트. DB flush
     }
