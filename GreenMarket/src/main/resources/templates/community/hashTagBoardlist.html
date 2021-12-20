@@ -12,28 +12,40 @@
 
 <body>
 	<div class="panel panel-default" layout:fragment="content1">
-		 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/bootstrap/images/bg_1.jpg');">
+		 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/bootstrap/images/hashtag_img.png');">
 		  <div class="overlay"></div>
 		  <div class="container">
 		    <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
 		      <div class="col-md-9 ftco-animate pb-5 text-center">
 		       <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Community <i class="fa fa-chevron-right"></i></a></span> <span>About us <i class="fa fa-chevron-right"></i></span></p>
-		       <h1 class="mb-0 bread">같은 태그 게시글</h1>
+		    <!--   <h1 class="mb-0 bread">${tag.ctName}</h1> -->
+		       <div th:text="'#'+${tagList[0].ctName}" style="font-weight: bold; font-size: 50px; color: white;"></div>
 		     </div>
 		   </div>
 		 </div>
 		</section>
 		<div class="container">
-			<!--게시판 위 상단바. 카테고리, 내 동네 표시 등 구현할 곳-->
-			<div th:each="tag, i : ${tagList}">
-				<div text="${tag.ctName}"></div>
-				<div text="${tag.ctId}"></div>
-			</div >
+			<br>
+			<button class="btn btn-primary" onclick="history.back()">돌아가기</button>		
+			<br><br>
+			<table class="table table-bordered table-hover " id="xxx">
+				
+				<tr>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>조회수</th>
+					<th>작성일</th>
+					<th>수정일</th>
+				</tr>
+				<tr th:each="tag : ${tagList}" th:onclick="'window.location.href=\'' + @{/community/boarddetail(cId=${tag.community.cId})} +'\' '">
+					<td width="300" style="word-break:break-all" th:text="${tag.community.cTitle}"></td >
+					<td width="100" style="word-break:break-all" th:text="${tag.community.member.mNickname}"></td>
+					<td width="100" th:text="${tag.community.cViews}"></td>
+					<td width="200" th:text="${#dates.format(new java.util.Date(tag.community.cRegdate), 'yyyy-MM-dd hh:mm')}"></td> 
+					<td width="200" th:text="${#dates.format(new java.util.Date(tag.community.cUpdate), 'yyyy-MM-dd hh:mm')}"></td>
+				</tr>
+			</table>
 		
-	
-		
-			
-			
 			
 		</div >
 	</div>
