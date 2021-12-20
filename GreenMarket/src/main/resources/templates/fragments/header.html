@@ -129,7 +129,6 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-		
           <h4 class="modal-title"> 로그인 </h4>
         </div>
         <div class="modal-body">
@@ -149,12 +148,12 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
                로그인 유지하기
                </label>
             </div>
-             <button type="submit" id="login_btn"class="btn btn-primary btn-block">로그인</button>
+             <button type="button" id="login_btn" class="btn btn-primary btn-block" >로그인</button>
           	</form>	
           		</div>
           	<div class="signup">
           	 <form th:action="@{/layout/signup}" method="get">
-            	 <input type="submit" value="회원가입" id="loginButton" class="btn btn-default" style="margin-left: 90px;"/>
+            	 <input type="submit" value="회원가입" id="loginButton" class="btn btn-default" style="margin-left: 110px;"/>
              </form>
              <form th:action="@{/layout/}" method="get">
             	 <input type="submit" value="비밀번호 찾기" id="searchPwd" class="btn btn-default" style="margin-left: 90px;"/>
@@ -163,7 +162,6 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
           <div class="modal-footer">
            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_modal">닫기</button>
          </div>
-        
       </div>
     </div>
     </div>

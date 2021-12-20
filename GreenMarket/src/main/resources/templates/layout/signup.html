@@ -5,14 +5,34 @@
    layout:decorate="~{layout/layout1}"> 
 <th:block layout:fragment="style1">
 	<style>
-	body {
-	
+	#signup-form {
+	margin-top : 5%;
 	}
+	
 	#img {
-	 width : 100px;
-	 height: 100px;
+	 width : 150px;
+	 height: 150px;
 	 border-radius : 70%;
 	 object-fit: cover;
+	}
+	
+	label {
+	font-weight : 900;
+	color : black;
+	margin-right : 3%;
+	}
+	
+	.box-form {
+	height: 52px !important;
+    background: #fff !important;
+    color: #000000 !important;
+    font-size: 18px;
+    border-radius: 5px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    width: 40%;
+    display: block;
+    margin-left:50%;
 	}
 	</style>
 <head>
@@ -34,9 +54,9 @@
 		   </div>
 		 </div>
 		</section>
-      <div class="container">
-      <div class="input-form-backgroud">
-      <div class="input-form col-md-12 mz-auto" style="margin-left: 19%">
+      <div class="container" style="text-align : center;">
+      <div class="input-form-backgroud" >
+      <div class="input-form col-md-12 mz-auto">
          <form id="signup-form" action="./signup" method="POST">
          <div class="validation-form" novalidate>
          
@@ -48,75 +68,73 @@
 				<img id="img" src="/bootstrap/images/user.png"/>
 				</div>
 				<br>
-               <input id="file_img" name="file_img" type="file" class=""/> 
+               <input id="file_img" name="file_img" type="file" class="" style="
+    			margin-left: 15%;"/> 
             </div>
          </div>
          <br>
          <div class="row">
             <div class="col">
-                  <label for="mId">아이디</label>
-                  <input id="mId" name="mId" type="text" placeholder="아이디을 입력하세요" class="form-control"/>
+                  <label for="mId" >아이디</label>
+                  <input id="mId2" name="mId" type="text" placeholder="아이디을 입력하세요" class="box-form"/>
             </div> 
             <div class="col-3">
-                  <input type="button" id="checkId" value="중복확인" class="form-control">
+                  <input type="button" id="checkId" value="중복확인" class="form-control2">
             </div>
          </div>    
-<!--          <i id="mId" class="text-info"></i> -->
+         <i id="mIdInfo" class="text-info"></i>
          <br>
          
          <div class="row">
             <div class="col">
-                  <label for="mPw">비밀번호(영문+숫자+특수번호로 입력해주세요)</label> 
-                  <input id="mPw" name="mPw" type="password" placeholder="비밀번호를 입력하세요."class="form-control" />
+                  <label for="mPw">비밀번호</label> 
+                  <input id="mPw2" name="mPw" type="password" placeholder="(영문+숫자+특수번호 8-12 자리입력)"class="form-control" />
             </div>
-            <div class="col-3">
-                  <input type="button" id="checkId" value="비밀번호 확인" class="form-control">
-            </div>
-            </div>
-<!--         	<i id="mPw" class="text-info"></i> -->
+         </div>
+        	<i id="mPwInfo" class="text-info"></i>
          <br>
          
          <div class="row">
             <div class="col">
                <label for="mName">이름</label>
-               <input id="mName" name="mName" type="text" placeholder="이름을 입력하세요." class="form-control" />
+               <input id="mName" name="mName" type="text" placeholder="이름을 입력하세요." class="box-form" />
             </div>
          </div>
-<!--           <i id="mName" class="text-info"></i> -->
+          <i id="mNameInfo" class="text-info"></i>
          <br>
          
          <div class="row">
             <div class="col">
                <label for="mNickname"> 닉네임 </label> 
-               <input id="mNickname" name="mNickname" type="text" placeholder="닉네임을 입력하세요" class="form-control" /> 
+               <input id="mNickname" name="mNickname" type="text" placeholder="닉네임을 입력하세요" class="box-form" /> 
             </div>
             <div class="col-3">
-               <input type="button" id="checkNick" value="중복확인" class="form-control">
+               <input type="button" id="checkNick" value="중복확인" class="form-control2">
             </div>
          </div>   
-<!--            <i id="mNickname" class="text-info"></i> -->
+           <i id="mNicknameInfo" class="text-info"></i>
          <br>
          
          
          <div class="row">
             <div class="col">
                <label for="mPhone">휴대폰 번호</label> 
-               <input id="mPhone" name="mPhone" type="text" placeholder="'-'을 제외하고 입력하세요." class="" />
+               <input id="mPhone" name="mPhone" type="text" placeholder="'-'을 제외하고 입력하세요." class="box-form" />
             </div>
             <div class="col-3">
-               <input type="button" id="sendPhoneButton" value="인증" class="form-control">
+               <input type="button" id="sendPhoneButton" value="인증" class="form-control2">
             </div> 
          </div>
-<!--          <i id="mPhone" class="text-info"></i> -->
+         <i id="mPhoneInfo" class="text-info"></i>
          <br>
          
          <div class="row">
             <div class="col">
                <label for="mPhone2">인증번호</label> 
-               <input type="text" id="inputCertifiedNumber" readonly="readonly" class=""> 
+               <input type="text" id="inputCertifiedNumber" readonly="readonly" class="box-form"> 
             </div>
             <div class="col-3">
-               <input type="button" id="CertiUserNum" value="번호 인증" readonly="readonly" class="form-control">
+               <input type="button" id="CertiUserNum" value="번호 인증" readonly="readonly" class="form-control2">
                <input type="hidden" id="numStr" name="numStr">
             </div>
          </div>
@@ -125,22 +143,32 @@
          <div class="row">
             <div class="col">
                <label for="mEmail"> 이메일 </label> 
-               <input id="mEmail" name="mEmail" type="text" placeholder="abcd@email.com" class="" />
+               <input id="mEmail" name="mEmail" type="text" placeholder="abcd@email.com" class="box-form" />
             </div>
          </div>
-<!--          <i id="mEmail" class="text-info"></i> -->
+         <i id="mEmailInfo" class="text-info"></i>
          <br>
+         
+         <div class="row">
+            <div class="col">
+               <label for="mInfo"> 자기소개</label> 
+               <textarea id="mInfo" name="mInfo" placeholder="자기소개를 적어주세요!" class="" ></textarea>
+            </div>
+         </div>
+         <i id="mInfoInfo" class="text-info"></i>
+         <br>
+         
          
          <div class="row">
             <div class="col">
                <label for="memberAddress">주소</label> 
                <input type="text" id="sample6_postcode" placeholder="우편번호" name="AddNum" class="">
                <input type="text" id="sample6_address" placeholder="주소" name="memberAddress1" class="">
-               <input type="text" id="sample6_detailAddress" placeholder="상세주소" name="memberAddress2" class="">
-               <input type="text" id="sample6_extraAddress" placeholder="참고항목" name="memberAddress3" class=""> <br>  
+               <input type="text" id="sample6_extraAddress" placeholder="상세주소" name="memberAddress2" class=""> <br>  
+               <input type="text" id="sample6_detailAddress" placeholder="상세주소 직접 입력" name="memberAddress3" class="">
             </div>
             <div class="col-3">    
-               <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"  class=""><br>
+               <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"  class="form-control2"><br>
             </div>
             <div class="col-8">   
             
@@ -160,81 +188,117 @@
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <!--       <script src="https://code.jquery.com/jquery-3.4.1.js"></script> -->
       <script>  
-  /*    
-      $("#btn").click(function(event){
-		
-		var mId = $("#mId").val();
-		var mPw = $("#mPw").val();
-		var mName = $("#mName").val();
-		var mNickname = $("#mNickname").val();
-		var mEmail = $("#mEmail").val();
-		var mPhone = $("#mPhone").val();
-		
-		var regId = /^[a-zA-Z0-9]{4,12}$/;
-		var regPw = /[a-zA-Z0-9!@#$%^&*]{8,12}$/;
-		var regName = /^[가-힝a-zA-Z]{2,}$/;
-		var regEmail = /[a-z0-9]{2,}@[a-z0-9]{2,}\.[a-z0-9]{3,}/i;
-		// var regPhone = /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}$/;
-		
-		if(mId == ''){
-			$('i[id="mId"]').html("아이디를 입력하세요");
-			$("#mId").focus();
-			event.preventDefault();
-		} else if(!regId.test(mId)) {
-			$('i[id="mId"]').html("아이디를 형식을 확인하세요");
-			$("#mId").focus();
-			event.preventDefault();
-		}if(mPw == '') {
-			$('i[id="mPw"]').html("비밀번호를 입력하세요");
-			$("#mPw").focus();
-			event.preventDefault();
-		} else if(!regPw.test(mPw)) {
-			$('i[id="mPw"]').html("비밀번호를 형식을 확인하세요");
-			$("#mPw").focus();
-			event.preventDefault();
-			
-		} if(mName == '') {
-			$('i[id="mName"]').html("이름을 입력하세요");
-			$("#mName").focus();
-			event.preventDefault();
-		} else if(!regName.test(mName)) {
-			$('i[id="mName"]').html("이름을 확인하세요");
-			$("#mName").focus();
-			event.preventDefault();
-	
-		} if(mNickname == '') {
-			$('i[id="mNickname"]').html("닉네임을 입력하세요");
-			$("#mNickname").focus();
-			event.preventDefault();
-		} else if(!regName.test(mNickname)) {
-			$('i[id="mNickname"]').html("닉네임을 확인하세요");
-			$("#mNickname").focus();
-			event.preventDefault();
-	
-		} if(mEmail == '') {
-			$('i[id="mEmail"]').html("이메일을 입력하세요");
-			$("#mEmail").focus();
-			event.preventDefault();
-		} else if(!regEmail.test(mEmail)) {
-			$('i[id="mEmail"]').html("이메일 형식을 확인하세요");
-			$("#mEmail").focus();
-			event.preventDefault();
-			
-		} if(mPhone == '') {
-			$('i[id="mPhone"]').html("전화번호를 입력하세요");
-			$("#mPhone").focus();
-			event.preventDefault();
-		}  
-	});
-	*/
-      $('#checkId').click(function() {
-      		if($("#mId").val() == ""){
-			swal("아이디를 입력하세요");
-			return false;
-		} else if($("#mpwd").val() == ""){
-			swal("비밀번호를 입력하세요");
-			return false;
-		}
+         
+      $("#btn_upload_file").click(function(event){
+      
+      var mId = $("#mId2").val();
+      var mPw = $("#mPw2").val();
+      var mName = $("#mName").val();
+      var mNickname = $("#mNickname").val();
+      var mEmail = $("#mEmail").val();
+      var mPhone = $("#mPhone").val();
+      var mInfo = $("#mInfo").val();
+      
+      var regId = /^[a-zA-Z0-9]{4,12}$/;
+      var regPw = /[a-zA-Z0-9!@#$%^&*]{8,12}$/;
+      var regName = /^[가-힝a-zA-Z]{2,}$/;
+      var regEmail = /[a-z0-9]{2,}@[a-z0-9]{2,}\.[a-z0-9]{3,}/i;
+      var regPhone = /^[0-9]{3}[0-9]{3,4}[0-9]{4}$/;
+      
+      var isCompleted = 1;
+      
+      if(mId == ''){
+         $('i[id="mIdInfo"]').html("아이디를 입력하세요");
+         $("#mId").focus();
+         event.preventDefault();
+         isCompleted = 0;
+      } else if(!regId.test(mId)) {
+         $('i[id="mIdInfo"]').html("아이디를 형식을 확인하세요");
+         $("#mId").focus();
+         event.preventDefault();
+         isCompleted = 0;
+      } if(mPw == '') {
+         $('i[id="mPwInfo"]').html("비밀번호를 입력하세요");
+         $("#mPw").focus();
+         event.preventDefault();
+         isCompleted = 0;
+      } else if(!regPw.test(mPw)) {
+         $('i[id="mPwInfo"]').html("비밀번호를 형식을 확인하세요");
+         $("#mPw").focus();
+         event.preventDefault();
+         isCompleted = 0;
+      }  if(mName == '') {
+         $('i[id="mNameInfo"]').html("이름을 입력하세요");
+         $("#mName").focus();
+         event.preventDefault();
+         isCompleted = 0;
+      } else if(!regName.test(mName)) {
+         $('i[id="mNameInfo"]').html("이름을 확인하세요");
+         $("#mName").focus();
+         event.preventDefault();
+   		 isCompleted = 0;
+      }  if(mNickname == '') {
+         $('i[id="mNicknameInfo"]').html("닉네임을 입력하세요");
+         $("#mNickname").focus();
+         event.preventDefault();
+         isCompleted = 0;
+      } else if(!regName.test(mNickname)) {
+         $('i[id="mNicknameInfo"]').html("닉네임을 확인하세요");
+         $("#mNickname").focus();
+         event.preventDefault();
+		 isCompleted = 0;   
+      }  if(mEmail == '') {
+         $('i[id="mEmailInfo"]').html("이메일을 입력하세요");
+         $("#mEmail").focus();
+         event.preventDefault();
+         isCompleted = 0;
+      } else if(!regEmail.test(mEmail)) {
+         $('i[id="mEmailInfo"]').html("이메일 형식을 확인하세요");
+         $("#mEmail").focus();
+         event.preventDefault();
+         isCompleted = 0;
+      }  if(mPhone == '') {
+         $('i[id="mPhoneInfo"]').html("전화번호를 입력하세요");
+         $("#mPhone").focus();
+         event.preventDefault();
+         isCompleted = 0;
+      }else if(!regPhone.test(mPhone)) {
+         $('i[id="mPhoneInfo"]').html("전화번호 형식을 확인하세요");
+         $("#mPhone").focus();
+         event.preventDefault();
+         isCompleted = 0;
+   	  } if(mInfo == '') {
+         $('i[id="mInfoInfo"]').html("자기소개를 입력하세요");
+         $("#mInfo").focus();
+         event.preventDefault();
+         isCompleted = 0;
+   	  }
+   	  if (isCompleted) {
+   	  	// alert('회원가입 완료 되었습니다!');
+   	  	// $("#signup-form").submit();
+   	  	uploadImage();
+   	  }	
+   });
+       
+         $('#checkId').click(function() {
+			 $.ajax({
+               type : "GET",
+               url : "/login/duCheck",
+               data : {
+                  "mId" : $('#mId2').val()
+               },
+               success : function(aa) {
+                  console.log(aa);
+                  if (aa == "1") {
+                     Swal.fire('사용가능한 아이디입니다.');
+                  } else {
+                     Swal.fire('사용 불가능한 아이디입니다.');
+                  }
+               }
+            });
+         });
+      
+      $('#checkNick').click(function() {
 		
          $.ajax({
             type : "GET",
@@ -246,35 +310,13 @@
                console.log(aa);
                if (aa == "1") {
                   Swal.fire('사용가능한 닉네임입니다.');
-                  $('#mNickname').attr('readonly', 'readonly');
                } else {
                   Swal.fire('사용 불가능한 닉네임입니다.');
-                  return $('#mPw').focus();
                }
             }
          });
       });
       
-         $('#checkId').click(function() {
-            $.ajax({
-               type : "GET",
-               url : "/login/duCheck",
-               data : {
-                  "mId" : $('#mId').val()
-               },
-               success : function(aa) {
-                  console.log(aa);
-                  if (aa == "1") {
-                     Swal.fire('사용가능한 아이디입니다.');
-                     $('#mId').attr('readonly', 'readonly');
-                  } else {
-                     Swal.fire('사용 불가능한 아이디입니다.');
-                     return $('#mId').focus();
-                  }
-               }
-            });
-         });
-         
          var numStr;
          $('#CertiUserNum').click(function() {
             if ($('#inputCertifiedNumber').val() == "") {
@@ -418,11 +460,13 @@
 							contentType : false
 						}).done(function(responseBody) {
 							$("#mPhoto").val(responseBody);
+							alert('회원가입 완료 되었습니다!');
 							$("#signup-form").submit();
+							// document.getElementById('btn').click();
 						}).fail(function(error) {
 						})
 					} else {
-						alert("파일첨부를 해주세요.");
+						Swal.fire("프로필 사진을 지정 해주세요.");
 						$("#file_img").focus();
 					}
 			}
@@ -443,7 +487,7 @@
 							.done(resolve)
 							.fail(reject);
 						} else {
-							alert("파일첨부를 해주세요.");
+							Swal.fire("프로필 사진을 지정 해주세요.");
 							$("#" + id).focus();
 							reject();
 						}				
