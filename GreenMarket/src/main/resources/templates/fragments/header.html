@@ -3,13 +3,100 @@
 xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <meta charset="UTF-8">
 <style th:fragment="header1">
+	.ftco-navbar-light .container {
+	    width: auto;
+	
+	}
+	@media (min-width: 1200px) {
+		.container, .container-sm, .container-md, .container-lg, .container-xl {
+		    max-width: 1188px;
+		}		
+	}
+	
+	#cnt_unread_on_menu { /* 상단 Message 메뉴 옆에 표시하는 채팅 안읽은 메시지 수 */
+		background-color: red;
+	    color: white;
+	    border-radius: 100%;
+	    padding: 0px 0px;
+	    font-size: 11px;
+	    width: 17px;
+	    text-align: center;
+	    line-height: 17px;
+	    position: absolute;
+	    right: 6px;
+	    top: 17px;
+		display: none;
+	}
+	
+	.awake #cnt_unread_on_menu { /* 스크롤 내려서 메뉴 바뀌었을 때 채팅 안읽은 메시지 수 위치 */
+		top: 10px;
+	}
+	
+	#nav-item-message { /* 상단 메뉴 Message */
+		position: relative;
+	}
 
+/* 채팅 알람 관련 css */	
+	#chat_alert_wrapper {
+		position: fixed;
+	    background-color: white;
+	    width: 335px;
+	    height: 0px;
+	    bottom: 30px;
+	    right: 54px;
+	    transition: 0.3s;
+	    display: none;
+	    overflow: hidden;
+	    border: 1px solid #ddd;
+	    box-shadow: 0px 4px 8px rgb(0 0 0 / 20%);    
+	    border-radius: 19px;
+	    padding: 15px 15px;
+		cursor: pointer;  
+		z-index: 100;
+		transition-timing-function: linear;
+	}
+	
+	#chat_alert_photo {
+		float: left;
+	    margin-right: 17px;
+		margin-bottom: 25px;
+		margin-top: 4px;
+		margin-left: 5px;
+	}
+	
+	#chat_alert_img_photo {
+		width: 50px;
+	    height: 50px;
+	    border-radius: 70%;
+	}
+	
+	#chat_alert_roomName {
+		margin-bottom: 1px;
+		margin-top: -12px;
+		margin-left: 4px;	
+		color: black;
+		font-size: 14px;	
+	}
+	
+	#chat_alert_userName {
+		margin-bottom: 0px;
+	    color: black;
+	    font-weight: 600;		
+	}
+	#chat_alert_msg {
+		color: gray;
+	}
 </style>
 <head>
 
 </head>
 <body>	
 	<header class="page-header" th:fragment="header1">
+	<!-- 세션 연결되어있는지 확인하기 위한 데이터 (data_is_authenticated) -->
+	<input type="hidden" id="data_is_authenticated" sec:authorize-expr="!isAuthenticated()" value="false">
+	<input type="hidden" id="data_is_authenticated" sec:authorize-expr="isAuthenticated()" value="true">
+	<!-- 로그인 창을 띄울지 확인하기 위한 데이터 -->
+	<input type="hidden" id="showsLoginForm" th:value="${showsLoginForm}">
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
 			<a th:href="@{/index}" class="navbar-brand">GreenMarket<span>Secondhand rental</span></a>
@@ -19,18 +106,18 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a th:href="@{/index}" class="nav-link">Home</a></li>
-					<li class="nav-item"><a th:href="@{/layout/about}" class="nav-link">About</a></li>
-					<li class="nav-item"><a th:href="@{/layout/destination}" class="nav-link">Destination</a></li>
-					<li class="nav-item" id="nav-item-message"><a th:href="@{/trade/chatMain}" class="nav-link">Message</a></li>
-					<li class="nav-item"><a th:href="@{/community/boardlist}" class="nav-link">Community</a></li>
-					<li class="nav-item" sec:authorize-expr="!isAuthenticated()"><a href="#" data-toggle="modal" data-target="#exampleModal" class="nav-link">로그인</a></li>
+					<li class="nav-item" id="nav-item-home"><a th:href="@{/index}" class="nav-link">Home</a></li>
+					<li class="nav-item" id="nav-item-item"><a th:href="@{/item/itemlist?itemName=&itemSort=&startDate=&endDate=&priceLimit=0}" class="nav-link">Item</a></li>
+					<li class="nav-item" id="nav-item-trade"><a th:href="@{/trade/myTrade}" class="nav-link">Trade</a></li>
+					<li class="nav-item" id="nav-item-message"><a th:href="@{/trade/chatMain}" class="nav-link">Message</a><div id="cnt_unread_on_menu"></div></li>
+					<li class="nav-item" id="nav-item-community"><a th:href="@{/community/boardlist}" class="nav-link">Community</a></li>
+					<li class="nav-item" sec:authorize-expr="!isAuthenticated()"><a href="#" id="nav-link-login" data-toggle="modal" data-target="#exampleModal" class="nav-link">로그인</a></li>
 					<li class="nav-item" sec:authorize-expr="isAuthenticated()"><a th:href="@{/login/logout}" class="nav-link">로그아웃</a></li>
-					<li class="nav-item" sec:authorize-expr="!isAuthenticated()"><a th:href="@{/layout/signup}" class="nav-link">회원가입</a></li>
-					<li class="nav-item" sec:authorize-expr="isAuthenticated()"><a th:href="@{/layout/myPage}" class="nav-link">마이페이지</a></li>
+					<li class="nav-item" id="nav-item-join" sec:authorize-expr="!isAuthenticated()"><a th:href="@{/layout/signup}" class="nav-link">회원가입</a></li>
+					<li class="nav-item" id="nav-item-mypage" sec:authorize-expr="isAuthenticated()"><a th:href="@{/layout/myPage}" class="nav-link">마이페이지</a></li>
 				</ul>
 				<div class="info">
-					<span sec:authorize-expr="isAuthenticated()"><a sec:authentication="name" class="nav-link">님 반갑습니다!</a></span>
+					<span sec:authorize-expr="isAuthenticated()"><a sec:authentication="name">님 반갑습니다!</a></span>
 					<span sec:authorize-expr="isAuthenticated()">님 반갑습니다!</span>
 				</div>
 			</div>
@@ -43,7 +130,6 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-		
           <h4 class="modal-title"> 로그인 </h4>
         </div>
         <div class="modal-body">
@@ -63,12 +149,12 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
                로그인 유지하기
                </label>
             </div>
-             <button type="submit" id="login_btn"class="btn btn-primary btn-block">로그인</button>
+             <button type="button" id="login_btn" class="btn btn-primary btn-block" >로그인</button>
           	</form>	
           		</div>
           	<div class="signup">
           	 <form th:action="@{/layout/signup}" method="get">
-            	 <input type="submit" value="회원가입" id="loginButton" class="btn btn-default" style="margin-left: 90px;"/>
+            	 <input type="submit" value="회원가입" id="loginButton" class="btn btn-default" style="margin-left: 110px;"/>
              </form>
              <form th:action="@{/layout/}" method="get">
             	 <input type="submit" value="비밀번호 찾기" id="searchPwd" class="btn btn-default" style="margin-left: 90px;"/>
@@ -77,13 +163,17 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
           <div class="modal-footer">
            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_modal">닫기</button>
          </div>
-        
       </div>
     </div>
     </div>
     </div>
+	<!-- 채팅 알림창 -->
+	<div id="chat_alert_wrapper" onclick="location.href='/trade/chatMain'">
+		<div id="chat_alert_roomName"></div>
+		<div id="chat_alert_photo"></div>		
+		<div id="chat_alert_userName"></div>
+		<div id="chat_alert_msg"></div>
+	</div>
 	</header>
-
-
 </body>
 </html>

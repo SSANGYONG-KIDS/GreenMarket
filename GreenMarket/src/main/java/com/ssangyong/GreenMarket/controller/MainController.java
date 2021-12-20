@@ -33,8 +33,11 @@ public class MainController {
 		LoginService loginService;	   
 	   
 	   @RequestMapping(value = {"/", "/index"})
-	   public String main(Model model, @AuthenticationPrincipal SecurityUser principal) {
+	   public String main(Model model, @AuthenticationPrincipal SecurityUser principal, boolean showsLoginForm) {
 	      System.out.println("main 실행");
+	      
+	      // 로그인폼을 보여줄 것인지에 대한 변수
+	      model.addAttribute("showsLoginForm", showsLoginForm);
 	      
 	      // 탈퇴한 회원인 경우
 	      if (principal != null && memberService.selectById(principal.getUsername()).getMIsdropped() == 1) {
@@ -51,9 +54,14 @@ public class MainController {
 	      for (ItemEntity item: resultAll) {
 	    	  if(numOfItem >= 6) break;
 	    		  numOfItem ++;
+	    		  
+	    	  if(item.getIContent().length()>=10) {
+	    		  String sub = item.getIContent().substring(0, 10)+" ...";
+	    		  item.setIContent(sub);
+	    	  }
 	    		  result.add(item);
 	      }
-	      
+	  
 //	      model.addAttribute("pagevo", pagevo);
 //	      model.addAttribute("result", new PageMaker<>(result));
 	      model.addAttribute("itemResult", result);

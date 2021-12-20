@@ -13,6 +13,8 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.ssangyong.GreenMarket.model.ItemEntity;
+import com.ssangyong.GreenMarket.model.MemberEntity;
 import com.ssangyong.GreenMarket.model.MessageEntity;
 import com.ssangyong.GreenMarket.model.MsgEnumType;
 import com.ssangyong.GreenMarket.service.LoginService;
@@ -38,6 +40,11 @@ public class ChatSocketHandler extends TextWebSocketHandler{
 	static final String OBJ_KEY_M_ID = "mId";
 	static final String OBJ_KEY_CONTENT = "content";
 	static final String OBJ_KEY_OTHER_M_ID = "otherMId"; // 상대방 m_id
+	
+	static final String OBJ_KEY_T_ID = "tId";
+	static final String OBJ_KEY_M_NICKNAME = "mNickname";
+	static final String OBJ_KEY_I_TITLE = "iTitle";
+	static final String OBJ_KEY_M_PHOTO = "mPhoto";
 	
 	// 메시지 보낼 때 밸류
 	static final String OBJ_TYPE_MESSAGE = "msg"; // 일반 텍스트 메시지
@@ -141,8 +148,14 @@ public class ChatSocketHandler extends TextWebSocketHandler{
 					
 					// 보낼 메시지 객체
 					JSONObject objForTarget = new JSONObject();
+					MemberEntity memberSending = loginService.selectById(principalMId);
+					ItemEntity item = tradeService.selectById(Integer.parseInt(tId)).getItem();
 					objForTarget.put(OBJ_KEY_TYPE, OBJ_TYPE_ALERT_ANOTHER_ROOM_MSG); // 메시지 종류
-					objForTarget.put(OBJ_KEY_CONTENT, tId);
+					objForTarget.put(OBJ_KEY_T_ID, tId);
+					objForTarget.put(OBJ_KEY_I_TITLE, item.getITitle());
+					objForTarget.put(OBJ_KEY_M_PHOTO, memberSending.getMPhoto());
+					objForTarget.put(OBJ_KEY_M_NICKNAME, memberSending.getMNickname()); // 보내는 사람 닉네임
+					objForTarget.put(OBJ_KEY_CONTENT, content);
 					
 					// 메시지 보내기 (다른방에서 메시지 왔음 알리기)
 					sessionOfTarget.sendMessage(new TextMessage(objForTarget.toJSONString()));

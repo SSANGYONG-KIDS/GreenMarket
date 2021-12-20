@@ -185,10 +185,11 @@
 							<div class="text" width="200px;">
 								<div class="d-flex align-items-center mb-4 topp">
 									<div class="one">
-										<span class="day" th:text="${item.iId}"></span>
+											<span class="day" style="font-size: 30px;" th:text="${item.iId}"></span>
 									</div>
 									<div class="two">
-										<span class="yr" th:text="${item.iCategory.title}"></span> <span class="mos" th:text="${item.iRegdate}"></span>
+										<span class="yr" th:text="${item.iCategory.title}"></span> 
+										<span class="mos" th:text="${#dates.format(new java.util.Date(item.iRegdate), 'yyyy-MM-dd hh:mm')}"></span>
 									</div>
 								</div>
 								<h3 class="heading" width="200px;">
@@ -580,6 +581,12 @@
 			</section>
 	</div>
 	<!-- loader -->
-	<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>		
+	<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+	<th:block layout:fragment="script1">		
+		<!-- 메인 상단 메뉴 active -->
+		<script>
+			$('#nav-item-home').addClass('active');			
+		</script>
+	</th:block>		
 </body>
 </html>

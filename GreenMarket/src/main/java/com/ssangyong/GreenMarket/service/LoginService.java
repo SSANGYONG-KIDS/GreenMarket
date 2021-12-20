@@ -78,8 +78,9 @@ public class LoginService implements UserDetailsService {
    } 
 
    
-   public boolean checkName(String mId) {
+   public boolean checkmId(String mId) {
  	  return memberRepo.findById(mId).isPresent();
+// 	  return memberRepo.findBymId(mId).size() > 0 ? true:false;
    }
    
    public boolean checkNickName(String mNickname) {

@@ -6,18 +6,17 @@
 <meta charset="UTF-8">
 <script src="/bootstrap/js/jquery.min.js"></script>
 
-
 <title>register</title>
 
 </head>
 <body >
 	<div class="panel panel-default" layout:fragment="content1">
-		 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/bootstrap/images/bg_1.jpg');">
+		 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/bootstrap/images/board_detail.png');">
 		  <div class="overlay"></div>
 		  <div class="container">
 		    <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
 		      <div class="col-md-9 ftco-animate pb-5 text-center">
-		       <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Community <i class="fa fa-chevron-right"></i></a></span> <span>About us <i class="fa fa-chevron-right"></i></span></p>
+		       <p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i class="fa fa-chevron-right"></i></a></span> <span>Community <i class="fa fa-chevron-right"></i></span></p>
 		       <h1 class="mb-0 bread">게시글 상세보기</h1>
 		     </div>
 		   </div>
@@ -106,6 +105,10 @@
 
 
 <th:block layout:fragment="script1">
+<!-- 메인 상단 메뉴 active -->
+<script>
+	$('#nav-item-community').addClass('active');			
+</script>
 <script th:inline="javascript">
 	
 	//댓글 삭제
@@ -148,12 +151,9 @@
 			url: "/community/boarddetail/",
 			data: data
 		}).done(function(resp){
-			alert("댓글을 등록하였습니다.");
 			location.href = window.location.href;
 		}).fail(function(error){
 			alert("cId값 넘겨주기 실패");
-			alert(data.cId);
-			alert(data.crContent);
 			console.log(error);
 		});	
 		
@@ -175,8 +175,7 @@
 			alert("삭제가 완료되었습니다.");
 			location.href="/community/boardlist";
 		}).fail(function(error){
-			alert("삭제 실패함.");
-			alert(data);
+			alert("삭제 실패");
 			alert(JSON.stringfy(data));
 			console.log(error);
 		});	
@@ -190,11 +189,9 @@
 			url: "/community/update",
 			data: {"cId" : "[[${cId}]]" }
 		}).done(function(resp){
-			alert("cId값을 넘겨주기 성공");
 			location.href="/community/update";
 		}).fail(function(error){
-			alert("cId값 넘겨주기 실패");
-			alert(data);
+			alert("수정 실패");
 			alert(JSON.stringfy(data));
 			console.log(error);
 		});	

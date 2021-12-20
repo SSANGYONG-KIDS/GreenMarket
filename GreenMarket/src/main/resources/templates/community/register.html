@@ -10,12 +10,12 @@
 </head>
 <body >
 	<div class="panel panel-default" layout:fragment="content1">
-		 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/bootstrap/images/bg_1.jpg');">
+		 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/bootstrap/images/register_img.png');">
 		  <div class="overlay"></div>
 		  <div class="container">
 		    <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
 		      <div class="col-md-9 ftco-animate pb-5 text-center">
-		       <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Community <i class="fa fa-chevron-right"></i></a></span> <span>About us <i class="fa fa-chevron-right"></i></span></p>
+		       <p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i class="fa fa-chevron-right"></i></a></span> <span>Community <i class="fa fa-chevron-right"></i></span></p>
 		       <h1 class="mb-0 bread">새 글 등록</h1>
 		     </div>
 		   </div>
@@ -59,6 +59,10 @@
 
 
 <th:block layout:fragment="script1">
+<!-- 메인 상단 메뉴 active -->
+<script>
+	$('#nav-item-community').addClass('active');			
+</script>
 <script>
     $('.summernote').summernote({
     	placeholder: '내용을 입력하세요',
@@ -75,16 +79,19 @@
 	//	var value=marginTag(); //return array
 	//	console.log($("#rdTag").val(value));
 		
+		alert("1");
+		
 		var tagArray=new Array();
 		$("#tag-list li").each(function( index, element ) {
-     		var tempstr = $(this).text();
+	    	var tempstr = $(this).text();
 			var idx = tempstr.lastIndexOf(" x");
 			tempstr = tempstr.substring(0,idx);
-     		tagArray.push(tempstr);
+	     	tagArray.push(tempstr);
 		});
 		
-		alert(tagArray);
-		
+		if(tagArray.length==0){
+			tagArray.push("default__"); //default__ 로 태그 등록하고, db엔 insert 안함.
+		}
 		
 		let data = {
 			cTitle: $("#cTitle").val(),
@@ -141,23 +148,6 @@
 			tag[counter]=value;
 			counter++; //del-btn의 고유 id
 		}
-		/*
-		//tag 안에 있는 값을 array type으로 만들어서 넘긴다.
-		function marginTag(){
-			return Object.values(tag).filter(function(word){
-				return word !== "";
-			});
-		}
-		
-		
-		
-		//서버에 제공
-		$("#tag-form").on("submit",function(e){
-			var value=marginTag(); //return array
-			$("#rdTag").val(value);
-			$(this).submit();
-		});
-		*/
 		
 		$("#tag").on("keypress", function (e) {
             var self = $(this);
@@ -177,7 +167,6 @@
                 
                     // 해시태그가 중복되었는지 확인
                     if (result.length == 0) { 
-                     //   $("#tag-list").append("<li class='tag-item'>"+tagValue+"<span class='del-btn' idx='"+counter+"'> x</span></li>");
                         $("#tag-list").append("<li class='tag-item'>"+tagValue+" <button class='btn btn-primary badge del-btn' idx='"+counter+"'>x</button><br></li>");
                         addTag(tagValue);
                         self.val("");

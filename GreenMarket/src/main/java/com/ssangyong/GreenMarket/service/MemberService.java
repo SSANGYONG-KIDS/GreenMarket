@@ -42,6 +42,7 @@ public class MemberService implements UserDetailsService{
     	memberEntity.setMEmail(member.getMEmail());
 //    	memberEntity.setMPhone(member.getMPhone());
     	memberEntity.setMPhoto(member.getMPhoto());
+    	memberEntity.setMInfo(member.getMInfo());
     	memberEntity.setMAddress(member.getMAddress());
        //함수 종료시(service종료) 트랜잭션 종료 후 더티체킹=> 자동 업데이트. DB flush
     }
@@ -63,12 +64,14 @@ public class MemberService implements UserDetailsService{
     
     // 비밀번호 확인
     @Transactional
-    public boolean checkCurrentPassword(String mId, String password) {   	
+    public int checkCurrentPassword(String mId, String password) {   	
     	// 멤버 정보 가져오기
-    	MemberEntity memberEntity = memberrepository.findById(mId).get();
+    	MemberEntity memberEntity = memberrepository.findById(mId).orElse(null);
+    	
+    	if (memberEntity == null) return 2; // 일치하는 아이디 없음
     	
     	// 비교하기
-    	return new BCryptPasswordEncoder().matches(password, memberEntity.getMPw());
+    	return new BCryptPasswordEncoder().matches(password, memberEntity.getMPw()) ? 1 : 0;
     	
     }
     

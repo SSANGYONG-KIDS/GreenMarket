@@ -4,13 +4,11 @@
 
 var reviewManager= ( function(){
 	var getAll= function(obj, callback){
-		console.log("getAll......."+obj);
+		
 		$.getJSON("/review/myreviews/"+obj,callback);
 	};
 	var add= function(obj, callback){
-		console.log("add review.......");
-		console.log(obj["rContent"]);
-		console.log(obj["rStar"]);
+	
 		$.ajax({
 			url:"/review/"+obj["tnum"],
 			data:JSON.stringify(obj),

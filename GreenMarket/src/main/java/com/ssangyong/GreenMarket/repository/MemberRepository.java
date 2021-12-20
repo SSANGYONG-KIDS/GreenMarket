@@ -8,4 +8,5 @@ import com.ssangyong.GreenMarket.model.MemberEntity;
 
 public interface MemberRepository extends CrudRepository<MemberEntity, String>{
 	 List<MemberEntity> findBymNickname(String mNickname);
+//	 List<MemberEntity> findBymId(String mId);
 }
