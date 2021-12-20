@@ -40,29 +40,29 @@
 	</section>
 	<section class="ftco-section">
 		<div class="container">
+			<div style="text-align:right; padding-bottom:20px;">
+		  		<button class="btn btn-primary py-3 px-4" id="addReview" data-toggle="modal" data-target="#reviewModal">리뷰 작성</button>
+		  	</div>
 			<div id="wrapper_products" class="row d-flex">
-				<div id="products" class="col-md-4 ftco-animate" th:each="review:${myreviewlist}">
+				<div id="products" class="col-md-12 ftco-animate" style="padding-bottom:10px" th:each="review:${myreviewlist}">
 					<form th:action="@{/review/myreview}" method="get">
 						<input type="hidden" name="rId" id="rId"/>
 						<div class="item">
 					        <div class="testimony-wrap py-4">
 					          	<div class="text">
-						        	<p class="re_star">
-							            <span style="color:red" th:if="${review.rStar}>0" th:each="num: ${#numbers.sequence(1,review.rStar)}">★</span>
+					          		<p style="font-size: 20px"><b><a th:href="@{/item/itemdetail(iId=${review.item.iId})}">[[${review.item.iTitle}]] ></a></b></p>
+						        	<p>
+							            <span><span style="color:red;" th:if="${review.rStar}>0" th:each="num: ${#numbers.sequence(1,review.rStar)}">★</span></span>
+							            <span th:text="${#dates.format(new java.util.Date(review.rRegdate), 'yyyy-MM-dd HH:mm')}"></span>
 						          	</p>
-						         	<p class="mb-4">[[${review.rContent}]]</p>
-						         	<p class="mb-4"><a th:href="@{/item/itemdetail(iId=${review.item.iId})}">[[${review.item.iTitle}]]</a></p>
-						         	<p class="mb-4"><span th:text="${#dates.format(new java.util.Date(review.rRegdate), 'yyyy-MM-dd HH:mm')}"></span></p>     
-									<p class="name">[[${review.member.mId}]]</p>
+						          	<hr>
+						         	<p class="mb-4" style="color:black">[[${review.rContent}]]</p>
 					      		</div>
 					    	</div>
 					  	</div>
 					</form>
 				</div>
 			</div>
-			<div>
-		  		<button class="btn btn-primary py-3 px-4" id="addReview" data-toggle="modal" data-target="#reviewModal">리뷰 작성</button>
-		  	</div>
 		  	<!-- Modal -->
 			<div id="reviewModal" class="modal fade" role="dialog">
 			  <div class="modal-dialog">
