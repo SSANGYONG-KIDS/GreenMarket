@@ -135,13 +135,11 @@
 								<div class="text">
 									<div class="d-flex align-items-center mb-4 topp">
 										<div class="one">
-											<span class="day" style="font-size: 30px;"
-												th:text="${item.iId}"></span>
+											<span class="day" style="font-size: 30px;" th:text="${item.iId}"></span>
 										</div>
 										<div class="two">
-											<span class="yr" th:text="${item.iCategory.title}"></span> <span
-												class="mos"
-												th:text="${#dates.format(new java.util.Date(item.iRegdate), 'yyyy-MM-dd hh:mm')}"></span>
+											<span class="yr" th:text="${item.iCategory.title}"></span> 
+											<span class="mos" th:text="${#dates.format(new java.util.Date(item.iRegdate), 'yyyy-MM-dd hh:mm')}"></span>
 										</div>
 									</div>
 									<h3 class="heading" width="200px;">

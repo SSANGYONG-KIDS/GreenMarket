@@ -40,29 +40,29 @@
 	</section>
 	<section class="ftco-section">
 		<div class="container">
+			<div style="text-align:right; padding-bottom:20px;">
+		  		<button class="btn btn-primary py-3 px-4" id="addReview" data-toggle="modal" data-target="#reviewModal">리뷰 작성</button>
+		  	</div>
 			<div id="wrapper_products" class="row d-flex">
-				<div id="products" class="col-md-4 ftco-animate" th:each="review:${myreviewlist}">
+				<div id="products" class="col-md-12 ftco-animate" style="padding-bottom:10px" th:each="review:${myreviewlist}">
 					<form th:action="@{/review/myreview}" method="get">
 						<input type="hidden" name="rId" id="rId"/>
 						<div class="item">
 					        <div class="testimony-wrap py-4">
 					          	<div class="text">
-						        	<p class="re_star">
-							            <span style="color:red" th:if="${review.rStar}>0" th:each="num: ${#numbers.sequence(1,review.rStar)}">★</span>
+					          		<p style="font-size: 20px"><b><a th:href="@{/item/itemdetail(iId=${review.item.iId})}">[[${review.item.iTitle}]] ></a></b></p>
+						        	<p>
+							            <span><span style="color:red;" th:if="${review.rStar}>0" th:each="num: ${#numbers.sequence(1,review.rStar)}">★</span></span>
+							            <span th:text="${#dates.format(new java.util.Date(review.rRegdate), 'yyyy-MM-dd HH:mm')}"></span>
 						          	</p>
-						         	<p class="mb-4">[[${review.rContent}]]</p>
-						         	<p class="mb-4"><a th:href="@{/item/itemdetail(iId=${review.item.iId})}">[[${review.item.iTitle}]]</a></p>
-						         	<p class="mb-4"><span th:text="${#dates.format(new java.util.Date(review.rRegdate), 'yyyy-MM-dd HH:mm')}"></span></p>     
-									<p class="name">[[${review.member.mId}]]</p>
+						          	<hr>
+						         	<p class="mb-4" style="color:black">[[${review.rContent}]]</p>
 					      		</div>
 					    	</div>
 					  	</div>
 					</form>
 				</div>
 			</div>
-			<div>
-		  		<button class="btn btn-primary py-3 px-4" id="addReview" data-toggle="modal" data-target="#reviewModal">리뷰 작성</button>
-		  	</div>
 		  	<!-- Modal -->
 			<div id="reviewModal" class="modal fade" role="dialog">
 			  <div class="modal-dialog">
@@ -131,7 +131,7 @@
 				}else{
 					if(tnum!=0){
 						reviewManager.add(obj,printReview);
-						alert("입력완료");	
+							
 					}else {
 						alert("후기를 작성할 거래를 선택하세요.");
 					} 		
@@ -142,36 +142,40 @@
 			rContent.val("");
 			rStar.val("");
 		})
-		
+	
 		
 		function printReview(review){
 			console.log(review);
-			var str=""
-			str+='<div id="products" class="col-md-4 ftco-animate fadeInUp ftco-animated">'
-			str+="<form th:action='@{/review/myreview}' method='get'>"
-			str+="<input type='hidden' name='rId' id='rId' value="+review.rid+"/>"
-			str+="<div class='item'>"
-			str+="<div class='testimony-wrap py-4'>"
-			str+="<div class='text'>"
-			str+="<p class='re_star'>"
-			for(let i = 0; i < review.rStar; i++){
-				str+="<span style='color:red'>★</span>"
+			if(review.rid!=""){
+				var str=""
+				str+='<div id="products" class="col-md-12 ftco-animate fadeInUp ftco-animated">'
+				str+="<form th:action='@{/review/myreview}' method='get'>"
+				str+="<input type='hidden' name='rId' id='rId' value="+review.rid+"/>"
+				str+="<div class='item'>"
+				str+="<div class='testimony-wrap py-4'>"
+				str+="<div class='text'>"
+				str+="<p style='font-size: 20px; color:#006633'><b><a href='/item/itemdetail?iId="+review.item.iid+"'>"+review.item.ititle+"</a>></b></p>"
+				str+="<p><span>"
+				for(let i = 0; i < review.rStar; i++){
+					str+="<span style='color:red'>★</span>"
+				}
+				str+="</span>"
+				let date = new Date(review.rregdate);		
+				let dateFormat = date.getFullYear() + '-' 
+					+ (date.getMonth() + 1 > 9 ? date.getMonth() + 1 : '0' + date.getMonth() + 1) + '-' 
+					+ (date.getDate() > 9 ? date.getDate() : '0' + date.getDate()) + ' ' 
+					+ (date.getHours() > 9 ? date.getHours() : '0' + date.getHours()) + ':' 
+					+ (date.getMinutes() > 9 ? date.getMinutes() : '0' + date.getMinutes());
+				str+="<span>"+dateFormat+"</span></p><hr>"
+				str+="<p class='mb-4' style='color:black'>"+review.rContent+"</p>"
+				str+="</div></div></div></form>"
+				str+='</div>'
+			
+				$("#wrapper_products").append(str);
+				alert("입력완료");
+			}else{
+				alert("이미 등록한 리뷰가 있습니다.");
 			}
-			str+="</p>"
-			str+="<p class='mb-4'>"+review.rContent+"</p>"
-			str+="<p class='mb-4'><a style='color:#006633' th:href='/item/itemdetail?iId="+review.item.iid+"'>"+review.item.ititle+"</a></p>"
-			let date = new Date(review.rregdate);		
-			let dateFormat = date.getFullYear() + '-' 
-				+ (date.getMonth() + 1 > 9 ? date.getMonth() + 1 : '0' + date.getMonth() + 1) + '-' 
-				+ (date.getDate() > 9 ? date.getDate() : '0' + date.getDate()) + ' ' 
-				+ (date.getHours() > 9 ? date.getHours() : '0' + date.getHours()) + ':' 
-				+ (date.getMinutes() > 9 ? date.getMinutes() : '0' + date.getMinutes());
-			str+="<p class='mb-4'><span>"+dateFormat+"</span></p>"
-			str+="<p class='name'>"+"[[${member.mId}]]"+"</p>"
-			str+="</div></div></div></form>"
-			str+='</div>'
-		
-			$("#wrapper_products").append(str);
 		}
 		
 		

@@ -51,9 +51,14 @@ public class MainController {
 	      for (ItemEntity item: resultAll) {
 	    	  if(numOfItem >= 6) break;
 	    		  numOfItem ++;
+	    		  
+	    	  if(item.getIContent().length()>=10) {
+	    		  String sub = item.getIContent().substring(0, 10)+" ...";
+	    		  item.setIContent(sub);
+	    	  }
 	    		  result.add(item);
 	      }
-	      
+	  
 //	      model.addAttribute("pagevo", pagevo);
 //	      model.addAttribute("result", new PageMaker<>(result));
 	      model.addAttribute("itemResult", result);

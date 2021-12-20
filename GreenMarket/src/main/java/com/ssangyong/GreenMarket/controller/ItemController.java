@@ -59,6 +59,12 @@ public class ItemController {
 
 		Page<ItemEntity> result = itemService.selectAll(pagevo);
 
+		for(ItemEntity item : result) {
+			if(item.getIContent().length()>=10) {
+				String sub = item.getIContent().substring(0, 10)+" ...";
+				item.setIContent(sub);
+			}
+		}
 
 	    model.addAttribute("itemSorts", ICategoryEnumType.values());
 		model.addAttribute("itemResult", result);
@@ -115,6 +121,13 @@ public class ItemController {
 		model.addAttribute("member",member);
 		
 		List<ItemEntity> myitemlist = (List<ItemEntity>)itemService.selectMyList(member);
+		
+		for(ItemEntity item : myitemlist) {
+			if(item.getIContent().length()>=10) {
+				String sub = item.getIContent().substring(0, 10)+" ...";
+				item.setIContent(sub);
+			}
+		}
 
 		model.addAttribute("myitemlist", myitemlist);
 	}
