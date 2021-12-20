@@ -58,7 +58,11 @@
 				
 				// 다른 방에 메시지 왔음을 알리는 메시지라면
 				else if (resObj.type == OBJ_TYPE_ALERT_ANOTHER_ROOM_MSG) {
-					let anotherTId = resObj.mId; // 메시지 온 방(tId) 번호
+					let anotherTId = resObj.tId; // 메시지 온 방(tId) 번호
+					let roomName = resObj.iTitle;
+					let nickname = resObj.mNickname;
+					let msg = resObj.content;
+					let imgSrc = resObj.mPhoto;
 					
 					if ($('#is_chat_main').val() == 'true') { // 채팅 메인 화면이라면
 						// 왼쪽에 UI 안읽은 메시지 1 추가
@@ -66,6 +70,7 @@
 					}
 					
 					// 오른쪽 하단 메시지 알림 띄우기
+					showChatAlert(roomName, nickname, msg, imgSrc);
 					
 					// Message 메뉴에 안읽은 메시지 1 추가
 					addUnreadCntOnMenu();
@@ -165,6 +170,53 @@
 			else if (cntInDiv == 0 ) {
 				if (div.css('display') != 'none') div.css('display', 'none');
 			}
+		}		
+	</script>
+	
+	<!-- 채팅 알림창 관련 함수 -->
+	<script>
+		let chatAlertTimer;
+		function showChatAlert(roomName, nickname, msg, imgSrc) {
+			// html, css 초기화 
+			clearTimeout(chatAlertTimer);
+			$('#chat_alert_wrapper').css('transition', '0s');
+			$('#chat_alert_wrapper').hide();
+			$('#chat_alert_wrapper').css('border', 'none');
+			$('#chat_alert_wrapper').css('box-shadow', 'none');
+			$('#chat_alert_wrapper').css('padding', '0px 15px');			
+			$('#chat_alert_wrapper').outerHeight('0px');
+			$('#chat_alert_photo').html('');
+			$('#chat_alert_roomName').html('');
+			$('#chat_alert_userName').html('');
+			$('#chat_alert_msg').html('');
+			$('#chat_alert_wrapper').css('border', '1px solid #ddd');
+			$('#chat_alert_wrapper').css('box-shadow', '0px 4px 8px rgb(0 0 0 / 20%)');			
+			$('#chat_alert_wrapper').css('padding', '15px 0px');
+			
+			// 메세지 삽입
+			let imgHtml = ''		
+				+ '<img id="chat_alert_img_photo"'
+				+ ' onclick="location.href=\'/trade/chatMain\'"'
+				+ ' src="'+ imgSrc + '">';
+			$('#chat_alert_photo').append(imgHtml);
+			$('#chat_alert_roomName').append(roomName);
+			$('#chat_alert_userName').append(nickname);
+			$('#chat_alert_msg').append(msg);
+			
+			// 알림창 보여주기
+			$('#chat_alert_wrapper').show();
+			$('#chat_alert_wrapper').css('transition', '0.5s');
+
+			$('#chat_alert_wrapper').css('padding', '15px 15px');			
+			$('#chat_alert_wrapper').height('76px');
+			
+			// 알림창 사라지기
+			chatAlertTimer = setTimeout(() => {
+				$('#chat_alert_wrapper').css('border', 'none');
+				$('#chat_alert_wrapper').css('box-shadow', 'none');
+				$('#chat_alert_wrapper').css('padding', '0px 15px');
+				$('#chat_alert_wrapper').outerHeight('0px');
+			}, 2000);				
 		}
 	</script>
 </th:block>
