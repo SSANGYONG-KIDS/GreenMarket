@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ssangyong.GreenMarket.model.ItemEntity;
 import com.ssangyong.GreenMarket.model.MemberEntity;
 import com.ssangyong.GreenMarket.model.ReviewEntity;
+import com.ssangyong.GreenMarket.model.TradeEntity;
 import com.ssangyong.GreenMarket.repository.ReviewRepository;
 
 @Service
@@ -29,6 +30,11 @@ public class ReviewService {
 	// 각 item의 review list 조회
 	public List<ReviewEntity> selectItemReviewList(ItemEntity item) {
 		return (List<ReviewEntity>)reviewRepo.findByItem(item);
+	}
+	
+	// 거래아이디로 찾기
+	public ReviewEntity selectByTrade(TradeEntity trade) {
+		return reviewRepo.findByTrade(trade);
 	}
 
 	// 아이디로 찾기

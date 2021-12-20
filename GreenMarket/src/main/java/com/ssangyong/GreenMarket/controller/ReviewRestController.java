@@ -53,12 +53,16 @@ public class ReviewRestController {
 		
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		MemberEntity member = memberService.selectById(userDetails.getUsername());
-				
-		review.setTrade(trade);
-		review.setMember(member);
-		review.setItem(trade.getItem());
-
-		return new ResponseEntity<>(reviewService.insertReview(review), HttpStatus.CREATED);
+		
+		ReviewEntity review2 = reviewService.selectByTrade(trade);
+		if(review2==null) {
+			review.setTrade(trade);
+			review.setMember(member);
+			review.setItem(trade.getItem());
+			
+			reviewService.insertReview(review);
+		}
+		return new ResponseEntity<>(review, HttpStatus.CREATED);
 	}
 
 }
