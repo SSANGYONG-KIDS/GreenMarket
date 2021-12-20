@@ -24,7 +24,7 @@
 				<div class="col-md-9 ftco-animate pb-5 text-center">
 					<p class="breadcrumbs">
 						<span class="mr-2"><a th:href="@{/index}">Home <i class="fa fa-chevron-right"></i></a></span> 
-						<span>Detail Item<i class="fa fa-chevron-right"></i></span>
+						<span>마이페이지 <i class="fa fa-chevron-right"></i></span>
 					</p>
 					<h1 class="mb-0 bread">Detail Item</h1>
 				</div>
@@ -103,6 +103,10 @@
 </div>
 </body>
 <th:block layout:fragment="script1">
+<!-- 메인 상단 메뉴 active -->
+<script>
+	$('#nav-item-mypage').addClass('active');			
+</script>
 <script>
 $(document).ready(function()
 		// input file 파일 첨부시 fileCheck 함수 실행

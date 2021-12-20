@@ -31,7 +31,7 @@
 				<div class="col-md-9 ftco-animate pb-5 text-center">
 					<p class="breadcrumbs">
 						<span class="mr-2"><a th:href="@{/index}">Home <i class="fa fa-chevron-right"></i></a></span> 
-						<span>My Reviews<i class="fa fa-chevron-right"></i></span>
+						<span>마이페이지 <i class="fa fa-chevron-right"></i></span>
 					</p>
 					<h1 class="mb-0 bread">My Reviews</h1>
 				</div>
@@ -101,6 +101,10 @@
 	</section>
 </div>
 <th:block layout:fragment="script1">
+<!-- 메인 상단 메뉴 active -->
+<script>
+	$('#nav-item-mypage').addClass('active');			
+</script>
 <script th:src="@{/bootstrap/js/review.js}"></script>
 <script>
 	/* review modal */

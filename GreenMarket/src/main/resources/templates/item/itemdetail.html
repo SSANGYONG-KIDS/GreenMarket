@@ -320,7 +320,7 @@
 					class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
 					<div class="col-md-9 ftco-animate pb-5 text-center">
 						<p class="breadcrumbs">
-							<span class="mr-2"><a th:href="@{/index}">Home <i class="fa fa-chevron-right"></i></a></span> <span>Item Detail<i class="fa fa-chevron-right"></i></span>
+							<span class="mr-2"><a th:href="@{/index}">Home <i class="fa fa-chevron-right"></i></a></span> <span>Item <i class="fa fa-chevron-right"></i></span>
 						</p>
 						<h1 class="mb-0 bread">Item Detail</h1>
 					</div>
@@ -581,19 +581,11 @@
 	</section>
 </div>
 <th:block layout:fragment="script1">
+	<!-- 메인 상단 메뉴 active -->
 	<script>
-	// 상단 메뉴 쪽 이미지 부분
-	let divisor = 3; 
-	var myHeight = function() {
-		$('.js-myheight').css('height', $(window).height()/divisor);
-		$('.overlay').css('height', $(window).height()/divisor);
-		$(window).resize(function() {
-			$('.js-myheight').css('height', $(window).height()/divisor);
-			$('.overlay').css('height', $(window).height()/divisor);
-		});
-	};
-	myHeight();
-	
+		$('#nav-item-item').addClass('active');			
+	</script>
+	<script>
 	$(function(){
 		var like_me = "[[${like_me}]]";
 		

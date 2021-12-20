@@ -53,10 +53,22 @@
               }
          });
         });
+		
+		// 페이지 로딩 끝난 후 로그인 창 띄울지 결정 @author ino5
+		if ($('#showsLoginForm').val() == 'true') {
+			$('#nav-link-login').click();
+		}
 	})		
 	</script>
 
 	<!-- summernote -->
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+	
+	<!-- 로그인창 띄울지 여부 -->
+	<script>
+		$().ready(()=>{
+			
+		})
+	</script>
 </th:block>
 </html>

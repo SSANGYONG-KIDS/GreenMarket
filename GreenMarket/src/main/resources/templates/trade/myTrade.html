@@ -99,7 +99,7 @@
 		  <div class="container">
 		    <div class="row no-gutters slider-text js-myheight align-items-end justify-content-center">
 		      <div class="col-md-9 ftco-animate pb-5 text-center">
-		       <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="fa fa-chevron-right"></i></a></span> <span>채팅하기 <i class="fa fa-chevron-right"></i></span></p>
+		       <p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i class="fa fa-chevron-right"></i></a></span> <span>Trade <i class="fa fa-chevron-right"></i></span></p>
 		       <h1 class="mb-0 bread">거래 관리</h1>
 		     </div>
 		   </div>
@@ -214,6 +214,10 @@
 	</div>
 
 	<th:block layout:fragment="script1">
+		<!-- 메인 상단 메뉴 active -->
+		<script>
+			$('#nav-item-trade').addClass('active');			
+		</script>	
 		<!-- 상단 크기 조절 -->
 		<script th:inline="javascript">
 			// 상단 메뉴 쪽 이미지 부분

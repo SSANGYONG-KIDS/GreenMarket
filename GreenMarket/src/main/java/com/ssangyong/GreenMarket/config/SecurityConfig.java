@@ -60,16 +60,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 		// permitAll: 모든사용자가 접근가능하다는 의미
 		// hasRole : 특정권한을 가진 사람만 접근가능하다는 의미
 		http.authorizeRequests() // HttpServletRequest에 따라 접근(access)을 제한
-			.antMatchers("/trade/test/**").permitAll()
-			.antMatchers("/trade/**").authenticated() // 로그인 필요
+			// 로그인 필요
+			.antMatchers("/trade/**").authenticated()
+			.antMatchers("/item/itemdetail").authenticated()
+			.antMatchers("/community/boarddetail", "/community/myBoardlist", "/community/register").authenticated()
+			
+			// 모두 허용
 			.antMatchers("/**","/fragments/**","/center/centerlist","/layout/login/**","/exerciseinfoboard/boardlist","/dietdiaryboard/boardlist","/healthboard/boardlist","/sharingboard/boardlist","/naversearch/**", "/upload/**", "/body/**").permitAll() //   누구나 접근 허용
-//			.antMatchers("/user/**").hasRole("USER") // /user으로 시작하는 경로는  USER롤을 가진 사용자만  접근 가능(자동으로 ROLE_가 삽입)
-			.antMatchers("/user/**").authenticated()
-//			.anyRequest().authenticated() // 나머지 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 가능
 		.and()
 			.formLogin() // form 기반으로 인증을 하도록 한다. 로그인 정보는 기본적으로 HttpSession을 이용
-			.loginPage("/") // 로그인 페이지 링크 .... post의 이름이 같다면 loginProcessingUrl생략 	
-	          //스프링시큐리티가 해당주소로 오는 요청을 가로채서 대신한다. 
+			.loginPage("/?showsLoginForm=true") // 로그인 페이지 링크 .... post의 이름이 같다면 loginProcessingUrl생략 	
+	        .loginProcessingUrl("/")
 			.defaultSuccessUrl("/index") // 로그인 성공 후 리다이렉트 주소				
 			.permitAll()
 			.and()
