@@ -18,17 +18,9 @@ var reviewManager= ( function(){
 			success: callback
 		});
 	};
-	var remove= function(obj, callback){
-		console.log("remove review.......");
-		$.ajax({
-			url:"/review/"+obj["rId"],
-			type:"delete",
-			success: callback
-		});
-	};
+	
 	
 	return { "getAll":getAll, 
-			 "add": add,
-			"remove":remove
+			 "add": add
 	};
 })();
