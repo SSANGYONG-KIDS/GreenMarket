@@ -201,6 +201,4 @@ public class CommunityController {
 		System.out.println("controller-putmapping-update()");
 		service.updateBoard(board);
 	}
-
-
 }
