@@ -33,10 +33,10 @@ public class MailService {
         simpleMessage.setTo((String[]) toUserList.toArray(new String[toUserSize]));
         
         // 메일 제목
-        simpleMessage.setSubject("그린마켓 임시 비멀번호를 알려드립니다!");
+        simpleMessage.setSubject("그린마켓 임시 비밀번호를 알려드립니다!");
         
         // 메일 내용
-        simpleMessage.setText(password+ " 이 비밀번호로 다시 로그인 해주세요!");
+        simpleMessage.setText(password+" 이 비밀번호로 다시 로그인해주세요!");
         
         // 메일 발송
         javaMailSender.send(simpleMessage);
