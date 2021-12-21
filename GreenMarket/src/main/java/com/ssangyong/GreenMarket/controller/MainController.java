@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ssangyong.GreenMarket.model.ICategoryEnumType;
 import com.ssangyong.GreenMarket.model.ItemEntity;
+import com.ssangyong.GreenMarket.model.ItemPageVO;
+import com.ssangyong.GreenMarket.model.PageMaker;
 import com.ssangyong.GreenMarket.model.SecurityUser;
 import com.ssangyong.GreenMarket.service.ItemPhotoService;
 import com.ssangyong.GreenMarket.service.ItemService;
 import com.ssangyong.GreenMarket.service.LoginService;
 import com.ssangyong.GreenMarket.service.MemberService;
+
+import edu.emory.mathcs.backport.java.util.Collections;
 
 @Controller
 public class MainController {
@@ -48,24 +53,40 @@ public class MainController {
 
 		  
 		  // main에 게시물 6개까지 보여주기
-	      int numOfItem = 0;
-	      List<ItemEntity> resultAll = itemService.selectAll();
-	      List<ItemEntity> result = new ArrayList<>();
-	      for (ItemEntity item: resultAll) {
-	    	  if(numOfItem >= 6) break;
-	    		  numOfItem ++;
-	    		  
-	    	  if(item.getIContent().length()>=10) {
-	    		  String sub = item.getIContent().substring(0, 10)+" ...";
-	    		  item.setIContent(sub);
-	    	  }
-	    		  result.add(item);
-	      }
-	  
+//	      int numOfItem = 0;
+//	      List<ItemEntity> resultAll = itemService.selectAll();
+//	      List<ItemEntity> result = new ArrayList<>();
+//	      for (ItemEntity item: resultAll) {
+//	    	  if(numOfItem >= 6) break;
+//	    		  numOfItem ++;
+//	    		  
+//	    	  if(item.getIContent().length()>=10) {
+//	    		  String sub = item.getIContent().substring(0, 10)+" ...";
+//	    		  item.setIContent(sub);
+//	    	  }
+//	    		  result.add(item);
+//	      }
+//	      Collections.sort(result, Collections.reverseOrder());
+//	      model.addAttribute("itemResult", result);
+//	      model.addAttribute("itemSorts", ICategoryEnumType.values());	      
+	      
 //	      model.addAttribute("pagevo", pagevo);
 //	      model.addAttribute("result", new PageMaker<>(result));
-	      model.addAttribute("itemResult", result);
-	      model.addAttribute("itemSorts", ICategoryEnumType.values());
+	      	ItemPageVO pagevo = new ItemPageVO(1, 6, null, null, null, null, 0);
+			Page<ItemEntity> result = itemService.selectAll(pagevo);
+			
+			for(ItemEntity item : result) {
+				if(item.getIContent().length()>=10) {
+					String sub = item.getIContent().substring(0, 10)+" ...";
+					item.setIContent(sub);
+				}
+				System.out.println(item);
+			}	      
+		    model.addAttribute("itemSorts", ICategoryEnumType.values());
+			model.addAttribute("itemResult", result);
+			model.addAttribute("pagevo", pagevo);
+			model.addAttribute("result", new PageMaker<>(result));
+			
 	      return "index";
 	   }
 	   
