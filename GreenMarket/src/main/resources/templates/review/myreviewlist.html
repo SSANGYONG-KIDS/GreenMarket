@@ -52,11 +52,14 @@
 						<input type="hidden" name="rId" id="rId"/>
 						<div class="item">
 					        <div class="testimony-wrap py-4">
+					        	<div style="text-align: right">
+									<a th:href="@{/review/delete(rId=${review.rId})}">삭제</a>
+								</div>
 					          	<div class="text">
 					          		<p style="font-size: 20px"><b><a th:href="@{/item/itemdetail(iId=${review.item.iId})}">[[${review.item.iTitle}]] ></a></b></p>
 						        	<p>
-							            <span><span style="color:red;" th:if="${review.rStar}>0" th:each="num: ${#numbers.sequence(1,review.rStar)}">★</span></span>
-							            <span th:text="${#dates.format(new java.util.Date(review.rRegdate), 'yyyy-MM-dd HH:mm')}"></span>
+							           <span><span style="color:red;" th:if="${review.rStar}>0" th:each="num: ${#numbers.sequence(1,review.rStar)}">★</span></span>
+							           <span th:text="${#dates.format(new java.util.Date(review.rRegdate), 'yyyy-MM-dd HH:mm')}"></span>
 						          	</p>
 						          	<hr>
 						         	<p class="mb-4" style="color:black">[[${review.rContent}]]</p>
@@ -90,7 +93,7 @@
 			        <label>거래 목록</label><br>
 			        <select id="userTradelist">
 				        <option selected="selected" th:value=0>선택없음</option>
-					    <option  th:each="userTrade:${myTradelist}" th:value="${userTrade.tId}">[[${userTrade.item.iTitle}]]</option>
+					    <option th:each="userTrade:${myTradelist}" th:value="${userTrade.tId}">[[${userTrade.item.iTitle}]]</option>
 					</select>
 			      </div>
 			      <div class="modal-footer">
@@ -106,7 +109,11 @@
 <th:block layout:fragment="script1">
 <!-- 메인 상단 메뉴 active -->
 <script>
-	$('#nav-item-mypage').addClass('active');			
+	$('#nav-item-mypage').addClass('active');	
+	var result ="";
+	if(result!=""){
+		alert("삭제 완료");
+	}
 </script>
 <script th:src="@{/bootstrap/js/review.js}"></script>
 <script>
