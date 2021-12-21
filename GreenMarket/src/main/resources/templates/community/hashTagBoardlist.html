@@ -30,19 +30,19 @@
 			<br><br>
 			<table class="table table-bordered table-hover " id="xxx">
 				
-				<tr>
+				<tr align="center">
 					<th>제목</th>
 					<th>작성자</th>
 					<th>조회수</th>
 					<th>작성일</th>
 					<th>수정일</th>
-				</tr>
+				</tr >
 				<tr th:each="tag : ${tagList}" th:onclick="'window.location.href=\'' + @{/community/boarddetail(cId=${tag.community.cId})} +'\' '">
 					<td width="300" style="word-break:break-all" th:text="${tag.community.cTitle}"></td >
-					<td width="100" style="word-break:break-all" th:text="${tag.community.member.mNickname}"></td>
-					<td width="100" th:text="${tag.community.cViews}"></td>
-					<td width="200" th:text="${#dates.format(new java.util.Date(tag.community.cRegdate), 'yyyy-MM-dd hh:mm')}"></td> 
-					<td width="200" th:text="${#dates.format(new java.util.Date(tag.community.cUpdate), 'yyyy-MM-dd hh:mm')}"></td>
+					<td width="100" style="word-break:break-all" th:text="${tag.community.member.mNickname}" align="center"></td>
+					<td width="100" th:text="${tag.community.cViews}" align="center"></td>
+					<td width="200" th:text="${#dates.format(new java.util.Date(tag.community.cRegdate), 'yyyy-MM-dd hh:mm')}" align="center"></td> 
+					<td width="200" th:text="${#dates.format(new java.util.Date(tag.community.cUpdate), 'yyyy-MM-dd hh:mm')}" align="center"></td>
 				</tr>
 			</table>
 		
