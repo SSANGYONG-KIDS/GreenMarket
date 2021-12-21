@@ -73,7 +73,7 @@
 	</section>
 	<section class="ftco-section">
 		<div style="text-align: center; margin-bottom:100px;">
-			<h3><b>내 관심 물품은 총 [[${myitemcart.size}]]개 입니다.</b></h1>
+			<h3><b>내 관심 물품은 총 <span id="all_cnt" th:text="${myitemcart.size}"></span>개 입니다.</b></h1>
 		</div>
 		<div class="container">
 			<div class="row d-flex">
@@ -125,7 +125,9 @@
 			$.ajax({
 				url:`updateGood/[[${member.mId}]]/`+id,
 				type: "post",
-				success: function(data){	
+				success: function(data){
+					if (data == 1) $('#all_cnt').text(Number($('#all_cnt').text()) + 1);
+					else if (data == 0) $('#all_cnt').text(Number($('#all_cnt').text()) - 1);
 					alert('좋아요 상태가 업데이트 되었습니다.');
 				},
 				error: function(){}
