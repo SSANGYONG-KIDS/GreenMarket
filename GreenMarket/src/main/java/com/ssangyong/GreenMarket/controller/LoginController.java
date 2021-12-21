@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ssangyong.GreenMarket.model.MemberAddress;
 import com.ssangyong.GreenMarket.model.MemberEntity;
 import com.ssangyong.GreenMarket.service.LoginService;
+import com.ssangyong.GreenMarket.service.MailService;
 import com.ssangyong.GreenMarket.service.MemberService;
 import com.ssangyong.GreenMarket.service.S3Uploader;
 
@@ -35,6 +36,9 @@ public class LoginController {
    
    @Autowired
    MemberService memberservice;
+   
+   @Autowired
+   MailService mailservice;
    
 
    @PostMapping( value = "/layout/signup")
@@ -84,5 +88,18 @@ public class LoginController {
    public void droppedMember() {
 	   
    }
+  
+   /*@GetMapping("/send")
+   public  sendTestMail(String email) {
+       
+
+       mailTO.setAddress(email);
+       mailTO.setTitle("밤둘레 님이 발송한 이메일입니다.");
+       mailTO.setMessage("안녕하세요. 반가워요!");
+
+       mailService.sendMail(mailTO);
+
+       return mailTO;
+   } */
 	
 }
