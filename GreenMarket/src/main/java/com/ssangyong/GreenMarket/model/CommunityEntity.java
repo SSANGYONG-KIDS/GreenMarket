@@ -61,4 +61,9 @@ public class CommunityEntity {
 	@OneToMany(mappedBy = "community", cascade = CascadeType.ALL, fetch = FetchType.LAZY) //LAZY에서 변경
 	@OrderBy("crId desc")
 	private List<CommunityReplyEntity> creplies; 
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "community", cascade = CascadeType.ALL, fetch = FetchType.LAZY) //LAZY에서 변경
+	@OrderBy("ctId desc")
+	private List<CommunityTagEntity> tags; 
 }
