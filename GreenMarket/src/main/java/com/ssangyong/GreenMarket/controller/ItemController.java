@@ -78,7 +78,15 @@ public class ItemController {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		MemberEntity member =  loginService.selectById(userDetails.getUsername());
 		
-		model.addAttribute("myitemcart", icService.selectItemList(member.getMId()));
+		List<ItemEntity> myitemcart = icService.selectItemList(member.getMId());
+		for(ItemEntity item : myitemcart) {
+			if(item.getIContent().length()>=10) {
+				String sub = item.getIContent().substring(0, 10)+" ...";
+				item.setIContent(sub);
+			}
+		}
+		
+		model.addAttribute("myitemcart", myitemcart);
 		model.addAttribute("member", member);
 	}		
 

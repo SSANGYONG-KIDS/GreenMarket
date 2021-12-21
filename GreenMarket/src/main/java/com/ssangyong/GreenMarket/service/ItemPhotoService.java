@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssangyong.GreenMarket.model.ItemEntity;
 import com.ssangyong.GreenMarket.model.ItemPhotoEntity;
 import com.ssangyong.GreenMarket.repository.ItemPhotoRepository;
 
@@ -19,6 +20,12 @@ public class ItemPhotoService {
 	public List<ItemPhotoEntity> selectAll() {
 		return (List<ItemPhotoEntity>) itemPhotoRepo.findAll();
 	}
+	
+	// 물품당 사진 list조회
+	public List<ItemPhotoEntity> selectByItem(ItemEntity item) {
+		return (List<ItemPhotoEntity>) itemPhotoRepo.findByItem(item);
+	}
+
 
 	// 아이디로 찾기
 	public ItemPhotoEntity selectById(Integer ipId) {

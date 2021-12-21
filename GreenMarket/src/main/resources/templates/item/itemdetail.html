@@ -226,7 +226,7 @@
 		}
 		
 		#like_button:after {
-			content: "♥";
+			content: "❤";
 			color: #D61F12;
 			opacity: 0;
 			-webkit-transition: all 0.2s ease-in-out;
@@ -298,6 +298,9 @@
 			height: 500px;
 			overflow-y: auto;
 		}
+		.modal-title{
+			margin-left: auto;
+		}
 		._14i3z6h {
 		    color: inherit !important;
 		    font-weight: bold;
@@ -320,9 +323,9 @@
 					class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
 					<div class="col-md-9 ftco-animate pb-5 text-center">
 						<p class="breadcrumbs">
-							<span class="mr-2"><a th:href="@{/index}">Home <i class="fa fa-chevron-right"></i></a></span> <span>Item <i class="fa fa-chevron-right"></i></span>
+							<span class="mr-2"><a th:href="@{/index}">Home <i class="fa fa-chevron-right"></i></a></span> <span><a th:href="@{/item/itemlist}">Item</a><i class="fa fa-chevron-right"></i></span>
 						</p>
-						<h1 class="mb-0 bread">Item Detail</h1>
+						<h1 class="mb-0 bread">상세 조회</h1>
 					</div>
 				</div>
 			</div>
@@ -376,7 +379,7 @@
 							<div>
 								<button aria-label="목록에 숙소 추가하기" data-testid="pdp-save-button-unsaved" type="button" class="_kvaiv9k">
 									<div aria-hidden="true" class="_5kaapu">
-										<span id="like_button">♥</span>
+										<span id="like_button">❤</span>
 										<span id="like_num" style="margin-left:20px">[[${like_num}]]</span>
 									</div>
 								</button>
@@ -385,7 +388,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="">
+			<div>
 				<div class="col-md-6 order-md-last heading-section pl-md-5 ftco-animate d-flex align-items-center">
 					<div class="image-box">
 						<img class="image-thumbnail" th:src="${item.photos[0].ipFilename}"/>
@@ -424,7 +427,7 @@
 	    		<!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-header">
-			        	<h4 class="modal-title">item photos</h4>
+			        	<h4 class="modal-title">Photos</h4>
 			        	<button type="button" class="close" data-dismiss="modal">&times;</button>
 			      	</div>
 			      	<div class="modal-body">
