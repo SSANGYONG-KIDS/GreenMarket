@@ -63,6 +63,23 @@ public class CommunityController {
 		model.addAttribute("pagevo", pagevo);
 		model.addAttribute("result", new PageMaker<>(result));
 	}
+
+	//내가 쓴 글 보기
+	@GetMapping("/community/myBoardlist")
+	public String myBoardlist(Model model, Principal principal, Authentication authentication, PageVO pagevo) {
+		System.out.println("내가 쓴 글 보기 controller");
+		
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		MemberEntity user =  log_service.selectById(userDetails.getUsername());
+		
+	//	Page<CommunityEntity> result = service.selectMyBoard(pagevo, user.getMId());
+		Page<CommunityEntity> result = service.selectMyBoardlist(pagevo, user);
+		
+		model.addAttribute("boardResult",result);
+		model.addAttribute("pagevo", pagevo);
+		model.addAttribute("result", new PageMaker<>(result));
+		return "community/myBoardlist";	
+	}
 	
 	//태그 포함된 게시글 보기
 	@GetMapping("community/tagBoardlist/{ctId}")
@@ -77,23 +94,6 @@ public class CommunityController {
 		model.addAttribute("tagList",tagList);
 		
 		return "community/hashTagBoardlist";
-	}
-		
-	
-	//내가 쓴 글 보기
-	@GetMapping("/community/myBoardlist")
-	public String myBoardlist(Model model, Principal principal, Authentication authentication, PageVO pagevo) {
-		System.out.println("내가 쓴 글 보기 controller");
-		
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		MemberEntity user =  log_service.selectById(userDetails.getUsername());
-		
-		Page<CommunityEntity> result = service.selectMyBoard(pagevo, user.getMId());
-		
-		model.addAttribute("boardResult",result);
-		model.addAttribute("pagevo", pagevo);
-		model.addAttribute("result", new PageMaker<>(result));
-		return "community/myBoardlist";	
 	}
 	
 	

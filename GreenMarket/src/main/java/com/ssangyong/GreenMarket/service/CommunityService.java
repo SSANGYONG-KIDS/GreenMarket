@@ -36,24 +36,36 @@ public class CommunityService {
 		return result;
 	}
 		
-	
+	// 내가 쓴 글 보기
+	public Page<CommunityEntity> selectMyBoardlist(PageVO pvo, MemberEntity user){
+		Predicate p = repo.makePredicate(pvo.getType(), pvo.getKeyword());
+		
+		Pageable pageable = pvo.makePaging(0, "cId");
+		Page<CommunityEntity> result = repo.findByMember(user, pageable);
+		return result;
+	}
+	/*
+	// 내가쓴 글 보기(원래)
+	public Page<CommunityEntity> selectMyBoard(PageVO pvo, String mId){
+		System.out.println("service-selectMyBoard()");
+		Predicate p = repo.makePredicate(pvo.getType(), pvo.getKeyword());
+	//	Predicate p = repo.makePredicate(null, null);
+		String id = mId;
+			
+		// makePaging(방향, sort할 field)
+		Pageable pageable = pvo.makePaging(0, "cId");
+		System.out.println("#############################################################");
+		Page<CommunityEntity> result = repo.findByMember_mId(mId, p, pageable);
+		System.out.println("#############################################################");
+		return result;
+	}
+	*/
 	// 원래 코드!!list조회
 	public List<CommunityEntity> selectAll() {
 		return (List<CommunityEntity>) repo.findAll();
 	}
 
-	// 내가쓴 글 보기
-	public Page<CommunityEntity> selectMyBoard(PageVO pvo, String mId){
-		System.out.println("service-selectMyBoard()");
-	//	Predicate p = repo.makePredicate(pvo.getType(), pvo.getKeyword());
-	//	Predicate p = repo.makePredicate(null, null);
-		String id = mId;
-		
-		// makePaging(방향, sort할 field)
-		Pageable pageable = pvo.makePaging(0, "cId");
-		Page<CommunityEntity> result = repo.findByMember_mId(id, pageable);
-		return result;
-	}
+	
 	
 	
 	// 아이디로 찾기 (글 상세보기)
