@@ -5,7 +5,14 @@
    layout:decorate="~{layout/layout1}"> 
 <th:block layout:fragment="style1">
 	<style>
-
+	.row {
+	display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -30%;
+	}
+	
 	#signup-form {
 	margin-top : 5%;
 	}
@@ -37,7 +44,7 @@
     font-size: 18px;
     border-radius: 5px;
     box-shadow: none;
-    width: 40%;
+    width: 60%;
     display: block;
     margin-left:33.5%;
     border: 1px solid #ced4da;
@@ -60,8 +67,8 @@
 	textarea {
 	display : block;
 	margin-left: 33.5%;
-	width : 40%;
-	height : 100%;
+	width : 50%;
+	height : 120%;
 	 border-radius: 5px;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
@@ -81,8 +88,8 @@
     box-shadow: none !important;
     width: 40%;
     display: block;
-    margin-left: -56.5%;
-    margin-top: 18%;
+    margin-left:-40%;
+    margin-top: 13%;
     border: 1px solid #ced4da;
 	}
 
@@ -96,8 +103,8 @@
     box-shadow: none !important;
     width: 50%;
     display: block;
-    margin-left: -56.5%;
-    margin-top: 30%;
+    margin-left: -40%;
+    margin-top: 20%;
     border: 1px solid #ced4da;
 	}
 
@@ -123,7 +130,7 @@
 		  <div class="overlay"></div>
 		  <div class="container">
 		    <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
-		      <div class="col-md-9 ftco-animate pb-5 text-center">
+		      <div class="col-md-9 ftco-animate pb-5 text-center" style= "margin-left:25%">
 		       <p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i class="fa fa-chevron-right"></i></a></span> <span>회원가입 <i class="fa fa-chevron-right"></i></span></p>
 		       <h1 class="mb-0 bread">회원가입</h1>
 		     </div>
@@ -152,7 +159,7 @@
          <div class="row">
             <div class="col">
                   <label for="mId" class="id">아이디</label>
-                  <input id="mId2" name="mId" type="text" placeholder="아이디을 입력하세요" class="box-form1"/>
+                  <input id="mId3" name="mId" type="text" placeholder="아이디을 입력하세요" class="box-form1"/>
             </div> 
             <div class="col-3">
                   <input type="button" id="checkId" value="중복확인" class="checkform">
@@ -225,7 +232,7 @@
          <i id="mEmailInfo" class="text-info"></i>
          <br>
          
-         <div class="row">
+         <div class="row"style="padding-bottom:100px;">
             <div class="col">
                <label for="mInfo" class="myinfo"> 자기소개</label> 
                <textarea id="mInfo" name="mInfo" placeholder="자기소개를 적어주세요!" class="textform" ></textarea>
@@ -267,7 +274,7 @@
          
       $("#btn_upload_file").click(function(event){
       
-      var mId = $("#mId2").val();
+      var mId = $("#mId3").val();
       var mPw = $("#mPw2").val();
       var mName = $("#mName").val();
       var mNickname = $("#mNickname").val();
@@ -293,7 +300,11 @@
          $("#mId").focus();
          event.preventDefault();
          isCompleted = 0;
-      } if(mPw == '') {
+      } else{
+      	$('i[id="mIdInfo"]').html("");
+      }
+      
+      if(mPw == '') {
          $('i[id="mPwInfo"]').html("비밀번호를 입력하세요");
          $("#mPw").focus();
          event.preventDefault();
@@ -303,52 +314,75 @@
          $("#mPw").focus();
          event.preventDefault();
          isCompleted = 0;
-      }  if(mName == '') {
+      }  else {
+      	$('i[id="mPwInfo"]').html("");
+      }
+      
+      if(mName == '') {
          $('i[id="mNameInfo"]').html("이름을 입력하세요");
-         $("#mName").focus();
+         //$("#mName").focus();
          event.preventDefault();
          isCompleted = 0;
       } else if(!regName.test(mName)) {
          $('i[id="mNameInfo"]').html("이름을 확인하세요");
-         $("#mName").focus();
+         //$("#mName").focus();
          event.preventDefault();
    		 isCompleted = 0;
-      }  if(mNickname == '') {
+      } else {
+      	$('i[id="mNameInfo"]').html("");
+      }
+      
+      if(mNickname == '') {
          $('i[id="mNicknameInfo"]').html("닉네임을 입력하세요");
-         $("#mNickname").focus();
+         //$("#mNickname").focus();
          event.preventDefault();
          isCompleted = 0;
       } else if(!regName.test(mNickname)) {
          $('i[id="mNicknameInfo"]').html("닉네임을 확인하세요");
-         $("#mNickname").focus();
+        // $("#mNickname").focus();
          event.preventDefault();
 		 isCompleted = 0;   
-      }  if(mEmail == '') {
+      } else {
+      	$('i[id="mNicknameInfo"]').html("");
+      }
+      
+       if(mEmail == '') {
          $('i[id="mEmailInfo"]').html("이메일을 입력하세요");
-         $("#mEmail").focus();
+        // $("#mEmail").focus();
          event.preventDefault();
          isCompleted = 0;
       } else if(!regEmail.test(mEmail)) {
          $('i[id="mEmailInfo"]').html("이메일 형식을 확인하세요");
-         $("#mEmail").focus();
+         // $("#mEmail").focus();
          event.preventDefault();
          isCompleted = 0;
-      }  if(mPhone == '') {
+      } else {
+      	$('i[id="mEmailInfo"]').html("");
+      }
+      
+      if(mPhone == '') {
          $('i[id="mPhoneInfo"]').html("전화번호를 입력하세요");
-         $("#mPhone").focus();
+        // $("#mPhone").focus();
          event.preventDefault();
          isCompleted = 0;
       }else if(!regPhone.test(mPhone)) {
          $('i[id="mPhoneInfo"]').html("전화번호 형식을 확인하세요");
-         $("#mPhone").focus();
+        // $("#mPhone").focus();
          event.preventDefault();
          isCompleted = 0;
-   	  } if(mInfo == '') {
+   	  } else {
+      	$('i[id="mPhoneInfo"]').html("");
+      }
+      
+   	  if(mInfo == '') {
          $('i[id="mInfoInfo"]').html("자기소개를 입력하세요");
          $("#mInfo").focus();
          event.preventDefault();
          isCompleted = 0;
-   	  }
+        } else {
+      	$('i[id="mInfoInfo"]').html("");
+      	}
+   	  
    	  if (isCompleted) {
    	  	// alert('회원가입 완료 되었습니다!');
    	  	// $("#signup-form").submit();
@@ -357,11 +391,15 @@
    });
        
          $('#checkId').click(function() {
+         		
+         	if($('#mId3').val() == "") {
+				alert("아이디 입력쓰~");         		
+         	}else{
 			 $.ajax({
                type : "GET",
                url : "/login/duCheck",
                data : {
-                  "mId" : $('#mId2').val()
+                  "mId" : $('#mId3').val()
                },
                success : function(aa) {
                   console.log(aa);
@@ -372,6 +410,7 @@
                   }
                }
             });
+            }
          });
       
       $('#checkNick').click(function() {
@@ -516,12 +555,6 @@
 			reader.readAsDataURL(f);
 		});
 	}
-         
-   		$("#btn_upload_file").click(function(e) {
-				e.preventDefault();
-				uploadImage();
-			});
-			
 			function uploadImage() {
 				var file = $('#file_img')[0].files[0]; // 이미지 파일 얻기
 				if (typeof file != "undefined") {

@@ -5,8 +5,10 @@ import java.util.Random;
 
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ssangyong.GreenMarket.model.MemberAddress;
 import com.ssangyong.GreenMarket.model.MemberEntity;
+import com.ssangyong.GreenMarket.model.SecurityUser;
 import com.ssangyong.GreenMarket.service.LoginService;
 import com.ssangyong.GreenMarket.service.MailService;
 import com.ssangyong.GreenMarket.service.MemberService;
@@ -88,18 +91,34 @@ public class LoginController {
    public void droppedMember() {
 	   
    }
-  
-   /*@GetMapping("/send")
-   public  sendTestMail(String email) {
-       
-
-       mailTO.setAddress(email);
-       mailTO.setTitle("밤둘레 님이 발송한 이메일입니다.");
-       mailTO.setMessage("안녕하세요. 반가워요!");
-
-       mailService.sendMail(mailTO);
-
-       return mailTO;
-   } */
-	
+   
+	 @PostMapping("/login/findpw")
+	 @ResponseBody
+		public int FindPassword(@AuthenticationPrincipal SecurityUser principal,String id,String email) {
+		 System.out.println("비밀번호 찾기");
+		 String mId = principal != null ? principal.getUsername() : id; 
+		 int result = loginservice.FindPassword(id, email);
+		 
+		 if(result==1) {
+			// 임시 비밀번호 생성
+		      String password = "";
+		      for (int i = 0; i < 12; i++) {
+		    	  password += (char) ((Math.random() * 26) + 97);
+		      }
+		      MemberEntity member = memberservice.selectById(mId);
+		      
+		      member.setMPw(password);
+		      
+		      // 비밀번호 변경
+		      memberservice.updateMemberPassword(member);
+			  mailservice.sendMail(email, password);
+			 
+			  System.out.println("이메일로 임시 비밀번호를 발송하였습니다.");
+		 }else{
+			 return result;
+		 }
+		return result;
+		 
+		 
+	 }
 }

@@ -14,18 +14,14 @@ public class MailService {
      
     @Autowired
     private JavaMailSender javaMailSender;
-    
-    @Autowired
-    private MemberEntity member;
 
-    public void sendMail() {
+    public void sendMail(String email, String password) {
         
     	// 수신 대상을 담을 ArrayList 생성
         ArrayList<String> toUserList = new ArrayList<>();
         
         // 수신 대상 추가
-        toUserList.add("수신대상1@gmail.com");
-        toUserList.add("수신대상2@naver.com");
+        toUserList.add(email);
         
     	// 수신 대상 개수
         int toUserSize = toUserList.size();
@@ -37,10 +33,10 @@ public class MailService {
         simpleMessage.setTo((String[]) toUserList.toArray(new String[toUserSize]));
         
         // 메일 제목
-        simpleMessage.setSubject("Subject Sample");
+        simpleMessage.setSubject("그린마켓 임시 비멀번호를 알려드립니다!");
         
         // 메일 내용
-        simpleMessage.setText("Text Sample");
+        simpleMessage.setText(password+ " 이 비밀번호로 다시 로그인 해주세요!");
         
         // 메일 발송
         javaMailSender.send(simpleMessage);
