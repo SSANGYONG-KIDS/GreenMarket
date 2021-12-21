@@ -13,22 +13,31 @@ import com.ssangyong.GreenMarket.model.ItStateEnumType;
 import com.ssangyong.GreenMarket.model.ItemCartEntity;
 import com.ssangyong.GreenMarket.model.ItemCartEntityId;
 import com.ssangyong.GreenMarket.model.ItemEntity;
+import com.ssangyong.GreenMarket.model.ItemPhotoEntity;
 import com.ssangyong.GreenMarket.model.MemberEntity;
 import com.ssangyong.GreenMarket.repository.ItemCartRepository;
-import com.ssangyong.GreenMarket.repository.ItemRepository;
+import com.ssangyong.GreenMarket.repository.ItemPhotoRepository;
 
 
 @Service
 public class ItemCartService {
 	@Autowired
 	ItemCartRepository icRepository;
+	@Autowired
+	ItemPhotoRepository ipRepository;
 	
 	//한 사람이 좋아요 한 물품전체 조회
 	public List<ItemEntity> selectItemList(String mId) {
 		List<Object[]> objects= icRepository.allFindByMId(mId);
+		
 	    List<ItemEntity> itemlist= new ArrayList<>();
 	      objects.forEach(arr->{
 	    	  MemberEntity member = MemberEntity.builder().mId((String)arr[7]).build();
+	    	  
+	    	  ItemPhotoEntity photo = ipRepository.findById(Integer.parseInt(String.valueOf(arr[9]))).get();
+	    			  
+	    	  List<ItemPhotoEntity> photos = new ArrayList<>();
+	    	  photos.add(photo);
 	    	  
 	    	  ItemEntity item = ItemEntity.builder()
 	               .iId(Integer.parseInt(String.valueOf(arr[0])))
@@ -40,7 +49,9 @@ public class ItemCartService {
 	               .iTstate(ItStateEnumType.valueOf((String)arr[6]))
 	               .member(member)
 	               .iCategory(ICategoryEnumType.valueOf((String)arr[8]))
+	               .photos(photos)
 	               .build();
+	    	 
 	    	  itemlist.add(item);
 	      });
 	     

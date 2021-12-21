@@ -31,15 +31,18 @@
 				<div class="col-md-9 ftco-animate pb-5 text-center">
 					<p class="breadcrumbs">
 						<span class="mr-2"><a th:href="@{/index}">Home <i class="fa fa-chevron-right"></i></a></span> 
-						<span>마이페이지 <i class="fa fa-chevron-right"></i></span>
+						<span><a th:href="@{/layout/myPage}">MyPage</a><i class="fa fa-chevron-right"></i></span>
 					</p>
-					<h1 class="mb-0 bread">My Reviews</h1>
+					<h1 class="mb-0 bread">내 리뷰 관리</h1>
 				</div>
 			</div>
 		</div>
 	</section>
 	<section class="ftco-section">
 		<div class="container">
+			<div style="text-align: center;">
+				<h3><b>내가 작성한 리뷰는 총 [[${myreviewlist.size}]]개 입니다.</b></h1>
+			</div>
 			<div style="text-align:right; padding-bottom:20px;">
 		  		<button class="btn btn-primary py-3 px-4" id="addReview" data-toggle="modal" data-target="#reviewModal">리뷰 작성</button>
 		  	</div>
