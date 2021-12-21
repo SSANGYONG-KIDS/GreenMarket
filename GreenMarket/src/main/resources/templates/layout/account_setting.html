@@ -6,21 +6,117 @@
 	layout:decorate="~{layout/layout1}">
 <th:block layout:fragment="style1">
 	<style>
-
-	#current_img {
-	 width : 100px;
-	 height: 100px;
+	.modify-form {
+	margin-top : 5%;
+	}
+	
+	#current_img  {
+	 width : 150px;
+	 height: 150px;
 	 border-radius : 70%;
 	 object-fit: cover;
 	}
 	
-	#mId, #mName, #mNickname{
-	  background-color: #ccc;
+	label {
+	font-weight : 900;
+	color : black;
+	}
+	
+	.pw {
+	margin-left:30%;
+	}
+
+	.box-form {
+	height: 52px !important;
+    background: #fff !important;
+    color: #000000 !important;
+    font-size: 18px;
+    border-radius: 5px;
+    box-shadow: none;
+    width: 40%;
+    display: block;
+    margin-left:33.5%;
+	}
+	
+	.box-form1 {
+	height: 52px !important;
+    background: #fff !important;
+    color: #000000 !important;
+    font-size: 18px;
+    border-radius: 5px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    width: 40%;
+    display: block;
+    margin-left:45%;
+	}
+	
+	textarea {
+	display : block;
+	margin-left: 33.5%;
+	width : 40%;
+	height : 100%;
+	 border-radius: 5px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+	}
+	.address {
+	margin-top: 3%;
+	display : block;
+	}
+	.checkform {
+	height: 32px !important;
+    background: green !important;
+    color: white !important;
+    font-size: 18px;
+    border-radius: 5px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    width: 40%;
+    display: block;
+    margin-left: -56.5%;
+    margin-top: 18%;
+	}
+	
+	.checkaddressform {
+	height: 32px !important;
+    background: green !important;
+    color: white !important;
+    font-size: 18px;
+    border-radius: 5px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    width: 50%;
+    display: block;
+    margin-left: -56.5%;
+    margin-top: 30%;
+	}
+	
+	#modifyPhone {
+		width:30%;
+		height:10%;
+	}
+	
+	#modify, #delete_account {
+	width: 20%;
+    height: 40%;
+    margin-left: 38%;
+    margin-top: 3%;
+}
+
+	#delete_account {
+		margin-top: 2%;
+		margin-bottom: 5%;
 	}
 	
 	#modify_pw {
 		display:none;
 	}
+	
+	#modify-form {
+	margin-top : 5%;
+	}
+	
 	
 	</style>
 <head>
@@ -46,9 +142,11 @@
 				</div>
 			</div>
 		</section>
-		<div class="container">
+		
+		
+		<div class="container" style="text-align : center;">
 			<div class="input-form-backgroud">
-				<div class="input-form col-md-12 mz-auto" style="margin-left: 19%">
+				<div class="input-form col-md-12 mz-auto">
 					<form class="modify-form" method="POST" >
 						<div class="validation-form" novalidate>
 							
@@ -59,14 +157,16 @@
 									
 									<div th:if="${member.mPhoto == null}"> 
 									<img src="/bootstrap/images/user.png" id="current_img">
-									<input id="file_img" name="file_img" type="file" />
+									<input id="file_img" name="file_img" type="file" style="
+    									margin-left: 15%;"/>
 									 </div>
 									 
 									<div th:unless="${member.mPhoto == null}">
 									<img th:src="${member.mPhoto}" id="current_img"> 
 									</div>
 									<br>
-										<input id="file_img" name="file_img" type="file" />
+										<input id="file_img" name="file_img" type="file" style="
+    										margin-left: 15%;"/>
 								</div>
 							</div>
 							<input type="hidden" id="mPhoto" name="mPhoto" /> <br>
@@ -74,25 +174,24 @@
 							<!-- 아이디 폼 -->
 							<div class="row">
 								<div class="col">
-									<label for="mId">아이디</label> 
-									<input id="mId" name="mId" type="text"  class=""
+									<label for="mId" class="id">아이디</label> 
+									<input id="mId" name="mId" type="text"  class="box-form"
 										th:value="${member.mId}" readonly="readonly" />
 								</div>
-
 							</div>
 							<br>
 
 							<!-- 비밀번호 -->
 							<div class="row">
 <!-- 								<div class="col"> -->
-									<label for="mPw">비밀번호</label> 
+									<label for="mPw" class="pw">비밀번호</label> 
 <!-- 									<input type="hidden" id="mpw" th:value="${member.mPw}"> -->
 <!-- 									<input id="mPw" name="mPw" type="password" placeholder="비밀번호를 입력하세요."  -->
 <!-- 										class="form-control" /> -->
 <!-- 								</div> -->
 								<div class="col-3">
-									<input type="button" id="checkPwd" value="비밀번호 수정"
-										class="form-control" readonly>
+									<input type="button" id="checkPwd" value="비밀번호 수정" 
+										class="form-control" readonly> 
 								</div>
 							</div>
 							<br>
@@ -100,8 +199,8 @@
 							<!-- 이름 -->
 							<div class="row">
 								<div class="col">
-									<label for="mName">이름</label> 
-									<input id="mName" name="mName" type="text" class=""
+									<label for="mName" class="name">이름</label> 
+									<input id="mName" name="mName" type="text" class="box-form"
 										th:value="${member.mName}" readonly="readonly" />
 								</div>
 							</div>
@@ -110,9 +209,10 @@
 							<!-- 휴대폰 번호 -->
 							<div class="row">
 								<div class="col">
+	 									<label for="mPhone" class="phone">휴대폰 번호</label> 
 								<input type="button" id="modifyPhone" value="전화번호 수정"
 										class="form-control" readonly>
-<!-- 									<label for="mPhone">휴대폰 번호</label> <input id="mPhone" -->
+<!-- 											<input id="mPhone" --> 
 <!-- 										name="mPhone" type="text" placeholder="'-'을 제외하고 입력하세요." -->
 <!-- 										class="form-control" th:value="${member.mPhone}" /> -->
 								</div>
@@ -143,9 +243,9 @@
 							<!-- 닉네임 -->
 							<div class="row">
 								<div class="col">
-									<label for="mNickname"> 닉네임 </label> 
+									<label for="mNickname" class="nickname"> 닉네임 </label> 
 									<input id="mNickname" name="mNickname" type="text" 
-										class="" th:value="${member.mNickname}" readonly="readonly"/>
+										class="box-form" th:value="${member.mNickname}" readonly="readonly"/>
 								</div>
 <!-- 								<div class="col-3"> -->
 <!-- 									<input type="button" id="checkNick" value="중복확인" -->
@@ -157,9 +257,9 @@
 							<!-- 이메일 -->
 							<div class="row">
 								<div class="col">
-									<label for="mEmail"> 이메일 수정 (수정할 이메일을 입력해주세요)</label> 
+									<label for="mEmail" class="email"> 이메일 수정 (수정할 이메일을 입력해주세요)</label> 
 									<input id="mEmail" name="mEmail" type="text" placeholder="abcd@email.com"
-										class="form-control" th:value="${member.mEmail}" />
+										class="box-form" th:value="${member.mEmail}" />
 								</div>
 							</div>
 							<br>
@@ -177,21 +277,20 @@
 								<!-- 주소 -->
 							<div class="row">
 								<div class="col">
-									<label for="memberAddress">주소</label> 
+									<label for="memberAddress" class="address">주소</label> 
 									<input type="text" id="sample6_postcode" placeholder="우편번호" name="mAddress.AddNum"
-										class="" th:value="${member.mAddress.AddNum}"> 
+										class="box-form1" th:value="${member.mAddress.AddNum}"> 
 										<input type="text" id="sample6_address" placeholder="주소" name="mAddress.memberAddress1"
-										class="" th:value="${member.mAddress.memberAddress1}">
+										class="box-form1" th:value="${member.mAddress.memberAddress1}">
 										<input type="text" id="sample6_extraAddress" placeholder="상세주소"
-										name="mAddress.memberAddress2" class="" th:value="${member.mAddress.memberAddress2}"> <br>
+										name="mAddress.memberAddress2" class="box-form1" th:value="${member.mAddress.memberAddress2}">
 										<input type="text" id="sample6_detailAddress" placeholder="상세주소 직접 입력"
-										name="mAddress.memberAddress3" class="" th:value="${member.mAddress.memberAddress3}"> 
+										name="mAddress.memberAddress3" class="box-form1" th:value="${member.mAddress.memberAddress3}"> 
 								</div>
 								<div class="col-3">
 									<input type="button" onclick="sample6_execDaumPostcode()"
-										value="우편번호 찾기" class="form-control"><br>
+										value="우편번호 찾기" class="checkaddressform"><br>
 								</div>
-								<div class="col-8"></div>
 							</div>
 							<br> 
 							<input type="button"
@@ -593,17 +692,25 @@ $('#checkcurrent').click(function () {
 					type: "POST",
 					url: "/modify",
 					data: data
-				}).done(function(resp){
-	         		 Swal.fire('수정성공!', '휴대폰 인증이 정상적으로 완료되었습니다.', 'success')
+				}).done(function(resp){		
+					Swal.fire({
+ 					 position: 'top',
+  					icon: 'success',
+  					title: '수정이 완료되었습니다!',
+  					showConfirmButton: false,
+  					timer: 1500
+					})	
 	         		location.href="/layout/account_setting";
 	         	}).fail(function(error) {
-	         		 Swal.fire("수정실패");
+	         		 Swal.fire({
+ 					 position: 'top',
+  					icon: 'error',
+  					title: '수정 실패!',
+  					showConfirmButton: false,
+  					timer: 1500
+					})	
 	         	});						
 			}
-
-
-	 		
-	
 	}
 	
 	
@@ -619,14 +726,24 @@ $('#checkcurrent').click(function () {
 				url: "/delete",
 				data: data
 			}).done(function(resp){
-         		alert("회원이 탈퇴되었습니다.");
+         			Swal.fire({
+ 					position: 'top',
+  					icon: 'success',
+  					title: '탈퇴가 완료되었습니다!',
+  					showConfirmButton: false,
+  					timer: 1500
+					})	
          		location.href="/login/logout";
          	}).fail(function(error) {
-         		alert("회원 탈퇴 실패");
+         		Swal.fire({
+ 					position: 'top',
+  					icon: 'error',
+  					title: '탈퇴가 실패되었습니다!',
+  					showConfirmButton: false,
+  					timer: 1500
+					})
          	});		
 	}
-	
-	
 	
       </script>
 		<!-- Bootstrap CSS -->

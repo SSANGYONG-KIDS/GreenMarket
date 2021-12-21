@@ -5,6 +5,7 @@
    layout:decorate="~{layout/layout1}"> 
 <th:block layout:fragment="style1">
 	<style>
+
 	#signup-form {
 	margin-top : 5%;
 	}
@@ -21,8 +22,28 @@
 	color : black;
 	margin-right : 3%;
 	}
-	
+		
+	.myinfo {
+	margin-right:27%;
+	}
+
+	.pw, .name, .email {
+		margin-right : 27%;
+	}
 	.box-form {
+	height: 52px !important;
+    background: #fff !important;
+    color: #000000 !important;
+    font-size: 18px;
+    border-radius: 5px;
+    box-shadow: none;
+    width: 40%;
+    display: block;
+    margin-left:33.5%;
+    border: 1px solid #ced4da;
+	}
+	
+	.box-form1 {
 	height: 52px !important;
     background: #fff !important;
     color: #000000 !important;
@@ -32,8 +53,63 @@
     box-shadow: none !important;
     width: 40%;
     display: block;
-    margin-left:50%;
+    margin-left:45%;
+    border: 1px solid #ced4da;
 	}
+	
+	textarea {
+	display : block;
+	margin-left: 33.5%;
+	width : 40%;
+	height : 100%;
+	 border-radius: 5px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border: 1px solid #ced4da;
+	}
+	.address {
+	margin-top: 3%;
+	display : block;
+	}
+	.checkform {
+	height: 32px !important;
+    background: green !important;
+    color: white !important;
+    font-size: 18px;
+    border-radius: 5px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    width: 40%;
+    display: block;
+    margin-left: -56.5%;
+    margin-top: 18%;
+    border: 1px solid #ced4da;
+	}
+
+	.checkaddressform {
+	height: 32px !important;
+    background: green !important;
+    color: white !important;
+    font-size: 18px;
+    border-radius: 5px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    width: 50%;
+    display: block;
+    margin-left: -56.5%;
+    margin-top: 30%;
+    border: 1px solid #ced4da;
+	}
+
+	#btn_upload_file{
+	width: 20%;
+    height: 40%;
+    margin-left: 38%;
+    margin: top;
+    margin-bottom: 10%;
+    margin-top: 3%;
+	}
+	
 	</style>
 <head>
 <meta charset="UTF-8">
@@ -75,11 +151,11 @@
          <br>
          <div class="row">
             <div class="col">
-                  <label for="mId" >아이디</label>
-                  <input id="mId2" name="mId" type="text" placeholder="아이디을 입력하세요" class="box-form"/>
+                  <label for="mId" class="id">아이디</label>
+                  <input id="mId2" name="mId" type="text" placeholder="아이디을 입력하세요" class="box-form1"/>
             </div> 
             <div class="col-3">
-                  <input type="button" id="checkId" value="중복확인" class="form-control2">
+                  <input type="button" id="checkId" value="중복확인" class="checkform">
             </div>
          </div>    
          <i id="mIdInfo" class="text-info"></i>
@@ -87,8 +163,8 @@
          
          <div class="row">
             <div class="col">
-                  <label for="mPw">비밀번호</label> 
-                  <input id="mPw2" name="mPw" type="password" placeholder="(영문+숫자+특수번호 8-12 자리입력)"class="form-control" />
+                  <label for="mPw" class="pw">비밀번호</label> 
+                  <input id="mPw2" name="mPw" type="password" placeholder="(영문+숫자+특수번호 8-12 자리입력)"class="box-form" />
             </div>
          </div>
         	<i id="mPwInfo" class="text-info"></i>
@@ -96,8 +172,8 @@
          
          <div class="row">
             <div class="col">
-               <label for="mName">이름</label>
-               <input id="mName" name="mName" type="text" placeholder="이름을 입력하세요." class="box-form" />
+               <label for="mName" class="name">이름</label>
+               <input id="mName" name="mName" type="text" placeholder="이름을 입력하세요." class="box-form"/>
             </div>
          </div>
           <i id="mNameInfo" class="text-info"></i>
@@ -105,11 +181,11 @@
          
          <div class="row">
             <div class="col">
-               <label for="mNickname"> 닉네임 </label> 
-               <input id="mNickname" name="mNickname" type="text" placeholder="닉네임을 입력하세요" class="box-form" /> 
+               <label for="mNickname" class="nickname"> 닉네임 </label> 
+               <input id="mNickname" name="mNickname" type="text" placeholder="닉네임을 입력하세요" class="box-form1" /> 
             </div>
             <div class="col-3">
-               <input type="button" id="checkNick" value="중복확인" class="form-control2">
+               <input type="button" id="checkNick" value="중복확인" class="checkform">
             </div>
          </div>   
            <i id="mNicknameInfo" class="text-info"></i>
@@ -118,11 +194,11 @@
          
          <div class="row">
             <div class="col">
-               <label for="mPhone">휴대폰 번호</label> 
-               <input id="mPhone" name="mPhone" type="text" placeholder="'-'을 제외하고 입력하세요." class="box-form" />
+               <label for="mPhone" class="phone">휴대폰 번호</label> 
+               <input id="mPhone" name="mPhone" type="text" placeholder="'-'을 제외하고 입력하세요." class="box-form1" />
             </div>
             <div class="col-3">
-               <input type="button" id="sendPhoneButton" value="인증" class="form-control2">
+               <input type="button" id="sendPhoneButton" value="인증" class="checkform">
             </div> 
          </div>
          <i id="mPhoneInfo" class="text-info"></i>
@@ -131,10 +207,10 @@
          <div class="row">
             <div class="col">
                <label for="mPhone2">인증번호</label> 
-               <input type="text" id="inputCertifiedNumber" readonly="readonly" class="box-form"> 
+               <input type="text" id="inputCertifiedNumber" readonly="readonly" class="box-form1"> 
             </div>
             <div class="col-3">
-               <input type="button" id="CertiUserNum" value="번호 인증" readonly="readonly" class="form-control2">
+               <input type="button" id="CertiUserNum" value="번호 인증" readonly="readonly" class="checkform">
                <input type="hidden" id="numStr" name="numStr">
             </div>
          </div>
@@ -142,7 +218,7 @@
                
          <div class="row">
             <div class="col">
-               <label for="mEmail"> 이메일 </label> 
+               <label for="mEmail" class="email"> 이메일 </label> 
                <input id="mEmail" name="mEmail" type="text" placeholder="abcd@email.com" class="box-form" />
             </div>
          </div>
@@ -151,27 +227,23 @@
          
          <div class="row">
             <div class="col">
-               <label for="mInfo"> 자기소개</label> 
-               <textarea id="mInfo" name="mInfo" placeholder="자기소개를 적어주세요!" class="" ></textarea>
+               <label for="mInfo" class="myinfo"> 자기소개</label> 
+               <textarea id="mInfo" name="mInfo" placeholder="자기소개를 적어주세요!" class="textform" ></textarea>
             </div>
          </div>
          <i id="mInfoInfo" class="text-info"></i>
          <br>
          
-         
          <div class="row">
             <div class="col">
-               <label for="memberAddress">주소</label> 
-               <input type="text" id="sample6_postcode" placeholder="우편번호" name="AddNum" class="">
-               <input type="text" id="sample6_address" placeholder="주소" name="memberAddress1" class="">
-               <input type="text" id="sample6_extraAddress" placeholder="상세주소" name="memberAddress2" class=""> <br>  
-               <input type="text" id="sample6_detailAddress" placeholder="상세주소 직접 입력" name="memberAddress3" class="">
+               <label for="memberAddress" class="address">주소</label> 
+               <input type="text" id="sample6_postcode" placeholder="우편번호" name="AddNum" class="box-form1">
+               <input type="text" id="sample6_address" placeholder="주소" name="memberAddress1" class="box-form1">
+               <input type="text" id="sample6_extraAddress" placeholder="상세주소" name="memberAddress2" class="box-form1"> 
+               <input type="text" id="sample6_detailAddress" placeholder="상세주소 직접 입력" name="memberAddress3" class="box-form1">
             </div>
             <div class="col-3">    
-               <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"  class="form-control2"><br>
-            </div>
-            <div class="col-8">   
-            
+               <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"  class="checkaddressform">
             </div>
          </div>
          <br>
