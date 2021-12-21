@@ -5,6 +5,9 @@
    layout:decorate="~{layout/layout1}"> 
 <th:block layout:fragment="style1">
 	<style>
+	.text-info {
+	margin-left: -55%;
+	}
 	.row {
 	display: flex;
     -ms-flex-wrap: wrap;
@@ -131,7 +134,7 @@
 		  <div class="container">
 		    <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
 		      <div class="col-md-9 ftco-animate pb-5 text-center" style= "margin-left:25%">
-		       <p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i class="fa fa-chevron-right"></i></a></span> <span>회원가입 <i class="fa fa-chevron-right"></i></span></p>
+		       <p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i class="fa fa-chevron-right"></i></a></span></p>
 		       <h1 class="mb-0 bread">회원가입</h1>
 		     </div>
 		   </div>
@@ -141,7 +144,7 @@
       <div class="input-form-backgroud" >
       <div class="input-form col-md-12 mz-auto">
          <form id="signup-form" action="./signup" method="POST">
-         <div class="validation-form" novalidate>
+         <div class="validation-form">
          
          <div class="profile">
             <div class="col">
@@ -159,7 +162,7 @@
          <div class="row">
             <div class="col">
                   <label for="mId" class="id">아이디</label>
-                  <input id="mId3" name="mId" type="text" placeholder="아이디을 입력하세요" class="box-form1"/>
+                  <input id="mId3" name="mId" type="text" placeholder="아이디을 입력하세요(아이디 3글자 이상!)" class="box-form1"/>
             </div> 
             <div class="col-3">
                   <input type="button" id="checkId" value="중복확인" class="checkform">
@@ -232,7 +235,7 @@
          <i id="mEmailInfo" class="text-info"></i>
          <br>
          
-         <div class="row"style="padding-bottom:100px;">
+         <div class="row"style="padding-bottom:60px;">
             <div class="col">
                <label for="mInfo" class="myinfo"> 자기소개</label> 
                <textarea id="mInfo" name="mInfo" placeholder="자기소개를 적어주세요!" class="textform" ></textarea>
@@ -289,15 +292,22 @@
       var regPhone = /^[0-9]{3}[0-9]{3,4}[0-9]{4}$/;
       
       var isCompleted = 1;
+      var isFocus = 1;
       
       if(mId == ''){
          $('i[id="mIdInfo"]').html("아이디를 입력하세요");
-         $("#mId").focus();
+         if(isFocus){
+         		$("#mId3").focus();
+         		isFocus = 0;
+         	}
          event.preventDefault();
          isCompleted = 0;
       } else if(!regId.test(mId)) {
          $('i[id="mIdInfo"]').html("아이디를 형식을 확인하세요");
-         $("#mId").focus();
+         	if(isFocus){
+         		$("#mId3").focus();
+         		isFocus = 0;
+         	}
          event.preventDefault();
          isCompleted = 0;
       } else{
@@ -306,12 +316,18 @@
       
       if(mPw == '') {
          $('i[id="mPwInfo"]').html("비밀번호를 입력하세요");
-         $("#mPw").focus();
+         if(isFocus){
+         		$("#mPw2").focus();
+         		isFocus = 0;
+         	}
          event.preventDefault();
          isCompleted = 0;
       } else if(!regPw.test(mPw)) {
          $('i[id="mPwInfo"]').html("비밀번호를 형식을 확인하세요");
-         $("#mPw").focus();
+         if(isFocus){
+         		$("#mPw2").focus();
+         		isFocus = 0;
+         	}
          event.preventDefault();
          isCompleted = 0;
       }  else {
@@ -320,12 +336,18 @@
       
       if(mName == '') {
          $('i[id="mNameInfo"]').html("이름을 입력하세요");
-         //$("#mName").focus();
+         if(isFocus){
+         		 $("#mName").focus();
+         		isFocus = 0;
+         	}
          event.preventDefault();
          isCompleted = 0;
       } else if(!regName.test(mName)) {
          $('i[id="mNameInfo"]').html("이름을 확인하세요");
-         //$("#mName").focus();
+        	if(isFocus){
+         		 $("#mName").focus();
+         		isFocus = 0;
+         	}
          event.preventDefault();
    		 isCompleted = 0;
       } else {
@@ -334,12 +356,18 @@
       
       if(mNickname == '') {
          $('i[id="mNicknameInfo"]').html("닉네임을 입력하세요");
-         //$("#mNickname").focus();
+         if(isFocus){
+         		$("#mNickname").focus();
+         		isFocus = 0;
+         	}
          event.preventDefault();
          isCompleted = 0;
       } else if(!regName.test(mNickname)) {
          $('i[id="mNicknameInfo"]').html("닉네임을 확인하세요");
-        // $("#mNickname").focus();
+        	if(isFocus){
+         		$("#mNickname").focus();
+         		isFocus = 0;
+         	}
          event.preventDefault();
 		 isCompleted = 0;   
       } else {
@@ -348,12 +376,18 @@
       
        if(mEmail == '') {
          $('i[id="mEmailInfo"]').html("이메일을 입력하세요");
-        // $("#mEmail").focus();
+         if(isFocus){
+         		$("#mEmail").focus();
+         		isFocus = 0;
+         	}
          event.preventDefault();
          isCompleted = 0;
       } else if(!regEmail.test(mEmail)) {
          $('i[id="mEmailInfo"]').html("이메일 형식을 확인하세요");
-         // $("#mEmail").focus();
+          if(isFocus){
+         		$("#mEmail").focus();
+         		isFocus = 0;
+         	}
          event.preventDefault();
          isCompleted = 0;
       } else {
@@ -362,12 +396,18 @@
       
       if(mPhone == '') {
          $('i[id="mPhoneInfo"]').html("전화번호를 입력하세요");
-        // $("#mPhone").focus();
+          if(isFocus){
+         		$("#mPhone").focus();
+         		isFocus = 0;
+         	}
          event.preventDefault();
          isCompleted = 0;
       }else if(!regPhone.test(mPhone)) {
          $('i[id="mPhoneInfo"]').html("전화번호 형식을 확인하세요");
-        // $("#mPhone").focus();
+        	if(isFocus){
+         		$("#mPhone").focus();
+         		isFocus = 0;
+         	}
          event.preventDefault();
          isCompleted = 0;
    	  } else {
@@ -376,7 +416,10 @@
       
    	  if(mInfo == '') {
          $('i[id="mInfoInfo"]').html("자기소개를 입력하세요");
-         $("#mInfo").focus();
+         if(isFocus){
+         		$("#mInfoInfo").focus();
+         		isFocus = 0;
+         	}
          event.preventDefault();
          isCompleted = 0;
         } else {
