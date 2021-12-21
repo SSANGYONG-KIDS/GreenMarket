@@ -37,19 +37,19 @@
 			</div >	
 			<br>
 			<table class="table table-bordered table-hover " id="xxx">
-				<tr>
+				<tr align="center">
 					<th>제목</th>
 					<th>작성자</th>
 					<th>조회수</th>
 					<th>작성일</th>
 					<th>수정일</th>
-				</tr>
+				</tr >
 				<tr th:each="board:${boardResult}" th:onclick="'window.location.href=\'' + @{/community/boarddetail(cId=${board.cId})} +'\' '">
 					<td width="300" style="word-break:break-all" th:text="${board.cTitle}"></td >
-					<td width="100" style="word-break:break-all" th:text="${board.member.mNickname}"></td>
-					<td width="100" th:text="${board.cViews}"></td>
-					<td width="200" th:text="${#dates.format(new java.util.Date(board.cRegdate), 'yyyy-MM-dd hh:mm')}"></td> 
-					<td width="200" th:text="${#dates.format(new java.util.Date(board.cUpdate), 'yyyy-MM-dd hh:mm')}"></td>
+					<td width="100" style="word-break:break-all" th:text="${board.member.mNickname}" align="center"></td>
+					<td width="100" th:text="${board.cViews}" align="center"></td>
+					<td width="200" th:text="${#dates.format(new java.util.Date(board.cRegdate), 'yyyy-MM-dd hh:mm')}" align="center"></td> 
+					<td width="200" th:text="${#dates.format(new java.util.Date(board.cUpdate), 'yyyy-MM-dd hh:mm')}" align="center"></td>
 				</tr>
 			</table>
 			
@@ -66,7 +66,6 @@
 			</div>
 			
 			<!-- 페이징처리 -->
-	
 			<form id='f1' th:action="@{/community/boardlist}" method="get">
 				<input type="hidden" name='page' th:value=${result.currentPageNum}>
 				<input type='hidden' name='size' th:value=${result.currentPage.pageSize}>
@@ -75,7 +74,7 @@
 			</form>		
 			
 			<nav>
-				<div aria-label="Page navigation example" class="row mt-5" style="text-align: center;">
+				<div aria-label="Page navigation example" class="row mt-5" align="center">
 					<div class="col text-center">
 						<div class="block-27">
 							<ul class="pagination">
