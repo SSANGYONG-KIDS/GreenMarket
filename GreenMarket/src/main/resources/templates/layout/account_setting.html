@@ -134,8 +134,8 @@
 					<div class="col-md-9 ftco-animate pb-5 text-center">
 						<p class="breadcrumbs">
 							<span class="mr-2"><a href="/">Home <i
-									class="fa fa-chevron-right"></i></a></span> <span>마이페이지 <i
-								class="fa fa-chevron-right"></i></span>
+									class="fa fa-chevron-right"></i></a></span> <span><a th:href="@{/layout/myPage}">마이페이지<i
+								class="fa fa-chevron-right"></i></a></span>
 						</p>
 						<h1 class="mb-0 bread">내 계정 수정</h1>
 					</div>
@@ -646,10 +646,9 @@ $('#checkcurrent').click(function () {
    	
    	function update() {
    		    alert("회원정보를 수정하겠습니까?");
-
  	 		let data = {
-	 		mEmail : $("#mEmail").val(),
-	 		mInfo : $("#mInfo").val(),
+	 		'mEmail' : $("#mEmail").val(),
+	 		'mInfo' : $("#mInfo").val(),
 	 		'mAddress.AddNum' : $("#sample6_postcode").val(),
 	 		'mAddress.memberAddress1' : $("#sample6_address").val(),
 	 		'mAddress.memberAddress2' : $("#sample6_detailAddress").val(),

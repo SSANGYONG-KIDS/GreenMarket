@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Optional;
 import java.util.Random;
 
+import javax.transaction.Transactional;
+
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -76,7 +78,6 @@ public class LoginService implements UserDetailsService {
        }
 
    } 
-
    
    public boolean checkmId(String mId) {
  	  return memberRepo.findById(mId).isPresent();
@@ -87,6 +88,19 @@ public class LoginService implements UserDetailsService {
 // 	  return memberRepo.findById(mNickname).isPresent();
 	   return memberRepo.findBymNickname(mNickname).size() > 0 ? true : false;
    }
-   
+
+   @Transactional
+   public int FindPassword(String mId, String mEmail) {
+	   
+	   MemberEntity memberEntity = memberRepo.findById(mId).orElse(null);
+	   
+	   if (memberEntity == null) return 2;
+	   
+	   else if(memberEntity.getMEmail().equals(mEmail)) {
+		   return 1;
+	   }else {
+		   return 0;
+	   }
+   }
    
 }

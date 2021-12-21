@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -32,6 +33,48 @@ public class MemberService implements UserDetailsService{
   	public MemberEntity selectById(String mId) {
   		return memberrepository.findById(mId).get();
   	}
+  	
+  	//이메일 찾기
+  	public MemberEntity selectByEmail(String mEmail) {
+  		return memberrepository.findById(mEmail).get();
+  	}
+  	
+  	
+//  	 @Transactional
+//     @Async
+//     public void sendAuthMail(String to) {
+//         Email email = MemberRepository.findEmailByAddress(to);
+//         String key = makeRandomKey();
+//
+//         if(email != null){
+//             // 인증 요청만 하고, 실제 인증하지 않은 더미 이메일
+//             // 새로운 키 값 업데이트 -> 병합
+//
+//             if(email.getIsUsed()==true){
+//                 throw new RuntimeException("Mail already used");
+//             }
+//
+//             email.setKeyValue(key);
+//         }
+//         else{
+//             // 아예 새로 요청한 이메일 주소
+//             email = new Email();
+//             email.setKeyValue(key);
+//             email.setAddress(to);
+//             email.setIsUsed(false);
+//         }
+//         memberRepository.saveEmail(email);
+//
+//         SimpleMailMessage message = new SimpleMailMessage();
+//         message.setFrom("geeksecsimsw@gmail.com");
+//         message.setTo(to);
+//         message.setSubject("[From Giggle] 이메일 인증");
+//         message.setText("인증 번호는 "+key+" 입니다.");
+//
+//         javaMailSender.send(message);
+//     }
+//  	
+  	
   	
     // 회원 수정
     @Transactional

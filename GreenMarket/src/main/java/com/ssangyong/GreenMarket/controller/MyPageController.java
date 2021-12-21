@@ -40,6 +40,7 @@ public class MyPageController {
 	 @ResponseBody
 		public void myModify(MemberEntity member, @AuthenticationPrincipal SecurityUser principal) {
 		 System.out.println("회원정보 수정하기");
+		 System.out.println(member.toString());
 		 member.setMId(principal.getUsername());
 	     memberservice.updateMember(member);
 	 }
