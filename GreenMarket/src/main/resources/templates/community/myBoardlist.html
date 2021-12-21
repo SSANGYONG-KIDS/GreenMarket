@@ -26,7 +26,7 @@
 		</section>
 		<div class="container">
 			<br>
-			<button class="btn btn-primary" onclick="history.back()">돌아가기</button>		
+			<a class="btn btn-primary" href="/community/boardlist" >돌아가기</a>
 			<br><br>
 			
 			<table class="table table-bordered table-hover " id="xxx">
@@ -47,6 +47,13 @@
 			</table>
 			
 			<!-- 페이징처리 -->
+			<form id='f1' th:action="@{/community/myBoardlist}" method="get">
+				<input type="hidden" name='page' th:value=${result.currentPageNum}>
+				<input type='hidden' name='size' th:value=${result.currentPage.pageSize}>
+				<input type="hidden" name="type" th:value="${pagevo.type}">	
+				<input type="hidden" name="keyword" th:value="${pagevo.keyword}">	
+			</form>	
+			
 			<nav>
 				<div aria-label="Page navigation example" class="row mt-5" style="text-align: center;">
 					<div class="col text-center">
@@ -78,7 +85,17 @@
 	<script>
 		$('#nav-item-community').addClass('active');			
 	</script>
-
+	<script>
+	$(function(){
+		var formObj = $("#f1");
+		$(".pagination a").click(function(e){
+			e.preventDefault(); //본래의 기능(link)를 취소
+			formObj.find("[name='page']").val($(this).attr("href"));
+			//alert($(this).attr("href"));
+			formObj.submit();
+		});
+	});
+	</script>
 </th:block>
 
 </body>
