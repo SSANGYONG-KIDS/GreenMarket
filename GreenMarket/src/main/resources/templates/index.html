@@ -364,216 +364,81 @@
 			</section>
 			-->
 	
-	
-	<!-- 평점 -->
-			<section class="ftco-section testimony-section bg-bottom" style="background-image: url(/bootstrap/images/bg_1.jpg);">
+
+			<!-- 게시판 -->
+			<section class="ftco-section testimony-section bg-bottom" style="background-color: #bdebb9;">
 				<div class="overlay"></div>
 				<div class="container">
 					<div class="row justify-content-center pb-4">
 						<div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
-							<span class="subheading">Testimonial</span>
-							<h2 class="mb-4">Customer Feedback</h2>
+							<span class="subheading" style="color: #006633">Communication</span>
+							<h2 class="mb-4">Community</h2>
 						</div>
 					</div>
 					<div class="row ftco-animate">
 						<div class="col-md-12">
 							<div class="carousel-testimony owl-carousel">
-								<div class="item">
-									<div class="testimony-wrap py-4">
-										<div class="text">
-											<p class="star">
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-											</p>
-											<p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-											<div class="d-flex align-items-center">
-												<div class="user-img" style="background-image: url(/bootstrap/images/person_1.jpg)"></div>
-												<div class="pl-3">
-													<p class="name">Roger Scott</p>
-													<span class="position">Marketing Manager</span>
+								<th:block th:each="board:${boardResult}">
+									<div class="item">
+										<div class="testimony-wrap py-4">
+											<div class="text">
+												<p class="star">
+													<span class="fa" th:text="${board.cTitle}"></span>
+												</p>
+												<p class="mb-4 c_content" style="display:none;"th:text="${board.cContent}">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+												<div class="d-flex align-items-center">
+													<div class="user-img" th:style="'background-image:url(' + ${board.member.mPhoto} + ');'"></div>
+													<div class="pl-3">
+														<p class="name" th:text="${board.member.mNickname}">Roger Scott</p>
+														<span class="position" th:text="${board.member.mId}">Marketing Manager</span>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								<div class="item">
-									<div class="testimony-wrap py-4">
-										<div class="text">
-											<p class="star">
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-											</p>
-											<p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-											<div class="d-flex align-items-center">
-												<div class="user-img" style="background-image: url(/bootstrap/images/person_2.jpg)"></div>
-												<div class="pl-3">
-													<p class="name">Roger Scott</p>
-													<span class="position">Marketing Manager</span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="item">
-									<div class="testimony-wrap py-4">
-										<div class="text">
-											<p class="star">
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-											</p>
-											<p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-											<div class="d-flex align-items-center">
-												<div class="user-img" style="background-image: url(/bootstrap/images/person_3.jpg)"></div>
-												<div class="pl-3">
-													<p class="name">Roger Scott</p>
-													<span class="position">Marketing Manager</span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="item">
-									<div class="testimony-wrap py-4">
-										<div class="text">
-											<p class="star">
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-											</p>
-											<p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-											<div class="d-flex align-items-center">
-												<div class="user-img" style="background-image: url(/bootstrap/images/person_1.jpg)"></div>
-												<div class="pl-3">
-													<p class="name">Roger Scott</p>
-													<span class="position">Marketing Manager</span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="item">
-									<div class="testimony-wrap py-4">
-										<div class="text">
-											<p class="star">
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-												<span class="fa fa-star"></span>
-											</p>
-											<p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-											<div class="d-flex align-items-center">
-												<div class="user-img" style="background-image: url(/bootstrap/images/person_2.jpg)"></div>
-												<div class="pl-3">
-													<p class="name">Roger Scott</p>
-													<span class="position">Marketing Manager</span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+								</th:block>
 							</div>
 						</div>
 					</div>
 				</div>
-			</section>
+			</section>			
 			
-			
-			<!-- 한나 커뮤니티 부분 -->
-			<section class="ftco-section img ftco-select-destination" style="background-image: url(/bootstrap/images/bg_3.jpg);">
-				<div class="container">
-					<div class="row justify-content-center pb-4">
-						<div class="col-md-12 heading-section text-center ftco-animate">
-							<span class="subheading">Pacific Provide Places</span>
-							<h2 class="mb-4">Select Your Destination</h2>
-						</div>
-					</div>
-				</div>
-				<div class="container container-2">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="carousel-destination owl-carousel ftco-animate">
-								<div class="item">
-									<div class="project-destination">
-										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-1.jpg);">
-											<div class="text">
-												<h3>Philippines</h3>
-												<span>8 Tours</span>
-											</div>
-										</a>
-									</div>
-								</div>
-								<div class="item">
-									<div class="project-destination">
-										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-2.jpg);">
-											<div class="text">
-												<h3>Canada</h3>
-												<span>2 Tours</span>
-											</div>
-										</a>
-									</div>
-								</div>
-								<div class="item">
-									<div class="project-destination">
-										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-3.jpg);">
-											<div class="text">
-												<h3>Thailand</h3>
-												<span>5 Tours</span>
-											</div>
-										</a>
-									</div>
-								</div>
-								<div class="item">
-									<div class="project-destination">
-										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-4.jpg);">
-											<div class="text">
-												<h3>Autralia</h3>
-												<span>5 Tours</span>
-											</div>
-										</a>
-									</div>
-								</div>
-								<div class="item">
-									<div class="project-destination">
-										<a href="#" class="img" style="background-image: url(/bootstrap/images/place-5.jpg);">
-											<div class="text">
-												<h3>Greece</h3>
-												<span>7 Tours</span>
-											</div>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
+			<!-- 게시판 참고용
+			<table class="table table-bordered table-hover " id="xxx">
+				<tr>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>조회수</th>
+					<th>작성일</th>
+					<th>수정일</th>
+				</tr>
+				<tr th:each="board:${boardResult}" th:onclick="'window.location.href=\'' + @{/community/boarddetail(cId=${board.cId})} +'\' '">
+					<td width="300" style="word-break:break-all" th:text="${board.cTitle}"></td >
+					<td width="100" style="word-break:break-all" th:text="${board.member.mNickname}"></td>
+					<td width="100" th:text="${board.cViews}"></td>
+					<td width="200" th:text="${#dates.format(new java.util.Date(board.cRegdate), 'yyyy-MM-dd hh:mm')}"></td> 
+					<td width="200" th:text="${#dates.format(new java.util.Date(board.cUpdate), 'yyyy-MM-dd hh:mm')}"></td>
+				</tr>
+			</table>			
+			-->
 	
 
 			
 			<!-- 마이페이지 -->
 			<div style="margin-top: 70px"></div >
-	
+			
+			<!-- 광고 배너-->
 			<section class="ftco-intro ftco-section ftco-no-pt">
 				<div class="container">
 					<div class="row justify-content-center">
 						<div class="col-md-12 text-center">
-							<div class="img"  style="background-image: url(/bootstrap/images/bg_2.jpg);">
+							<div class="img"  style="background-image: url(/bootstrap/images/itcen2.jpg); background-size: contain; height: 300px;">
+								<!--
 								<div class="overlay"></div>
 								<h2>We Are Pacific A Travel Agency</h2>
 								<p>We can manage your dream building A small river named Duden flows by their place</p>
 								<p class="mb-0"><a href="#" class="btn btn-primary px-4 py-3">Ask For A Quote</a></p>
+								-->
 							</div>
 						</div>
 					</div>
@@ -586,6 +451,14 @@
 		<!-- 메인 상단 메뉴 active -->
 		<script>
 			$('#nav-item-home').addClass('active');			
+		</script>
+		<script>
+			$().ready(() => {
+				$('.c_content').each((index, item) => {
+					$(item).text($(item).text().replace(/(<([^>]+)>)/ig,""));
+					$(item).show();
+				})
+			});
 		</script>
 	</th:block>		
 </body>

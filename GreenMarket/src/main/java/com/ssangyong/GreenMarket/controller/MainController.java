@@ -6,19 +6,27 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ssangyong.GreenMarket.model.CommunityEntity;
 import com.ssangyong.GreenMarket.model.ICategoryEnumType;
 import com.ssangyong.GreenMarket.model.ItemEntity;
+import com.ssangyong.GreenMarket.model.ItemPageVO;
+import com.ssangyong.GreenMarket.model.PageMaker;
+import com.ssangyong.GreenMarket.model.PageVO;
 import com.ssangyong.GreenMarket.model.SecurityUser;
+import com.ssangyong.GreenMarket.service.CommunityService;
 import com.ssangyong.GreenMarket.service.ItemPhotoService;
 import com.ssangyong.GreenMarket.service.ItemService;
 import com.ssangyong.GreenMarket.service.LoginService;
 import com.ssangyong.GreenMarket.service.MemberService;
+
+import edu.emory.mathcs.backport.java.util.Collections;
 
 @Controller
 public class MainController {
@@ -30,7 +38,9 @@ public class MainController {
 		@Autowired
 		ItemPhotoService itemPhotoService;
 		@Autowired
-		LoginService loginService;	   
+		LoginService loginService;
+		@Autowired
+		CommunityService communityService;
 	   
 	   @RequestMapping(value = {"/", "/index"})
 	   public String main(Model model, @AuthenticationPrincipal SecurityUser principal, boolean showsLoginForm) {
@@ -46,26 +56,28 @@ public class MainController {
 	    	  model.addAttribute("isDropped", 0);
 	      }
 
-		  
-		  // main에 게시물 6개까지 보여주기
-	      int numOfItem = 0;
-	      List<ItemEntity> resultAll = itemService.selectAll();
-	      List<ItemEntity> result = new ArrayList<>();
-	      for (ItemEntity item: resultAll) {
-	    	  if(numOfItem >= 6) break;
-	    		  numOfItem ++;
-	    		  
-	    	  if(item.getIContent().length()>=10) {
-	    		  String sub = item.getIContent().substring(0, 10)+" ...";
-	    		  item.setIContent(sub);
-	    	  }
-	    		  result.add(item);
-	      }
-	  
-//	      model.addAttribute("pagevo", pagevo);
-//	      model.addAttribute("result", new PageMaker<>(result));
-	      model.addAttribute("itemResult", result);
-	      model.addAttribute("itemSorts", ICategoryEnumType.values());
+		  	// 아이템 목록
+	      	ItemPageVO pagevo = new ItemPageVO(1, 6, null, null, null, null, 0);
+			Page<ItemEntity> result = itemService.selectAll(pagevo);
+			
+			for(ItemEntity item : result) {
+				if(item.getIContent().length()>=10) {
+					String sub = item.getIContent().substring(0, 10)+" ...";
+					item.setIContent(sub);
+				}
+				System.out.println(item);
+			}	      
+		    model.addAttribute("itemSorts", ICategoryEnumType.values());
+			model.addAttribute("itemResult", result);
+			model.addAttribute("pagevo", pagevo);
+			model.addAttribute("result", new PageMaker<>(result));
+			
+			// 게시글 목록
+			PageVO pagevoCm = new PageVO(1, 6, null, null);
+			Page<CommunityEntity> resultCm = communityService.selectAll(pagevoCm);
+			model.addAttribute("boardResult", resultCm);
+			model.addAttribute("result", new PageMaker<>(resultCm));
+			
 	      return "index";
 	   }
 	   
