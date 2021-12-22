@@ -622,8 +622,22 @@
 							contentType : false
 						}).done(function(responseBody) {
 							$("#mPhoto").val(responseBody);
-							alert('회원가입 완료 되었습니다!');
-							$("#signup-form").submit();
+							 Swal.fire({
+                            title: '<strong>회원가입 완료!</strong>',
+                            icon : 'success',
+                            html : '그린마켓에 오신걸 환영합니다! <br> 메인 화면해서 로그인해주세요!',
+                            showDenyButton: false,
+                            showCancelButton: false,
+                            confirmButtonText: '확인'
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                               $("#signup-form").submit();
+                            } else if (result.isDenied) {
+                                location.href = "/layout/signup";
+                            }
+                        })
+							//$("#signup-form").submit();
 							// document.getElementById('btn').click();
 						}).fail(function(error) {
 						})
