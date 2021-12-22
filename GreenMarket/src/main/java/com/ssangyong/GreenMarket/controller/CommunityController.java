@@ -82,7 +82,7 @@ public class CommunityController {
 	
 	//태그 포함된 게시글 보기
 	@GetMapping("community/tagBoardlist/{ctId}")
-	public String sameTagBoardlist(@PathVariable Integer ctId, Model model) {
+	public String sameTagBoardlist(@PathVariable Integer ctId, Model model, PageVO pagevo) {
 		System.out.println("controller-같은 태그 게시물보기() 실행");
 		System.out.println("ctId: "+ctId);
 			
@@ -91,7 +91,6 @@ public class CommunityController {
 		
 		//model attribute 등록하기
 		model.addAttribute("tagList",tagList);
-		
 		return "community/hashTagBoardlist";
 	}
 	
