@@ -55,12 +55,12 @@ public class LoginService implements UserDetailsService {
    }
    
    public void certifiedPhoneNumber(String mPhone, String cerNum) {
-       String api_key = "NCS49WNVQ5ZW0S3I";
-       String api_secret = "NESLMKGUAVFRAG3QGST9KSZLO4RQVKGU";
+       String api_key = "NCSEE28TUBDDKYD3";
+       String api_secret = "6LT6R7UENFIXUKJONYPKMTIGHJDD4NAK";
        Message coolsms = new Message(api_key, api_secret);
        HashMap<String, String> params = new HashMap<String, String>();
        params.put("to", mPhone);    // 수신전화번호
-       params.put("from", "010-5104-6324");    // 발신전화번호. 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨
+       params.put("from", "010-8447-7807");    // 발신전화번호. 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨
        params.put("type", "SMS");
        params.put("text", "[ GREENMARKET ] 휴대폰인증 메시지 : 인증번호는" + "["+cerNum+"]" + "입니다.");
        params.put("app_version", "test app 1.2"); // application name and version

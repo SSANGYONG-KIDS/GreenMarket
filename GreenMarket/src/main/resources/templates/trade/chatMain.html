@@ -423,7 +423,7 @@
 				</div>
 				<div id="main_right_bottom"> <!-- 채팅 입력창 -->
 					<textarea type="text" id="input_msg" placeholder="메세지를 입력해주세요."
-						onKeypress="javascript:if(event.keyCode==13) {preventMoving(event); sendMsg();}"></textarea>
+						onKeypress="javascript:if(event.keyCode==13) {preventMoving(event); $('#btn_input_msg').click();}"></textarea>
 					<button id="btn_input_msg" class="btn btn-primary py-1.5 px-2.5">전송</button>		
 				</div>
 			</div> <!-- 메인 오른쪽 끝-->
@@ -585,7 +585,18 @@
 			
 			// 채팅 메시지 전송 버튼 클릭 이벤트
 			$(document).on('click', "#btn_input_msg", e=> {
-				sendMsg();
+				if (wsOfChat != null) { // 웹 소켓이 null이 아니고 (연결 상태까지는 확인 x)
+					let tId = wsOfChat.url.substring(wsOfChat.url.lastIndexOf('/') + 1);
+
+					if (tId != 0) { // 로비 제외한 채팅방에 연결하지 않은 상태라면
+						sendMsg(); // 메시지 보내기
+					}
+					
+					else if(tId == 0) { // 로비라면
+						alert('좌측 목록에서 대화할 채팅방을 선택해주세요.');
+						$('#input_msg').val(''); // 채팅 입력창 빈 값으로 만들기	
+					}					
+				}
 			});
 		</script>
 		

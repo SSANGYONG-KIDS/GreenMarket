@@ -1,6 +1,7 @@
 package com.ssangyong.GreenMarket.controller;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,14 +56,16 @@ public class TradeController {
 	 */
 	@RequestMapping("reserveForm/{iId:.+}")
 	public String reserveForm(@PathVariable int iId, @AuthenticationPrincipal SecurityUser principal, Model model, ItemPageVO itemPageVO) {
-		System.out.println("-- reserveForm in TradeController");
-		System.out.println("iId: " + iId);
-		System.out.println("principal: " + principal);
-		System.out.println("itemPageVO: " + itemPageVO);
-		
+	
+		// 입력받은 예약 날짜가 존재하지 않을 때
+		if (itemPageVO.getStartDate() == null || itemPageVO.getStartDate().equals("")) { // 시작일에 대해서
+			itemPageVO.setStartDate(LocalDate.now().toString()); // 현재 날짜 가져오기
+		}
+		if (itemPageVO.getEndDate() == null || itemPageVO.getEndDate().equals("")) { // 종료일에 대해서
+			itemPageVO.setEndDate(itemPageVO.getStartDate()); // 시작일 가져오기
+		}
+			
 		// 날짜 한글 형식으로 바꾸기
-		if (itemPageVO.getStartDate() == null) itemPageVO.setStartDate("---");
-		if (itemPageVO.getEndDate() == null) itemPageVO.setEndDate("---");
 		String startDateKor = tradeService.convertFormToKorDate(itemPageVO.getStartDate());
 		String endDateKor = tradeService.convertFormToKorDate(itemPageVO.getEndDate());
 		System.out.println("startDateKor: " + startDateKor + ", endDateKor: " + endDateKor);
@@ -96,14 +99,10 @@ public class TradeController {
 	@PostMapping("reserve")
 	@ResponseBody
 	public String reserve(int iId, String startDate, String endDate, @AuthenticationPrincipal SecurityUser principal, Model model) {
-		System.out.println("-- reserve in TradeController");
 		
 		// Timestamp 형식으로 변경
 		startDate += " 00:00:00";
 		endDate += " 00:00:00";
-		
-		// TradeEntity에 넣기 전 콘솔 확인
-		System.out.println("sessionId: " + principal.getUsername() + ", iId: " + iId + ", startDate: " + startDate + ", endDate: " + endDate);
 		
 		// TradeEntity에 정보 넣기
 		TradeEntity trade = TradeEntity.builder()
@@ -200,24 +199,4 @@ public class TradeController {
 		}		
 		model.addAttribute("cntsUnreadForRenter", cntsUnreadForRenter);
 	}
-	
-	/**
-	 * 테스트
-	 */
-	@RequestMapping("test")
-	@ResponseBody
-	public String test() {
-		// 내가 구매한 거래 내역 가져오기
-		return tradeService.listTradeForRenter(loginService.selectById("test1")).toString();
-		
-		// 내가 판매한 거래 내역 가져오기
-//		List<TradeEntity> list = tradeService.listTradeForSharer(loginService.selectById("test1"));
-//		System.out.println("before sysout");
-//		for (TradeEntity val : list) {
-//			System.out.println(val.getTId());
-//			System.out.println(val.getItem().getMember().getMId());
-//		}
-//		return null; 
-	}
-
 }
