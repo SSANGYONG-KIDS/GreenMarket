@@ -380,7 +380,7 @@
 							<div class="carousel-testimony owl-carousel">
 								<th:block th:each="board:${boardResult}">
 									<div class="item">
-										<div class="testimony-wrap py-4">
+										<div class="testimony-wrap py-4" th:onclick="'window.location.href=\'' + @{/community/boarddetail(cId=${board.cId})} +'\' '" style="cursor: pointer;">
 											<div class="text">
 												<p class="star">
 													<span class="fa" th:text="${board.cTitle}"></span>
@@ -432,7 +432,8 @@
 				<div class="container">
 					<div class="row justify-content-center">
 						<div class="col-md-12 text-center">
-							<div class="img"  style="background-image: url(/bootstrap/images/itcen2.jpg); background-size: contain; height: 300px;">
+							<div class="img" onclick="window.open('http://www.itcen.co.kr/');"  
+								 style="background-image: url(/bootstrap/images/itcen2.jpg); background-size: contain; height: 300px; cursor: pointer;">
 								<!--
 								<div class="overlay"></div>
 								<h2>We Are Pacific A Travel Agency</h2>
@@ -455,7 +456,8 @@
 		<script>
 			$().ready(() => {
 				$('.c_content').each((index, item) => {
-					$(item).text($(item).text().replace(/(<([^>]+)>)/ig,""));
+					$(item).text($(item).text().replaceAll(/(<([^>]+)>)/ig,"")); // 태그 삭제
+					$(item).text($(item).text().replaceAll('&nbsp;'," ")); // &nbsp 삭제
 					$(item).show();
 				})
 			});
