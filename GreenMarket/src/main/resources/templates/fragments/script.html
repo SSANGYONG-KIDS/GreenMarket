@@ -59,14 +59,14 @@
 			}
 
 			$("#findPwd").click(function () {
-			
-				if($("#mId2").val()=="") {
-					alert("아이디입력!");
+
+				if ($("#mId2").val() == "") {
+					alert("아이디를 입력하세요!");
 				}
-				if($("#mEmail2").val()=="") {
-					alert("이메일 입력!");
+				if ($("#mEmail2").val() == "") {
+					alert("이메일을 입력하세요!");
 				}
-			
+
 				$.ajax({
 					url: "/login/findpw",
 					type: "POST",
@@ -77,7 +77,7 @@
 					success: function (aa) {
 						console.log(aa);
 						if (aa == "1") {
-							alert("임시비밀번호를 발급했습니다.메일을 확인하세요!");
+							Swal.fire("임시비밀번호를 발급했습니다.메일을 확인하세요!");
 						} else if (aa == "2") {
 							Swal.fire('존재하지 않는 아이디입니다.');
 						} else {
