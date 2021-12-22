@@ -158,7 +158,7 @@
 
 	.checkcurrent {
 	height: 40px !important;
-    background: green !important;
+    background: rgb(163, 163, 163)!important;
     color: white !important;
     font-size: 18px;
     border-radius: 5px;
@@ -169,15 +169,28 @@
     margin-top:1%;
     border: 1px solid #ced4da;
 	}
-	.checkcurrentp{
+	.checkcurrentp1{
 	height: 40px !important;
-    background: green !important;
+    background: rgb(163, 163, 163)!important;
     color: white !important;
     font-size: 18px;
     border-radius: 5px;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
-    margin-left:50%;
+    margin-left:220%;
+    margin-top:1%;
+    border: 1px solid #ced4da;
+	}
+
+	.checkcurrentp2{
+	height: 40px !important;
+    background: rgb(163, 163, 163)!important;
+    color: white !important;
+    font-size: 18px;
+    border-radius: 5px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    margin-left:200%;
     margin-top:1%;
     border: 1px solid #ced4da;
 	}
@@ -202,7 +215,7 @@
 	</style>
 <head>
 <meta charset="UTF-8">
-<title>My Account 수정</title>
+<title>내 계정 수정</title>
 </head>
 <body>
 	<div class="panel panel-default" layout:fragment="content1">
@@ -402,7 +415,7 @@
           	  		<input type="text" id="mPhone" name="mPhone" th:value="${member.mPhone}" class="form-control"  required="required" autofocus placeholder="'-'을 제외하고 입력하세요."/>
           	  		</div>
 							<div class="col-3"> 
-									<input type="button" id="sendPhoneButton" value="인증" class="checkcurrentp">
+									<input type="button" id="sendPhoneButton" value="인증" class="checkcurrentp1">
 								</div>
           	  		
           	  		<!-- 휴대폰 인증 -->
@@ -413,7 +426,7 @@
 								</div>
 								<div class="col-3">
 									<input type="button" id="CertiUserNum" value="번호 인증"
-										readonly="readonly" class="checkcurrentp" placeholder="인증번호를 입력해주세요!"> 
+										readonly="readonly" class="checkcurrentp2" placeholder="인증번호를 입력해주세요!"> 
 										<input type="hidden" id="numStr" name="numStr">
 								</div>
 			</div>
@@ -782,23 +795,49 @@ function update() {
 
 	
 	$("#delete_account").on('click', delete_account);
-   	function delete_account() {
-   		    alert("회원을 탈퇴하시겠습니까?");
- 	 		let data = {
- 	 		mId : $("#mId").val(),
-	 		};
-	 		
- 			$.ajax({
-				type: "POST",
-				url: "/delete",
-				data: data
-			}).done(function(resp){
-         			Swal.fire('탈퇴성공!')
-         		location.href="/login/logout";
-         	}).fail(function(error) {
-         		Swal.fire("탈퇴실패!");
-         	});		
-	}
+	function delete_account() {
+
+    Swal.fire({
+        title: '탈퇴하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: '취소',
+        confirmButtonText: '탈퇴'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let data = {
+                mId: $("#mId").val(),
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/delete",
+                data: data
+            }).done(function (resp) {
+
+                Swal.fire({
+                    title: '탈퇴 성공',
+                    showDenyButton: false,
+                    showCancelButton: false,
+                    confirmButtonText: '확인'
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        location.href = "/login/logout";
+                    } else if (result.isDenied) {
+                        location.href = "/login/logout";
+                    }
+                })
+
+            }).fail(function (error) {
+                location.href = "/layout/account_setting";
+            });
+        }
+
+    });
+}
 	
       </script>
 		<!-- Bootstrap CSS -->

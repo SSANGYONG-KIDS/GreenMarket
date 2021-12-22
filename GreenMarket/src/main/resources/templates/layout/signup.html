@@ -125,7 +125,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-<title>회원가입 페이지</title>
+<title>회원가입</title>
 </head>
 <body>
    <div class="panel panel-default" layout:fragment="content1">
@@ -162,7 +162,7 @@
          <div class="row">
             <div class="col">
                   <label for="mId" class="id">아이디</label>
-                  <input id="mId3" name="mId" type="text" placeholder="아이디을 입력하세요(아이디 3글자 이상!)" class="box-form1"/>
+                  <input id="mId3" name="mId" type="text" placeholder="아이디을 입력하세요(아이디 4글자 이상!)" class="box-form1"/>
             </div> 
             <div class="col-3">
                   <input type="button" id="checkId" value="중복확인" class="checkform">
@@ -256,6 +256,7 @@
                <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"  class="checkaddressform">
             </div>
          </div>
+          <i id="mAddressInfo" class="text-info"></i>
          <br>
             <input type="button" id="btn_upload_file" class="btn btn-primary btn-lg btn-block" value="가입하기" />
             </div>
@@ -390,7 +391,8 @@
          	}
          event.preventDefault();
          isCompleted = 0;
-      } else {
+      } 
+      else {
       	$('i[id="mEmailInfo"]').html("");
       }
       
@@ -427,8 +429,8 @@
       	}
    	  
    	  if(postcode == ''){
+   		$('i[id="mAddressInfo"]').html("주소를 입력하세요");
    		  if(isFocus){
-   			alert('주소를 입력하세요');
    			$("#postcode").focus();
    			isFocus = 0;
 	   		 event.preventDefault();
