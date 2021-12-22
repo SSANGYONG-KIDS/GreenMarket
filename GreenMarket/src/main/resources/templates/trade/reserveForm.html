@@ -344,36 +344,53 @@
 				let endDate = $('#span_endDate').html();
 				startDate = startDate.replace(/[^0-9]/g, "");
 				endDate = endDate.replace(/[^0-9]/g, "");
+				let dayGap = endDate - startDate;
 				startDate = startDate.substr(0, 4) + '-' + startDate.substr(4, 2) + '-' + startDate.substr(6, 2);
 				endDate = endDate.substr(0, 4) + '-' + endDate.substr(4, 2) + '-' + endDate.substr(6, 2);
 				formData.append('startDate', startDate);
 				formData.append('endDate', endDate);
-				
-				// 서버에 예약 요청 
-				$.ajax({
-					type : 'POST',
-					url : '/trade/reserve',
-					data : formData,
-					processData : false,
-					contentType : false
-				}).done(res => {
-					console.log('ajax: /trade/reserve');
-					console.log(res);
-					alert('예약 완료');
-					// location.href = '/item/itemdetail?iId=' + iId;
-					location.href = '/trade/chatMain';
-				}).fail(err => {
-					console.log('ajax: /trade/reserve');
-					console.log(res);
-					alert(res);					
-				})				
+
+				// 서버에 예약 요청하기 전에 유효성 검사
+				if ($('#span_startDate').html().replace(/[^0-9]/g, "") == '') { // 시작일이 입력되어있지 않을 때
+					alert('시작일을 입력해주세요.');
+					$('#btn_edit_date').click();					
+				}
+				else if ($('#span_endDate').html().replace(/[^0-9]/g, "") == '') { // 종료일이 입력되어있지 않을 때
+					alert('종료일을 입력해주세요.');
+					$('#btn_edit_date').click();						
+				}
+				else if (dayGap < 0) { // 종료일이 시작일보다 앞설 때
+					alert('종료일이 시작일보다 앞섭니다. 다시 입력해주세요.');
+					$('#btn_edit_date').click();	
+				}
+				else { // 문제 없는 경우
+					// 서버에 예약 요청 
+					$.ajax({
+						type : 'POST',
+						url : '/trade/reserve',
+						data : formData,
+						processData : false,
+						contentType : false
+					}).done(res => {
+						alert('예약 완료');
+						location.href = '/trade/chatMain';
+					}).fail(err => {
+						alert(res);					
+					});					
+				}				
 			});
 			
 			// 요금 상세정보에 기간 일 수 표시하기
 			function renderTerm() {
-				let dayOfTerm = (new Date($('#data_endDate').val()) - new Date($('#data_startDate').val())) / (1000 * 60 * 60 * 24);
+				let startDate = new Date($('#data_startDate').val());
+				let endDate = new Date($('#data_endDate').val());
+				let dayGap = (endDate - startDate) / (1000 * 60 * 60 * 24);
+				let dayOfTerm = dayGap + 1;
+
 				$('#day_of_term').text(dayOfTerm);
-				$('#totalPrice').text($('#iPrice').text() * $('#day_of_term').text());
+				$('#totalPrice').text($('#iPrice').text() * $('#day_of_term').text());		
+										
+				return dayOfTerm;
 			}
 			renderTerm();
 			
@@ -409,10 +426,9 @@
 				$('#data_endDate').val(DataOfEndDate);
 				
 				// 요금 세부 정보에 일 수 갱신하기
-				renderTerm();
+				let dayOfTerm = renderTerm();
 				
-				// 모달창 닫기
-				$('#modal_date_close').trigger('click');			
+				$('#modal_date_close').trigger('click'); // 모달창 닫기		
 			});
 		</script>
 	</th:block>
