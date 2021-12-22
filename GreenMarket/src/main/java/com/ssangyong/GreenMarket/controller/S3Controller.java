@@ -74,7 +74,6 @@ public class S3Controller {
 			e.printStackTrace();
 		}
 		
-		System.out.println(result); 
 		return result;
 	}
 

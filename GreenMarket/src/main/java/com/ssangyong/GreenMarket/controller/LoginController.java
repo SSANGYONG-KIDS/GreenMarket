@@ -112,8 +112,6 @@ public class LoginController {
 		      // 비밀번호 변경
 		      memberservice.updateMemberPassword(member);
 			  mailservice.sendMail(email, password);
-			 
-			  System.out.println("이메일로 임시 비밀번호를 발송하였습니다.");
 		 }else{
 			 return result;
 		 }

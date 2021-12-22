@@ -72,7 +72,6 @@ public class CommunityController {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		MemberEntity user =  log_service.selectById(userDetails.getUsername());
 		
-	//	Page<CommunityEntity> result = service.selectMyBoard(pagevo, user.getMId());
 		Page<CommunityEntity> result = service.selectMyBoardlist(pagevo, user);
 		
 		model.addAttribute("boardResult",result);
@@ -100,7 +99,6 @@ public class CommunityController {
 	//글 상세보기
 	@GetMapping("/community/boarddetail")
 	public String selectById(Model model, Integer cId, Principal principal, Authentication authentication, PageVO pagevo ) {
-		System.out.println("게시글 상세보기 controller");
 		model.addAttribute("board", service.selectById(cId));
 		model.addAttribute("pagevo", pagevo);
 		model.addAttribute("cId",cId);
@@ -109,7 +107,6 @@ public class CommunityController {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		MemberEntity user =  log_service.selectById(userDetails.getUsername());
 		model.addAttribute("user",user);
-		System.out.println("user.mId: "+user.getMId());
 		
 		//조회수 +1
 		service.updateViews(cId);
@@ -121,9 +118,6 @@ public class CommunityController {
 	@RequestMapping(value="community/boarddetail", method= {RequestMethod.POST})
 	@ResponseBody
 	public void replySave(CommunityReplyEntity reply, Integer cId, Authentication authentication) {
-		System.out.println("댓글등록 controller");
-	//	System.out.println("reply: "+reply);
-	//	System.out.println("cId: "+cId);
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		MemberEntity user = log_service.selectById(userDetails.getUsername());
 		reply.setMember(user);
@@ -154,10 +148,6 @@ public class CommunityController {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		MemberEntity user = log_service.selectById(userDetails.getUsername());
 		
-		//MemberEntity user = log_service.selectById("test"); // 임시로 세션 아이디 대신 test 가져오기
-		//System.out.println("board.getCTitle(): "+board.getCTitle());
-		//System.out.println("board.getCContent(): "+board.getCContent());
-		
 		service.insertBoard(board, user);
 		service.insertTag(tagArr, board);
 	}
@@ -166,9 +156,7 @@ public class CommunityController {
 	//글 수정 페이지로 이동
 	@GetMapping("community/update")
 	public String update(Model model, Integer cId) {
-		System.out.println("controller-getmapping-update()");
-		System.out.println("cId: "+cId);
-		//model.addAttribute("cId", cId);
+
 		model.addAttribute("board", service.selectById(cId));
 		return "community/update";
 	}
@@ -177,8 +165,6 @@ public class CommunityController {
 	//댓글 삭제하기
 	@GetMapping("community/boarddetail/{cId}/{crId}")
 	public String replyDelete(@PathVariable Integer cId, @PathVariable Integer crId) {
-		System.out.println("controller-댓글 삭제() 실행");
-		
 		int ret = reply_service.deleteReply(crId);
 		
 		return "redirect:/community/boarddetail?cId="+cId;
@@ -188,8 +174,8 @@ public class CommunityController {
 	@RequestMapping(value="community/boarddetail", method= {RequestMethod.DELETE})
 	@ResponseBody
 	public void boardDelete(Integer cId, RedirectAttributes rttr ) {
-		System.out.println("controller-boardDelete() 실행");
 		int ret = service.deleteBoard(cId);
+		
 		rttr.addFlashAttribute("resultMessage", ret==0?"삭제실패":"삭제성공");
 	}
 	
@@ -198,7 +184,6 @@ public class CommunityController {
 	@RequestMapping(value="community/update", method= {RequestMethod.POST})
 	@ResponseBody
 	public void update(CommunityEntity board) {
-		System.out.println("controller-putmapping-update()");
 		service.updateBoard(board);
 	}
 }

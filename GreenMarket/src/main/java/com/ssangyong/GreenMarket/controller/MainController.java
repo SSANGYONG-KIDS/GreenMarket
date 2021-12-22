@@ -44,7 +44,6 @@ public class MainController {
 	   
 	   @RequestMapping(value = {"/", "/index"})
 	   public String main(Model model, @AuthenticationPrincipal SecurityUser principal, boolean showsLoginForm) {
-	      System.out.println("main 실행");
 	      
 	      // 로그인폼을 보여줄 것인지에 대한 변수
 	      model.addAttribute("showsLoginForm", showsLoginForm);
@@ -65,7 +64,6 @@ public class MainController {
 					String sub = item.getIContent().substring(0, 10)+" ...";
 					item.setIContent(sub);
 				}
-				System.out.println(item);
 			}	      
 		    model.addAttribute("itemSorts", ICategoryEnumType.values());
 			model.addAttribute("itemResult", result);

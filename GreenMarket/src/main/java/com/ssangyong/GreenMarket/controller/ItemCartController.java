@@ -28,8 +28,6 @@ public class ItemCartController {
 	//관심 물품 목록에 저장하기
 	@PostMapping("/updateGood/{mId}/{iId}")
 	public ResponseEntity<Integer> addOrDeleteItemCart(@PathVariable String mId,@PathVariable int iId) {
-		System.out.println("mId= "+mId);
-		System.out.println("iId= "+iId);
 
 		ItemCartEntityId icId = new ItemCartEntityId();
 		icId.setItem(iService.selectById(iId));
