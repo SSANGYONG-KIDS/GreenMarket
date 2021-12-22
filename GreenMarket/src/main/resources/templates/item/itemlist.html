@@ -4,6 +4,10 @@
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout1}">
+<head>
+<meta charset="UTF-8">
+<title>물품 검색</title>
+</head>
 <body>
 <th:block layout:fragment="style1">
 <style>
@@ -22,7 +26,6 @@
 					<div class="col-md-9 ftco-animate pb-5 text-center">
 						<p class="breadcrumbs">
 							<span class="mr-2"><a th:href="@{/index}">Home <i class="fa fa-chevron-right"></i></a></span>
-							<span>Item <i class="fa fa-chevron-right"></i></span>
 						</p>
 						<h1 class="mb-0 bread">물품 검색</h1>
 					</div>

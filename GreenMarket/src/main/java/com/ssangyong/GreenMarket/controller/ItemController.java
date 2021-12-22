@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -233,11 +235,13 @@ public class ItemController {
 	}
 	
 	
-	@DeleteMapping("/item/itemdelete/{iId}")
-	public String itemDelete(@PathVariable int iId, RedirectAttributes rttr ) {
+	@DeleteMapping("/itemdelete/{iId}")
+	@ResponseBody
+	public String itemDelete(@PathVariable int iId) {
 		int ret = itemService.deleteItem(iId);
-		rttr.addFlashAttribute("resultMessage", ret==0?"삭제실패":"삭제성공");
-		return "redirect:/item/myitemlist";
+		String resultMessage = ret==0?"삭제실패":"삭제성공";
+		
+		return resultMessage;
 	}
 	
 }
