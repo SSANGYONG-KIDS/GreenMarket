@@ -44,30 +44,12 @@ public class CommunityService {
 		Page<CommunityEntity> result = repo.findByMember(user, pageable);
 		return result;
 	}
-	/*
-	// 내가쓴 글 보기(원래)
-	public Page<CommunityEntity> selectMyBoard(PageVO pvo, String mId){
-		System.out.println("service-selectMyBoard()");
-		Predicate p = repo.makePredicate(pvo.getType(), pvo.getKeyword());
-	//	Predicate p = repo.makePredicate(null, null);
-		String id = mId;
-			
-		// makePaging(방향, sort할 field)
-		Pageable pageable = pvo.makePaging(0, "cId");
-		System.out.println("#############################################################");
-		Page<CommunityEntity> result = repo.findByMember_mId(mId, p, pageable);
-		System.out.println("#############################################################");
-		return result;
-	}
-	*/
+	
 	// 원래 코드!!list조회
 	public List<CommunityEntity> selectAll() {
 		return (List<CommunityEntity>) repo.findAll();
 	}
 
-	
-	
-	
 	// 아이디로 찾기 (글 상세보기)
 	public CommunityEntity selectById(Integer cId) {
 		return repo.findById(cId).get();
@@ -80,7 +62,6 @@ public class CommunityService {
 	
 	//같은 태그 게시글 띄우기
 	public List<CommunityTagEntity> selectByTagName(Integer ctId) {
-		System.out.println("service-select by tagName() 호출");
 		CommunityTagEntity tagEntity = tag_repo.findById(ctId).get();
 	
 		String thisName = tagEntity.getCtName();
@@ -92,7 +73,6 @@ public class CommunityService {
 	// 삽입 (변경)
 	@Transactional
 	public void insertBoard(CommunityEntity board, MemberEntity user) {
-		System.out.println("insert board() 호출");
 		board.setCViews(0); //조회수 0
 		board.setMember(user);
 		repo.save(board);
@@ -101,7 +81,6 @@ public class CommunityService {
 	// 태그 엔티티 삽입
 	@Transactional
 	public void insertTag(List<String> tagArr, CommunityEntity board) {
-		System.out.println("service - insert tag()");
 		for(String tagName : tagArr) {
 			if(tagName.equals("default__")) {
 				return;
@@ -117,7 +96,6 @@ public class CommunityService {
 	// 글 수정
 	@Transactional
 	public void updateBoard(CommunityEntity requestBoard) {
-		System.out.println("service-updateBoard() 호출");
 		CommunityEntity board = repo.findById(requestBoard.getCId()).get(); //영속화
 		board.setCTitle(requestBoard.getCTitle());
 		board.setCContent(requestBoard.getCContent());

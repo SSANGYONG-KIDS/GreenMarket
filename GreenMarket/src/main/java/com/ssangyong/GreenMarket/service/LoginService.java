@@ -2,7 +2,6 @@ package com.ssangyong.GreenMarket.service;
 
 import java.util.HashMap;
 import java.util.Optional;
-import java.util.Random;
 
 import javax.transaction.Transactional;
 
@@ -12,16 +11,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ssangyong.GreenMarket.model.MemberAddress;
 import com.ssangyong.GreenMarket.model.MemberEntity;
 import com.ssangyong.GreenMarket.model.MemberRoleEnumType;
 import com.ssangyong.GreenMarket.model.SecurityUser;  
-import com.ssangyong.GreenMarket.repository.LoginRepository;
 import com.ssangyong.GreenMarket.repository.MemberRepository;
 
 import net.nurigo.java_sdk.api.Message;
@@ -81,12 +76,10 @@ public class LoginService implements UserDetailsService {
    
    public boolean checkmId(String mId) {
  	  return memberRepo.findById(mId).isPresent();
-// 	  return memberRepo.findBymId(mId).size() > 0 ? true:false;
    }
    
    public boolean checkNickName(String mNickname) {
-// 	  return memberRepo.findById(mNickname).isPresent();
-	   return memberRepo.findBymNickname(mNickname).size() > 0 ? true : false;
+	  return memberRepo.findBymNickname(mNickname).size() > 0 ? true : false;
    }
 
    @Transactional

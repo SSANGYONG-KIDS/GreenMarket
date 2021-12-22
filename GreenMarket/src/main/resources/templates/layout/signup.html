@@ -272,7 +272,6 @@
 	</script>	
    	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<!--       <script src="https://code.jquery.com/jquery-3.4.1.js"></script> -->
       <script>  
          
       $("#btn_upload_file").click(function(event){
@@ -284,6 +283,7 @@
       var mEmail = $("#mEmail").val();
       var mPhone = $("#mPhone").val();
       var mInfo = $("#mInfo").val();
+      var postcode = $("#sample6_postcode").val();
       
       var regId = /^[a-zA-Z0-9]{4,12}$/;
       var regPw = /[a-zA-Z0-9!@#$%^&*]{8,12}$/;
@@ -426,9 +426,17 @@
       	$('i[id="mInfoInfo"]').html("");
       	}
    	  
+   	  if(postcode == ''){
+   		  if(isFocus){
+   			alert('주소를 입력하세요');
+   			$("#postcode").focus();
+   			isFocus = 0;
+	   		 event.preventDefault();
+	   		 isCompleted = 0;
+   		  }
+   	  }
+   	  
    	  if (isCompleted) {
-   	  	// alert('회원가입 완료 되었습니다!');
-   	  	// $("#signup-form").submit();
    	  	uploadImage();
    	  }	
    });
