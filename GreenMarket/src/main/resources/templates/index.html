@@ -457,7 +457,7 @@
 			$().ready(() => {
 				$('.c_content').each((index, item) => {
 					$(item).text($(item).text().replaceAll(/(<([^>]+)>)/ig,"")); // 태그 삭제
-					$(item).text($(item).text().replaceAll('&nbsp;'," ")); // &nbsp 삭제
+					$(item).text($(item).text().replaceAll('&nbsp;',"")); // &nbsp 삭제
 					$(item).show();
 				})
 			});
