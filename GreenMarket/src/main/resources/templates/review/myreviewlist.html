@@ -41,7 +41,7 @@
 	<section class="ftco-section">
 		<div class="container">
 			<div style="text-align: center;">
-				<h3><b>내가 작성한 리뷰는 총 [[${myreviewlist.size}]]개 입니다.</b></h1>
+				<h3><b>내가 작성한 리뷰는 총 <span id="all_cnt" th:text="${myreviewlist.size}"></span>개 입니다.</b></h1>
 			</div>
 			<div style="text-align:right; padding-bottom:20px;">
 		  		<button class="btn btn-primary py-3 px-4" id="addReview" data-toggle="modal" data-target="#reviewModal">리뷰 작성</button>
@@ -167,6 +167,9 @@
 				str+="<input type='hidden' name='rId' id='rId' value="+review.rid+"/>"
 				str+="<div class='item'>"
 				str+="<div class='testimony-wrap py-4'>"
+				str+="<div style='text-align: right'>"
+				str+="<a href='/review/delete?rId="+review.rid+"'>삭제</a>"
+				str+="</div>"
 				str+="<div class='text'>"
 				str+="<p style='font-size: 20px; color:#006633'><b><a href='/item/itemdetail?iId="+review.item.iid+"'>"+review.item.ititle+"</a>></b></p>"
 				str+="<p><span>"
@@ -186,6 +189,7 @@
 				str+='</div>'
 			
 				$("#wrapper_products").append(str);
+				$('#all_cnt').text(Number($('#all_cnt').text()) + 1);
 				alert("입력완료");
 			}else{
 				alert("이미 등록한 리뷰가 있습니다.");
