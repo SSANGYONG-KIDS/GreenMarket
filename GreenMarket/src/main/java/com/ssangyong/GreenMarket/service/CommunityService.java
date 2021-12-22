@@ -38,8 +38,6 @@ public class CommunityService {
 		
 	// 내가 쓴 글 보기
 	public Page<CommunityEntity> selectMyBoardlist(PageVO pvo, MemberEntity user){
-		Predicate p = repo.makePredicate(pvo.getType(), pvo.getKeyword());
-		
 		Pageable pageable = pvo.makePaging(0, "cId");
 		Page<CommunityEntity> result = repo.findByMember(user, pageable);
 		return result;

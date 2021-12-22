@@ -7,10 +7,16 @@
 <head>
 <meta charset="UTF-8">
 <title>게시판</title>
-
 </head>
 
 <body>
+<th:block layout:fragment="style1">
+<style>
+	.pagination {
+		display: block;
+	}
+</style>
+</th:block>
 	<div class="panel panel-default" layout:fragment="content1">
 		 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/bootstrap/images/boardlist_img_2.png');">
 		  <div class="overlay"></div>
@@ -72,7 +78,7 @@
 			</form>		
 			
 			<nav>
-				<div aria-label="Page navigation example" class="row mt-5" align="center">
+				<div aria-label="Page navigation example" class="row mt-5" style="text-align: center;">
 					<div class="col text-center">
 						<div class="block-27">
 							<ul class="pagination">
