@@ -31,15 +31,18 @@
 				<div class="col-md-9 ftco-animate pb-5 text-center">
 					<p class="breadcrumbs">
 						<span class="mr-2"><a th:href="@{/index}">Home <i class="fa fa-chevron-right"></i></a></span> 
-						<span>마이페이지 <i class="fa fa-chevron-right"></i></span>
+						<span><a th:href="@{/layout/myPage}">MyPage</a><i class="fa fa-chevron-right"></i></span>
 					</p>
-					<h1 class="mb-0 bread">My Reviews</h1>
+					<h1 class="mb-0 bread">내 리뷰 관리</h1>
 				</div>
 			</div>
 		</div>
 	</section>
 	<section class="ftco-section">
 		<div class="container">
+			<div style="text-align: center;">
+				<h3><b>내가 작성한 리뷰는 총 [[${myreviewlist.size}]]개 입니다.</b></h1>
+			</div>
 			<div style="text-align:right; padding-bottom:20px;">
 		  		<button class="btn btn-primary py-3 px-4" id="addReview" data-toggle="modal" data-target="#reviewModal">리뷰 작성</button>
 		  	</div>
@@ -49,11 +52,14 @@
 						<input type="hidden" name="rId" id="rId"/>
 						<div class="item">
 					        <div class="testimony-wrap py-4">
+					        	<div style="text-align: right">
+									<a th:href="@{/review/delete(rId=${review.rId})}">삭제</a>
+								</div>
 					          	<div class="text">
 					          		<p style="font-size: 20px"><b><a th:href="@{/item/itemdetail(iId=${review.item.iId})}">[[${review.item.iTitle}]] ></a></b></p>
 						        	<p>
-							            <span><span style="color:red;" th:if="${review.rStar}>0" th:each="num: ${#numbers.sequence(1,review.rStar)}">★</span></span>
-							            <span th:text="${#dates.format(new java.util.Date(review.rRegdate), 'yyyy-MM-dd HH:mm')}"></span>
+							           <span><span style="color:red;" th:if="${review.rStar}>0" th:each="num: ${#numbers.sequence(1,review.rStar)}">★</span></span>
+							           <span th:text="${#dates.format(new java.util.Date(review.rRegdate), 'yyyy-MM-dd HH:mm')}"></span>
 						          	</p>
 						          	<hr>
 						         	<p class="mb-4" style="color:black">[[${review.rContent}]]</p>
@@ -87,7 +93,7 @@
 			        <label>거래 목록</label><br>
 			        <select id="userTradelist">
 				        <option selected="selected" th:value=0>선택없음</option>
-					    <option  th:each="userTrade:${myTradelist}" th:value="${userTrade.tId}">[[${userTrade.item.iTitle}]]</option>
+					    <option th:each="userTrade:${myTradelist}" th:value="${userTrade.tId}">[[${userTrade.item.iTitle}]]</option>
 					</select>
 			      </div>
 			      <div class="modal-footer">
@@ -103,7 +109,11 @@
 <th:block layout:fragment="script1">
 <!-- 메인 상단 메뉴 active -->
 <script>
-	$('#nav-item-mypage').addClass('active');			
+	$('#nav-item-mypage').addClass('active');	
+	var result ="";
+	if(result!=""){
+		alert("삭제 완료");
+	}
 </script>
 <script th:src="@{/bootstrap/js/review.js}"></script>
 <script>

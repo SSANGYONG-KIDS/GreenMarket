@@ -4,6 +4,10 @@
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout1}">
+<head>
+<meta charset="UTF-8">
+<title>내 관심 물품</title>
+</head>
 <body>
 <th:block layout:fragment="style1">
 <style>
@@ -15,29 +19,34 @@
 		-webkit-transition: all 0.1s ease-in-out;
 		transition: all 0.1s ease-in-out;
 		position: absolute;
-    	left: 8em;
+    	left: 10em;
 	}
 	
 	.like_button:hover {
-			display: inline-block;
-			color: #cca2a3;
-			cursor: pointer;
-			font-weight:bold;
-			font-size: 22px;
-			position: absolute;
-   			left: 8em;
-		}
+		display: inline-block;
+		color: #cca2a3;
+		cursor: pointer;
+		font-weight:bold;
+		font-size: 22px;
+		position: absolute;
+   		left: 10em;
+	}
+		
+	.like_button:hover:after {
+		color: #800000;
+		cursor: pointer;
+		font-weight:bold;
+		size: 32px;
+	}
 	
 	.like_button.liked {
 		font-size: 0px;	
 	}
 	
 	.like_button:after {
-		content: "♥";
+		content: "❤";
 		color: #D61F12;
 		opacity: 0;
-		-webkit-transition: all 0.2s ease-in-out;
-		transition: all 0.2s ease-in-out;
 		position: absolute;
     	left: 0em;
 	}
@@ -51,7 +60,7 @@
 </style>
 </th:block>
 <div class="panel panel-default" layout:fragment="content1">
-	<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/bootstrap/images/item/myitem.jpg');">
+	<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/bootstrap/images/item/like.jpg');">
 		<div class="overlay"></div>
 		<div class="container">
 			<div
@@ -59,31 +68,37 @@
 				<div class="col-md-9 ftco-animate pb-5 text-center">
 					<p class="breadcrumbs">
 						<span class="mr-2"><a th:href="@{/index}">Home <i class="fa fa-chevron-right"></i></a></span> 
-						<span>마이페이지 <i class="fa fa-chevron-right"></i></span>
+						<span><a th:href="@{/layout/myPage}">MyPage</a><i class="fa fa-chevron-right"></i></span>
 					</p>
-					<h1 class="mb-0 bread">Item Cart</h1>
+					<h1 class="mb-0 bread">내 관심 물품</h1>
 				</div>
 			</div>
 		</div>
 	</section>
 	<section class="ftco-section">
+		<div style="text-align: center; margin-bottom:100px;">
+			<h3><b>내 관심 물품은 총 <span id="all_cnt" th:text="${myitemcart.size}"></span>개 입니다.</b></h1>
+		</div>
 		<div class="container">
 			<div class="row d-flex">
-				<div class="col-md-4 ftco-animate" th:each="item:${myitemcart}">
+				<div class="col-md-4 ftco-animate" style="margin-bottom: 50px" th:each="item:${myitemcart}">
 					<form th:action="@{/item/itemdetail}" method="get">
 						<div class="blog-entry justify-content-end">
 							<div class="text">
+								<div style="z-index: 0;" class="block-20">
+									<img style="color: white;" width="100%" height="100%" th:src="@{${item.photos[0].ipFilename}}">
+								</div>
 								<div class="d-flex align-items-center mb-4 topp">
 									<div class="one">
 										<span class="day" style="font-size: 30px;" th:text="${item.iId}"></span>
 									</div>
 									<div class="two">
 										<span class="yr" th:text="${item.iCategory.title}"></span> 
-										<span class="mos" th:text="${#dates.format(new java.util.Date(item.iRegdate), 'yyyy-MM-dd hh:mm')}"></span> 
+										<span class="mos" th:text="${#dates.format(new java.util.Date(item.iRegdate), 'yyyy-MM-dd HH:mm')}"></span> 
 									</div>
 								</div>
 								<div class="like" aria-hidden="true" style="text-align:right">
-									<span th:id="${item.iId}" class="like_button" style="font-size:30px">♥</span>
+									<span th:id="${item.iId}" class="like_button" style="font-size:30px">❤</span>
 								</div>
 								<h3 class="heading" style="margin-top:30px">
 									<a href="#" th:text="${item.iTitle}"></a>
@@ -114,7 +129,9 @@
 			$.ajax({
 				url:`updateGood/[[${member.mId}]]/`+id,
 				type: "post",
-				success: function(data){	
+				success: function(data){
+					if (data == 1) $('#all_cnt').text(Number($('#all_cnt').text()) + 1);
+					else if (data == 0) $('#all_cnt').text(Number($('#all_cnt').text()) - 1);
 					alert('좋아요 상태가 업데이트 되었습니다.');
 				},
 				error: function(){}

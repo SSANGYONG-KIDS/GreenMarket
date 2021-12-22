@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <th:block th:fragment="scriptFragment">
 	<script src="/bootstrap/js/jquery.min.js"></script>
 
 	<!-- 제이쿼리 ui -->
 	<script src="/bootstrap/js/jquery-ui.js"></script>
-	
+
 	<script src="/bootstrap/js/jquery-migrate-3.0.1.min.js"></script>
 	<script src="/bootstrap/js/popper.min.js"></script>
 	<script src="/bootstrap/js/bootstrap.min.js"></script>
@@ -22,53 +21,81 @@
 	<script defer src="/bootstrap/js/main.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-	<!-- contextPath 관련 -->	
-	<link id="contextPathHolder" th:data-contextPath="${#httpServletRequest.getContextPath()}"/>
+	<!-- contextPath 관련 -->
+	<link id="contextPathHolder" th:data-contextPath="${#httpServletRequest.getContextPath()}" />
 	<script>
 		let contextPath = $('#contextPathHolder').attr('data-contextPath') ? $('#contextPathHolder').attr('data-contextPath') : '';
-	$().ready(() => {
-		$("#login_btn").click(function() {
-		 $.ajax({
-            type : "POST",
-            url : "/checkCurrentPassword",
-            data : {
-               "id" : $("#mId").val(),
-               "password" : $("#mPw").val()
-            },
-            success : function(aa) {
-               console.log(aa);
-               if (aa == "1") {
-              	 Swal.fire({
-  				 position: 'top',
-  				 icon: 'success',
-  				 title: '반갑습니다!',
-  				 showConfirmButton: false,
-				})
-                $("#userForm").submit();
-               } else if(aa=="2"){
-                  Swal.fire('존재하지 않는 아이디입니다.');
-               } else {
-               	 Swal.fire('비밀번호 불일치합니다.');
-               }
-              }
-         });
-        });
-		
-		// 페이지 로딩 끝난 후 로그인 창 띄울지 결정 @author ino5
-		if ($('#showsLoginForm').val() == 'true') {
-			$('#nav-link-login').click();
-		}
-	})		
+		$().ready(() => {
+			$("#login_btn").click(function () {
+				$.ajax({
+					type: "POST",
+					url: "/checkCurrentPassword",
+					data: {
+						"id": $("#mId").val(),
+						"password": $("#mPw").val()
+					},
+					success: function (aa) {
+						console.log(aa);
+						if (aa == "1") {
+							Swal.fire({
+								position: 'top',
+								icon: 'success',
+								title: '반갑습니다!',
+								showConfirmButton: false,
+							})
+							$("#userForm").submit();
+						} else if (aa == "2") {
+							Swal.fire('존재하지 않는 아이디입니다.');
+						} else {
+							Swal.fire('비밀번호 불일치합니다.');
+						}
+					}
+				});
+			});
+
+			// 페이지 로딩 끝난 후 로그인 창 띄울지 결정 @author ino5
+			if ($('#showsLoginForm').val() == 'true') {
+				$('#nav-link-login').click();
+			}
+
+			$("#findPwd").click(function () {
+
+				if ($("#mId2").val() == "") {
+					alert("아이디를 입력하세요!");
+				}
+				if ($("#mEmail2").val() == "") {
+					alert("이메일을 입력하세요!");
+				}
+
+				$.ajax({
+					url: "/login/findpw",
+					type: "POST",
+					data: {
+						"id": $("#mId2").val(),
+						"email": $("#mEmail2").val()
+					},
+					success: function (aa) {
+						console.log(aa);
+						if (aa == "1") {
+							Swal.fire("임시비밀번호를 발급했습니다.메일을 확인하세요!");
+						} else if (aa == "2") {
+							Swal.fire('존재하지 않는 아이디입니다.');
+						} else {
+							Swal.fire('존재하지 않는 이메일입니다.');
+						}
+					}
+				});
+			});
+		})
+
 	</script>
 
 	<!-- summernote -->
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-	
+
 	<!-- 로그인창 띄울지 여부 -->
 	<script>
-		$().ready(()=>{
-			
-		})
 	</script>
 </th:block>
+
 </html>

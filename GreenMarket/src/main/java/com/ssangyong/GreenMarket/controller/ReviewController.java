@@ -43,4 +43,12 @@ public class ReviewController {
 		model.addAttribute("myreviewlist", myreviewlist);
 		model.addAttribute("myTradelist", myTradelist);
 	}
+	
+	@GetMapping("/review/delete")
+	public String deleteMyReview(Model model, Integer rId, Principal principal, Authentication authentication) {
+		int result = reviewService.deleteReview(rId);
+		
+		model.addAttribute("result", result);
+		return "redirect:/review/myreviewlist";
+	}
 }

@@ -6,67 +6,261 @@
 	layout:decorate="~{layout/layout1}">
 <th:block layout:fragment="style1">
 	<style>
-
-	#current_img {
-	 width : 100px;
-	 height: 100px;
+	.modify-form {
+	margin-top : 5%;
+	}
+	
+	.row {
+	display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -30%;
+	}
+	
+	.id, .name, .nickname{
+		margin-left:-30%;
+	}
+	
+	.email {
+		margin-left:-11%;
+	}
+	
+	.phone {
+	margin-left:-14%;
+	}
+	
+	.mphone2 {
+	margin-left:-14%;
+	}
+	
+	#current_img  {
+	 width : 150px;
+	 height: 150px;
 	 border-radius : 70%;
 	 object-fit: cover;
 	}
 	
-	#mId, #mName, #mNickname{
-	  background-color: #ccc;
+	label {
+	font-weight : 900;
+	color : black;
+	}
+	
+	.pw {
+	margin-left:34%;
+	}
+	
+
+	.box-form {
+	height: 52px !important;
+    background:#ced4da !important;
+    color: #000000 !important;
+    font-size: 18px;
+    border-radius: 5px;
+    box-shadow: none;
+    width: 60%;
+    display: block;
+    margin-left:33.5%;
+    border: 1px solid #ced4da;
+	}
+	
+	.box-form1 {
+	height: 52px !important;
+    background: #fff !important;
+    color: #000000 !important;
+    font-size: 18px;
+    border-radius: 5px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    width: 40%;
+    display: block;
+    margin-left:45%;
+    border: 1px solid #ced4da;
+	}
+	
+	textarea {
+	display : block;
+	margin-left: 33.5%;
+	width : 50%;
+	height : 120%;
+	 border-radius: 5px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border: 1px solid #ced4da;
+	}
+	.address {
+	margin-left:-7%;
+	margin-top: 5%;
+	display : block;
+	}
+	.checkform {
+	height: 50px !important;
+    background: green !important;
+    color: white !important;
+    font-size: 18px;
+    border-radius: 5px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    width: 40%;
+    margin-left: -31%;
+    border: 1px solid #ced4da;
+   
+	}
+	
+	.emailform {
+	height: 52px !important;
+    background: #fff !important;
+    color: #000000 !important;
+    font-size: 18px;
+    border-radius: 5px;
+    box-shadow: none;
+    width: 60%;
+    display: block;
+    margin-left:33.5%;
+    border: 1px solid #ced4da;
+	
+	}
+	.checkphoneform {
+	height: 50px !important;
+    background: green !important;
+    color: white !important;
+    font-size: 18px;
+    border-radius: 5px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border: 1px solid #ced4da;
+	width:10%;
+	margin-left:3%;
+	
+	}
+	
+	.checkaddressform {
+	height: 40px !important;
+    background: green !important;
+    color: white !important;
+    font-size: 18px;
+    border-radius: 5px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    width: 50%;
+    display: block;
+    margin-left: -40%;
+    margin-top: 27%;
+    border: 1px solid #ced4da;
+	}
+	
+	#modify, #delete_account {
+	width: 20%;
+    height: 40%;
+    margin-left: 38%;
+    margin-top: 3%;
+}
+
+	.checkcurrent {
+	height: 40px !important;
+    background: rgb(163, 163, 163)!important;
+    color: white !important;
+    font-size: 18px;
+    border-radius: 5px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    width: 30%;
+    margin-left:35%;
+    margin-top:1%;
+    border: 1px solid #ced4da;
+	}
+	.checkcurrentp1{
+	height: 40px !important;
+    background: rgb(163, 163, 163)!important;
+    color: white !important;
+    font-size: 18px;
+    border-radius: 5px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    margin-left:220%;
+    margin-top:1%;
+    border: 1px solid #ced4da;
+	}
+
+	.checkcurrentp2{
+	height: 40px !important;
+    background: rgb(163, 163, 163)!important;
+    color: white !important;
+    font-size: 18px;
+    border-radius: 5px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    margin-left:200%;
+    margin-top:1%;
+    border: 1px solid #ced4da;
+	}
+
+	#delete_account {
+		margin-top: 2%;
+		margin-bottom: 5%;
 	}
 	
 	#modify_pw {
 		display:none;
 	}
 	
+	#modify-form {
+	margin-top : 5%;
+	}
+	
+	.modal-title-password, .modal-title-phone{
+		margin-left:33%;
+		font-weight : 900;
+	}
 	</style>
 <head>
 <meta charset="UTF-8">
-<title>My Account 수정</title>
+<title>내 계정 수정</title>
 </head>
 <body>
 	<div class="panel panel-default" layout:fragment="content1">
 		<section class="hero-wrap hero-wrap-2 js-fullheight"
-			style="background-image: url('/bootstrap/images/계정수정.png');">
+			style="background-image: url('/bootstrap/images/account_setting.png');">
 			<div class="overlay"></div>
 			<div class="container">
 				<div
 					class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
-					<div class="col-md-9 ftco-animate pb-5 text-center">
+					<div class="col-md-9 ftco-animate pb-5 text-center" style= "margin-left:25%">
 						<p class="breadcrumbs">
 							<span class="mr-2"><a href="/">Home <i
-									class="fa fa-chevron-right"></i></a></span> <span>마이페이지 <i
-								class="fa fa-chevron-right"></i></span>
+									class="fa fa-chevron-right"></i></a></span> <span><a th:href="@{/layout/myPage}">마이페이지<i
+								class="fa fa-chevron-right"></i></a></span>
 						</p>
 						<h1 class="mb-0 bread">내 계정 수정</h1>
 					</div>
 				</div>
 			</div>
 		</section>
-		<div class="container">
+		
+		
+		<div class="container" style="text-align : center;">
 			<div class="input-form-backgroud">
-				<div class="input-form col-md-12 mz-auto" style="margin-left: 19%">
+				<div class="input-form col-md-12 mz-auto">
 					<form class="modify-form" method="POST" >
-						<div class="validation-form" novalidate>
+						<div class="validation-form">
 							
 							<!--프로필 -->
 							<div class="row">
-								<div class="col">
-									<label for="mPhoto"> 프로필 사진 수정</label>
+								<div class="col" style="margin-left:25%;">
+									<label for="mPhoto" class="pphoto"> 프로필 사진 수정</label>
 									
 									<div th:if="${member.mPhoto == null}"> 
 									<img src="/bootstrap/images/user.png" id="current_img">
-									<input id="file_img" name="file_img" type="file" />
+									<input id="file_img" name="file_img" type="file" style="
+    									margin-left: 15%;"/>
 									 </div>
 									 
 									<div th:unless="${member.mPhoto == null}">
 									<img th:src="${member.mPhoto}" id="current_img"> 
 									</div>
 									<br>
-										<input id="file_img" name="file_img" type="file" />
+										<input id="file_img" name="file_img" type="file" style="
+    										margin-left: 15%;"/>
 								</div>
 							</div>
 							<input type="hidden" id="mPhoto" name="mPhoto" /> <br>
@@ -74,25 +268,19 @@
 							<!-- 아이디 폼 -->
 							<div class="row">
 								<div class="col">
-									<label for="mId">아이디</label> 
-									<input id="mId" name="mId" type="text"  class=""
-										th:value="${member.mId}" readonly="readonly" />
+									<label for="mId" class="id">아이디</label> 
+									<input id="mId" name="mId" type="text"  class="box-form"
+										th:value="${member.mId}" disabled/>
 								</div>
-
 							</div>
 							<br>
 
 							<!-- 비밀번호 -->
 							<div class="row">
-<!-- 								<div class="col"> -->
-									<label for="mPw">비밀번호</label> 
-<!-- 									<input type="hidden" id="mpw" th:value="${member.mPw}"> -->
-<!-- 									<input id="mPw" name="mPw" type="password" placeholder="비밀번호를 입력하세요."  -->
-<!-- 										class="form-control" /> -->
-<!-- 								</div> -->
+									<label for="mPw" class="pw">비밀번호</label> 
 								<div class="col-3">
-									<input type="button" id="checkPwd" value="비밀번호 수정"
-										class="form-control" readonly>
+									<input type="button" id="checkPwd" value="비밀번호 수정" 
+										class="checkform" readonly> 
 								</div>
 							</div>
 							<br>
@@ -100,9 +288,9 @@
 							<!-- 이름 -->
 							<div class="row">
 								<div class="col">
-									<label for="mName">이름</label> 
-									<input id="mName" name="mName" type="text" class=""
-										th:value="${member.mName}" readonly="readonly" />
+									<label for="mName" class="name">이름</label> 
+									<input id="mName" name="mName" type="text" class="box-form"
+										th:value="${member.mName}" disabled />
 								</div>
 							</div>
 							<br>
@@ -110,56 +298,29 @@
 							<!-- 휴대폰 번호 -->
 							<div class="row">
 								<div class="col">
+	 									<label for="mPhone" class="phone">휴대폰 번호</label> 
 								<input type="button" id="modifyPhone" value="전화번호 수정"
-										class="form-control" readonly>
-<!-- 									<label for="mPhone">휴대폰 번호</label> <input id="mPhone" -->
-<!-- 										name="mPhone" type="text" placeholder="'-'을 제외하고 입력하세요." -->
-<!-- 										class="form-control" th:value="${member.mPhone}" /> -->
+										class="checkphoneform" readonly>
 								</div>
-<!-- 								<div class="col-3"> -->
-<!-- 									<input type="button" id="sendPhoneButton" value="인증" -->
-<!-- 										class="form-control"> -->
-<!-- 								</div> -->
 							</div>
 							<br>
-
-<!-- 							휴대폰 인증 -->
-<!-- 							<div class="row"> -->
-<!-- 								<div class="col"> -->
-<!-- 									<label for="mPhone2">인증번호</label>  -->
-<!-- 									<input type="text" id="inputCertifiedNumber" readonly="readonly" -->
-<!-- 										class="form-control"> -->
-<!-- 								</div> -->
-<!-- 								<div class="col-3"> -->
-<!-- 									<input type="button" id="CertiUserNum" value="번호 인증" -->
-<!-- 										readonly="readonly" class="form-control">  -->
-<!-- 										<input type="hidden" id="numStr" name="numStr"> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
-<!-- 							<br> -->
-
-
 
 							<!-- 닉네임 -->
 							<div class="row">
 								<div class="col">
-									<label for="mNickname"> 닉네임 </label> 
+									<label for="mNickname" class="nickname"> 닉네임 </label> 
 									<input id="mNickname" name="mNickname" type="text" 
-										class="" th:value="${member.mNickname}" readonly="readonly"/>
+										class="box-form" th:value="${member.mNickname}" disabled/>
 								</div>
-<!-- 								<div class="col-3"> -->
-<!-- 									<input type="button" id="checkNick" value="중복확인" -->
-<!-- 										class="form-control"> -->
-<!-- 								</div> -->
 							</div>
 							<br>
 
 							<!-- 이메일 -->
 							<div class="row">
 								<div class="col">
-									<label for="mEmail"> 이메일 수정 (수정할 이메일을 입력해주세요)</label> 
+									<label for="mEmail" class="email"> 이메일 수정 (수정할 이메일을 입력해주세요)</label> 
 									<input id="mEmail" name="mEmail" type="text" placeholder="abcd@email.com"
-										class="form-control" th:value="${member.mEmail}" />
+										class="emailform" th:value="${member.mEmail}" />
 								</div>
 							</div>
 							<br>
@@ -167,7 +328,7 @@
 							<!-- 자기소개 -->
 								<div class="row">
 									<div class="col">
-										<label for="mInfo"> 자기소개</label>
+										<label for="mInfo" class="selfinfo"> 자기소개</label>
 										<textarea id="mInfo" name="mInfo" placeholder="자기소개를 적어주세요!"
 											class="" th:text="${member.mInfo}"></textarea>
 									</div>
@@ -177,21 +338,20 @@
 								<!-- 주소 -->
 							<div class="row">
 								<div class="col">
-									<label for="memberAddress">주소</label> 
+									<label for="memberAddress" class="address">주소</label> 
 									<input type="text" id="sample6_postcode" placeholder="우편번호" name="mAddress.AddNum"
-										class="" th:value="${member.mAddress.AddNum}"> 
+										class="box-form1" th:value="${member.mAddress.AddNum}"> 
 										<input type="text" id="sample6_address" placeholder="주소" name="mAddress.memberAddress1"
-										class="" th:value="${member.mAddress.memberAddress1}">
+										class="box-form1" th:value="${member.mAddress.memberAddress1}">
 										<input type="text" id="sample6_extraAddress" placeholder="상세주소"
-										name="mAddress.memberAddress2" class="" th:value="${member.mAddress.memberAddress2}"> <br>
+										name="mAddress.memberAddress2" class="box-form1" th:value="${member.mAddress.memberAddress2}">
 										<input type="text" id="sample6_detailAddress" placeholder="상세주소 직접 입력"
-										name="mAddress.memberAddress3" class="" th:value="${member.mAddress.memberAddress3}"> 
+										name="mAddress.memberAddress3" class="box-form1" th:value="${member.mAddress.memberAddress3}"> 
 								</div>
 								<div class="col-3">
 									<input type="button" onclick="sample6_execDaumPostcode()"
-										value="우편번호 찾기" class="form-control"><br>
+										value="우편번호 찾기" class="checkaddressform"><br>
 								</div>
-								<div class="col-8"></div>
 							</div>
 							<br> 
 							<input type="button"
@@ -210,7 +370,7 @@
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title"> 비밀번호 수정 </h4>
+          <h4 class="modal-title-password"> 비밀번호 수정 </h4>
         </div>
         <div class="modal-body">
           <div id="userDiv" class="form-group">
@@ -218,7 +378,7 @@
           			<div class="form-group">
           	  		<label> 현재 비밀번호</label>
           	  		<input type="password" id="current_pwd" name="username"  class="form-control"  placeholder="현재 비밀번호를 입력하세요"  required="required" autofocus/>
-          	  		<input type="button" id="checkcurrent" class="" value="비밀번호 확인 "/>
+          	  		<input type="button" id="checkcurrent" class="checkcurrent" value="비밀번호 확인 "/>
           	  		</div>
           	  <div class="form-group" id = "modify_pw"style="margin-bottom: 30px;">
              	 <label> 수정할 비밀번호</label> 
@@ -246,32 +406,30 @@
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title"> 핸드폰번호 수정 </h4>
+          <h4 class="modal-title-phone"> 핸드폰번호 수정 </h4>
         </div>
         <div class="modal-body">
           <div id="userDiv" class="form-group">
           			<div class="form-group">
-          	  		<label> 현재 핸드폰 번호 -> 새로운 번호를 입력해주세요 </label> 
-          	  		<input type="text" id="mPhone" name="mPhone" th:value="${member.mPhone}" class="form-control"  required="required" autofocus/>
+          	  		<label> 새로운 번호를 입력해주세요 </label> 
+          	  		<input type="text" id="mPhone" name="mPhone" th:value="${member.mPhone}" class="form-control"  required="required" autofocus placeholder="'-'을 제외하고 입력하세요."/>
           	  		</div>
 							<div class="col-3"> 
-									<input type="button" id="sendPhoneButton" value="인증"
-										class="form-control">
+									<input type="button" id="sendPhoneButton" value="인증" class="checkcurrentp1">
 								</div>
           	  		
           	  		<!-- 휴대폰 인증 -->
-							<div class="row">
-								<div class="col">
+								<div class="form-group">
 									<label for="mPhone2">인증번호</label> 
 									<input type="text" id="inputCertifiedNumber" readonly="readonly"
 										class="form-control">
 								</div>
 								<div class="col-3">
 									<input type="button" id="CertiUserNum" value="번호 인증"
-										readonly="readonly" class="form-control"> 
+										readonly="readonly" class="checkcurrentp2" placeholder="인증번호를 입력해주세요!"> 
 										<input type="hidden" id="numStr" name="numStr">
 								</div>
-							</div>
+			</div>
 							<br>
           	 
              <button class="btn btn-primary btn-block" id="submit_phone">확인</button>
@@ -545,88 +703,141 @@ $('#checkcurrent').click(function () {
          
    	$("#modify").on('click',update);
    	
-   	function update() {
-   		    alert("회원정보를 수정하겠습니까?");
+function update() {
+    Swal.fire({
+        title: '수정하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '수정',
+        cancelButtonText: '취소'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let data = {
+                'mEmail': $("#mEmail").val(),
+                'mInfo': $("#mInfo").val(),
+                'mAddress.AddNum': $("#sample6_postcode").val(),
+                'mAddress.memberAddress1': $("#sample6_address").val(),
+                'mAddress.memberAddress2': $("#sample6_detailAddress").val(),
+                'mAddress.memberAddress3': $("#sample6_extraAddress").val()
+            };
 
- 	 		let data = {
-	 		mEmail : $("#mEmail").val(),
-	 		mInfo : $("#mInfo").val(),
-	 		'mAddress.AddNum' : $("#sample6_postcode").val(),
-	 		'mAddress.memberAddress1' : $("#sample6_address").val(),
-	 		'mAddress.memberAddress2' : $("#sample6_detailAddress").val(),
-	 		'mAddress.memberAddress3' : $("#sample6_extraAddress").val()
-	 		};
-			
-			// 사진
-			var file = $('#file_img')[0].files[0];
-			var formData = new FormData();
-			formData.append('data', file); // data 안에 파일 넣기
-			formData.append('path', "signup"); // web 서버에 만들 폴더 이름
-			if (file != null) { // 사진 바꿨을 때
-				// 사진 S3서버에 등록
-				$.ajax({
-					type : 'POST',
-					url : '/profile_upload',
-					data : formData,
-					processData : false,
-					contentType : false
-				}).done(function(responseBody) { // 사진을 S3서버에 등록한 후
-					data.mPhoto = responseBody; // 사진 주소 data에 넣기
-		 			
-		 			// 회원정보수정
-		 			$.ajax({
-						type: "POST",
-						url: "/modify",
-						data: data
-					}).done(function(resp){
-		         		 Swal.fire('수정성공!', '휴대폰 인증이 정상적으로 완료되었습니다.', 'success')
-		         		location.href="/layout/account_setting";
-		         	}).fail(function(error) {
-		         		 Swal.fire("수정실패");
-		         	});						
-				}).fail(function(error) {
-				})
-			} else { // 사진 안바꿨을 때
-				data.mPhoto = $('#current_img').attr('src');
-	 			// 회원정보수정
-	 			$.ajax({
-					type: "POST",
-					url: "/modify",
-					data: data
-				}).done(function(resp){
-	         		 Swal.fire('수정성공!', '휴대폰 인증이 정상적으로 완료되었습니다.', 'success')
-	         		location.href="/layout/account_setting";
-	         	}).fail(function(error) {
-	         		 Swal.fire("수정실패");
-	         	});						
-			}
+            // 사진
+            var file = $('#file_img')[0].files[0];
+            var formData = new FormData();
+            formData.append('data', file); // data 안에 파일 넣기
+            formData.append('path', "signup"); // web 서버에 만들 폴더 이름
+            if (file != null) { // 사진 바꿨을 때
+                // 사진 S3서버에 등록
+                $.ajax({
+                    type: 'POST',
+                    url: '/profile_upload',
+                    data: formData,
+                    processData: false,
+                    contentType: false
+                }).done(function (responseBody) { // 사진을 S3서버에 등록한 후
+                    data.mPhoto = responseBody; // 사진 주소 data에 넣기
 
+                    // 회원정보수정
+                    $.ajax({
+                        type: "POST",
+                        url: "/modify",
+                        data: data
+                    }).done(function (resp) {
+                        Swal.fire({
+                            title: '수정 성공',
+                            showDenyButton: false,
+                            showCancelButton: false,
+                            confirmButtonText: '확인'
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                location.href = "/layout/account_setting";
+                            } else if (result.isDenied) {
+                                location.href = "/layout/account_setting";
+                            }
+                        })
 
-	 		
-	
-	}
-	
+                    }).fail(function (error) {
+                        location.href = "/layout/account_setting";
+                    });
+                }).fail(function (error) {
+                })
+            } else { // 사진 안바꿨을 때
+                data.mPhoto = $('#current_img').attr('src');
+                // 회원정보수정
+                $.ajax({
+                    type: "POST",
+                    url: "/modify",
+                    data: data
+                }).done(function (resp) {
+                    Swal.fire({
+                        title: '수정 성공',
+                        showDenyButton: false,
+                        showCancelButton: false,
+                        confirmButtonText: '확인'
+                    }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+                            location.href = "/layout/account_setting";
+                        } else if (result.isDenied) {
+                            location.href = "/layout/account_setting";
+                        }
+                    })
+                }).fail(function (error) {
+                    location.href = "/layout/account_setting";
+                });
+            }
+        }
+    })
+}
+
 	
 	$("#delete_account").on('click', delete_account);
-   	function delete_account() {
-   		    alert("회원을 탈퇴하시겠습니까?");
- 	 		let data = {
- 	 		mId : $("#mId").val(),
-	 		};
-	 		
- 			$.ajax({
-				type: "POST",
-				url: "/delete",
-				data: data
-			}).done(function(resp){
-         		alert("회원이 탈퇴되었습니다.");
-         		location.href="/login/logout";
-         	}).fail(function(error) {
-         		alert("회원 탈퇴 실패");
-         	});		
-	}
-	
-	
+	function delete_account() {
+
+    Swal.fire({
+        title: '탈퇴하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: '취소',
+        confirmButtonText: '탈퇴'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let data = {
+                mId: $("#mId").val(),
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/delete",
+                data: data
+            }).done(function (resp) {
+
+                Swal.fire({
+                    title: '탈퇴 성공',
+                    showDenyButton: false,
+                    showCancelButton: false,
+                    confirmButtonText: '확인'
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        location.href = "/login/logout";
+                    } else if (result.isDenied) {
+                        location.href = "/login/logout";
+                    }
+                })
+
+            }).fail(function (error) {
+                location.href = "/layout/account_setting";
+            });
+        }
+
+    });
+}
 	
       </script>
 		<!-- Bootstrap CSS -->

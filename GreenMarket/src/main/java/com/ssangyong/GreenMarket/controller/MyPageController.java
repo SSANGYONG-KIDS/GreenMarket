@@ -30,8 +30,7 @@ public class MyPageController {
 	   
 	 @GetMapping("/layout/account_setting")
 	   public String selectById(Model model, @AuthenticationPrincipal SecurityUser principal) {
-	      System.out.println("회원정보 보기 controller");
-	      System.out.println(principal);
+
 	      model.addAttribute("member", memberservice.selectById(principal.getUsername()));
 	      return "layout/account_setting";
  }
@@ -39,7 +38,7 @@ public class MyPageController {
 	 @PostMapping("/modify")
 	 @ResponseBody
 		public void myModify(MemberEntity member, @AuthenticationPrincipal SecurityUser principal) {
-		 System.out.println("회원정보 수정하기");
+	
 		 member.setMId(principal.getUsername());
 	     memberservice.updateMember(member);
 	 }
@@ -48,15 +47,14 @@ public class MyPageController {
 	 @PostMapping("/checkCurrentPassword")
 	 @ResponseBody
 		public int checkCurrentPassword(String password, @AuthenticationPrincipal SecurityUser principal, String id) {
-		 System.out.println("비밀번호 확인하기");
-		 String mId = principal != null ? principal.getUsername() : id; 
+		 String mId = principal != null ? principal.getUsername() : id;
+		 
 	     return memberservice.checkCurrentPassword(mId, password);
 	 }
 	 
 	 @PostMapping("/modifyPhone")
 	 @ResponseBody
 		public void CurrentPhone(MemberEntity member, @AuthenticationPrincipal SecurityUser principal ) {
-		 System.out.println("전화번호 수정하기");
 		 member.setMId(principal.getUsername());
 	     memberservice.updateMemberPhone(member);
 	 }
@@ -64,7 +62,6 @@ public class MyPageController {
 	 @PostMapping("/modifyPwd")
 	 @ResponseBody
 		public void modifyPwd(MemberEntity member, @AuthenticationPrincipal SecurityUser principal ) {
-		 System.out.println("비밀번호 수정하기");
 		 member.setMId(principal.getUsername());
 	     memberservice.updateMemberPassword(member);
 	 }
@@ -72,7 +69,6 @@ public class MyPageController {
 	 @PostMapping("/delete")
 	 @ResponseBody
 		public void delete(@AuthenticationPrincipal SecurityUser principal) {
-		 System.out.println("회원 탈퇴");
 		 memberservice.deleteById(principal.getUsername());
 	 }
 }

@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.ssangyong.GreenMarket.model.CommunityEntity;
+import com.ssangyong.GreenMarket.model.MemberEntity;
 import com.ssangyong.GreenMarket.model.QCommunityEntity;
 
 public interface CommunityRepository extends CrudRepository<CommunityEntity, Integer>, QuerydslPredicateExecutor<CommunityEntity> {
@@ -33,7 +34,7 @@ public interface CommunityRepository extends CrudRepository<CommunityEntity, Int
 		default:
 			break;
 		}
-		//builder.and(board.cId.gt(0)); //내가 추가함.
+		
 		return builder;
 	}
 	
@@ -42,7 +43,10 @@ public interface CommunityRepository extends CrudRepository<CommunityEntity, Int
 
 	public Page<CommunityEntity> findAll(Predicate p, Pageable pageable);
 	
+	public Page<CommunityEntity> findByMember(MemberEntity member, Pageable pageable);
+	
 	//멤버 id로 게시글 목록 가져오기
-	public Page<CommunityEntity> findByMember_mId(@Param(value="mId") String mId, Pageable page);
+	//public Page<CommunityEntity> findByMember_mId(@Param(value="mId") String mId, Predicate p, Pageable page);
+	
 	
 }

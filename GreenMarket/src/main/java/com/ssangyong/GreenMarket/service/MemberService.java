@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -33,14 +34,17 @@ public class MemberService implements UserDetailsService{
   		return memberrepository.findById(mId).get();
   	}
   	
+  	//이메일 찾기
+  	public MemberEntity selectByEmail(String mEmail) {
+  		return memberrepository.findById(mEmail).get();
+  	}
+  
     // 회원 수정
     @Transactional
     public void updateMember(MemberEntity member) {
     	MemberEntity memberEntity = memberrepository.findById(member.getMId()).get(); //영속화
-//    	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//    	memberEntity.setMPw(encoder.encode(member.getMPw()));
+
     	memberEntity.setMEmail(member.getMEmail());
-//    	memberEntity.setMPhone(member.getMPhone());
     	memberEntity.setMPhoto(member.getMPhoto());
     	memberEntity.setMInfo(member.getMInfo());
     	memberEntity.setMAddress(member.getMAddress());
@@ -86,15 +90,5 @@ public class MemberService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		return null;
 	}
-
-
-//  	
-//	@Override
-//	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-//		UserDetails user = memberrepository.findById(userId)
-//				.filter(u->u!=null).map(u->new SecurityUser(u)).get();
-//		return user;
-//	}
-  	
   	
 }

@@ -4,10 +4,14 @@
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout1}">
+<head>
+<meta charset="UTF-8">
+<title>내 물품 관리</title>
+</head>
 <body>
 <div class="panel panel-default" layout:fragment="content1">
 	<section class="hero-wrap hero-wrap-2 js-fullheight"
-		style="background-image: url('/bootstrap/images/item/myitem.jpg');">
+		style="background-image: url('/bootstrap/images/item/mylist.jpg');">
 		<div class="overlay"></div>
 		<div class="container">
 			<div
@@ -15,9 +19,9 @@
 				<div class="col-md-9 ftco-animate pb-5 text-center">
 					<p class="breadcrumbs">
 						<span class="mr-2"><a th:href="@{/index}">Home <i class="fa fa-chevron-right"></i></a></span> 
-						<span>마이페이지 <i class="fa fa-chevron-right"></i></span>
+						<span><a th:href="@{/layout/myPage}">MyPage <i class="fa fa-chevron-right"></i></a></span>
 					</p>
-					<h1 class="mb-0 bread">My Items</h1>
+					<h1 class="mb-0 bread">내 물품 관리</h1>
 				</div>
 			</div>
 		</div>
@@ -38,7 +42,7 @@
 									</div>
 									<div class="two">
 										<span class="yr" th:text="${item.iCategory.title}"></span> 
-										<span class="mos" th:text="${#dates.format(new java.util.Date(item.iRegdate), 'yyyy-MM-dd hh:mm')}"></span> 
+										<span class="mos" th:text="${#dates.format(new java.util.Date(item.iRegdate), 'yyyy-MM-dd HH:mm')}"></span> 
 									</div>
 								</div>
 								<h3 class="heading">

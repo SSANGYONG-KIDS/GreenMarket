@@ -86,6 +86,14 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 	#chat_alert_msg {
 		color: gray;
 	}
+	
+	#span_info_id {
+		color: #3c7228;
+	}
+	
+	#span_info_welcome {
+		color: darkgray;
+	}
 </style>
 <head>
 
@@ -117,8 +125,8 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 					<li class="nav-item" id="nav-item-mypage" sec:authorize-expr="isAuthenticated()"><a th:href="@{/layout/myPage}" class="nav-link">마이페이지</a></li>
 				</ul>
 				<div class="info">
-					<span sec:authorize-expr="isAuthenticated()"><a sec:authentication="name">님 반갑습니다!</a></span>
-					<span sec:authorize-expr="isAuthenticated()">님 반갑습니다!</span>
+					<span id="span_info_id" sec:authorize-expr="isAuthenticated()"><a sec:authentication="name">님 반갑습니다!</a></span>
+					<span id="span_info_welcome" sec:authorize-expr="isAuthenticated()">님 반갑습니다!</span>
 				</div>
 			</div>
 		</div>
@@ -152,13 +160,46 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
              <button type="button" id="login_btn" class="btn btn-primary btn-block" >로그인</button>
           	</form>	
           		</div>
-          	<div class="signup">
+          	<div class="signup2">
           	 <form th:action="@{/layout/signup}" method="get">
             	 <input type="submit" value="회원가입" id="loginButton" class="btn btn-default" style="margin-left: 110px;"/>
              </form>
-             <form th:action="@{/layout/}" method="get">
-            	 <input type="submit" value="비밀번호 찾기" id="searchPwd" class="btn btn-default" style="margin-left: 90px;"/>
-             </form>
+            	<a href="#" data-toggle="modal" data-target="#emailModal">
+            	 <input type="button" value="비밀번호 찾기" id="searchPwd" class="btn btn-default" style="margin-left: 90px;"/>
+        	</a>
+        </div>
+          <div class="modal-footer">
+           <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_modal">닫기</button>
+         </div>
+      </div>
+    </div>
+    </div>
+    </div>
+    
+    
+    <div class="modal fade" id="emailModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="search-title"> 비밀번호 찾기 </h4>
+        </div>
+        <div class="modal-body">
+          <div id="userDiv" class="form-group">
+          		<form id="findForm" action="/" method="post">
+          			<div class="form-group">
+          	  		<label>아이디 입력</label> 
+          	  		<input type="text"  id="mId2" name="username"  class="form-control"  placeholder="아이디를 입력하세요"  required="required" autofocus/>
+          	  		</div>
+          	  <div class="form-group" style="margin-bottom: 30px;">
+             	 <label> 이메일 입력</label> 
+              	 <input type="text"  id="mEmail2" name="userEmail"  class="form-control"  placeholder="이메일을 입력하세요"  required="required" autofocus/>
+             </div>
+             <button type="button" id="findPwd" class="btn btn-primary btn-block" >임시비밀번호 발급</button>
+          	</form>	
+          		</div>
+          	<div class="signup">
+          	 <button type="button" id="login_btn2" class="btn btn-primary btn-block" data-toggle="modal" data-dismiss="modal">로그인하러가기</button>
         </div>
           <div class="modal-footer">
            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_modal">닫기</button>
