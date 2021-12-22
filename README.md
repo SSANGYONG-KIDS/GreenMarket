@@ -45,11 +45,11 @@ SSANGYONG ojt Teamproject GreenMarket
 
 
 ## 3. 프로젝트 기능 및 시연
-### 실제 베포 사이트 : [Green Market](http://3.37.119.119:8888/) 
-### 파일 형상관리 : [Slack](https://w1636686392-4sg608206.slack.com/ssb/redirect), [Notion](https://www.notion.so/Green-Market-8562d6a29a77448eb50a30eddc6750ba)
-### 이슈 및 QA Sheets : [Google Sheet](https://docs.google.com/spreadsheets/d/1vZC6iFc5GuNYroBcgPnYUUgcM67Wuj9-gnhB4QinWWI/edit#gid=0) 
+### ✔ 실제 베포 사이트 : [Green Market](http://3.37.119.119:8888/) 
+### ✔ 파일 형상관리 : [Slack](https://w1636686392-4sg608206.slack.com/ssb/redirect), [Notion](https://www.notion.so/Green-Market-8562d6a29a77448eb50a30eddc6750ba)
+### ✔ 이슈 및 QA Sheets : [Google Sheet](https://docs.google.com/spreadsheets/d/1vZC6iFc5GuNYroBcgPnYUUgcM67Wuj9-gnhB4QinWWI/edit#gid=0) 
 
-### 발표 자료 : 
+### ✔ 발표 자료 : 
 
 ![슬라이드1](https://user-images.githubusercontent.com/49936027/147057804-197ef1f7-046f-41f7-a310-746782d0feaa.JPG)
 ![슬라이드2](https://user-images.githubusercontent.com/49936027/147057808-f6eee48b-a30d-4791-b2a0-c7e666eaddea.JPG)
