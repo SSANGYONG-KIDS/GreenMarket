@@ -45,11 +45,15 @@
 					<label for="Title">제목:</label> 
 					<input type="text" class="form-control" id="iTitle" placeholder="제목을 입력해주세요." name="iTitle">
 				</div>
+				<i id="iTitleInfo" class="text-info"></i><br>
+				
 				<!-- 내용 -->
 				<div class="form-group">
 					<label for="Content">내용:</label>
-					<textarea class="form-control" rows="3" cols="" id="iContent" name="iContent" placeholder="내용을 입력해주세요."></textarea>
+					<textarea class="form-control" rows="3" id="iContent" name="iContent" placeholder="내용을 입력해주세요."></textarea>
 				</div>
+				<i id="iContentInfo" class="text-info"></i><br>
+				
 				<!-- 작성자 -->
 				<div class="form-group">
 					<label for="writer">작성자:</label> 
@@ -60,6 +64,8 @@
 					<label for="Price">가격:</label> 
 					<input type="text" class="form-control" id="iPrice" name="iPrice" placeholder="1day당 가격을 숫자만 입력하세요.(ex.15000)">
 				</div>
+				<i id="iPriceInfo" class="text-info"></i><br>
+				
 				<!-- 물건 상태 -->
 				<div class="form-group">
 					<label for="state">물건 상태: </label> 
@@ -175,7 +181,42 @@ function fileCheck(e) {
 		var form = $("form")[0];
 		var item_id= $("#iId").val();
 		
-		if(typeof form != "undefined") {
+		var title = $("#iTitle").val();
+	    var content = $("#iContent").val();
+	    var price = $("#iPrice").val();
+	    var isCompleted = 1;
+	    var isFocus = 1;
+	    
+	    if(title == ''){
+	    	$('i[id="iTitleInfo"]').html("제목을 입력하세요.");
+	         if(isFocus){
+	         		$("#iTitle").focus();
+	         		isFocus = 0;
+	         	}
+	         return false;
+	         isCompleted = 0;
+	    }else if(content == ''){
+	    	$('i[id="iContentInfo"]').html("내용을 입력하세요");
+	    	$('i[id="iTitleInfo"]').html("");
+	         if(isFocus){
+	         		$("#iContent").focus();
+	         		isFocus = 0;
+	         	}
+	         return false;
+	         isCompleted = 0;
+	    }else if(price == ''){
+	    	$('i[id="iPriceInfo"]').html("가격을 입력하세요");
+	    	$('i[id="iContentInfo"]').html("");
+	    	$('i[id="iTitleInfo"]').html("");
+	         if(isFocus){
+	         		$("#iPrice").focus();
+	         		isFocus = 0;
+	         	}
+	         return false;
+	         isCompleted = 0;
+	    }
+	    
+	    if(typeof form != "undefined") {
 		 	var formData = new FormData(form);
 				for (var x = 0; x < content_files.length; x++) {
 					// 삭제 안한것만 담아 준다. 
@@ -183,28 +224,29 @@ function fileCheck(e) {
 						 formData.append("article_file", content_files[x]);
 					}
 				}
-		   /*
-		   * 파일업로드 multiple ajax처리
-		   */
-		   
-			$.ajax({
-		   	      type: 'POST',
-		   	   	  enctype: 'multipart/form-data',
-		   	      url: '/file-upload',
-		       	  data : formData,
-		       	  processData: false,
-		   	      contentType: false
-		   	    }).done(function(responseBody) {
-		   	    	$('#iIds').val(responseBody);
-					
-					$('#itemform').submit();
+				/*
+				 * 파일업로드 multiple ajax처리
+				 */
+				$.ajax({
+				   	  type: 'POST',
+				   	  enctype: 'multipart/form-data',
+				   	  url: '/file-upload',
+				      data : formData,
+				      processData: false,
+				   	  contentType: false
+				}).done(function(responseBody) {
+				   	  $('#iIds').val(responseBody);
+							
+					  $('#itemform').submit();
 				}).fail(function(error) {
-					alert('사진을 입력해주세요.');
+					  alert('사진을 입력해주세요.');
+					  
 				})
 			}else {
-		    	$('#itemform').submit();
-		      }    
-		return false;
+				 $('#itemform').submit();
+			}  
+	    return false;
+
 	}
 </script>
 </th:block>
