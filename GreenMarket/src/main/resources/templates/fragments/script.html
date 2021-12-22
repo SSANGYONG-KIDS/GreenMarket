@@ -59,14 +59,14 @@
 			}
 
 			$("#findPwd").click(function () {
-			
-				if($("#mId2").val()=="") {
+
+				if ($("#mId2").val() == "") {
 					alert("아이디입력!");
 				}
-				if($("#mEmail2").val()=="") {
+				if ($("#mEmail2").val() == "") {
 					alert("이메일 입력!");
 				}
-			
+
 				$.ajax({
 					url: "/login/findpw",
 					type: "POST",

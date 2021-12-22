@@ -690,62 +690,96 @@ $('#checkcurrent').click(function () {
          
    	$("#modify").on('click',update);
    	
-   	function update() {
-   			 alert('수정하시겠습니까?');
- 	 		let data = {
-	 		'mEmail' : $("#mEmail").val(),
-	 		'mInfo' : $("#mInfo").val(),
-	 		'mAddress.AddNum' : $("#sample6_postcode").val(),
-	 		'mAddress.memberAddress1' : $("#sample6_address").val(),
-	 		'mAddress.memberAddress2' : $("#sample6_detailAddress").val(),
-	 		'mAddress.memberAddress3' : $("#sample6_extraAddress").val()
-	 		};
-			
-			// 사진
-			var file = $('#file_img')[0].files[0];
-			var formData = new FormData();
-			formData.append('data', file); // data 안에 파일 넣기
-			formData.append('path', "signup"); // web 서버에 만들 폴더 이름
-			if (file != null) { // 사진 바꿨을 때
-				// 사진 S3서버에 등록
-				$.ajax({
-					type : 'POST',
-					url : '/profile_upload',
-					data : formData,
-					processData : false,
-					contentType : false
-				}).done(function(responseBody) { // 사진을 S3서버에 등록한 후
-					data.mPhoto = responseBody; // 사진 주소 data에 넣기
-		 			
-		 			// 회원정보수정
-		 			$.ajax({
-						type: "POST",
-						url: "/modify",
-						data: data
-					}).done(function(resp){
-		         		 Swal.fire('수정성공!')
-		         		location.href="/layout/account_setting";
-		         	}).fail(function(error) {
-		         		 Swal.fire("수정실패");
-		         	});						
-				}).fail(function(error) {
-				})
-			} else { // 사진 안바꿨을 때
-				data.mPhoto = $('#current_img').attr('src');
-	 			// 회원정보수정
-	 			$.ajax({
-					type: "POST",
-					url: "/modify",
-					data: data
-				}).done(function(resp){		
-					Swal.fire('수정성공!')
-	         		location.href="/layout/account_setting";
-	         	}).fail(function(error) {
-	         		Swal.fire("수정실패");
-	         	});						
-			}
-	}
-	
+function update() {
+    Swal.fire({
+        title: '수정하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '수정',
+        cancelButtonText: '취소'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let data = {
+                'mEmail': $("#mEmail").val(),
+                'mInfo': $("#mInfo").val(),
+                'mAddress.AddNum': $("#sample6_postcode").val(),
+                'mAddress.memberAddress1': $("#sample6_address").val(),
+                'mAddress.memberAddress2': $("#sample6_detailAddress").val(),
+                'mAddress.memberAddress3': $("#sample6_extraAddress").val()
+            };
+
+            // 사진
+            var file = $('#file_img')[0].files[0];
+            var formData = new FormData();
+            formData.append('data', file); // data 안에 파일 넣기
+            formData.append('path', "signup"); // web 서버에 만들 폴더 이름
+            if (file != null) { // 사진 바꿨을 때
+                // 사진 S3서버에 등록
+                $.ajax({
+                    type: 'POST',
+                    url: '/profile_upload',
+                    data: formData,
+                    processData: false,
+                    contentType: false
+                }).done(function (responseBody) { // 사진을 S3서버에 등록한 후
+                    data.mPhoto = responseBody; // 사진 주소 data에 넣기
+
+                    // 회원정보수정
+                    $.ajax({
+                        type: "POST",
+                        url: "/modify",
+                        data: data
+                    }).done(function (resp) {
+                        Swal.fire({
+                            title: '수정 성공',
+                            showDenyButton: false,
+                            showCancelButton: false,
+                            confirmButtonText: '확인'
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                location.href = "/layout/account_setting";
+                            } else if (result.isDenied) {
+                                location.href = "/layout/account_setting";
+                            }
+                        })
+
+                    }).fail(function (error) {
+                        location.href = "/layout/account_setting";
+                    });
+                }).fail(function (error) {
+                })
+            } else { // 사진 안바꿨을 때
+                data.mPhoto = $('#current_img').attr('src');
+                // 회원정보수정
+                $.ajax({
+                    type: "POST",
+                    url: "/modify",
+                    data: data
+                }).done(function (resp) {
+                    Swal.fire({
+                        title: '수정 성공',
+                        showDenyButton: false,
+                        showCancelButton: false,
+                        confirmButtonText: '확인'
+                    }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+                            location.href = "/layout/account_setting";
+                        } else if (result.isDenied) {
+                            location.href = "/layout/account_setting";
+                        }
+                    })
+                }).fail(function (error) {
+                    location.href = "/layout/account_setting";
+                });
+            }
+        }
+    })
+}
+
 	
 	$("#delete_account").on('click', delete_account);
    	function delete_account() {
