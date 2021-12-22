@@ -50,7 +50,7 @@
 								</h3>
 								<p th:text="${item.iContent}"></p>
 								<input type="hidden" name='iId' th:value=${item.iId}> 
-								<input type="submit" value="상세보기">
+								<input type="submit" value="수정하기">
 							</div>
 						</div>
 					</form>
@@ -58,7 +58,7 @@
 			</div>
 			<div>
 				<p style="text-align:right">
-					<a th:href="@{/item/insertform}" class="btn btn-primary py-3 px-4">물품 입력</a>
+					<a th:href="@{/item/insertform}" class="btn btn-primary py-3 px-4">물품 등록</a>
 				</p>
 			</div>
 		</div>

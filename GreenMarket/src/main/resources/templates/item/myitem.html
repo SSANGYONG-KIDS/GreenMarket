@@ -5,7 +5,7 @@
 	layout:decorate="~{layout/layout1}">
 <head>
 <meta charset="UTF-8">
-<title>내 물품 정보</title>
+<title>내 물품 수정</title>
 </head>
 <body>
 <th:block layout:fragment="style1">
@@ -20,7 +20,7 @@
 </th:block>
 <div class="panel panel-default" layout:fragment="content1">
 	<section class="hero-wrap hero-wrap-2 js-fullheight"
-		style="background-image: url('/bootstrap/images/item/myitem.jpg');">
+		style="background-image: url('/bootstrap/images/item/updateitem.jpg');">
 		<div class="overlay"></div>
 		<div class="container">
 			<div
@@ -31,7 +31,7 @@
 						<span class="mr-2"><a th:href="@{/layout/myPage}">MyPage <i class="fa fa-chevron-right"></i></a></span>
 						<span class="mr-2"><a th:href="@{/item/myitemlist}">MyItemList <i class="fa fa-chevron-right"></i></a></span>
 					</p>
-					<h1 class="mb-0 bread">내 물품 정보</h1>
+					<h1 class="mb-0 bread">내 물품 수정</h1>
 				</div>
 			</div>
 		</div>
@@ -44,41 +44,41 @@
 				<input type="hidden" id="delete_pids" name="delete_pids"/> 
 				<!-- 제목 -->
 				<div class="form-group">
-					<label for="Title">title:</label> 
+					<label for="Title">제목:</label> 
 					<input type="text" class="form-control" id="iTitle" th:value="${item.iTitle}" name="iTitle">
 				</div>
 				<!-- 내용 -->
 				<div class="form-group">
-					<label for="Content">content:</label>
+					<label for="Content">내용:</label>
 					<textarea class="form-control" rows="3" id="iContent" name="iContent" th:text="${item.iContent}"></textarea>
 				</div>
 				<!-- 작성자 -->
 				<div class="form-group">
-					<label for="writer">writer:</label> 
+					<label for="writer">작성자:</label> 
 					<input type="text" class="form-control" th:value="${item.member.mId}" id="writer" name="writer" readonly="readonly">
 				</div>
 				<!-- 가격 -->
 				<div class="form-group">
-					<label for="Price">price:</label> 
+					<label for="Price">가격:</label> 
 					<input type="text" class="form-control" id="iPrice" name="iPrice" th:value="${item.iPrice}">
 				</div>
 				<!-- 물건 상태 -->
 				<div class="form-group">
-					<label for="state">state:</label> 
+					<label for="state">물품 상태: </label> 
 					<select id="iState" name="iState">
 						<option th:selected="${state.title}==${item.iState.title}" th:each="state:${istates}" th:value="${state}">[[${state.title}]]</option>
 					</select>
 				</div>
 				<!-- 거래 상태 -->
 				<div class="form-group">
-					<label for="Tstate">Tstate:</label> 
+					<label for="Tstate">거래 상태: </label> 
 					<select id="iTstate" name="iTstate">
 						<option th:selected="${state.title}==${item.iTstate.title}" th:each="state:${tstates}" th:value="${state}">[[${state.title}]]</option>
 					</select>
 				</div>
 				<!-- 카테고리 -->
 				<div class="form-group">
-					<label for="Category">category:</label> 
+					<label for="Category">카테고리: </label> 
 					<select id="iCategory" name="iCategory">
 						<option th:selected="${category.title}==${item.iCategory.title}" th:each="category:${categorys}" th:value="${category}">[[${category.title}]]</option>
 					</select>

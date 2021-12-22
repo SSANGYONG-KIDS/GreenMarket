@@ -241,7 +241,7 @@
 					<img class="item_photo" th:src="${item.photos[0].ipFilename}"/>
 					<div class="item_info_text">
 						<span class="item_info_text_title">[[${item.iTitle}]]</span><br>
-						<span class="item_info_text_content">[[${item.iContent}]]</span><br>
+						<span class="item_info_text_content">[[${#strings.abbreviate(item.iContent, 60)}]]</span><br>
 						상태: [[${item.iState.title}]] <br>
 					</div>
 				</div>
