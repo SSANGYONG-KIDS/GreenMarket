@@ -14,7 +14,7 @@ SSANGYONG ojt Teamproject GreenMarket
 #### Front End
 <img src="https://img.icons8.com/color/48/000000/html-5.png"><img src="https://img.icons8.com/color/48/000000/css3.png">
 
-+ 브라우저의 동작 원리를 이해하며, html5, css, jsp를 주로 사용
++ 브라우저의 동작 원리를 이해하며, html5, css3, JS 를 주로 사용
 
 #### DevOps
 ![image](https://user-images.githubusercontent.com/49936027/142104398-7445d958-312e-45cb-82a1-c3ed63e910f3.png)
