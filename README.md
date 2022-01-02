@@ -4,7 +4,7 @@ SSANGYONG ojt Teamproject GreenMarket
 ## 1. 프로젝트 개요
 
 
-### 사용 기술
+### 사용 기술 (Tech stack)
 #### Backend
 <img src="https://img.icons8.com/color/48/000000/java-coffee-cup-logo.png"><img src="https://img.icons8.com/color/48/000000/spring-logo.png"><img src="https://img.icons8.com/windows/32/000000/node-js.png"><img src="https://img.icons8.com/color/48/000000/oracle-logo.png">
 
